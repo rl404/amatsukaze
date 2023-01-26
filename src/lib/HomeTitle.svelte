@@ -2,6 +2,7 @@
 	import Fa from 'svelte-fa';
 	import { faGithub } from '@fortawesome/free-brands-svg-icons';
 	import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+	import amatsukaze from '$lib/assets/amatsukaze.png';
 
 	let hover: boolean = false;
 
@@ -31,6 +32,7 @@
 	<div
 		id="title-background"
 		class="block w-full absolute h-full top-0 left-0 opacity-20 bg-no-repeat"
+		style="background-image: url({amatsukaze})"
 	/>
 
 	<div
@@ -92,9 +94,3 @@
 		<Fa icon={open ? faChevronRight : faChevronLeft} class="w-4 h-4" />
 	</button>
 </div>
-
-<style>
-	#title-background {
-		background-image: url('amatsukaze.png');
-	}
-</style>
