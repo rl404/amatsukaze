@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { PUBLIC_SHIMAKAZE_HOST } from '$env/static/public';
 	import ForceGraph, {
 		type ForceGraphGenericInstance,
@@ -124,6 +124,10 @@
 			.linkColor(getLinkColor)
 			.linkCurvature(getLinkCurvature)
 			.linkDirectionalArrowLength(NODE_RADIUS);
+	});
+
+	onDestroy(() => {
+		graph._destructor();
 	});
 
 	const onBackgroundClick = (e: MouseEvent) => {
