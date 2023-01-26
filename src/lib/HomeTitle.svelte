@@ -85,8 +85,8 @@
 	<button
 		class:hidden={!hover && open}
 		class="absolute top-1/2 left-0 -translate-y-1/2 bg-yellow-500 hover:bg-yellow-800 {open
-			? 'rounded-r'
-			: 'rounded-l'} p-2 text-center {!open && '-left-8'}"
+			? 'rounded-r-full'
+			: 'rounded-l-full'} p-2 text-center {!open && '-left-8'}"
 		on:click={toggleOpen}
 	>
 		<Fa icon={open ? faChevronRight : faChevronLeft} class="w-4 h-4" />

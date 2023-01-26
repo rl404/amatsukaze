@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
-	import { PUBLIC_SHIMAKAZE_HOST } from '$env/static/public';
 	import ForceGraph, {
 		type ForceGraphGenericInstance,
 		type LinkObject,
@@ -101,7 +100,7 @@
 			}
 
 			const img = new Image();
-			img.dataset.src = PUBLIC_SHIMAKAZE_HOST + '/wikia/image/' + n.imageURL;
+			img.dataset.src = '/api/wikia/image/' + n.imageURL;
 			return { ...n, image: img };
 		});
 

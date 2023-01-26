@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_VTUBER_WIKI_HOST, PUBLIC_SHIMAKAZE_HOST } from '$env/static/public';
+	import { PUBLIC_VTUBER_WIKI_HOST } from '$env/static/public';
 	import { createEventDispatcher } from 'svelte';
 	import axios from 'axios';
 	import type { Data } from 'src/routes/api/vtubers/[id]/+server';
@@ -226,7 +226,7 @@
 					{#if data.image !== ''}
 						<div class="col-span-5">
 							<img
-								src="{PUBLIC_SHIMAKAZE_HOST}/wikia/image/{data.image}"
+								src="/api/wikia/image/{data.image}"
 								alt={data.name}
 								class="m-auto mb-3 rounded-lg border-solid border-2 border-yellow-100"
 								style="height:200px;"

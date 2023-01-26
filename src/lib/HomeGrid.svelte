@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { PUBLIC_SHIMAKAZE_HOST } from '$env/static/public';
-
 	type vtuberImage = {
 		id: number;
 		name: string;
@@ -26,7 +24,7 @@
 	{#each vtubers as vtuber}
 		<div
 			class="transition bg-no-repeat bg-cover bg-top pb-[90%] grayscale hover:grayscale-0 opacity-20 hover:opacity-100 rounded hover:outline-yellow-500 hover:outline hover:drop-shadow-lg"
-			style="background-image:url({PUBLIC_SHIMAKAZE_HOST}/wikia/image/{vtuber.image})"
+			style="background-image:url(/api/wikia/image/{vtuber.image})"
 			on:mouseover={() => handleOnHover(vtuber.id)}
 			on:mouseout={handleOnUnhover}
 			on:focus={() => handleOnHover(vtuber.id)}
