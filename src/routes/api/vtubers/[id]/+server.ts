@@ -15,7 +15,11 @@ export type Data = {
 	character_designers: Array<string>;
 	character_2d_modelers: Array<string>;
 	character_3d_modelers: Array<string>;
-	agencies: Array<string>;
+	agencies: Array<{
+		id: number;
+		name: string;
+		image: string;
+	}>;
 	affiliations: Array<string>;
 	channels: Array<{ type: string; url: string }>;
 	social_medias: Array<string>;

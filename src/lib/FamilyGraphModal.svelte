@@ -106,7 +106,9 @@
 					characterDesigners: d.character_designers || ['-'],
 					character2dModelers: d.character_2d_modelers || ['-'],
 					character3dModelers: d.character_3d_modelers || ['-'],
-					agencies: d.agencies || ['-'],
+					agencies: d.agencies?.map((a: { id: number; name: string; image: string }) => {
+						return a.name;
+					}) || ['-'],
 					affiliations: d.affiliations || ['-'],
 					channels:
 						d.channels?.map((c: { type: string; url: string }) => {
@@ -249,7 +251,13 @@
 					<div class="col-span-2 text-right text-gray-400">3D Modeler</div>
 					<div class="col-span-3 whitespace-pre-line">{data.character3dModelers.join('\n')}</div>
 					<div class="col-span-2 text-right text-gray-400">Agencies</div>
-					<div class="col-span-3 whitespace-pre-line">{data.agencies.join('\n')}</div>
+					<div class="col-span-3 whitespace-pre-line">
+						{#if data.agencies.length === 0}
+							-
+						{:else}
+							{data.agencies.join('\n')}
+						{/if}
+					</div>
 					<div class="col-span-2 text-right text-gray-400">Affiliations</div>
 					<div class="col-span-3 whitespace-pre-line">{data.affiliations.join('\n')}</div>
 					<div class="col-span-2 text-right text-gray-400">Channels</div>
