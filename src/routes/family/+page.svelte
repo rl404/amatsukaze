@@ -1,8 +1,8 @@
 <script lang="ts">
 	import FamilyGraph from '$lib/FamilyGraph.svelte';
 	import FamilyGraphTop from '$lib/FamilyGraphTop.svelte';
-
 	import type { PageData } from './$types';
+
 	export let data: PageData;
 
 	let searchQuery = '';

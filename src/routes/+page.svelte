@@ -16,7 +16,7 @@
 
 	shuffleArray(data.data);
 
-	const vtubers = data.data.slice(0, 60);
+	const vtubers = data.data;
 </script>
 
 <div class="relative overflow-hidden">

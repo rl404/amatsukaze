@@ -126,7 +126,7 @@
 	});
 
 	onDestroy(() => {
-		graph._destructor();
+		graph && graph._destructor();
 	});
 
 	const onBackgroundClick = (e: MouseEvent) => {

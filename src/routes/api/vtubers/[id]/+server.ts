@@ -15,7 +15,11 @@ export type Data = {
 	character_designers: Array<string>;
 	character_2d_modelers: Array<string>;
 	character_3d_modelers: Array<string>;
-	agencies: Array<string>;
+	agencies: Array<{
+		id: number;
+		name: string;
+		image: string;
+	}>;
 	affiliations: Array<string>;
 	channels: Array<{ type: string; url: string }>;
 	social_medias: Array<string>;
@@ -34,7 +38,10 @@ export const GET = (async ({ params }) => {
 	const resp = await fetch(`${PUBLIC_SHIMAKAZE_HOST}/vtubers/${params.id}`);
 	const data = await resp.json();
 	return new Response(JSON.stringify(data), {
-		headers: { 'content-type': 'application/json' },
+		headers: {
+			'content-type': 'application/json',
+			'cache-control': 'max-age=86400, stale-while-revalidate=86400'
+		},
 		status: resp.status
 	});
 }) satisfies RequestHandler;
