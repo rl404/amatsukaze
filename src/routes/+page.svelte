@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import HomeTitle from '$lib/HomeTitle.svelte';
-	import HomeGrid from '$lib/HomeGrid.svelte';
+	import Title from './Title.svelte';
+	import Grid from './Grid.svelte';
 
 	export let data: PageData;
 
@@ -20,6 +20,6 @@
 </script>
 
 <div class="relative overflow-hidden">
-	<HomeGrid {vtubers} />
-	<HomeTitle />
+	<Grid {vtubers} />
+	<Title />
 </div>

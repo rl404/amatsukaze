@@ -5,7 +5,7 @@
 		type LinkObject,
 		type NodeObject
 	} from 'force-graph';
-	import FamilyGraphModal from './FamilyGraphModal.svelte';
+	import VtuberModal from '$lib/component/VtuberModal.svelte';
 
 	export let data: {
 		nodes: Array<{
@@ -455,7 +455,7 @@
 <div bind:this={canvas} />
 
 {#each modalDatas as modalData}
-	<FamilyGraphModal
+	<VtuberModal
 		open={modalData.id !== 0}
 		id={modalData.id}
 		title={modalData.title}

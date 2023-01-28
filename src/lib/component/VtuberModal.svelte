@@ -3,7 +3,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import axios from 'axios';
 	import type { Data } from 'src/routes/api/vtubers/[id]/+server';
-	import ChannelBadge from './component/ChannelBadge.svelte';
+	import ChannelBadge from '$lib/component/ChannelBadge.svelte';
 
 	export let open = false;
 	export let id = 0;

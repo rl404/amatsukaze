@@ -2,7 +2,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import Fa from 'svelte-fa';
 	import { faChevronLeft, faQuestion, faSearch, faRemove } from '@fortawesome/free-solid-svg-icons';
-	import Divider from './component/Divider.svelte';
+	import Divider from '$lib/component/Divider.svelte';
 
 	const dispatch = createEventDispatcher();
 
