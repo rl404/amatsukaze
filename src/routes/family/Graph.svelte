@@ -46,9 +46,11 @@
 	let nodes: Array<GraphNode>;
 	let links: Array<GraphLink>;
 
-	$: nodes = data.nodes.map((n) => {
-		return { id: n.id, name: n.name, imageURL: n.image, hasRetired: n.has_retired };
-	});
+	$: nodes = data.nodes
+		.map((n) => {
+			return { id: n.id, name: n.name, imageURL: n.image, hasRetired: n.has_retired };
+		})
+		.sort((a, b) => (a.id < b.id ? 1 : -1));
 
 	$: links = data.links.map((l) => {
 		return {
@@ -63,11 +65,14 @@
 
 	const NODE_RADIUS = 4;
 	const NODE_COLOR = '#eab308';
+	const NODE_DESIGNER_COLOR = '#3b82f6';
 	const NODE_RETIRED_COLOR = '#713e12';
 	const NODE_INACTIVE_COLOR = 'rgba(0,0,0,0.1)';
 
-	const LINK_DESIGNER_COLOR = '#3b82f6';
-	const LINK_MODELER_COLOR = '#a855f7';
+	const LINK_DESIGNER_COLOR = 'rgba(59, 130, 246, 0.3)';
+	const LINK_ACTIVE_DESIGNER_COLOR = 'rgba(59, 130, 246, 1)';
+	const LINK_MODELER_COLOR = 'rgba(168, 85, 247, 0.3)';
+	const LINK_ACTIVE_MODELER_COLOR = 'rgba(168, 85, 247, 1)';
 	const LINK_INACTIVE_COLOR = 'rgba(0,0,0,0.1)';
 
 	const ROLE_DESIGNER = 'DESIGNER';
@@ -107,7 +112,7 @@
 		graph = ForceGraph()(canvas)
 			.graphData({ nodes: nodes, links: links })
 			.autoPauseRedraw(false)
-			.minZoom(0.5)
+			.minZoom(0.3)
 			.maxZoom(10)
 			.onBackgroundClick(onBackgroundClick)
 			.onBackgroundRightClick(onBackgroundRightClick)
@@ -141,26 +146,38 @@
 	const getNodeColor = (node: GraphNode | any): string => {
 		if (hoverNodeID !== 0) {
 			if ([...hoverNodeIDs, hoverNodeID].includes(node.id)) {
-				return node.hasRetired ? NODE_RETIRED_COLOR : NODE_COLOR;
+				return node.id < 0
+					? NODE_DESIGNER_COLOR
+					: node.hasRetired
+					? NODE_RETIRED_COLOR
+					: NODE_COLOR;
 			}
 			return NODE_INACTIVE_COLOR;
 		}
 
 		if (clickNodeID !== 0) {
 			if ([...clickNodeIDs, clickNodeID].includes(node.id)) {
-				return node.hasRetired ? NODE_RETIRED_COLOR : NODE_COLOR;
+				return node.id < 0
+					? NODE_DESIGNER_COLOR
+					: node.hasRetired
+					? NODE_RETIRED_COLOR
+					: NODE_COLOR;
 			}
 			return NODE_INACTIVE_COLOR;
 		}
 
 		if (searchQuery !== '') {
 			if (node.name.toLowerCase().includes(searchQuery.toLowerCase())) {
-				return node.hasRetired ? NODE_RETIRED_COLOR : NODE_COLOR;
+				return node.id < 0
+					? NODE_DESIGNER_COLOR
+					: node.hasRetired
+					? NODE_RETIRED_COLOR
+					: NODE_COLOR;
 			}
 			return NODE_INACTIVE_COLOR;
 		}
 
-		return node.hasRetired ? NODE_RETIRED_COLOR : NODE_COLOR;
+		return node.id < 0 ? NODE_DESIGNER_COLOR : node.hasRetired ? NODE_RETIRED_COLOR : NODE_COLOR;
 	};
 
 	const getNodeObject = (
@@ -171,7 +188,7 @@
 		// Circle Node.
 		if (globalScale <= 2) {
 			ctx.beginPath();
-			ctx.arc(node.x, node.y, NODE_RADIUS, 0, 2 * Math.PI);
+			ctx.arc(node.x, node.y, node.id > 0 ? NODE_RADIUS : NODE_RADIUS * 1.5, 0, 2 * Math.PI);
 			ctx.fillStyle = getNodeColor(node);
 			ctx.fill();
 			return;
@@ -179,8 +196,10 @@
 
 		// Prepare text.
 		const label = node.name;
-		const fontSize = 20 / globalScale;
+		let fontSize = 20 / globalScale;
+		if (node.id < 0 && globalScale <= 5) fontSize *= 1.5;
 		ctx.font = `${fontSize}px Sans-Serif`;
+		if (node.id < 0 && globalScale <= 5) ctx.font = 'bold ' + ctx.font;
 		const textWidth = ctx.measureText(label).width;
 		[textWidth, fontSize].map((n) => n + fontSize * 0.2);
 		ctx.textAlign = 'center';
@@ -284,7 +303,7 @@
 			clickNodeID = hoverNodeID;
 			clickNodeIDs = hoverNodeIDs;
 
-			showModal(node.id, node.name, e.clientX, e.clientY);
+			node.id > 0 && showModal(node.id, node.name, e.clientX, e.clientY);
 		}
 	};
 
@@ -333,7 +352,7 @@
 			return LINK_INACTIVE_COLOR;
 		}
 
-		return roleToColor(link.role);
+		return roleToColor(link.role, false);
 	};
 
 	const getLinkCurvature = (link: GraphLink | any) => {
@@ -358,13 +377,13 @@
 		}
 	};
 
-	const roleToColor = (role: string): string => {
+	const roleToColor = (role: string, active: boolean = true): string => {
 		switch (role) {
 			case ROLE_DESIGNER:
-				return LINK_DESIGNER_COLOR;
+				return active ? LINK_ACTIVE_DESIGNER_COLOR : LINK_DESIGNER_COLOR;
 			case ROLE_2D_MODELER:
 			case ROLE_3D_MODELER:
-				return LINK_MODELER_COLOR;
+				return active ? LINK_ACTIVE_MODELER_COLOR : LINK_MODELER_COLOR;
 			default:
 				return '';
 		}

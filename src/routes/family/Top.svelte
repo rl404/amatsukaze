@@ -101,6 +101,9 @@
 				<span class="h-3 w-3 bg-yellow-800 rounded-xl inline-block ml-2 mr-3" />Retired Vtuber
 			</div>
 			<div>
+				<span class="h-3 w-3 bg-blue-500 rounded-xl inline-block ml-2 mr-3" />Designer/Modeler
+			</div>
+			<div>
 				<span
 					class="h-3 w-3 text-blue-500 inline-block ml-1.5 mr-3 text-center font-bold pointer-events-none"
 					>—</span
