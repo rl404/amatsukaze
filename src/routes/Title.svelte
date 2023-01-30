@@ -65,7 +65,7 @@
 			>
 		</div>
 		<div class="whitespace-nowrap">
-			<a href="/agency" class="hover:text-yellow-200">Agency Grouping</a><span
+			<a href="/agency" class="hover:text-yellow-200">Agency Tree</a><span
 				class="opacity-50 hidden sm:inline-block sm:ml-1 sm:mr-1">|</span
 			>
 		</div>

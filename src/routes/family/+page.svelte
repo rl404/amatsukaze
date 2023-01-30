@@ -1,6 +1,6 @@
 <script lang="ts">
-	import FamilyGraph from '$lib/FamilyGraph.svelte';
-	import FamilyGraphTop from '$lib/FamilyGraphTop.svelte';
+	import Graph from './Graph.svelte';
+	import Top from './Top.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -24,8 +24,8 @@
 </script>
 
 <div class="w-screen h-screen" id="family-graph">
-	<FamilyGraph data={data.data} {searchQuery} {searchResultIndex} />
-	<FamilyGraphTop
+	<Graph data={data.data} {searchQuery} {searchResultIndex} />
+	<Top
 		{searchQuery}
 		on:reset={resetSearch}
 		on:change={(e) => changeSearch(e.detail.search)}
