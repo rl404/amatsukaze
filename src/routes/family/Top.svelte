@@ -37,14 +37,19 @@
 </script>
 
 <div class="absolute top-0 p-2 w-full flex justify-between items-center">
-	<a href="/">
-		<button
-			class="bg-white hover:bg-yellow-500 rounded-full p-2 text-center hover:text-white border border-yellow-500"
-			title="Back"
-		>
-			<Fa icon={faChevronLeft} class="w-4 h-4" />
-		</button>
-	</a>
+	<div class="flex">
+		<a href="/">
+			<button
+				class="bg-white hover:bg-yellow-500 rounded-full p-2 text-center hover:text-white border border-yellow-500"
+				title="Back"
+			>
+				<Fa icon={faChevronLeft} class="w-4 h-4" />
+			</button>
+		</a>
+		<div class="p-2 bg-white border border-yellow-500 mr-2 ml-2 rounded-full">
+			<div class="h-4 leading-4">Vtuber Family Tree</div>
+		</div>
+	</div>
 	<div class="flex">
 		{#if searchQuery === '' && !searchShow}
 			<button
@@ -62,7 +67,7 @@
 				<!-- svelte-ignore a11y-autofocus -->
 				<input
 					type="text"
-					class="border border-yellow-300 text-sm rounded-lg focus:ring-yellow-500 focus:border-yellow-500 block pl-10 pr-10 p-1 outline-none w-full h-full"
+					class="border border-yellow-300 text-sm rounded-full focus:ring-yellow-500 focus:border-yellow-500 block pl-10 pr-10 p-1 outline-none w-full h-full"
 					placeholder="search..."
 					autofocus
 					bind:value={searchQuery}
