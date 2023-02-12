@@ -7,14 +7,15 @@
 
 <svelte:head>
 	<title>{`${title} | Amatsukaze`}</title>
-	<meta name="title" content="Amatsukaze" />
 	<meta name="description" content={description} />
-	<meta property="og:title" content="Amatsukaze" />
+	<meta property="og:title" content="Amatsukaze - Vtuber Wikia Visualizer" />
 	<meta property="og:description" content={description} />
 	<meta property="og:image" content={image} />
 	<meta property="og:type" content="website" />
-	<meta property="og:site_name" content="Amatsukaze" />
+	<meta property="og:site_name" content="Amatsukaze - Vtuber Wikia Visualizer" />
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
 	<meta name="robots" content="noindex, nofollow" />
 	<meta httpEquiv="Content-Type" content="text/html charset=utf-8" />
+	<meta name="theme-color" content="#eab308" />
+	<meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
