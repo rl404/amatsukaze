@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Head from '$lib/component/Head.svelte';
 	import type { PageData } from './$types';
 	import Graph from './Graph.svelte';
 	import Top from './Top.svelte';
@@ -23,7 +24,9 @@
 	};
 </script>
 
-<div class="w-screen h-screen" id="family-graph">
+<Head title="Agency Tree" description="Visualize vtuber data from wikia to agency tree." />
+
+<div class="w-screen h-screen" id="agency-graph">
 	<Graph data={data.data} {searchQuery} {searchResultIndex} />
 	<Top
 		{searchQuery}
@@ -34,7 +37,7 @@
 </div>
 
 <style>
-	#family-graph {
+	#agency-graph {
 		background-image: radial-gradient(#eab308 0.5px, white 0.5px);
 		background-size: 15px 15px;
 	}

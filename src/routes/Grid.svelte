@@ -34,7 +34,7 @@
 	{#each vtubers as vtuber, i}
 		<div
 			class="hidden transition bg-no-repeat bg-cover bg-top pb-[90%] grayscale hover:grayscale-0 opacity-20 hover:opacity-100 rounded hover:outline-yellow-500 hover:outline hover:drop-shadow-lg"
-			style="background-image:url(/api/wikia/image/{vtuber.image})"
+			style="background-image:url(/api/wikia/image/{vtuber.image.split('?')[0]}?width=200)"
 			on:mouseover={() => handleOnHover(vtuber.id)}
 			on:mouseout={handleOnUnhover}
 			on:focus={() => handleOnHover(vtuber.id)}

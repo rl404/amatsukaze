@@ -228,7 +228,7 @@
 					{#if data.image !== ''}
 						<div class="col-span-5">
 							<img
-								src="/api/wikia/image/{data.image}"
+								src="/api/wikia/image/{data.image.split('?')[0]}?height=200"
 								alt={data.name}
 								class="m-auto mb-3 rounded-lg border-solid border-2 border-yellow-100"
 								style="height:200px;"
