@@ -12,7 +12,7 @@
 	<meta property="og:description" content={description} />
 	<meta property="og:image" content={image} />
 	<meta property="og:type" content="website" />
-	<meta property="og:site_name" content="Amatsukaze - Vtuber Wikia Visualizer" />
+	<meta property="og:site_name" content="Amatsukaze" />
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
 	<meta name="robots" content="noindex, nofollow" />
 	<meta httpEquiv="Content-Type" content="text/html charset=utf-8" />
