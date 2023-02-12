@@ -2,6 +2,7 @@
 	import Graph from './Graph.svelte';
 	import Top from './Top.svelte';
 	import type { PageData } from './$types';
+	import Head from '$lib/component/Head.svelte';
 
 	export let data: PageData;
 
@@ -22,6 +23,8 @@
 		searchResultIndex++;
 	};
 </script>
+
+<Head title="Family Tree" description="Visualize vtuber data from wikia to family tree." />
 
 <div class="w-screen h-screen" id="family-graph">
 	<Graph data={data.data} {searchQuery} {searchResultIndex} />

@@ -2,6 +2,7 @@
 	import type { PageData } from './$types';
 	import Title from './Title.svelte';
 	import Grid from './Grid.svelte';
+	import Head from '$lib/component/Head.svelte';
 
 	export let data: PageData;
 
@@ -18,6 +19,8 @@
 
 	const vtubers = data.data;
 </script>
+
+<Head />
 
 <div class="relative overflow-hidden">
 	<Grid {vtubers} />
