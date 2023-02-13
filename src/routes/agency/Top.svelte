@@ -47,7 +47,7 @@
 			</button>
 		</a>
 		<div class="p-2 bg-white border border-yellow-500 mr-2 ml-2 rounded-full">
-			<div class="h-4 leading-4">Vtuber Agency Tree</div>
+			<div class="h-4 leading-4 overflow-hidden">Vtuber Agency Tree</div>
 		</div>
 	</div>
 	<div class="flex">
