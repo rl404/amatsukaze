@@ -14,10 +14,38 @@
 	export let z = 0;
 
 	const MODAL_MOVE_PADDING = 20;
+	const MODAL_WIDTH = 355;
+	const MODAL_HEIGHT = 305;
 
 	let modal: HTMLElement;
 
 	const dispatch = createEventDispatcher();
+
+	$: open && moveInside();
+
+	const moveInside = () => {
+		if (!open) return;
+
+		if (x <= MODAL_MOVE_PADDING) {
+			dispatch('move', { id: id, x: MODAL_MOVE_PADDING - x, y: 0 });
+		}
+
+		if (x + MODAL_WIDTH >= screen.width - MODAL_MOVE_PADDING) {
+			dispatch('move', { id: id, x: screen.width - MODAL_MOVE_PADDING - x - MODAL_WIDTH, y: 0 });
+		}
+
+		if (y <= MODAL_MOVE_PADDING) {
+			dispatch('move', { id: id, x: 0, y: MODAL_MOVE_PADDING - y });
+		}
+
+		if (y + MODAL_HEIGHT >= screen.height - MODAL_MOVE_PADDING) {
+			dispatch('move', {
+				id: id,
+				x: 0,
+				y: screen.height - MODAL_MOVE_PADDING - y - (MODAL_HEIGHT * 3) / 2
+			});
+		}
+	};
 
 	const onDragged = (node: HTMLElement) => {
 		let moving = false;
@@ -182,8 +210,8 @@
 	<div
 		class="absolute w-1/4 bg-white rounded-lg shadow-xl overflow-auto resize"
 		style="top:{y}px;left:{x}px;z-index:{z};height:{id > 0
-			? 305
-			: 105}px;min-height:52px;width:355px;min-width:300px;max-height:calc(100% - {y}px - {MODAL_MOVE_PADDING}px);max-width:calc(100% - {x}px - {MODAL_MOVE_PADDING}px);"
+			? MODAL_HEIGHT
+			: 105}px;min-height:52px;width:{MODAL_WIDTH}px;min-width:300px;max-height:calc(100% - {y}px - {MODAL_MOVE_PADDING}px);max-width:calc(100% - {x}px - {MODAL_MOVE_PADDING}px);"
 		bind:this={modal}
 	>
 		<div

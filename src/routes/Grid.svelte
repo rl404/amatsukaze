@@ -29,7 +29,7 @@
 </script>
 
 <div
-	class="overflow-hidden grid xl:grid-cols-10 lg:grid-cols-7 md:grid-cols-5 grid-cols-3 h-screen gap-1 p-1"
+	class="overflow-hidden grid xl:grid-cols-10 lg:grid-cols-7 md:grid-cols-6 sm:grid-cols-5 grid-cols-3 h-screen gap-1 p-1"
 >
 	{#each vtubers as vtuber, i}
 		<div
