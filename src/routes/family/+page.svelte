@@ -26,7 +26,7 @@
 
 <Head title="Family Tree" description="Visualize vtuber data from wikia to family tree." />
 
-<div class="w-screen h-screen" id="family-graph">
+<div class="w-screen h-screen">
 	<Graph data={data.data} {searchQuery} {searchResultIndex} />
 	<Top
 		{searchQuery}
@@ -35,10 +35,3 @@
 		on:next={nextSearchResult}
 	/>
 </div>
-
-<style>
-	#family-graph {
-		background-image: radial-gradient(#eab308 0.5px, white 0.5px);
-		background-size: 15px 15px;
-	}
-</style>
