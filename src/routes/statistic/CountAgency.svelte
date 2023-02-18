@@ -13,9 +13,7 @@
 	}, []);
 </script>
 
-<div>
-	<div class="text-center font-bold">Agency Count</div>
-	<div class="text-center font-bold text-5xl my-2">
-		{agencies.length}
-	</div>
+<div class="text-center font-bold">Agency Count</div>
+<div class="text-center font-bold text-5xl my-2">
+	{agencies.length}
 </div>
