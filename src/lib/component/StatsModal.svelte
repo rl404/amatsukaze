@@ -16,7 +16,7 @@
 			on:keypress={toggleModal}
 		/>
 		<div
-			class="relative w-full h-full max-w-md max-h-full overflow-x-hidden overflow-y-scroll z-20 m-auto rounded-lg"
+			class="relative w-full h-auto max-w-md max-h-full overflow-x-hidden overflow-y-scroll z-20 m-auto rounded-lg"
 		>
 			<div class="relative bg-white shadow rounded-lg">
 				<div class="flex items-start justify-between p-4 border-b rounded-t border-yellow-500">
