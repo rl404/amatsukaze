@@ -32,13 +32,13 @@
 		<Card class="md:col-span-2">
 			<CountAgency data={data.data} />
 		</Card>
-		<Card class="sm:col-span-2 md:col-span-1">
-			<ChartStatus data={data.data} />
-		</Card>
-		<Card class="sm:col-span-2 md:col-span-3 xl:col-span-2">
+		<Card class="sm:col-span-2 md:col-span-4 xl:col-span-2">
 			<ChartDebutDate data={data.data} />
 		</Card>
-		<Card class="sm:col-span-2 md:col-span-4 xl:col-span-1">
+		<Card class="sm:col-span-2 md:col-span-2 xl:col-span-1">
+			<ChartStatus data={data.data} />
+		</Card>
+		<Card class="sm:col-span-2 md:col-span-2 xl:col-span-1">
 			<ChartBirthday data={data.data} />
 		</Card>
 		<Card class="md:col-span-2 xl:col-span-1">

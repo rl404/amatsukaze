@@ -2,6 +2,9 @@
 	import type { vtubersResponseData } from './+page.server';
 	import { DonutChart } from '@carbon/charts-svelte';
 	import '@carbon/charts/styles.css';
+	import { onMount, type SvelteComponent } from 'svelte';
+	import StatsModal from '$lib/component/StatsModal.svelte';
+	import { PUBLIC_VTUBER_WIKI_HOST } from '$env/static/public';
 
 	export let data: Array<vtubersResponseData> = [];
 
@@ -41,12 +44,37 @@
 
 	let topZodiacData = zodiacData.slice(0, TOP_COUNT);
 	topZodiacData.push(['Other', otherZodiacCount]);
+
+	let chart: any;
+	let modal: SvelteComponent;
+	let modalTitle: string = '';
+	let modalData: Array<vtubersResponseData> = [];
+
+	$: chart && chart.services.events.addEventListener('pie-slice-click', onClick);
+
+	onMount(() => {
+		return () => {
+			chart && chart.services.events.removeEventListener('pie-slice-click', onClick);
+		};
+	});
+
+	const onClick = (e: any) => {
+		const chartData = e.detail.datum.data;
+		modalTitle = `${chartData.group} (${chartData.value.toLocaleString()})`;
+		modalData = data.filter((d) =>
+			chartData.group === 'Other'
+				? !topZodiacs.includes(d.zodiac_sign) && d.zodiac_sign !== ''
+				: d.zodiac_sign === chartData.group
+		);
+		modal.toggleModal();
+	};
 </script>
 
 <div class="text-center font-bold">Count by Zodiac Sign</div>
 
 <DonutChart
 	class="p-2"
+	bind:chart
 	data={topZodiacData.map((d) => ({ group: d[0], value: d[1] }))}
 	options={{
 		resizable: true,
@@ -68,3 +96,23 @@
 		height: '300px'
 	}}
 />
+
+<StatsModal title={modalTitle} bind:this={modal}>
+	<div class="grid gap-2 grid-cols-10">
+		{#each modalData as vtuber}
+			<div class="col-span-1">
+				<span
+					class="h-3 w-3 {vtuber.retirement_date
+						? 'bg-yellow-800'
+						: 'bg-yellow-500'} rounded-xl inline-block ml-2 mr-3"
+				/>
+			</div>
+			<a
+				href="{PUBLIC_VTUBER_WIKI_HOST}/wiki/{vtuber.name}"
+				target="_blank"
+				rel="noreferrer"
+				class="col-span-9 hover:text-yellow-500">{vtuber.name}</a
+			>
+		{/each}
+	</div>
+</StatsModal>
