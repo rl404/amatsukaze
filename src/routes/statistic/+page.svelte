@@ -16,6 +16,7 @@
 	import CountAgency from './CountAgency.svelte';
 	import CountVtuber from './CountVtuber.svelte';
 	import Top from './Top.svelte';
+	import '@carbon/charts/styles.css';
 
 	export let data: vtubersResponse;
 </script>
@@ -25,20 +26,20 @@
 <div class="p-4">
 	<Top />
 
-	<div class="grid gap-2 mt-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
+	<div class="grid gap-4 mt-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
 		<Card class="md:col-span-2">
 			<CountVtuber data={data.data} />
 		</Card>
 		<Card class="md:col-span-2">
 			<CountAgency data={data.data} />
 		</Card>
-		<Card class="sm:col-span-2 md:col-span-1">
-			<ChartStatus data={data.data} />
-		</Card>
-		<Card class="sm:col-span-2 md:col-span-3 xl:col-span-2">
+		<Card class="sm:col-span-2 md:col-span-4 xl:col-span-2">
 			<ChartDebutDate data={data.data} />
 		</Card>
-		<Card class="sm:col-span-2 md:col-span-4 xl:col-span-1">
+		<Card class="sm:col-span-2 md:col-span-2 xl:col-span-1">
+			<ChartStatus data={data.data} />
+		</Card>
+		<Card class="sm:col-span-2 md:col-span-2 xl:col-span-1">
 			<ChartBirthday data={data.data} />
 		</Card>
 		<Card class="md:col-span-2 xl:col-span-1">

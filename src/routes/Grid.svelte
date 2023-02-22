@@ -1,13 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import type { imagesResponseData } from './+page.server';
 
-	type vtuberImage = {
-		id: number;
-		name: string;
-		image: string;
-	};
-
-	export let vtubers: Array<vtuberImage>;
+	export let vtubers: Array<imagesResponseData>;
 
 	let onHoverID = 0;
 

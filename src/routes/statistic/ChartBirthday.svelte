@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { vtubersResponseData } from './+page.server';
 	import { HeatmapChart } from '@carbon/charts-svelte';
-	import '@carbon/charts/styles.css';
 
 	export let data: Array<vtubersResponseData> = [];
 
