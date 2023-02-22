@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { vtubersResponseData } from './+page.server';
 	import { DonutChart } from '@carbon/charts-svelte';
-	import '@carbon/charts/styles.css';
 	import { onMount, type SvelteComponent } from 'svelte';
 	import StatsModal from '$lib/component/StatsModal.svelte';
 	import { PUBLIC_VTUBER_WIKI_HOST } from '$env/static/public';

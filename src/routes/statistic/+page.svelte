@@ -16,6 +16,7 @@
 	import CountAgency from './CountAgency.svelte';
 	import CountVtuber from './CountVtuber.svelte';
 	import Top from './Top.svelte';
+	import '@carbon/charts/styles.css';
 
 	export let data: vtubersResponse;
 </script>
