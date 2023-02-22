@@ -3,20 +3,9 @@
 	import type { ForceGraphGenericInstance, LinkObject, NodeObject } from 'force-graph';
 	import ForceGraph from 'force-graph';
 	import { onDestroy, onMount } from 'svelte';
+	import type { agencyResponseData } from './+page.server';
 
-	export let data: {
-		nodes: Array<{
-			id: number;
-			name: string;
-			image: string;
-			has_retired: boolean;
-			agencies: Array<string>;
-		}>;
-		links: Array<{
-			id1: number;
-			id2: number;
-		}>;
-	};
+	export let data: agencyResponseData;
 
 	export let searchQuery: string = '';
 	export let searchResultIndex: number = -1;

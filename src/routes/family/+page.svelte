@@ -1,10 +1,10 @@
 <script lang="ts">
 	import Graph from './Graph.svelte';
 	import Top from './Top.svelte';
-	import type { PageData } from './$types';
 	import Head from '$lib/component/Head.svelte';
+	import type { familyResponse } from './+page.server';
 
-	export let data: PageData;
+	export let data: familyResponse;
 
 	let searchQuery = '';
 	let searchResultIndex = -1;

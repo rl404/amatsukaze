@@ -1,10 +1,10 @@
 <script lang="ts">
-	import type { PageData } from './$types';
 	import Title from './Title.svelte';
 	import Grid from './Grid.svelte';
 	import Head from '$lib/component/Head.svelte';
+	import type { imagesResponse } from './+page.server';
 
-	export let data: PageData;
+	export let data: imagesResponse;
 
 	const shuffleArray = (array: Array<any>) => {
 		for (var i = array.length - 1; i > 0; i--) {
