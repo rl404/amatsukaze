@@ -20,14 +20,16 @@
 </script>
 
 <div
-	class="absolute bottom-1/4 translate-y-1/4 w-full p-5 bg-gradient-to-r from-white to-pink-500 dark:from-neutral-900 dark:to-indigo-600 drop-shadow-lg transition text-right text-white {!open &&
+	class="absolute bottom-1/4 translate-y-1/4 w-full p-5 bg-gradient-to-r from-neutral-300 to-pink-500 dark:from-neutral-900 dark:to-indigo-600 drop-shadow-lg transition text-right text-white {!open &&
 		'translate-x-full'}"
 >
 	<div class="absolute block w-full h-full top-0 left-0 opacity-20 bg-no-repeat" style="background-image:url({amatsukaze})" />
 
-	<div class="absolute w-full h-1 block -top-2 left-0 bg-gradient-to-r from-white to-pink-500 dark:from-neutral-900 dark:to-indigo-600 transition" />
 	<div
-		class="absolute w-full h-1 block -bottom-2 left-0 bg-gradient-to-r from-white to-pink-500 dark:from-neutral-900 dark:to-indigo-600 transition"
+		class="absolute w-full h-1 block -top-2 left-0 bg-gradient-to-r from-neutral-300 to-pink-500 dark:from-neutral-900 dark:to-indigo-600 transition"
+	/>
+	<div
+		class="absolute w-full h-1 block -bottom-2 left-0 bg-gradient-to-r from-neutral-300 to-pink-500 dark:from-neutral-900 dark:to-indigo-600 transition"
 	/>
 
 	<div class="text-l sm:text-xl drop-shadow-lg">

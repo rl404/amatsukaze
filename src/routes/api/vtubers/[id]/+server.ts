@@ -2,6 +2,12 @@ import type { RequestHandler } from './$types';
 import { PUBLIC_SHIMAKAZE_HOST } from '$env/static/public';
 
 export type vtuberResponse = {
+	status: number;
+	message: string;
+	data: vtuberResponseData;
+};
+
+export type vtuberResponseData = {
 	id: number;
 	name: string;
 	image: string;
