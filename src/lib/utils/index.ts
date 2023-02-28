@@ -53,3 +53,7 @@ export const isEmptyArray = (arr: Array<any>): boolean => {
 	if (!arr) return true;
 	return arr.length === 0;
 };
+
+export const getRandomInt = (min: number = 0, max: number = 10): number => {
+	return Math.floor(Math.random() * (max - min)) + min;
+};

@@ -6,6 +6,7 @@
 	import Modal from './Modal.svelte';
 	import { PUBLIC_VTUBER_WIKI_HOST } from '$env/static/public';
 	import ChannelBadge from './ChannelBadge.svelte';
+	import VtuberModalLoading from './VtuberModalLoading.svelte';
 
 	export let id: number = 0;
 	export let title: string = '';
@@ -63,7 +64,7 @@
 
 	<div slot="body" class="p-4">
 		{#if loading}
-			<div>loading...</div>
+			<VtuberModalLoading />
 		{:else if error !== ''}
 			<div class="text-red-500 text-center">
 				{error}
