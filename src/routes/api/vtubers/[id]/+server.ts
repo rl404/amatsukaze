@@ -27,7 +27,7 @@ export type vtuberResponseData = {
 		image: string;
 	}>;
 	affiliations: Array<string>;
-	channels: Array<{ type: string; url: string }>;
+	channels: Array<vtuberResponseDataChannel>;
 	social_medias: Array<string>;
 	official_websites: Array<string>;
 	gender: string;
@@ -39,6 +39,8 @@ export type vtuberResponseData = {
 	zodiac_sign: string;
 	emoji: string;
 };
+
+export type vtuberResponseDataChannel = { type: string; url: string };
 
 export const GET = (async ({ params }) => {
 	const resp = await fetch(`${PUBLIC_SHIMAKAZE_HOST}/vtubers/${params.id}`);

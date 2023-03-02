@@ -1,5 +1,6 @@
 import type { AxiosError } from 'axios';
 import axios from 'axios';
+import type { vtuberResponseDataChannel } from '../../routes/api/vtubers/[id]/+server';
 
 export enum ThemeMode {
 	Light = 'light',
@@ -56,4 +57,12 @@ export const isEmptyArray = (arr: Array<any>): boolean => {
 
 export const getRandomInt = (min: number = 0, max: number = 10): number => {
 	return Math.floor(Math.random() * (max - min)) + min;
+};
+
+const channelOrder = ['YOUTUBE', 'TWITCH', 'BILIBILI', 'NICONICO', 'OTHER'];
+
+export const channelSorter = (a: vtuberResponseDataChannel, b: vtuberResponseDataChannel): number => {
+	const ia = channelOrder.findIndex((c) => c === a.type);
+	const ib = channelOrder.findIndex((c) => c === b.type);
+	return ia - ib;
 };

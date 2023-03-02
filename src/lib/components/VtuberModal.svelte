@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { SvelteComponent } from 'svelte';
 	import type { vtuberResponseData } from '../../routes/api/vtubers/[id]/+server';
-	import { formatBirthday, getAxiosError, getHostname, isEmptyArray } from '$lib/utils';
+	import { channelSorter, formatBirthday, getAxiosError, getHostname, isEmptyArray } from '$lib/utils';
 	import axios from 'axios';
 	import Modal from './Modal.svelte';
 	import { PUBLIC_VTUBER_WIKI_HOST } from '$env/static/public';
@@ -87,7 +87,7 @@
 					<div class="col-span-3 whitespace-pre-line">
 						{#if d[0] === 'Channels' && d[1] !== '-'}
 							<div class="grid grid-cols-1 gap-1">
-								{#each data.channels as channel}
+								{#each data.channels.sort(channelSorter) as channel}
 									<div>
 										<ChannelBadge type={channel.type} url={channel.url} />
 									</div>
