@@ -7,6 +7,7 @@
 	import { PUBLIC_VTUBER_WIKI_HOST } from '$env/static/public';
 	import ChannelBadge from './ChannelBadge.svelte';
 	import VtuberModalLoading from './VtuberModalLoading.svelte';
+	import Image from './Image.svelte';
 
 	export let id: number = 0;
 	export let title: string = '';
@@ -73,10 +74,10 @@
 			<div class="grid grid-cols-5 gap-4">
 				{#if data.image !== ''}
 					<div class="col-span-5 h-52">
-						<img
+						<Image
 							src="/api/wikia/image/{data.image.split('?')[0]}?height=206"
 							alt={data.name}
-							class="m-auto rounded-lg border dark:border-neutral-600 bg-white"
+							class="m-auto h-52 rounded-lg border dark:border-neutral-600 bg-white"
 						/>
 					</div>
 					<div class="col-span-5 border-t dark:border-neutral-600" />
