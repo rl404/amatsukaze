@@ -1,13 +1,17 @@
 <script lang="ts">
 	import type { SvelteComponent } from 'svelte';
+	import { PUBLIC_VTUBER_WIKI_HOST } from '$env/static/public';
 	import type { vtuberResponseData } from '../../routes/api/vtubers/[id]/+server';
 	import { channelSorter, formatBirthday, getAxiosError, getHostname, isEmptyArray } from '$lib/utils';
 	import axios from 'axios';
-	import Modal from './Modal.svelte';
-	import { PUBLIC_VTUBER_WIKI_HOST } from '$env/static/public';
 	import ChannelBadge from './ChannelBadge.svelte';
 	import VtuberModalLoading from './VtuberModalLoading.svelte';
+	import Modal from './Modal.svelte';
 	import Image from './Image.svelte';
+	import Border from './Border.svelte';
+	import Model2DBadge from './Model2DBadge.svelte';
+	import Model3DBadge from './Model3DBadge.svelte';
+	import RetiredBadge from './RetiredBadge.svelte';
 
 	export let id: number = 0;
 	export let title: string = '';
@@ -59,7 +63,7 @@
 
 <Modal bind:this={modal}>
 	<span slot="title">
-		<a class="hover:opacity-70" href="{PUBLIC_VTUBER_WIKI_HOST}/wiki/{title}" target="_blank" rel="noreferrer">{title}</a>
+		<a href="{PUBLIC_VTUBER_WIKI_HOST}/wiki/{title}" target="_blank" rel="noreferrer">{title}</a>
 		<span title="Emoji">{data?.emoji}</span>
 	</span>
 
@@ -77,10 +81,10 @@
 						<Image
 							src="/api/wikia/image/{data.image.split('?')[0]}?height=206"
 							alt={data.name}
-							class="m-auto h-52 rounded-lg border dark:border-neutral-600 bg-white"
+							class="m-auto h-52 rounded-lg border dark:border-neutral-600 bg-neutral-100 dark:bg-neutral-800"
 						/>
 					</div>
-					<div class="col-span-5 border-t dark:border-neutral-600" />
+					<Border class="col-span-5" />
 				{/if}
 				{#each titleData as d}
 					<div class="col-span-2 text-right opacity-40">{d[0]}</div>
@@ -97,7 +101,7 @@
 							<div class="grid grid-cols-1 gap-1">
 								{#each data.social_medias as url}
 									<div>
-										<a href={url} class="hover:opacity-50 underline" target="_blank" rel="noreferrer">{getHostname(url)}</a>
+										<a href={url} class="underline" target="_blank" rel="noreferrer">{getHostname(url)}</a>
 									</div>
 								{/each}
 							</div>
@@ -105,7 +109,7 @@
 							<div class="grid grid-cols-1 gap-1">
 								{#each data.official_websites as url}
 									<div>
-										<a href={url} class="hover:opacity-50 underline" target="_blank" rel="noreferrer">{getHostname(url)}</a>
+										<a href={url} class="underline" target="_blank" rel="noreferrer">{getHostname(url)}</a>
 									</div>
 								{/each}
 							</div>
@@ -121,15 +125,15 @@
 	<div slot="footer" class="sticky bottom-0 bg-white dark:bg-neutral-700 p-4 border-t dark:border-neutral-600 flex justify-between gap-2">
 		{#if !loading && error === '' && data}
 			<span class="text-ellipsis whitespace-nowrap overflow-hidden italic opacity-50" title={data.caption}>{data.caption}</span>
-			<div class="flex text-white text-xs font-medium gap-2">
+			<div class="flex gap-2">
 				{#if data.has_2d}
-					<span class="bg-blue-500 px-2.5 py-0.5 rounded-full" title="Has 2D model">2D</span>
+					<div><Model2DBadge /></div>
 				{/if}
 				{#if data.has_3d}
-					<span class="bg-purple-500 px-2.5 py-0.5 rounded-full" title="Has 3D model">3D</span>
+					<div><Model3DBadge /></div>
 				{/if}
 				{#if data.retirement_date}
-					<span class="bg-red-500 px-2.5 py-0.5 rounded-full" title="Has retired">Retired</span>
+					<div><RetiredBadge /></div>
 				{/if}
 			</div>
 		{/if}

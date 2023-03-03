@@ -27,7 +27,7 @@
 {#if loading}
 	<div class="animate-pulse aspect-square flex items-center justify-center {className}">
 		<svg
-			class="w-12 h-12 text-neutral-300 dark:text-neutral-300"
+			class="w-1/4 text-neutral-300 dark:text-neutral-300"
 			xmlns="http://www.w3.org/2000/svg"
 			aria-hidden="true"
 			fill="currentColor"
@@ -38,7 +38,9 @@
 		>
 	</div>
 {:else if error}
-	<div class="aspect-square flex items-center justify-center text-neutral-300 dark:text-neutral-300 {className}">
+	<div
+		class="aspect-square text-base text-center flex items-center justify-center text-neutral-300 dark:text-neutral-300 overflow-hidden {className}"
+	>
 		{alt}
 	</div>
 {:else}
