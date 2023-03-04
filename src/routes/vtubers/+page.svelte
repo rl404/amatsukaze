@@ -1,10 +1,14 @@
 <script lang="ts">
-	import type { vtubersResponse } from './+page.server';
 	import Head from '$lib/components/Head.svelte';
 	import VtuberGrid from '$lib/components/VtuberGrid.svelte';
 	import VtuberCard from '$lib/components/VtuberCard.svelte';
 	import Border from '$lib/components/Border.svelte';
 	import VtuberList from '$lib/components/VtuberList.svelte';
+	import InfiniteScroll from '$lib/components/InfiniteScroll.svelte';
+	import { getAxiosError } from '$lib/utils';
+	import type { vtubersResponse } from '../api/vtubers/+server';
+	import type { vtuberResponseData } from '../api/vtubers/[id]/+server';
+	import axios from 'axios';
 
 	export let data: vtubersResponse;
 
@@ -28,6 +32,36 @@
 	const nextLayout = () => {
 		layout = (layout + 1) % layouts.length;
 	};
+
+	let page = 1;
+	let limit = 24;
+	let error = '';
+	let vtubers: Array<vtuberResponseData> = data.data;
+	let newVtubers: Array<vtuberResponseData> = [];
+	let hasMore: boolean = true;
+
+	const fetchData = async () => {
+		await axios
+			.get(`/api/vtubers?page=${page}&limit=${limit}`)
+			.then((resp) => {
+				newVtubers = resp.data.data;
+				if (newVtubers.length > 0) {
+					hasMore = true;
+				} else {
+					hasMore = false;
+				}
+			})
+			.catch((err) => {
+				error = getAxiosError(err);
+			});
+	};
+
+	const loadMore = () => {
+		page++;
+		fetchData();
+	};
+
+	$: vtubers = [...vtubers, ...newVtubers];
 </script>
 
 <Head title="Vtuber List" description="Visualize vtuber data from wikia to a list." />
@@ -52,7 +86,7 @@
 		</div>
 	</div>
 	<Border class="col-span-6" />
-	{#each data.data as vtuber}
+	{#each vtubers as vtuber}
 		{#if layout === 0}
 			<VtuberGrid class="col-span-3 sm:col-span-2 md:col-span-1" id={vtuber.id} name={vtuber.name} image={vtuber.image} height={206} />
 		{/if}
@@ -85,5 +119,6 @@
 			/>
 		{/if}
 	{/each}
+	<InfiniteScroll {hasMore} threshold={100} window={true} on:loadMore={loadMore} />
 	<Border class="col-span-6" />
 </div>

@@ -10,6 +10,8 @@
 	let error = false;
 
 	onMount(() => {
+		if (src === '') return;
+
 		const img = new Image();
 		img.src = src;
 
@@ -24,7 +26,13 @@
 	});
 </script>
 
-{#if loading}
+{#if src === ''}
+	<div
+		class="aspect-square text-base text-center flex items-center justify-center text-neutral-300 dark:text-neutral-300 overflow-hidden {className}"
+	>
+		{alt}
+	</div>
+{:else if loading}
 	<div class="animate-pulse aspect-square flex items-center justify-center {className}">
 		<svg
 			class="w-1/4 text-neutral-300 dark:text-neutral-300"

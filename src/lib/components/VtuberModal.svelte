@@ -76,16 +76,14 @@
 			</div>
 		{:else}
 			<div class="grid grid-cols-5 gap-4">
-				{#if data.image !== ''}
-					<div class="col-span-5 h-52">
-						<Image
-							src="/api/wikia/image/{data.image.split('?')[0]}?height=206"
-							alt={data.name}
-							class="m-auto h-52 rounded-lg border dark:border-neutral-600 bg-neutral-100 dark:bg-neutral-800"
-						/>
-					</div>
-					<Border class="col-span-5" />
-				{/if}
+				<div class="col-span-5 h-52">
+					<Image
+						src={data.image && `/api/wikia/image/${data.image.split('?')[0]}?height=206`}
+						alt={data.name}
+						class="m-auto h-52 rounded-lg border dark:border-neutral-600 bg-neutral-100 dark:bg-neutral-800"
+					/>
+				</div>
+				<Border class="col-span-5" />
 				{#each titleData as d}
 					<div class="col-span-2 text-right opacity-40">{d[0]}</div>
 					<div class="col-span-3 whitespace-pre-line">

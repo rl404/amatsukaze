@@ -33,7 +33,7 @@
 >
 	<div class="flex items-center cursor-pointer" style="aspect-ratio: 2/1;" on:click={() => modal.toggleOpen()}>
 		<Image
-			src="/api/wikia/image/{image.split('?')[0]}?height={height}"
+			src={image && `/api/wikia/image/${image.split('?')[0]}?height=${height}`}
 			alt={name}
 			class="h-full w-1/3 object-cover object-top rounded-tl-lg bg-white shadow-lg"
 		/>

@@ -27,7 +27,7 @@
 	<div class="grid grid-cols-9 cursor-pointer gap-2 p-2 text-center" on:click={() => modal.toggleOpen()}>
 		<div class="col-span-9 md:col-span-3 text-lg text-left font-bold text-ellipsis whitespace-nowrap overflow-hidden flex gap-2" title={name}>
 			<Image
-				src="/api/wikia/image/{image.split('?')[0]}?height={height}"
+				src={image && `/api/wikia/image/${image.split('?')[0]}?height=${height}`}
 				alt={name}
 				class="h-7 w-7 object-cover object-top rounded-full bg-white shadow-lg"
 			/><span>{name}</span>
