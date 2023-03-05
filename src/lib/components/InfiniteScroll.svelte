@@ -66,8 +66,6 @@
 		} else {
 			element = component.parentNode;
 		}
-		element.target = element;
-		onScroll(element);
 	});
 
 	onDestroy(() => {
