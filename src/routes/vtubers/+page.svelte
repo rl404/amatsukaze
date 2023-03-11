@@ -15,7 +15,7 @@
 
 	export let data: vtubersResponse;
 
-	let name = '';
+	let names = '';
 	let page = 1;
 	let limit = 36;
 	let total = data.meta.total;
@@ -25,15 +25,27 @@
 	let vtubers: Array<vtuberResponseData> = data.data;
 	let newVtubers: Array<vtuberResponseData> = [];
 	let hasMore: boolean = true;
+	let advQuery: any = {};
 
 	$: vtubers = [...vtubers, ...newVtubers];
 
 	const fetchData = async () => {
+		let queries = {
+			...advQuery,
+			names: names,
+			page: page,
+			limit: limit
+		};
+
 		error = '';
 		loading = true;
 
 		await axios
-			.get(`/api/vtubers?name=${name}&page=${page}&limit=${limit}`)
+			.get(
+				`/api/vtubers?${Object.entries(queries)
+					.map((v) => `${v[0]}=${v[1] ?? ''}`)
+					.join('&')}`
+			)
 			.then((resp) => {
 				newVtubers = resp.data.data;
 				total = resp.data.meta.total;
@@ -60,6 +72,16 @@
 		vtubers = [];
 		newVtubers = [];
 		page = 1;
+		advQuery = {};
+		fetchData();
+	};
+
+	const onSubmitAdvanced = (d: any) => {
+		vtubers = [];
+		newVtubers = [];
+		page = 1;
+		names = '';
+		advQuery = d.detail;
 		fetchData();
 	};
 </script>
@@ -74,10 +96,10 @@
 			</div>
 			<div class="flex items-center justify-end gap-2 w-full sm:w-auto">
 				<div class="w-full">
-					<InputSearch class="w-full" bind:value={name} placeholder="search vtuber name..." on:submit={onSubmit} />
+					<InputSearch class="w-full" bind:value={names} placeholder="search vtuber name..." on:submit={onSubmit} />
 				</div>
-				<div title="advanced search" class="hover:opacity-70 cursor-pointer">
-					<AdvancedSearch />
+				<div>
+					<AdvancedSearch on:submit={onSubmitAdvanced} />
 				</div>
 				<div>
 					<Layout bind:layoutName />
@@ -119,7 +141,7 @@
 			/>
 		{/if}
 	{/each}
-	{#if vtubers.length === 0}
+	{#if vtubers.length === 0 && error === ''}
 		<div class="col-span-6 text-center">no vtubers found...</div>
 	{/if}
 	{#if error !== ''}

@@ -1,4 +1,8 @@
 <script lang="ts">
+	import IconButton from './IconButton.svelte';
+
+	export let maxWidthClass: string = 'max-w-md';
+
 	let open: boolean = false;
 
 	export const toggleOpen = () => {
@@ -10,17 +14,12 @@
 	<div class="fixed top-0 left-0 z-10 p-4 w-full h-full">
 		<div class="fixed top-0 left-0 w-full h-full bg-neutral-800 opacity-70" on:click={toggleOpen} />
 
-		<div class="relative w-full h-auto max-w-md max-h-full m-auto rounded-lg z-20 bg-white dark:bg-neutral-700 shadow overflow-y-scroll">
+		<div class="relative w-full h-auto {maxWidthClass} max-h-full m-auto rounded-lg z-20 bg-white dark:bg-neutral-700 shadow overflow-y-scroll">
 			<div class="sticky top-0 z-30 bg-white dark:bg-neutral-700 flex items-start justify-between p-4 border-b dark:border-neutral-600">
 				<div class="text-xl font-bold">
 					<slot name="title">Vtuber</slot>
 				</div>
-				<button
-					class="bg-transparent hover:bg-neutral-200 dark:hover:bg-neutral-600 rounded-lg p-1.5 inline-flex items-center"
-					type="button"
-					title="close"
-					on:click={toggleOpen}
-				>
+				<IconButton title="close" on:click={toggleOpen}>
 					<svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
 						><path
 							fill-rule="evenodd"
@@ -28,7 +27,7 @@
 							clip-rule="evenodd"
 						/></svg
 					>
-				</button>
+				</IconButton>
 			</div>
 
 			<slot name="body" />

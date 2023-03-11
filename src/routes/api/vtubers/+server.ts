@@ -10,11 +10,33 @@ export type vtubersResponse = {
 };
 
 export const GET = (async ({ url }) => {
-	const name = url.searchParams.get('name');
-	const page = url.searchParams.get('page');
-	const limit = url.searchParams.get('limit');
+	const queries = [
+		'names',
+		'name',
+		'original_name',
+		'nickname',
+		'exclude_active',
+		'exclude_retired',
+		'start_debut_year',
+		'end_debut_year',
+		'start_retired_year',
+		'end_retired_year',
+		'has_2d',
+		'has_3d',
+		'character_designer',
+		'character_2d_modeler',
+		'character_3d_modeler',
+		'in_agency',
+		'agency',
+		'channel_types',
+		'sort',
+		'page',
+		'limit'
+	]
+		.map((q) => `${q}=${url.searchParams.get(q) ?? ''}`)
+		.join('&');
 
-	const resp = await fetch(`${PUBLIC_SHIMAKAZE_HOST}/vtubers?name=${name}&page=${page}&limit=${limit}`);
+	const resp = await fetch(`${PUBLIC_SHIMAKAZE_HOST}/vtubers?${queries}`);
 	const data = await resp.json();
 	return new Response(JSON.stringify(data), {
 		headers: {

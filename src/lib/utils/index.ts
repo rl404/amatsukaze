@@ -59,10 +59,28 @@ export const getRandomInt = (min: number = 0, max: number = 10): number => {
 	return Math.floor(Math.random() * (max - min)) + min;
 };
 
-const channelOrder = ['YOUTUBE', 'TWITCH', 'BILIBILI', 'NICONICO', 'OTHER'];
+export const channelTypes = ['YOUTUBE', 'TWITCH', 'BILIBILI', 'NICONICO', 'OTHER'];
 
 export const channelSorter = (a: vtuberResponseDataChannel, b: vtuberResponseDataChannel): number => {
-	const ia = channelOrder.findIndex((c) => c === a.type);
-	const ib = channelOrder.findIndex((c) => c === b.type);
+	const ia = channelTypes.findIndex((c) => c === a.type);
+	const ib = channelTypes.findIndex((c) => c === b.type);
 	return ia - ib;
+};
+
+export const toTitleCase = (str: string): string => {
+	return str.replace(/\w\S*/g, function (txt) {
+		return txt.charAt(0).toUpperCase() + txt.slice(1).toLowerCase();
+	});
+};
+
+export const resetObject = (fields: any): any => {
+	return Object.keys(fields).reduce((acc: any, curr: any) => {
+		if (fields[curr] === null) return { ...acc, [curr]: null };
+		if (typeof fields[curr] === 'undefined') return { ...acc, [curr]: undefined };
+		if (typeof fields[curr] === 'boolean') return { ...acc, [curr]: false };
+		if (typeof fields[curr] === 'string') return { ...acc, [curr]: '' };
+		if (typeof fields[curr] === 'number') return { ...acc, [curr]: 0 };
+		if (fields[curr] instanceof Array) return { ...acc, [curr]: [] };
+		if (typeof fields[curr] === 'object') return { ...acc, [curr]: {} };
+	}, {});
 };
