@@ -141,7 +141,7 @@
 			/>
 		{/if}
 	{/each}
-	{#if vtubers.length === 0 && error === ''}
+	{#if !loading && vtubers.length === 0 && error === ''}
 		<div class="col-span-6 text-center">no vtubers found...</div>
 	{/if}
 	{#if error !== ''}
