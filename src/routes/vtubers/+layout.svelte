@@ -8,7 +8,7 @@
 	import ScrollTop from '$lib/components/ScrollTop.svelte';
 </script>
 
-<nav class="p-4 bg-gradient-to-r from-neutral-300 to-pink-500 dark:from-neutral-900 dark:to-indigo-600 drop-shadow-lg">
+<nav class="p-4 bg-gradient-to-r from-white to-pink-500 dark:from-neutral-900 dark:to-indigo-600 drop-shadow-lg">
 	<div class="flex flex-wrap items-center justify-between gap-4">
 		<a href="/" class="flex items-center gap-4">
 			<Image src={logo} alt="logo" class="h-6 rounded-full" />
