@@ -1,6 +1,6 @@
+import type { vtuberResponseDataChannel } from '../../routes/api/vtubers/[id]/+server';
 import type { AxiosError } from 'axios';
 import axios from 'axios';
-import type { vtuberResponseDataChannel } from '../../routes/api/vtubers/[id]/+server';
 
 export enum ThemeMode {
 	Light = 'light',
@@ -83,4 +83,20 @@ export const resetObject = (fields: any): any => {
 		if (fields[curr] instanceof Array) return { ...acc, [curr]: [] };
 		if (typeof fields[curr] === 'object') return { ...acc, [curr]: {} };
 	}, {});
+};
+
+export const clickAway = (el: any): any => {
+	const handleClick = (e: MouseEvent) => {
+		if (el && !el.contains(e.target) && !e.defaultPrevented) {
+			el.dispatchEvent(new CustomEvent('clickAway', el));
+		}
+	};
+
+	document.addEventListener('click', handleClick, true);
+
+	return {
+		destroy() {
+			document.removeEventListener('click', handleClick, true);
+		}
+	};
 };

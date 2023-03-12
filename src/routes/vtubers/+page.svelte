@@ -13,6 +13,7 @@
 	import InputSearch from './InputSearch.svelte';
 	import AdvancedSearch from './AdvancedSearch.svelte';
 	import Layout from './Layout.svelte';
+	import Sort from './Sort.svelte';
 
 	export let data: vtubersResponse;
 
@@ -21,6 +22,7 @@
 	let limit = 36;
 	let total = data.meta.total;
 	let layoutName: string = 'grid';
+	let sort: string = 'name';
 	let loading = false;
 	let error = '';
 	let vtubers: Array<vtuberResponseData> = data.data;
@@ -34,6 +36,7 @@
 		let queries = {
 			...advQuery,
 			names: names,
+			sort: sort,
 			page: page,
 			limit: limit
 		};
@@ -85,6 +88,13 @@
 		advQuery = d.detail;
 		fetchData();
 	};
+
+	const onSort = () => {
+		vtubers = [];
+		newVtubers = [];
+		page = 1;
+		fetchData();
+	};
 </script>
 
 <Head title="Vtuber List" description="Visualize vtuber data from wikia to a list." />
@@ -101,6 +111,9 @@
 				</div>
 				<div>
 					<AdvancedSearch on:submit={onSubmitAdvanced} />
+				</div>
+				<div>
+					<Sort bind:value={sort} on:submit={onSort} />
 				</div>
 				<div>
 					<Layout bind:layoutName />
