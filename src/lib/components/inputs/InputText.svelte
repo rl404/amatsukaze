@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import XmarkIcon from './icons/XmarkIcon.svelte';
+	import XmarkIcon from '../icons/XmarkIcon.svelte';
 
 	export let id: string = '';
 	export let value: string = '';

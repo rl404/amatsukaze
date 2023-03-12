@@ -1,5 +1,5 @@
 <script lang="ts">
-	import VtuberGrid from '$lib/components/VtuberGrid.svelte';
+	import VtuberGrid from '$lib/components/layouts/VtuberGrid.svelte';
 	import type { vtuberImagesResponseData } from './+page.server';
 
 	export let data: Array<vtuberImagesResponseData>;

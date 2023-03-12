@@ -1,17 +1,17 @@
 <script lang="ts">
 	import type { SvelteComponent } from 'svelte';
 	import { PUBLIC_VTUBER_WIKI_HOST } from '$env/static/public';
-	import type { vtuberResponseData } from '../../routes/api/vtubers/[id]/+server';
+	import type { vtuberResponseData } from '../../../routes/api/vtubers/[id]/+server';
 	import { channelSorter, formatBirthday, getAxiosError, getHostname, isEmptyArray } from '$lib/utils';
 	import axios from 'axios';
-	import ChannelBadge from './ChannelBadge.svelte';
+	import ChannelBadge from '../badges/ChannelBadge.svelte';
 	import VtuberModalLoading from './VtuberModalLoading.svelte';
 	import Modal from './Modal.svelte';
-	import Image from './Image.svelte';
-	import Border from './Border.svelte';
-	import Model2DBadge from './Model2DBadge.svelte';
-	import Model3DBadge from './Model3DBadge.svelte';
-	import RetiredBadge from './RetiredBadge.svelte';
+	import Image from '../Image.svelte';
+	import Border from '../Border.svelte';
+	import Model2DBadge from '../badges/Model2DBadge.svelte';
+	import Model3DBadge from '../badges/Model3DBadge.svelte';
+	import RetiredBadge from '../badges/RetiredBadge.svelte';
 
 	export let id: number = 0;
 	export let title: string = '';

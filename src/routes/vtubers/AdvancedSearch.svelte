@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { createEventDispatcher, type SvelteComponent } from 'svelte';
 	import { resetObject } from '$lib/utils';
-	import IconButton from '$lib/components/IconButton.svelte';
-	import Modal from '$lib/components/Modal.svelte';
-	import Button from '$lib/components/Button.svelte';
+	import IconButton from '$lib/components/buttons/IconButton.svelte';
+	import Modal from '$lib/components/modals/Modal.svelte';
+	import Button from '$lib/components/buttons/Button.svelte';
 	import ConfigIcon from '$lib/components/icons/ConfigIcon.svelte';
 	import SearchIcon from '$lib/components/icons/SearchIcon.svelte';
 	import InputText from './InputText.svelte';

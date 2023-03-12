@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { getRandomInt } from '$lib/utils';
-	import ImageIcon from './icons/ImageIcon.svelte';
+	import ImageIcon from '../icons/ImageIcon.svelte';
+
 	let rows: Array<Array<number>> = new Array(10).fill([]).map(() => [getRandomInt(50, 100), getRandomInt(10, 100)]);
 </script>
 

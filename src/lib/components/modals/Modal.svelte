@@ -1,6 +1,6 @@
 <script lang="ts">
-	import IconButton from './IconButton.svelte';
-	import XmarkIcon from './icons/XmarkIcon.svelte';
+	import IconButton from '../buttons/IconButton.svelte';
+	import XmarkIcon from '../icons/XmarkIcon.svelte';
 
 	export let maxWidthClass: string = 'max-w-md';
 

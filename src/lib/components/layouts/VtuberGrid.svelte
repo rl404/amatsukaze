@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { SvelteComponent } from 'svelte';
-	import VtuberModal from '$lib/components/VtuberModal.svelte';
-	import Image from './Image.svelte';
+	import VtuberModal from '$lib/components/modals/VtuberModal.svelte';
+	import Image from '../Image.svelte';
 
 	export let id: number;
 	export let name: string;

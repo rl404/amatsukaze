@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import axios from 'axios';
-	import InputText from '$lib/components/InputText.svelte';
+	import InputText from '$lib/components/inputs/InputText.svelte';
 
 	export let value: string;
 

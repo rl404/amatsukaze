@@ -1,10 +1,11 @@
 <script lang="ts">
 	import Head from '$lib/components/Head.svelte';
-	import VtuberGrid from '$lib/components/VtuberGrid.svelte';
-	import VtuberCard from '$lib/components/VtuberCard.svelte';
+	import VtuberGrid from '$lib/components/layouts/VtuberGrid.svelte';
+	import VtuberCard from '$lib/components/layouts/VtuberCard.svelte';
 	import Border from '$lib/components/Border.svelte';
-	import VtuberList from '$lib/components/VtuberList.svelte';
+	import VtuberList from '$lib/components/layouts/VtuberList.svelte';
 	import InfiniteScroll from '$lib/components/InfiniteScroll.svelte';
+	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
 	import { getAxiosError } from '$lib/utils';
 	import type { vtubersResponse } from '../api/vtubers/+server';
 	import type { vtuberResponseData } from '../api/vtubers/[id]/+server';
@@ -12,7 +13,6 @@
 	import InputSearch from './InputSearch.svelte';
 	import AdvancedSearch from './AdvancedSearch.svelte';
 	import Layout from './Layout.svelte';
-	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
 
 	export let data: vtubersResponse;
 

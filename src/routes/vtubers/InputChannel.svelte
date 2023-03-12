@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { channelTypes, toTitleCase } from '$lib/utils';
-	import InputCheckbox from '$lib/components/InputCheckbox.svelte';
+	import InputCheckbox from '$lib/components/inputs/InputCheckbox.svelte';
 
 	export let value: Array<string>;
 

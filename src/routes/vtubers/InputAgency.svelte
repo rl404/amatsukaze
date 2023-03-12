@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import axios from 'axios';
-	import InputText from '$lib/components/InputText.svelte';
+	import InputText from '$lib/components/inputs/InputText.svelte';
 	import type { agenciesResponseData } from '../api/agencies/+server';
 
 	export let value: string;

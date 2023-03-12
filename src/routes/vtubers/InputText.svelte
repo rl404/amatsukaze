@@ -1,5 +1,5 @@
 <script lang="ts">
-	import InputText from '$lib/components/InputText.svelte';
+	import InputText from '$lib/components/inputs/InputText.svelte';
 
 	export let id: string = '';
 	export let label: string;

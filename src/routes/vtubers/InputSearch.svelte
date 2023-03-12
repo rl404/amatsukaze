@@ -1,6 +1,6 @@
 <script lang="ts">
 	import SearchIcon from '$lib/components/icons/SearchIcon.svelte';
-	import InputText from '$lib/components/InputText.svelte';
+	import InputText from '$lib/components/inputs/InputText.svelte';
 	import { createEventDispatcher } from 'svelte';
 
 	export let value: string = '';

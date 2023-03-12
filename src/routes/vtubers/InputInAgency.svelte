@@ -1,5 +1,5 @@
 <script lang="ts">
-	import InputCheckbox from '$lib/components/InputCheckbox.svelte';
+	import InputCheckbox from '$lib/components/inputs/InputCheckbox.svelte';
 
 	export let inAgency: boolean | undefined;
 </script>

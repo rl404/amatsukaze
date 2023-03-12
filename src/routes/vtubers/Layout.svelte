@@ -1,5 +1,5 @@
 <script lang="ts">
-	import IconButton from '$lib/components/IconButton.svelte';
+	import IconButton from '$lib/components/buttons/IconButton.svelte';
 	import Grid1Icon from '$lib/components/icons/Grid1Icon.svelte';
 	import Grid2Icon from '$lib/components/icons/Grid2Icon.svelte';
 	import ListIcon from '$lib/components/icons/ListIcon.svelte';

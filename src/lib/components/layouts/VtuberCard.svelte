@@ -1,10 +1,10 @@
 <script lang="ts">
 	import type { SvelteComponent } from 'svelte';
-	import VtuberModal from '$lib/components/VtuberModal.svelte';
-	import Border from './Border.svelte';
-	import Image from './Image.svelte';
-	import Model2DBadge from './Model2DBadge.svelte';
-	import Model3DBadge from './Model3DBadge.svelte';
+	import VtuberModal from '$lib/components/modals/VtuberModal.svelte';
+	import Border from '../Border.svelte';
+	import Image from '../Image.svelte';
+	import Model2DBadge from '../badges/Model2DBadge.svelte';
+	import Model3DBadge from '../badges/Model3DBadge.svelte';
 
 	export let id: number;
 	export let name: string;

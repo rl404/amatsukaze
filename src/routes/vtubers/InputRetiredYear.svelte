@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import InputRange from '$lib/components/InputRange.svelte';
+	import InputRange from '$lib/components/inputs/InputRange.svelte';
 	import axios from 'axios';
 
 	export let values: Array<number>;
