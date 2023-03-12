@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { PUBLIC_VTUBER_WIKI_HOST } from '$env/static/public';
 	import amatsukaze from '$lib/assets/amatsukaze.png';
-	import Fa from 'svelte-fa';
-	import { faGithub } from '@fortawesome/free-brands-svg-icons';
-	import { faSun, faMoon, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+	import ChevronLeftIcon from '$lib/components/icons/ChevronLeftIcon.svelte';
+	import ChevronRightIcon from '$lib/components/icons/ChevronRightIcon.svelte';
+	import GithubIcon from '$lib/components/icons/GithubIcon.svelte';
+	import MoonIcon from '$lib/components/icons/MoonIcon.svelte';
+	import SunIcon from '$lib/components/icons/SunIcon.svelte';
 	import { setTheme, ThemeMode } from '$lib/utils';
 
 	let open: boolean = true;
@@ -45,15 +47,15 @@
 			</div>
 		{/each}
 		<div class="whitespace-nowrap flex place-content-end gap-2">
-			<span class="hover:opacity-70 block dark:hidden cursor-pointer" on:click={() => setTheme(ThemeMode.Dark)} title="light mode"
-				><Fa icon={faSun} pull="right" translateY={0.2} /></span
-			>
-			<span class="hover:opacity-70 hidden dark:block cursor-pointer" on:click={() => setTheme(ThemeMode.Light)} title="dark mode"
-				><Fa icon={faMoon} pull="right" translateY={0.2} /></span
-			>
-			<a href="https://github.com/rl404/amatsukaze" target="_blank" rel="noreferrer" title="github source code"
-				><Fa icon={faGithub} pull="right" translateY={0.2} /></a
-			>
+			<span class="hover:opacity-70 block dark:hidden cursor-pointer m-auto" on:click={() => setTheme(ThemeMode.Dark)} title="light mode">
+				<SunIcon class="w-5 h-5" />
+			</span>
+			<span class="hover:opacity-70 hidden dark:block cursor-pointer m-auto" on:click={() => setTheme(ThemeMode.Light)} title="dark mode">
+				<MoonIcon class="w-5 h-5" />
+			</span>
+			<a href="https://github.com/rl404/amatsukaze" target="_blank" rel="noreferrer" title="github source code" class="m-auto">
+				<GithubIcon class="w-5 h-5" />
+			</a>
 		</div>
 	</div>
 
@@ -64,6 +66,10 @@
 		title={open ? 'close' : 'open'}
 		on:click={toggleOpen}
 	>
-		<Fa icon={open ? faChevronRight : faChevronLeft} class="w-4 h-4" />
+		{#if open}
+			<ChevronRightIcon class="w-4 h-4" />
+		{:else}
+			<ChevronLeftIcon class="w-4 h-4" />
+		{/if}
 	</button>
 </div>

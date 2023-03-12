@@ -4,6 +4,8 @@
 	import IconButton from '$lib/components/IconButton.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import Button from '$lib/components/Button.svelte';
+	import ConfigIcon from '$lib/components/icons/ConfigIcon.svelte';
+	import SearchIcon from '$lib/components/icons/SearchIcon.svelte';
 	import InputText from './InputText.svelte';
 	import InputStatus from './InputStatus.svelte';
 	import InputDebutYear from './InputDebutYear.svelte';
@@ -98,11 +100,7 @@
 
 <div>
 	<IconButton title="advanced search" on:click={toggleOpen}>
-		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-			<path
-				d="M18.75 12.75h1.5a.75.75 0 000-1.5h-1.5a.75.75 0 000 1.5zM12 6a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5A.75.75 0 0112 6zM12 18a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5A.75.75 0 0112 18zM3.75 6.75h1.5a.75.75 0 100-1.5h-1.5a.75.75 0 000 1.5zM5.25 18.75h-1.5a.75.75 0 010-1.5h1.5a.75.75 0 010 1.5zM3 12a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5A.75.75 0 013 12zM9 3.75a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5zM12.75 12a2.25 2.25 0 114.5 0 2.25 2.25 0 01-4.5 0zM9 15.75a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5z"
-			/>
-		</svg>
+		<ConfigIcon class="w-5 h-5" />
 	</IconButton>
 
 	<Modal bind:this={modal} maxWidthClass="max-w-3xl">
@@ -153,11 +151,8 @@
 		<div slot="footer" class="sticky bottom-0 bg-white dark:bg-neutral-700 py-2 px-4 border-t dark:border-neutral-600 flex justify-between gap-2">
 			<Button on:click={onReset}>Reset</Button>
 			<Button on:click={onSubmit} color>
-				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
-					<path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-				</svg>
-				Search</Button
-			>
+				<SearchIcon class="w-4 h-4" /> Search
+			</Button>
 		</div>
 	</Modal>
 </div>

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
+	import XmarkIcon from './icons/XmarkIcon.svelte';
 
 	export let id: string = '';
 	export let value: string = '';
@@ -24,9 +25,7 @@
 <div class="relative">
 	{#if value !== ''}
 		<div class="absolute inset-y-0 right-0 flex items-center pr-2 hover:text-red-500 cursor-pointer" title="clear search" on:click={resetValue}>
-			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-				<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-			</svg>
+			<XmarkIcon class="w-5 h-5" />
 		</div>
 	{/if}
 

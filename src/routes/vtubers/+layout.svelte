@@ -2,9 +2,9 @@
 	import Image from '$lib/components/Image.svelte';
 	import logo from '$lib/assets/logo.png';
 	import { setTheme, ThemeMode } from '$lib/utils';
-	import Fa from 'svelte-fa';
-	import { faGithub } from '@fortawesome/free-brands-svg-icons';
-	import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
+	import GithubIcon from '$lib/components/icons/GithubIcon.svelte';
+	import SunIcon from '$lib/components/icons/SunIcon.svelte';
+	import MoonIcon from '$lib/components/icons/MoonIcon.svelte';
 </script>
 
 <nav class="p-4 bg-gradient-to-r from-neutral-300 to-pink-500 dark:from-neutral-900 dark:to-indigo-600 drop-shadow-lg">
@@ -14,14 +14,15 @@
 			<span class="text-2xl font-bold">Amatsukaze</span>
 		</a>
 		<div class="flex items-center gap-4 text-white text-2xl">
-			<span class="hover:opacity-70 block dark:hidden cursor-pointer" on:click={() => setTheme(ThemeMode.Dark)} title="light mode"
-				><Fa icon={faSun} pull="right" /></span
-			>
-			<span class="hover:opacity-70 hidden dark:block cursor-pointer" on:click={() => setTheme(ThemeMode.Light)} title="dark mode"
-				><Fa icon={faMoon} pull="right" /></span
-			>
-			<a href="https://github.com/rl404/amatsukaze" target="_blank" rel="noreferrer" title="github source code"><Fa icon={faGithub} pull="right" /></a
-			>
+			<span class="hover:opacity-70 block dark:hidden cursor-pointer" on:click={() => setTheme(ThemeMode.Dark)} title="light mode">
+				<SunIcon class="w-6 h-6" />
+			</span>
+			<span class="hover:opacity-70 hidden dark:block cursor-pointer" on:click={() => setTheme(ThemeMode.Light)} title="dark mode">
+				<MoonIcon class="w-6 h-6" />
+			</span>
+			<a href="https://github.com/rl404/amatsukaze" target="_blank" rel="noreferrer" title="github source code">
+				<GithubIcon class="w-6 h-6" />
+			</a>
 		</div>
 	</div>
 </nav>
