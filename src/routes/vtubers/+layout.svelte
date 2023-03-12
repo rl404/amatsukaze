@@ -5,6 +5,7 @@
 	import GithubIcon from '$lib/components/icons/GithubIcon.svelte';
 	import SunIcon from '$lib/components/icons/SunIcon.svelte';
 	import MoonIcon from '$lib/components/icons/MoonIcon.svelte';
+	import ScrollTop from '$lib/components/ScrollTop.svelte';
 </script>
 
 <nav class="p-4 bg-gradient-to-r from-neutral-300 to-pink-500 dark:from-neutral-900 dark:to-indigo-600 drop-shadow-lg">
@@ -30,3 +31,5 @@
 <div class="container mx-auto max-w-5xl px-4 pt-8 pb-16">
 	<slot />
 </div>
+
+<ScrollTop />
