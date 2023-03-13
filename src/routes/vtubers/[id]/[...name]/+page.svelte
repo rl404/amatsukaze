@@ -34,7 +34,9 @@
 				class="m-auto w-full rounded-lg border dark:border-neutral-600 bg-neutral-100 dark:bg-neutral-800"
 			/>
 		</div>
-		<div class="italic text-center opacity-70 font-bold" title="quote">{vtuber.caption}</div>
+		{#if vtuber.caption !== ''}
+			<div class="italic text-center opacity-70 font-bold" title="quote">{vtuber.caption}</div>
+		{/if}
 		<div class="flex flex-wrap gap-2 justify-center">
 			{#if vtuber.has_2d}
 				<div><Model2DBadge /></div>
