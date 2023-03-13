@@ -1,4 +1,4 @@
-import type { vtuberResponseDataChannel } from '../../routes/api/vtubers/[id]/+server';
+import type { vtuberResponseData, vtuberResponseDataChannel } from '../../routes/api/vtubers/[id]/+server';
 import type { AxiosError } from 'axios';
 import axios from 'axios';
 
@@ -100,3 +100,40 @@ export const clickAway = (el: any): any => {
 		}
 	};
 };
+
+export const vtuberSorter =
+	(sort: string) =>
+	(a: vtuberResponseData, b: vtuberResponseData): number => {
+		switch (sort) {
+			case 'name':
+				return a.name < b.name ? -1 : 1;
+			case '-name':
+				return a.name > b.name ? -1 : 1;
+			case 'debut_date':
+				if (!a.debut_date || !new Date(a.debut_date)) return 1;
+				if (!b.debut_date || !new Date(b.debut_date)) return -1;
+				const da1 = new Date(a.debut_date);
+				const db1 = new Date(b.debut_date);
+				return da1 < db1 ? -1 : 1;
+			case '-debut_date':
+				if (!a.debut_date || !new Date(a.debut_date)) return 1;
+				if (!b.debut_date || !new Date(b.debut_date)) return -1;
+				const da2 = new Date(a.debut_date);
+				const db2 = new Date(b.debut_date);
+				return da2 > db2 ? -1 : 1;
+			case 'retirement_date':
+				if (!a.retirement_date || !new Date(a.retirement_date)) return 1;
+				if (!b.retirement_date || !new Date(b.retirement_date)) return -1;
+				const da3 = new Date(a.retirement_date);
+				const db3 = new Date(b.retirement_date);
+				return da3 < db3 ? -1 : 1;
+			case '-retirement_date':
+				if (!a.retirement_date || !new Date(a.retirement_date)) return 1;
+				if (!b.retirement_date || !new Date(b.retirement_date)) return -1;
+				const da4 = new Date(a.retirement_date);
+				const db4 = new Date(b.retirement_date);
+				return da4 > db4 ? -1 : 1;
+			default:
+				return a.name < b.name ? -1 : 1;
+		}
+	};

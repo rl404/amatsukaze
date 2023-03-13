@@ -9,19 +9,20 @@
 	export let id: number;
 	export let name: string;
 	export let image: string;
-	export let has2d: boolean = false;
-	export let has3d: boolean = false;
-	export let agencies: Array<string> = [];
+	export let has2d: boolean;
+	export let has3d: boolean;
+	export let agencies: Array<string>;
 	export let debutDate: Date | undefined;
 	export let retirementDate: Date | undefined;
 
 	export let height: number;
 	export { className as class };
 	let className: string;
+	export let smallText: boolean = false;
 
 	let modal: SvelteComponent;
 
-	let rows = [
+	$: rows = [
 		{ name: 'Agency', value: agencies.length === 0 ? '-' : agencies.join(', ') },
 		{ name: 'Debut', value: !debutDate ? '-' : debutDate.toString().slice(0, 10) },
 		{ name: 'Retired', value: !retirementDate ? '-' : retirementDate.toString().slice(0, 10) }
@@ -37,9 +38,9 @@
 			alt={name}
 			class="h-full w-1/3 object-cover object-top rounded-tl-lg bg-white shadow-lg"
 		/>
-		<div class="h-full w-2/3 p-2 flex flex-col gap-1 overflow-hidden">
+		<div class="h-full w-2/3 p-2 flex flex-col overflow-hidden gap-1 {smallText && 'sm:gap-0.5'}">
 			<div>
-				<div class="text-lg font-bold text-ellipsis whitespace-nowrap overflow-hidden" title={name}>{name}</div>
+				<div class="text-lg font-bold text-ellipsis whitespace-nowrap overflow-hidden {smallText && 'sm:text-base'}" title={name}>{name}</div>
 			</div>
 			<Border class="h-3">
 				{#if has2d || has3d}
@@ -54,7 +55,7 @@
 				{/if}
 			</Border>
 			{#each rows as row}
-				<div class="flex justify-between gap-1">
+				<div class="flex justify-between gap-1 {smallText && 'sm:text-sm'}">
 					<span class="opacity-40">{row.name}</span>
 					<span class="text-right">{row.value}</span>
 				</div>

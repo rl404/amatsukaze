@@ -1,9 +1,12 @@
 <script lang="ts">
+	import Model2DBadge from '$lib/components/badges/Model2DBadge.svelte';
+	import Model3DBadge from '$lib/components/badges/Model3DBadge.svelte';
+	import RetiredBadge from '$lib/components/badges/RetiredBadge.svelte';
 	import Border from '$lib/components/Border.svelte';
 	import Head from '$lib/components/Head.svelte';
 	import Image from '$lib/components/Image.svelte';
 	import type { vtuberResponse } from '../../../api/vtubers/[id]/+server';
-	import AccordionAgency from './AccordionAgency.svelte';
+	import AccordionAgencyMates from './AccordionAgencyMates.svelte';
 	import AccordionDetails from './AccordionDetails.svelte';
 
 	export let data: vtuberResponse;
@@ -32,10 +35,21 @@
 			/>
 		</div>
 		<div class="italic text-center opacity-70 font-bold" title="quote">{vtuber.caption}</div>
+		<div class="flex flex-wrap gap-2 justify-center">
+			{#if vtuber.has_2d}
+				<div><Model2DBadge /></div>
+			{/if}
+			{#if vtuber.has_3d}
+				<div><Model3DBadge /></div>
+			{/if}
+			{#if vtuber.retirement_date}
+				<div><RetiredBadge /></div>
+			{/if}
+		</div>
 	</div>
 
 	<div class="col-span-4 sm:col-span-3 flex flex-col gap-4">
 		<div><AccordionDetails data={vtuber} /></div>
-		<div><AccordionAgency data={vtuber.agencies.map((a) => a.name)} /></div>
+		<div><AccordionAgencyMates id={vtuber.id} agencies={vtuber.agencies.map((a) => a.name)} /></div>
 	</div>
 </div>

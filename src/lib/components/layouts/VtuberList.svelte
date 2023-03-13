@@ -17,6 +17,7 @@
 	export let height: number;
 	export { className as class };
 	let className: string;
+	export let smallText: boolean = false;
 
 	let modal: SvelteComponent;
 </script>
@@ -32,17 +33,21 @@
 				class="h-7 w-7 object-cover object-top rounded-full bg-white shadow-lg"
 			/><span>{name}</span>
 		</div>
-		<div class="col-span-3 md:col-span-2 text-sm md:text-base" title="agencies">{agencies.length === 0 ? '-' : agencies.join(', ')}</div>
-		<div class="col-span-2 md:col-span-1 text-sm md:text-base" title="debut date">{!debutDate ? '-' : debutDate.toString().slice(0, 10)}</div>
-		<div class="col-span-2 md:col-span-1 text-sm md:text-base" title="retirement date">
+		<div class="col-span-3 md:col-span-2 text-sm {!smallText && 'md:text-base'}" title="agencies">
+			{agencies.length === 0 ? '-' : agencies.join(', ')}
+		</div>
+		<div class="col-span-2 md:col-span-1 text-sm {!smallText && 'md:text-base'}" title="debut date">
+			{!debutDate ? '-' : debutDate.toString().slice(0, 10)}
+		</div>
+		<div class="col-span-2 md:col-span-1 text-sm {!smallText && 'md:text-base'}" title="retirement date">
 			{!retirementDate ? '-' : retirementDate.toString().slice(0, 10)}
 		</div>
-		<div class="text-sm md:text-base">
+		<div class="text-sm {!smallText && 'md:text-base'}">
 			{#if has2d}
 				<Model2DBadge size="sm" />
 			{/if}
 		</div>
-		<div class="text-sm md:text-base">
+		<div class="text-sm {!smallText && 'md:text-base'}">
 			{#if has3d}
 				<Model3DBadge size="sm" />
 			{/if}

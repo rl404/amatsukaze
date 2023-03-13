@@ -125,8 +125,7 @@
 	{#each vtubers as vtuber}
 		{#if layoutName === 'grid'}
 			<VtuberGrid class="col-span-3 sm:col-span-2 md:col-span-1" id={vtuber.id} name={vtuber.name} image={vtuber.image} height={206} />
-		{/if}
-		{#if layoutName === 'card'}
+		{:else if layoutName === 'card'}
 			<VtuberCard
 				class="col-span-6 sm:col-span-3 lg:col-span-2"
 				id={vtuber.id}
@@ -139,8 +138,7 @@
 				retirementDate={vtuber.retirement_date}
 				height={206}
 			/>
-		{/if}
-		{#if layoutName === 'list'}
+		{:else if layoutName === 'list'}
 			<VtuberList
 				class="col-span-6"
 				id={vtuber.id}
