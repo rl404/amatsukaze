@@ -30,22 +30,22 @@
 	];
 </script>
 
-<Accordion title="Details" open={true}>
-	<div class="grid grid-cols-3 gap-2">
-		<Border class="col-span-3">
+<Accordion title="Details" open>
+	<div class="grid grid-cols-6 gap-2">
+		<Border class="col-span-6">
 			<span class="px-4 font-bold whitespace-nowrap">Basic Details</span>
 		</Border>
 		{#each basicData as d}
-			<div class="flex flex-col">
+			<div class="col-span-3 md:col-span-2 flex flex-col">
 				<div class="font-bold opacity-40">{d[0]}</div>
 				<div class="whitespace-pre-line">{d[1]}</div>
 			</div>
 		{/each}
 
-		<Border class="col-span-3">
+		<Border class="col-span-6">
 			<span class="px-4 font-bold whitespace-nowrap">Media</span>
 		</Border>
-		<div class="flex flex-col">
+		<div class="col-span-3 md:col-span-2 flex flex-col">
 			<div class="font-bold opacity-40">Channels</div>
 			<div class="grid grid-cols-1 gap-1">
 				{#if isEmptyArray(data.channels)}
@@ -59,7 +59,7 @@
 				{/if}
 			</div>
 		</div>
-		<div class="flex flex-col">
+		<div class="col-span-3 md:col-span-2 flex flex-col">
 			<div class="font-bold opacity-40">Social Medias</div>
 			<div class="grid grid-cols-1 gap-1">
 				{#if isEmptyArray(data.social_medias)}
@@ -73,7 +73,7 @@
 				{/if}
 			</div>
 		</div>
-		<div class="flex flex-col">
+		<div class="col-span-3 md:col-span-2 flex flex-col">
 			<div class="font-bold opacity-40">Official Websites</div>
 			<div class="grid grid-cols-1 gap-1">
 				{#if isEmptyArray(data.official_websites)}
@@ -88,11 +88,11 @@
 			</div>
 		</div>
 
-		<Border class="col-span-3">
+		<Border class="col-span-6">
 			<span class="px-4 font-bold whitespace-nowrap">Personal Details</span>
 		</Border>
 		{#each personalData as d}
-			<div class="flex flex-col">
+			<div class="col-span-3 md:col-span-2 flex flex-col">
 				<div class="font-bold opacity-40">{d[0]}</div>
 				<div class="whitespace-pre-line">{d[1]}</div>
 			</div>
