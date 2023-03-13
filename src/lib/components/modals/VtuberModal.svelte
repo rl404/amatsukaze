@@ -63,8 +63,8 @@
 
 <Modal bind:this={modal}>
 	<span slot="title">
-		<a href="{PUBLIC_VTUBER_WIKI_HOST}/wiki/{title}" target="_blank" rel="noreferrer">{title}</a>
-		<span title="Emoji">{data?.emoji}</span>
+		<a href="/vtubers/{id}/{title}" target="_blank" rel="noreferrer">{title}</a>
+		<span title="Emoji">{data?.emoji || ''}</span>
 	</span>
 
 	<div slot="body" class="p-4">
