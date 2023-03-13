@@ -38,6 +38,7 @@ export type vtuberResponseData = {
 	blood_type: string;
 	zodiac_sign: string;
 	emoji: string;
+	updated_at: Date;
 };
 
 export type vtuberResponseDataChannel = { type: string; url: string };

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { PUBLIC_VTUBER_WIKI_HOST } from '$env/static/public';
 	import Model2DBadge from '$lib/components/badges/Model2DBadge.svelte';
 	import Model3DBadge from '$lib/components/badges/Model3DBadge.svelte';
 	import RetiredBadge from '$lib/components/badges/RetiredBadge.svelte';
@@ -23,7 +24,15 @@
 
 <div class="grid grid-cols-4 gap-4">
 	<div class="col-span-4">
-		<div class="text-3xl font-bold">{vtuber.name} <span title="Emoji">{vtuber.emoji}</span></div>
+		<a
+			class="text-3xl font-bold"
+			href="{PUBLIC_VTUBER_WIKI_HOST}/{vtuber.name}"
+			target="_blank"
+			rel="noreferrer"
+			title={new Date(vtuber.updated_at).toString()}
+		>
+			{vtuber.name} <span title="Emoji">{vtuber.emoji}</span>
+		</a>
 		<Border />
 	</div>
 
