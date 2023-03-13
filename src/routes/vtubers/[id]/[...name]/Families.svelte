@@ -14,7 +14,7 @@
 	import Sort from './Sort.svelte';
 
 	export let id: number;
-	export let agency: string;
+	export let designer: string;
 	export let open: boolean = false;
 
 	let vtubers: Array<vtuberResponseData> = [];
@@ -24,7 +24,7 @@
 	let sort: string = 'name';
 
 	axios
-		.get(`/api/vtubers?agency=${agency}&limit=-1`)
+		.get(`/api/vtubers?character_designer=${designer}&limit=-1`)
 		.then((resp) => {
 			vtubers = resp.data.data.filter((d: vtuberResponseData) => d.id !== id);
 		})
@@ -49,7 +49,7 @@
 <div class="grid grid-cols-6 gap-2">
 	<div class="col-span-6 flex gap-2">
 		<Border>
-			<span class="px-4 font-bold whitespace-nowrap">{agency} ({vtubers.length.toLocaleString()})</span>
+			<span class="px-4 font-bold whitespace-nowrap">{designer} ({vtubers.length.toLocaleString()})</span>
 		</Border>
 		{#if open}
 			<Sort bind:value={sort} />

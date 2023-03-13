@@ -8,6 +8,7 @@
 	import type { vtuberResponse } from '../../../api/vtubers/[id]/+server';
 	import AccordionAgencyMates from './AccordionAgencyMates.svelte';
 	import AccordionDetails from './AccordionDetails.svelte';
+	import AccordionFamilies from './AccordionFamilies.svelte';
 
 	export let data: vtuberResponse;
 
@@ -53,5 +54,6 @@
 	<div class="col-span-4 sm:col-span-3 flex flex-col gap-4">
 		<div><AccordionDetails data={vtuber} /></div>
 		<div><AccordionAgencyMates id={vtuber.id} agencies={vtuber.agencies.map((a) => a.name)} /></div>
+		<div><AccordionFamilies id={vtuber.id} designers={vtuber.character_designers} /></div>
 	</div>
 </div>
