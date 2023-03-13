@@ -8,8 +8,12 @@
 
 <Accordion title="Agency-mates">
 	<div class="grid gap-2">
-		{#each agencies as agency}
-			<AgencyMates {id} {agency} open={agencies.length === 1} />
-		{/each}
+		{#if agencies.length === 0}
+			<div class="text-center">not in agency...</div>
+		{:else}
+			{#each agencies as agency}
+				<AgencyMates {id} {agency} open={agencies.length === 1} />
+			{/each}
+		{/if}
 	</div>
 </Accordion>
