@@ -14,7 +14,7 @@
 	<meta property="og:site_name" content="Amatsukaze" />
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
 	<meta name="robots" content="noindex, nofollow" />
-	<meta httpEquiv="Content-Type" content="text/html charset=utf-8" />
+	<meta http-equiv="Content-Type" content="text/html charset=utf-8" />
 	<meta name="theme-color" content="#eab308" />
 	<meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
