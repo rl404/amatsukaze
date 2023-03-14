@@ -1,6 +1,7 @@
 import type { vtuberResponseData, vtuberResponseDataChannel } from '../../routes/api/vtubers/[id]/+server';
 import type { AxiosError } from 'axios';
 import axios from 'axios';
+import type { agencyResponseData } from '../../routes/api/agencies/[id]/+server';
 
 export enum ThemeMode {
 	Light = 'light',
@@ -133,6 +134,19 @@ export const vtuberSorter =
 				const da4 = new Date(a.retirement_date);
 				const db4 = new Date(b.retirement_date);
 				return da4 > db4 ? -1 : 1;
+			default:
+				return a.name < b.name ? -1 : 1;
+		}
+	};
+
+export const agencySorter =
+	(sort: string) =>
+	(a: agencyResponseData, b: agencyResponseData): number => {
+		switch (sort) {
+			case 'name':
+				return a.name < b.name ? -1 : 1;
+			case '-name':
+				return a.name > b.name ? -1 : 1;
 			default:
 				return a.name < b.name ? -1 : 1;
 		}

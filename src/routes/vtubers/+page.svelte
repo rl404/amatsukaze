@@ -103,7 +103,7 @@
 	<div class="col-span-6">
 		<div class="flex flex-wrap items-center justify-between gap-4">
 			<div class="text-3xl font-bold">
-				Vtuber List <span class="text-xl font-normal opacity-70 hover:opacity-100">- {total.toLocaleString()}</span>
+				Vtuber List <span class="text-xl font-normal opacity-70 hover:opacity-100">— {total.toLocaleString()}</span>
 			</div>
 			<div class="flex items-center justify-end gap-2 w-full sm:w-auto">
 				<div class="w-full">
