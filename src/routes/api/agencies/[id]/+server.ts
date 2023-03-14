@@ -11,6 +11,7 @@ export type agencyResponseData = {
 	id: number;
 	name: string;
 	image: string;
+	updated_at: Date;
 };
 
 export const GET = (async ({ params }) => {
