@@ -7,8 +7,8 @@
 	import InfiniteScroll from '$lib/components/InfiniteScroll.svelte';
 	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
 	import { getAxiosError } from '$lib/utils';
-	import type { vtubersResponse } from '../api/vtubers/+server';
-	import type { vtuberResponseData } from '../api/vtubers/[id]/+server';
+	import type { vtubersResponse } from '../../api/vtubers/+server';
+	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
 	import axios from 'axios';
 	import InputSearch from './InputSearch.svelte';
 	import AdvancedSearch from './AdvancedSearch.svelte';

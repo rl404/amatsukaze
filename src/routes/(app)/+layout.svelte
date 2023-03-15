@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Image from '$lib/components/Image.svelte';
-	import logo from '$lib/assets/logo.png';
 	import { setTheme, ThemeMode } from '$lib/utils';
+	import logo from '$lib/assets/logo.png';
+	import Image from '$lib/components/Image.svelte';
 	import GithubIcon from '$lib/components/icons/GithubIcon.svelte';
 	import SunIcon from '$lib/components/icons/SunIcon.svelte';
 	import MoonIcon from '$lib/components/icons/MoonIcon.svelte';

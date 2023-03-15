@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Accordion from '$lib/components/Accordion.svelte';
-	import type { vtuberResponseData } from '../../../api/vtubers/[id]/+server';
+	import type { vtuberResponseData } from '../../../../api/vtubers/[id]/+server';
 
 	export let agency: string;
 

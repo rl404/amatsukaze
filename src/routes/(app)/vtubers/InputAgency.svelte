@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import axios from 'axios';
 	import InputText from '$lib/components/inputs/InputText.svelte';
-	import type { agenciesResponseData } from '../api/agencies/+server';
+	import type { agencyResponseData } from '../../api/agencies/[id]/+server';
 
 	export let value: string;
 
@@ -12,7 +12,7 @@
 		axios
 			.get(`/api/agencies`)
 			.then((resp) => {
-				options = [...options, ...resp.data.data.map((d: agenciesResponseData) => d.name)];
+				options = [...options, ...resp.data.data.map((d: agencyResponseData) => d.name)];
 			})
 			.catch(() => {});
 	});

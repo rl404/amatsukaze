@@ -3,7 +3,7 @@
 	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
 	import { getAxiosError } from '$lib/utils';
 	import axios from 'axios';
-	import type { vtuberResponseData } from '../../../api/vtubers/[id]/+server';
+	import type { vtuberResponseData } from '../../../../api/vtubers/[id]/+server';
 	import MembersTimeline from './MembersTimeline.svelte';
 
 	export let agency: string;

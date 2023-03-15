@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Head from '$lib/components/Head.svelte';
 	import type { vtuberImagesResponse } from './+page.server';
+	import Head from '$lib/components/Head.svelte';
 	import Grid from './Grid.svelte';
 	import Title from './Title.svelte';
 

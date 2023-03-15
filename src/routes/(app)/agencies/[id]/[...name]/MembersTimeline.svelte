@@ -3,7 +3,7 @@
 	import Timeline from '$lib/components/timelines/Timeline.svelte';
 	import TimelineItem from '$lib/components/timelines/TimelineItem.svelte';
 	import { isScreen, monthNames } from '$lib/utils';
-	import type { vtuberResponseData } from '../../../api/vtubers/[id]/+server';
+	import type { vtuberResponseData } from '../../../../api/vtubers/[id]/+server';
 
 	export let data: Array<vtuberResponseData>;
 

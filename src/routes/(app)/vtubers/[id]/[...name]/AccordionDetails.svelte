@@ -3,7 +3,7 @@
 	import ChannelBadge from '$lib/components/badges/ChannelBadge.svelte';
 	import Border from '$lib/components/Border.svelte';
 	import { channelSorter, formatBirthday, getHostname, isEmptyArray } from '$lib/utils';
-	import type { vtuberResponseData } from '../../../api/vtubers/[id]/+server';
+	import type { vtuberResponseData } from '../../../../api/vtubers/[id]/+server';
 
 	export let data: vtuberResponseData;
 

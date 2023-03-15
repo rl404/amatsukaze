@@ -9,7 +9,7 @@
 	import VtuberList from '$lib/components/layouts/VtuberList.svelte';
 	import { getAxiosError, vtuberSorter } from '$lib/utils';
 	import axios from 'axios';
-	import type { vtuberResponseData } from '../../../api/vtubers/[id]/+server';
+	import type { vtuberResponseData } from '../../../../api/vtubers/[id]/+server';
 	import Layout from './Layout.svelte';
 	import Sort from './Sort.svelte';
 
