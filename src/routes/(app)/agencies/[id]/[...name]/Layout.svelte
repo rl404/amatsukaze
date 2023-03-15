@@ -1,12 +1,15 @@
 <script lang="ts">
 	import IconButton from '$lib/components/buttons/IconButton.svelte';
+	import CalendarIcon from '$lib/components/icons/CalendarIcon.svelte';
 	import Grid1Icon from '$lib/components/icons/Grid1Icon.svelte';
 	import Grid2Icon from '$lib/components/icons/Grid2Icon.svelte';
 	import ListIcon from '$lib/components/icons/ListIcon.svelte';
 
 	export let value: string;
+	export let sort: string;
 
 	const layouts = [
+		{ name: 'timeline', component: CalendarIcon },
 		{ name: 'grid', component: Grid1Icon },
 		{ name: 'card', component: Grid2Icon },
 		{ name: 'list', component: ListIcon }
@@ -17,6 +20,7 @@
 	const nextLayout = () => {
 		layoutIndex = (layoutIndex + 1) % layouts.length;
 		value = layouts[layoutIndex].name;
+		if (value === 'timeline') sort = 'debut_date';
 	};
 </script>
 

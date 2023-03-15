@@ -9,15 +9,19 @@
 	import type { ComponentType } from 'svelte';
 
 	export let value: string;
+	export let layout: string;
 
-	const sorts: { [key: string]: { label: string; value: string; component: ComponentType } } = {
-		name: { label: 'Name ASC', value: 'name', component: SortLetterAscIcon },
-		'-name': { label: 'Name DESC', value: '-name', component: SortLetterDescIcon },
-		debut_date: { label: 'Debut date ASC', value: 'debut_date', component: SortNumberAscIcon },
-		'-debut_date': { label: 'Debut date DESC', value: '-debut_date', component: SortNumberDescIcon },
-		retirement_date: { label: 'Retirement date ASC', value: 'retirement_date', component: SortNumberAscIcon },
-		'-retirement_date': { label: 'Retirement date DESC', value: '-retirement_date', component: SortNumberDescIcon }
-	};
+	let sorts: { [key: string]: { label: string; value: string; component: ComponentType; hidden: boolean } };
+
+	$: layout,
+		(sorts = {
+			name: { label: 'Name ASC', value: 'name', component: SortLetterAscIcon, hidden: layout === 'timeline' },
+			'-name': { label: 'Name DESC', value: '-name', component: SortLetterDescIcon, hidden: layout === 'timeline' },
+			debut_date: { label: 'Debut date ASC', value: 'debut_date', component: SortNumberAscIcon, hidden: false },
+			'-debut_date': { label: 'Debut date DESC', value: '-debut_date', component: SortNumberDescIcon, hidden: false },
+			retirement_date: { label: 'Retirement date ASC', value: 'retirement_date', component: SortNumberAscIcon, hidden: false },
+			'-retirement_date': { label: 'Retirement date DESC', value: '-retirement_date', component: SortNumberDescIcon, hidden: false }
+		});
 
 	let hidden: boolean = true;
 	const toggle = () => {
@@ -39,7 +43,9 @@
 			class="absolute mt-2 -right-10 grid grid-cols-1 gap-2 z-10 p-2 rounded-lg bg-white dark:bg-neutral-800 border dark:border-neutral-600 text-sm w-max"
 		>
 			{#each Object.values(sorts) as sort}
-				<InputRadio label={sort.label} value={sort.value} bind:group={value} on:change={toggle} />
+				{#if !sort.hidden}
+					<InputRadio label={sort.label} value={sort.value} bind:group={value} on:change={toggle} />
+				{/if}
 			{/each}
 		</div>
 	{/if}

@@ -6,48 +6,53 @@
 	import type { vtuberResponseData } from '../../../../api/vtubers/[id]/+server';
 
 	export let data: Array<vtuberResponseData>;
+	export let sort: string;
 
-	type timelineData = { [date: string]: { debut: Array<vtuberResponseData>; retired: Array<vtuberResponseData> } };
+	type timelineCount = { debut: Array<vtuberResponseData>; retired: Array<vtuberResponseData> };
+	type timelineData = { [date: string]: timelineCount };
+	let timelineVtubers: Array<[string, timelineCount]>;
 
-	let timelineVtubers = Object.entries(
-		data.reduce((res: timelineData, vtuber: vtuberResponseData): timelineData => {
-			if (!vtuber.debut_date || !new Date(vtuber.debut_date)) {
-				if (!res[-1]) res[-1] = { debut: [], retired: [] };
-				res[-1].debut.push(vtuber);
-			} else {
-				const debutDate = new Date(vtuber.debut_date).toISOString();
-				const yearMonth = `${debutDate.slice(0, 7)}-01`;
-				if (!res[yearMonth]) res[yearMonth] = { debut: [], retired: [] };
-				res[yearMonth].debut.push(vtuber);
-			}
+	$: sort,
+		(timelineVtubers = Object.entries(
+			data.reduce((res: timelineData, vtuber: vtuberResponseData): timelineData => {
+				if (!vtuber.debut_date || !new Date(vtuber.debut_date)) {
+					if (!res[-1]) res[-1] = { debut: [], retired: [] };
+					res[-1].debut.push(vtuber);
+				} else {
+					const debutDate = new Date(vtuber.debut_date).toISOString();
+					const yearMonth = `${debutDate.slice(0, 7)}-01`;
+					if (!res[yearMonth]) res[yearMonth] = { debut: [], retired: [] };
+					res[yearMonth].debut.push(vtuber);
+				}
 
-			if (!vtuber.retirement_date) return res;
+				if (!vtuber.retirement_date) return res;
 
-			if (!new Date(vtuber.retirement_date)) {
-				if (!res[-1]) res[-1] = { debut: [], retired: [] };
-				res[-1].retired.push(vtuber);
-			} else {
-				const retiredDate = new Date(vtuber.retirement_date).toISOString();
-				const yearMonth = `${retiredDate.slice(0, 7)}-01`;
-				if (!res[yearMonth]) res[yearMonth] = { debut: [], retired: [] };
-				res[yearMonth].retired.push(vtuber);
-			}
+				if (!new Date(vtuber.retirement_date)) {
+					if (!res[-1]) res[-1] = { debut: [], retired: [] };
+					res[-1].retired.push(vtuber);
+				} else {
+					const retiredDate = new Date(vtuber.retirement_date).toISOString();
+					const yearMonth = `${retiredDate.slice(0, 7)}-01`;
+					if (!res[yearMonth]) res[yearMonth] = { debut: [], retired: [] };
+					res[yearMonth].retired.push(vtuber);
+				}
 
-			return res;
-		}, {})
-	)
-		.sort((a, b) => {
-			const da = new Date(a[0]);
-			const db = new Date(b[0]);
-			if (isNaN(da.getTime())) return 1;
-			if (isNaN(db.getTime())) return -1;
-			return da < db ? -1 : 1;
-		})
-		.map((v) => {
-			const d = new Date(v[0]);
-			v[0] = isNaN(d.getTime()) ? 'Unknown' : `${monthNames[d.getMonth()]} ${d.getFullYear()}`;
-			return v;
-		});
+				return res;
+			}, {})
+		)
+			.sort((a, b) => {
+				const da = new Date(a[0]);
+				const db = new Date(b[0]);
+				if (isNaN(da.getTime())) return 1;
+				if (isNaN(db.getTime())) return -1;
+				if (sort[0] !== '-') return da < db ? -1 : 1;
+				return da > db ? -1 : 1;
+			})
+			.map((v) => {
+				const d = new Date(v[0]);
+				v[0] = isNaN(d.getTime()) ? 'Unknown' : `${monthNames[d.getMonth()]} ${d.getFullYear()}`;
+				return v;
+			}));
 
 	$: isMD = isScreen('md');
 

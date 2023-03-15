@@ -3,7 +3,7 @@
 	import Border from '$lib/components/Border.svelte';
 	import Head from '$lib/components/Head.svelte';
 	import Image from '$lib/components/Image.svelte';
-	import type { agencyResponse } from '../../../api/agencies/[id]/+server';
+	import type { agencyResponse } from '../../../../api/agencies/[id]/+server';
 	import AccordionStatistics from './AccordionStatistics.svelte';
 	import AccordionMembers from './AccordionMembers.svelte';
 

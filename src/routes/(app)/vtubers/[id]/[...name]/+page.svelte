@@ -6,7 +6,7 @@
 	import Border from '$lib/components/Border.svelte';
 	import Head from '$lib/components/Head.svelte';
 	import Image from '$lib/components/Image.svelte';
-	import type { vtuberResponse } from '../../../api/vtubers/[id]/+server';
+	import type { vtuberResponse } from '../../../../api/vtubers/[id]/+server';
 	import AccordionAgencyMates from './AccordionAgencyMates.svelte';
 	import AccordionDetails from './AccordionDetails.svelte';
 	import AccordionFamilies from './AccordionFamilies.svelte';
