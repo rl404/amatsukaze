@@ -18,7 +18,8 @@
 		{ label: 'Family Tree', link: '/trees/family' },
 		{ label: 'Agency Tree', link: '/trees/agency' },
 		{ label: 'Statistics', link: '/statistics' },
-		{ label: 'List', link: '/vtubers' }
+		{ label: 'Vtuber List', link: '/vtubers' },
+		{ label: 'Agency List', link: '/agencies' }
 	];
 </script>
 
@@ -46,14 +47,14 @@
 				<a href={link.link}>{link.label}</a><span class="opacity-50 hidden sm:inline-block sm:ml-1 sm:mr-1">|</span>
 			</div>
 		{/each}
-		<div class="whitespace-nowrap flex place-content-end gap-2">
-			<span class="hover:opacity-70 block dark:hidden cursor-pointer m-auto" on:click={() => setTheme(ThemeMode.Dark)} title="light mode">
+		<div class="whitespace-nowrap flex items-center justify-end gap-2">
+			<span class="hover:opacity-70 block dark:hidden cursor-pointer" on:click={() => setTheme(ThemeMode.Dark)} title="light mode">
 				<SunIcon class="w-5 h-5" />
 			</span>
-			<span class="hover:opacity-70 hidden dark:block cursor-pointer m-auto" on:click={() => setTheme(ThemeMode.Light)} title="dark mode">
+			<span class="hover:opacity-70 hidden dark:block cursor-pointer" on:click={() => setTheme(ThemeMode.Light)} title="dark mode">
 				<MoonIcon class="w-5 h-5" />
 			</span>
-			<a href="https://github.com/rl404/amatsukaze" target="_blank" rel="noreferrer" title="github source code" class="m-auto">
+			<a href="https://github.com/rl404/amatsukaze" target="_blank" rel="noreferrer" title="github source code" class="">
 				<GithubIcon class="w-5 h-5" />
 			</a>
 		</div>
