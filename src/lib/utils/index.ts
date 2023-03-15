@@ -35,7 +35,7 @@ export const getAxiosError = (error: Error | AxiosError): string => {
 	return error.response.data.message;
 };
 
-const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+export const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 export const formatBirthday = (d: Date | undefined): string => {
 	if (!d || !new Date(d)) return '-';
@@ -151,3 +151,15 @@ export const agencySorter =
 				return a.name < b.name ? -1 : 1;
 		}
 	};
+
+const screenSize: { [size: string]: number } = {
+	sm: 640,
+	md: 768,
+	lg: 1024,
+	xl: 1280,
+	'2xl': 1536
+};
+
+export const isScreen = (size: string): boolean => {
+	return window.innerWidth >= screenSize[size];
+};

@@ -3,47 +3,13 @@
 	import Border from '$lib/components/Border.svelte';
 	import Head from '$lib/components/Head.svelte';
 	import Image from '$lib/components/Image.svelte';
-	import VtuberGrid from '$lib/components/layouts/VtuberGrid.svelte';
-	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
-	import VtuberCard from '$lib/components/layouts/VtuberCard.svelte';
-	import VtuberList from '$lib/components/layouts/VtuberList.svelte';
-	import { getAxiosError, vtuberSorter } from '$lib/utils';
-	import axios from 'axios';
-	import { onMount } from 'svelte';
 	import type { agencyResponse } from '../../../api/agencies/[id]/+server';
-	import type { vtuberResponseData } from '../../../api/vtubers/[id]/+server';
-	import Sort from './Sort.svelte';
-	import Layout from './Layout.svelte';
+	import AccordionStatistics from './AccordionStatistics.svelte';
+	import AccordionMembers from './AccordionMembers.svelte';
 
 	export let data: agencyResponse;
 
 	const agency = data.data;
-
-	let vtubers: Array<vtuberResponseData> = [];
-	let layout: string = 'grid';
-	let sort: string = 'name';
-	let loading: boolean = true;
-	let error: string = '';
-
-	onMount(() => {
-		axios
-			.get(`/api/vtubers?agency=${agency.name}&limit=-1`)
-			.then((resp) => {
-				vtubers = resp.data.data;
-			})
-			.catch((err) => {
-				error = getAxiosError(err);
-			})
-			.finally(() => {
-				loading = false;
-			});
-	});
-
-	$: sort, onSort();
-
-	const onSort = () => {
-		vtubers = vtubers.sort(vtuberSorter(sort));
-	};
 </script>
 
 <Head
@@ -74,56 +40,8 @@
 		/>
 	</div>
 
-	<div class="col-span-4 sm:col-span-3 grid grid-cols-6 gap-4">
-		<div class="col-span-6 flex gap-2">
-			<Border>
-				<span class="px-4 whitespace-nowrap font-bold">Members ({vtubers.length.toLocaleString()})</span>
-			</Border>
-			<Sort bind:value={sort} />
-			<Layout bind:value={layout} />
-		</div>
-		{#if loading}
-			<div class="col-span-6">
-				<SpinnerIcon class="w-6 h-6 m-auto text-gray-200 animate-spin dark:text-gray-600 fill-pink-500 dark:fill-indigo-600" />
-			</div>
-		{:else if error !== ''}
-			<div class="col-span-6 text-red-500 text-center">
-				{error}
-			</div>
-		{:else}
-			{#each vtubers as vtuber}
-				{#if layout === 'grid'}
-					<VtuberGrid class="col-span-2 sm:col-span-2 md:col-span-1" id={vtuber.id} name={vtuber.name} image={vtuber.image} height={206} smallText />
-				{:else if layout === 'card'}
-					<VtuberCard
-						class="col-span-6 sm:col-span-3 lg:col-span-2"
-						id={vtuber.id}
-						name={vtuber.name}
-						image={vtuber.image}
-						has2d={vtuber.has_2d}
-						has3d={vtuber.has_3d}
-						agencies={vtuber.agencies.map((a) => a.name)}
-						debutDate={vtuber.debut_date}
-						retirementDate={vtuber.retirement_date}
-						height={206}
-						smallText
-					/>
-				{:else if layout === 'list'}
-					<VtuberList
-						class="col-span-6"
-						id={vtuber.id}
-						name={vtuber.name}
-						image={vtuber.image}
-						has2d={vtuber.has_2d}
-						has3d={vtuber.has_3d}
-						agencies={vtuber.agencies.map((a) => a.name)}
-						debutDate={vtuber.debut_date}
-						retirementDate={vtuber.retirement_date}
-						height={206}
-						smallText
-					/>
-				{/if}
-			{/each}
-		{/if}
+	<div class="col-span-4 sm:col-span-3 flex flex-col gap-4">
+		<div><AccordionStatistics agency={agency.name} /></div>
+		<div><AccordionMembers agency={agency.name} /></div>
 	</div>
 </div>

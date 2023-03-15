@@ -13,11 +13,12 @@
 	export { className2 as class2 };
 	let className2: string = '';
 	export let smallText: boolean = false;
+	export let dir: string = 'ltr';
 
 	let modal: SvelteComponent;
 </script>
 
-<div class={className}>
+<div class={className} {dir}>
 	<div
 		class="{className2} aspect-square group bg-neutral-100 dark:bg-neutral-800 rounded-lg hover:outline hover:outline-pink-500 dark:hover:outline-indigo-600 drop-shadow hover:drop-shadow-lg cursor-pointer"
 		on:click={() => modal.toggleOpen()}
