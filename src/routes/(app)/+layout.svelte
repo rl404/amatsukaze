@@ -8,19 +8,19 @@
 	import ScrollTop from '$lib/components/ScrollTop.svelte';
 </script>
 
-<nav class="p-4 bg-gradient-to-r from-white to-pink-500 dark:from-neutral-900 dark:to-indigo-600 drop-shadow-lg">
-	<div class="flex flex-wrap items-center justify-between gap-4">
+<nav class="bg-gradient-to-r from-white to-pink-500 dark:from-neutral-900 dark:to-indigo-600 drop-shadow-lg">
+	<div class="container mx-auto max-w-5xl p-4 flex flex-wrap items-center justify-between gap-4">
 		<a href="/" class="flex items-center gap-4">
 			<Image src={logo} alt="logo" class="h-6 rounded-full" />
 			<span class="text-2xl font-bold">Amatsukaze</span>
 		</a>
 		<div class="flex items-center gap-4 text-white text-2xl">
-			<span class="hover:opacity-70 block dark:hidden cursor-pointer" on:click={() => setTheme(ThemeMode.Dark)} title="light mode">
+			<button class="hover:opacity-70 block dark:hidden" on:click={() => setTheme(ThemeMode.Dark)} title="light mode">
 				<SunIcon class="w-6 h-6" />
-			</span>
-			<span class="hover:opacity-70 hidden dark:block cursor-pointer" on:click={() => setTheme(ThemeMode.Light)} title="dark mode">
+			</button>
+			<button class="hover:opacity-70 hidden dark:block" on:click={() => setTheme(ThemeMode.Light)} title="dark mode">
 				<MoonIcon class="w-6 h-6" />
-			</span>
+			</button>
 			<a href="https://github.com/rl404/amatsukaze" target="_blank" rel="noreferrer" title="github source code">
 				<GithubIcon class="w-6 h-6" />
 			</a>
