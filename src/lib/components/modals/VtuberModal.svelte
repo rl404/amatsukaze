@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { SvelteComponent } from 'svelte';
-	import { PUBLIC_VTUBER_WIKI_HOST } from '$env/static/public';
 	import type { vtuberResponseData } from '../../../routes/api/vtubers/[id]/+server';
 	import { channelSorter, formatBirthday, getAxiosError, getHostname, isEmptyArray } from '$lib/utils';
 	import axios from 'axios';
