@@ -17,32 +17,25 @@
 	let vtubers: Array<vtuberResponseData> = [];
 	let loading: boolean = true;
 	let error: string = '';
-	let open: boolean = false;
 	let sort: string = 'debut_date';
 	let layout: string = 'timeline';
 
-	$: open && fetchData();
+	axios
+		.get(`/api/vtubers?agency=${agency}&limit=-1`)
+		.then((resp) => {
+			vtubers = resp.data.data;
+		})
+		.catch((err) => {
+			error = getAxiosError(err);
+		})
+		.finally(() => {
+			loading = false;
+		});
+
 	$: vtubers = vtubers.sort(vtuberSorter(sort));
-
-	const fetchData = () => {
-		loading = true;
-		error = '';
-
-		axios
-			.get(`/api/vtubers?agency=${agency}&limit=-1`)
-			.then((resp) => {
-				vtubers = resp.data.data;
-			})
-			.catch((err) => {
-				error = getAxiosError(err);
-			})
-			.finally(() => {
-				loading = false;
-			});
-	};
 </script>
 
-<Accordion title="Members" bind:open>
+<Accordion title="Members">
 	<div class="grid grid-cols-6 gap-2">
 		{#if loading}
 			<div class="col-span-6">
