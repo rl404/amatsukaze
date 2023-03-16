@@ -62,7 +62,7 @@
 
 <Modal bind:this={modal}>
 	<span slot="title">
-		<a href="/vtubers/{id}/{title}" target="_blank" rel="noreferrer">{title}</a>
+		<a href="/vtubers/{id}/{title}">{title}</a>
 		<span title="Emoji">{data?.emoji || ''}</span>
 	</span>
 

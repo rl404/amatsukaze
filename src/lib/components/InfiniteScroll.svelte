@@ -77,5 +77,5 @@
 </script>
 
 {#if !window && !elementScroll}
-	<div bind:this={component} id="svelte-infinite-scroll" style="width: 0;" />
+	<div bind:this={component} id="svelte-infinite-scroll" class="w-0" />
 {/if}

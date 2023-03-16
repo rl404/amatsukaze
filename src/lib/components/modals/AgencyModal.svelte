@@ -37,7 +37,7 @@
 
 <Modal bind:this={modal}>
 	<span slot="title">
-		<a href="/agencies/{id}/{title}" target="_blank" rel="noreferrer">{title}</a>
+		<a href="/agencies/{id}/{title}">{title}</a>
 	</span>
 
 	<div slot="body" class="p-4">

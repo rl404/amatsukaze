@@ -26,9 +26,7 @@
 			{/if}
 		</span>
 	</button>
-	{#if open}
-		<div class="p-4">
-			<slot />
-		</div>
-	{/if}
+	<div class="p-4" hidden={!open}>
+		<slot />
+	</div>
 </div>
