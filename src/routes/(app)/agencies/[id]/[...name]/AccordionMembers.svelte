@@ -35,7 +35,7 @@
 	$: vtubers = vtubers.sort(vtuberSorter(sort));
 </script>
 
-<Accordion title="Members">
+<Accordion title="Members" open>
 	<div class="grid grid-cols-6 gap-2">
 		{#if loading}
 			<div class="col-span-6">

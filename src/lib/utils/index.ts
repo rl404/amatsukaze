@@ -2,6 +2,7 @@ import type { vtuberResponseData, vtuberResponseDataChannel } from '../../routes
 import type { AxiosError } from 'axios';
 import axios from 'axios';
 import type { agencyResponseData } from '../../routes/api/agencies/[id]/+server';
+import { theme } from './store';
 
 export enum ThemeMode {
 	Light = 'light',
@@ -10,22 +11,30 @@ export enum ThemeMode {
 
 export const setTheme = (mode?: ThemeMode) => {
 	if (!mode) {
-		mode = ThemeMode.Light;
-		if (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-			mode = ThemeMode.Dark;
-		}
-
-		if ('theme' in localStorage) {
-			mode = localStorage.theme;
-		}
+		mode = getTheme();
 	}
 
 	localStorage.theme = mode;
-	if (localStorage.theme === ThemeMode.Dark) {
+	if (mode === ThemeMode.Dark) {
 		document.documentElement.classList.add('dark');
 	} else {
 		document.documentElement.classList.remove('dark');
 	}
+
+	theme.set(mode);
+};
+
+export const getTheme = (): ThemeMode => {
+	let mode = ThemeMode.Light;
+	if (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+		mode = ThemeMode.Dark;
+	}
+
+	if ('theme' in localStorage) {
+		mode = localStorage.theme;
+	}
+
+	return mode;
 };
 
 export const getAxiosError = (error: Error | AxiosError): string => {
