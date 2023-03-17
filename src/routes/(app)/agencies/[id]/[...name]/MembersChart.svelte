@@ -77,6 +77,13 @@
 				},
 				zoom: {
 					enabled: false
+				},
+				events: {
+					click: (_, __, cfg) => {
+						const id = Object.keys(data)[cfg.dataPointIndex];
+						const el = document.getElementById(id);
+						el?.scrollIntoView({ behavior: 'smooth' });
+					}
 				}
 			},
 			colors: chartColors,

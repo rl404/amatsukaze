@@ -8,7 +8,7 @@
 	export let data: Array<vtuberResponseData>;
 	export let sort: string;
 
-	type timelineCount = { debut: Array<vtuberResponseData>; retired: Array<vtuberResponseData> };
+	type timelineCount = { id: string; debut: Array<vtuberResponseData>; retired: Array<vtuberResponseData> };
 	type timelineData = { [date: string]: timelineCount };
 	let timelineVtubers: Array<[string, timelineCount]>;
 
@@ -16,24 +16,24 @@
 		(timelineVtubers = Object.entries(
 			data.reduce((res: timelineData, vtuber: vtuberResponseData): timelineData => {
 				if (!vtuber.debut_date || !new Date(vtuber.debut_date)) {
-					if (!res[-1]) res[-1] = { debut: [], retired: [] };
+					if (!res[-1]) res[-1] = { id: '', debut: [], retired: [] };
 					res[-1].debut.push(vtuber);
 				} else {
 					const debutDate = new Date(vtuber.debut_date).toISOString();
 					const yearMonth = `${debutDate.slice(0, 7)}-01`;
-					if (!res[yearMonth]) res[yearMonth] = { debut: [], retired: [] };
+					if (!res[yearMonth]) res[yearMonth] = { id: yearMonth, debut: [], retired: [] };
 					res[yearMonth].debut.push(vtuber);
 				}
 
 				if (!vtuber.retirement_date) return res;
 
 				if (!new Date(vtuber.retirement_date)) {
-					if (!res[-1]) res[-1] = { debut: [], retired: [] };
+					if (!res[-1]) res[-1] = { id: '', debut: [], retired: [] };
 					res[-1].retired.push(vtuber);
 				} else {
 					const retiredDate = new Date(vtuber.retirement_date).toISOString();
 					const yearMonth = `${retiredDate.slice(0, 7)}-01`;
-					if (!res[yearMonth]) res[yearMonth] = { debut: [], retired: [] };
+					if (!res[yearMonth]) res[yearMonth] = { id: yearMonth, debut: [], retired: [] };
 					res[yearMonth].retired.push(vtuber);
 				}
 
@@ -66,6 +66,7 @@
 <Timeline>
 	{#each timelineVtubers as timelineVtuber}
 		<TimelineItem
+			id={timelineVtuber[1].id}
 			dotClass="top-6 bg-gradient-to-t md:bg-gradient-to-r
       {timelineVtuber[1].retired.length > 0 ? 'from-red-500' : 'from-green-500'}
       {timelineVtuber[1].debut.length > 0 ? 'to-green-500' : 'to-red-500'}"
