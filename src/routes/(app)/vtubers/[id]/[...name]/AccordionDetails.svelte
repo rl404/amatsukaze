@@ -2,6 +2,7 @@
 	import Accordion from '$lib/components/Accordion.svelte';
 	import ChannelBadge from '$lib/components/badges/ChannelBadge.svelte';
 	import Border from '$lib/components/Border.svelte';
+	import InfoIcon from '$lib/components/icons/InfoIcon.svelte';
 	import { channelSorter, formatBirthday, getHostname, isEmptyArray } from '$lib/utils';
 	import type { vtuberResponseData } from '../../../../api/vtubers/[id]/+server';
 
@@ -30,7 +31,7 @@
 	];
 </script>
 
-<Accordion title="Details" open>
+<Accordion title="Details" icon={InfoIcon} open>
 	<div class="grid grid-cols-6 gap-2">
 		<Border class="col-span-6">
 			<span class="px-4 font-bold whitespace-nowrap">Basic Details</span>

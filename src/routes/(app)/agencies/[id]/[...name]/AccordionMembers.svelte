@@ -5,6 +5,7 @@
 	import VtuberGrid from '$lib/components/layouts/VtuberGrid.svelte';
 	import VtuberList from '$lib/components/layouts/VtuberList.svelte';
 	import Border from '$lib/components/Border.svelte';
+	import UserGroupIcon from '$lib/components/icons/UserGroupIcon.svelte';
 	import { getAxiosError, vtuberSorter } from '$lib/utils';
 	import axios from 'axios';
 	import type { vtuberResponseData } from '../../../../api/vtubers/[id]/+server';
@@ -35,7 +36,7 @@
 	$: vtubers = vtubers.sort(vtuberSorter(sort));
 </script>
 
-<Accordion title="Members" open>
+<Accordion title="Members" icon={UserGroupIcon} open>
 	<div class="grid grid-cols-6 gap-2">
 		{#if loading}
 			<div class="col-span-6">

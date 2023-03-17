@@ -1,8 +1,10 @@
 <script lang="ts">
+	import type { ComponentType } from 'svelte';
 	import ChevronDownIcon from './icons/ChevronDownIcon.svelte';
 	import ChevronUpIcon from './icons/ChevronUpIcon.svelte';
 
 	export let title: string;
+	export let icon: ComponentType | undefined = undefined;
 	export let open: boolean = false;
 
 	const toggleOpen = () => {
@@ -17,7 +19,12 @@
 			: 'rounded-t-lg border-b dark:border-neutral-600'}"
 		on:click={toggleOpen}
 	>
-		<span class="text-xl font-bold">{title}</span>
+		<span class="text-xl font-bold flex items-center gap-2">
+			{#if icon}
+				<svelte:component this={icon} class="w-5 h-5" />
+			{/if}
+			<span>{title}</span>
+		</span>
 		<span>
 			{#if open}
 				<ChevronUpIcon class="w-5 h-5" />

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Accordion from '$lib/components/Accordion.svelte';
+	import ChartIcon from '$lib/components/icons/ChartIcon.svelte';
 	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
 	import { getAxiosError, vtuberSorter } from '$lib/utils';
 	import axios from 'axios';
@@ -25,7 +26,7 @@
 		});
 </script>
 
-<Accordion title="Statistics" open>
+<Accordion title="Statistics" icon={ChartIcon} open>
 	<div class="grid gap-2">
 		{#if loading}
 			<div class="">
