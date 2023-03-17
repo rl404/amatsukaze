@@ -37,7 +37,7 @@
 					['Character Designers', isEmptyArray(data.character_designers) ? '-' : data.character_designers.join('\n')],
 					['2D Modeler', isEmptyArray(data.character_2d_modelers) ? '-' : data.character_2d_modelers.join('\n')],
 					['3D Modeler', isEmptyArray(data.character_3d_modelers) ? '-' : data.character_3d_modelers.join('\n')],
-					['Agencies', isEmptyArray(data.agencies) ? '-' : data.agencies.map((a) => a.name).join('\n')],
+					['Agencies', isEmptyArray(data.agencies) ? '-' : data.agencies.map((a) => `${a.id} ${a.name}`).join('\n')],
 					['Affiliations', isEmptyArray(data.affiliations) ? '-' : data.affiliations.join('\n')],
 					['Channels', isEmptyArray(data.channels) ? '-' : ''],
 					['Social Medias', isEmptyArray(data.social_medias) ? '-' : ''],
@@ -86,7 +86,15 @@
 				{#each titleData as d}
 					<div class="col-span-2 text-right opacity-40">{d[0]}</div>
 					<div class="col-span-3 whitespace-pre-line">
-						{#if d[0] === 'Channels' && d[1] !== '-'}
+						{#if d[0] === 'Agencies' && d[1] !== '-'}
+							<div class="grid">
+								{#each d[1].split('\n') as a}
+									<a href={`/agencies/${a.split(' ')[0]}/${a.split(' ').slice(1).join(' ')}`} class="underline">
+										{a.split(' ').slice(1).join(' ')}
+									</a>
+								{/each}
+							</div>
+						{:else if d[0] === 'Channels' && d[1] !== '-'}
 							<div class="grid grid-cols-1 gap-1">
 								{#each data.channels.sort(channelSorter) as channel}
 									<div>
