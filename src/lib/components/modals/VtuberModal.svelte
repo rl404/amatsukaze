@@ -89,9 +89,11 @@
 						{#if d[0] === 'Agencies' && d[1] !== '-'}
 							<div class="grid">
 								{#each d[1].split('\n') as a}
-									<a href={`/agencies/${a.split(' ')[0]}/${a.split(' ').slice(1).join(' ')}`} class="underline">
-										{a.split(' ').slice(1).join(' ')}
-									</a>
+									<div>
+										<a href={`/agencies/${a.split(' ')[0]}/${a.split(' ').slice(1).join(' ')}`} class="underline">
+											{a.split(' ').slice(1).join(' ')}
+										</a>
+									</div>
 								{/each}
 							</div>
 						{:else if d[0] === 'Channels' && d[1] !== '-'}
