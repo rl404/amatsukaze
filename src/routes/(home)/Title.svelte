@@ -15,11 +15,8 @@
 	};
 
 	const links = [
-		{ label: 'Family Tree', link: '/trees/family' },
-		{ label: 'Agency Tree', link: '/trees/agency' },
-		{ label: 'Statistics', link: '/statistics' },
-		{ label: 'Vtuber List', link: '/vtubers' },
-		{ label: 'Agency List', link: '/agencies' }
+		{ label: 'Vtubers', link: '/vtubers' },
+		{ label: 'Agencies', link: '/agencies' }
 	];
 </script>
 

@@ -11,7 +11,7 @@
 	};
 </script>
 
-<div class="fixed top-0 left-0 z-10 p-4 w-full h-full" hidden={!open}>
+<div class="fixed top-0 left-0 z-20 p-4 w-full h-full" hidden={!open}>
 	<div class="fixed top-0 left-0 w-full h-full bg-neutral-800 opacity-70" on:click={toggleOpen} />
 
 	<div class="relative w-full h-auto {maxWidthClass} max-h-full m-auto rounded-lg z-10 bg-white dark:bg-neutral-700 shadow overflow-y-scroll">
