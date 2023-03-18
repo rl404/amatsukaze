@@ -14,13 +14,13 @@
 	export let data: vtuberResponse;
 
 	const vtuber = data.data;
+
+	const debutDate = !vtuber.debut_date ? '-' : vtuber.debut_date.toString().slice(0, 10);
+	const retiredDate = !vtuber.retirement_date ? '-' : vtuber.retirement_date.toString().slice(0, 10);
+	const headDescription = `Agency: ${vtuber.agencies.map((a) => a.name).join(', ')}. Debut: ${debutDate}. Retired: ${retiredDate}.`;
 </script>
 
-<Head
-	title={vtuber.name}
-	description="Visualize vtuber data from wikia to a page."
-	image={vtuber.image && `/api/wikia/image/${vtuber.image.split('?')[0]}?height=206`}
-/>
+<Head title={vtuber.name} description={headDescription} image={vtuber.image && `/api/wikia/image/${vtuber.image.split('?')[0]}?height=206`} />
 
 <div class="grid grid-cols-4 gap-4">
 	<div class="col-span-4">
