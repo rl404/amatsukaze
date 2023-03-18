@@ -9,13 +9,26 @@
 
 	let data: { [date: string]: { debut: number; retired: number; total: number } } = {};
 
-	const today = new Date();
-	today.setDate(1);
-	today.setMonth(today.getMonth() + 1);
-	const minDate = vtubers[0].debut_date ? new Date(vtubers[0].debut_date) : new Date();
-	minDate.setDate(1);
+	let minDate = new Date();
+	let maxDate = new Date();
 
-	while (minDate.toISOString().slice(0, 7) != today.toISOString().slice(0, 7)) {
+	vtubers.forEach((vtuber) => {
+		if (vtuber.debut_date && new Date(vtuber.debut_date)) {
+			const debutDate = new Date(vtuber.debut_date);
+			if (debutDate < minDate) minDate = debutDate;
+			if (debutDate > maxDate) maxDate = debutDate;
+		}
+
+		if (vtuber.retirement_date && new Date(vtuber.retirement_date)) {
+			const retiredDate = new Date(vtuber.retirement_date);
+			if (retiredDate < minDate) minDate = retiredDate;
+			if (retiredDate > maxDate) maxDate = retiredDate;
+		}
+	});
+
+	minDate.setMonth(minDate.getMonth() - 1);
+
+	while (minDate.toISOString().slice(0, 7) != maxDate.toISOString().slice(0, 7)) {
 		const key = `${minDate.toISOString().slice(0, 7)}-01`;
 		data[key] = { debut: 0, retired: 0, total: 0 };
 		minDate.setMonth(minDate.getMonth() + 1);
