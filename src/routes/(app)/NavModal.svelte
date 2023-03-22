@@ -23,6 +23,9 @@
 		<div>
 			<a href="/agencies" on:click={() => toggleOpen()}>Agency list</a>
 		</div>
+		<div>
+			<a href="/statistics" on:click={() => toggleOpen()}>Statistics</a>
+		</div>
 	</div>
 
 	<div slot="footer" class="p-4 border-t dark:border-neutral-600 flex justify-end gap-4">

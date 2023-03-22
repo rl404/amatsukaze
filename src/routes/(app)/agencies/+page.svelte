@@ -3,7 +3,7 @@
 	import Head from '$lib/components/Head.svelte';
 	import AgencyGrid from '$lib/components/layouts/AgencyGrid.svelte';
 	import { agencySorter } from '$lib/utils';
-	import type { agenciesResponse } from '../api/agencies/+server';
+	import type { agenciesResponse } from '../../api/agencies/+server';
 	import InputSearch from './InputSearch.svelte';
 	import Sort from './Sort.svelte';
 

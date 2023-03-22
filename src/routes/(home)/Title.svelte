@@ -16,7 +16,8 @@
 
 	const links = [
 		{ label: 'Vtubers', link: '/vtubers' },
-		{ label: 'Agencies', link: '/agencies' }
+		{ label: 'Agencies', link: '/agencies' },
+		{ label: 'Statistics', link: '/statistics' }
 	];
 </script>
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Border from '$lib/components/Border.svelte';
-	import Chart from '$lib/components/Chart.svelte';
+	import Chart from '$lib/components/charts/Chart.svelte';
 	import { getTheme, ThemeMode } from '$lib/utils';
 	import { theme } from '$lib/utils/store';
 	import type { vtuberResponseData } from '../../../../api/vtubers/[id]/+server';
@@ -27,6 +27,7 @@
 	});
 
 	minDate.setMonth(minDate.getMonth() - 1);
+	maxDate.setMonth(maxDate.getMonth() + 1);
 
 	while (minDate.toISOString().slice(0, 7) != maxDate.toISOString().slice(0, 7)) {
 		const key = `${minDate.toISOString().slice(0, 7)}-01`;
@@ -182,6 +183,7 @@
 					labels: {
 						style: { colors: chartTextColor }
 					},
+					forceNiceScale: true,
 					max: Math.max(...Object.values(data).map((d) => d.debut), ...Object.values(data).map((d) => d.retired)),
 					axisBorder: { show: true, color: chartBorderColor },
 					axisTicks: { show: true, color: chartBorderColor }
