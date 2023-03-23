@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { createEventDispatcher, type SvelteComponent } from 'svelte';
+	import { page } from '$app/stores';
+	import { createEventDispatcher, onMount, type SvelteComponent } from 'svelte';
 	import { resetObject } from '$lib/utils';
 	import IconButton from '$lib/components/buttons/IconButton.svelte';
 	import Modal from '$lib/components/modals/Modal.svelte';
@@ -69,6 +70,14 @@
 	let maxDebutYear: number = 0;
 	let minRetiredYear: number = 0;
 	let maxRetiredYear: number = 0;
+
+	onMount(() => {
+		const params = Array.from($page.url.searchParams.entries()).reduce((res: any, curr) => {
+			res[curr[0]] = curr[1];
+			return res;
+		}, {});
+		query = { ...query, ...params };
+	});
 
 	const toggleOpen = () => {
 		modal.toggleOpen();

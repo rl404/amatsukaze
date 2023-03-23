@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import { page as appPage } from '$app/stores';
+	import { goto } from '$app/navigation';
 	import Head from '$lib/components/Head.svelte';
 	import VtuberGrid from '$lib/components/layouts/VtuberGrid.svelte';
 	import VtuberCard from '$lib/components/layouts/VtuberCard.svelte';
@@ -32,24 +35,21 @@
 
 	$: vtubers = [...vtubers, ...newVtubers];
 
-	const fetchData = async () => {
-		let queries = {
-			...advQuery,
-			names: names,
-			sort: sort,
-			page: page,
-			limit: limit
-		};
+	const fetchData = async (updateURL = true) => {
+		const queries = Object.entries({
+			...{ names: names, sort: sort, page: page, limit: limit },
+			...advQuery
+		})
+			.map((v) => `${v[0]}=${v[1] ?? ''}`)
+			.join('&');
 
 		error = '';
 		loading = true;
 
+		updateURL && goto(`?${queries}`);
+
 		await axios
-			.get(
-				`/api/vtubers?${Object.entries(queries)
-					.map((v) => `${v[0]}=${v[1] ?? ''}`)
-					.join('&')}`
-			)
+			.get(`/api/vtubers?${queries}`)
 			.then((resp) => {
 				newVtubers = resp.data.data;
 				total = resp.data.meta.total;
@@ -67,9 +67,21 @@
 			});
 	};
 
+	onMount(() => {
+		const params = Array.from($appPage.url.searchParams.entries());
+		if (params.length === 0) return;
+
+		onSubmitAdvanced({
+			detail: params.reduce((res: { [key: string]: any }, curr) => {
+				res[curr[0]] = curr[1];
+				return res;
+			}, {})
+		});
+	});
+
 	const loadMore = () => {
 		page++;
-		fetchData();
+		fetchData(false);
 	};
 
 	const onSubmit = () => {
@@ -84,7 +96,7 @@
 		vtubers = [];
 		newVtubers = [];
 		page = 1;
-		names = '';
+		names = d.detail.names || '';
 		advQuery = d.detail;
 		fetchData();
 	};
