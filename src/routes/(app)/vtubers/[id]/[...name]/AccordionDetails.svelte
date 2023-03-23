@@ -13,9 +13,9 @@
 		['Nicknames', isEmptyArray(data.nicknames) ? '-' : data.nicknames.join('\n')],
 		['Debut Date', !data.debut_date ? '-' : data.debut_date.toString().slice(0, 10)],
 		['Retirement Date', !data.retirement_date ? '-' : data.retirement_date.toString().slice(0, 10)],
-		['Character Designers', isEmptyArray(data.character_designers) ? '-' : data.character_designers.join('\n')],
-		['2D Modeler', isEmptyArray(data.character_2d_modelers) ? '-' : data.character_2d_modelers.join('\n')],
-		['3D Modeler', isEmptyArray(data.character_3d_modelers) ? '-' : data.character_3d_modelers.join('\n')],
+		['Character Designers', isEmptyArray(data.character_designers) ? '-' : ''],
+		['2D Modeler', isEmptyArray(data.character_2d_modelers) ? '-' : ''],
+		['3D Modeler', isEmptyArray(data.character_3d_modelers) ? '-' : ''],
 		['Agencies', isEmptyArray(data.agencies) ? '-' : ''],
 		['Affiliations', isEmptyArray(data.affiliations) ? '-' : data.affiliations.join('\n')]
 	];
@@ -40,7 +40,37 @@
 			<div class="col-span-3 md:col-span-2 flex flex-col">
 				<div class="font-bold opacity-40">{d[0]}</div>
 				<div class="whitespace-pre-line">
-					{#if d[0] === 'Agencies' && d[1] !== '-'}
+					{#if d[0] === 'Character Designers' && d[1] !== '-'}
+						<div class="grid">
+							{#each data.character_designers as a}
+								<div>
+									<a href={`/vtubers?character_designer=${a}`} class="underline">
+										{a}
+									</a>
+								</div>
+							{/each}
+						</div>
+					{:else if d[0] === '2D Modeler' && d[1] !== '-'}
+						<div class="grid">
+							{#each data.character_2d_modelers as a}
+								<div>
+									<a href={`/vtubers?character_2d_modeler=${a}`} class="underline">
+										{a}
+									</a>
+								</div>
+							{/each}
+						</div>
+					{:else if d[0] === '3D Modeler' && d[1] !== '-'}
+						<div class="grid">
+							{#each data.character_3d_modelers as a}
+								<div>
+									<a href={`/vtubers?character_3d_modeler=${a}`} class="underline">
+										{a}
+									</a>
+								</div>
+							{/each}
+						</div>
+					{:else if d[0] === 'Agencies' && d[1] !== '-'}
 						<div class="grid">
 							{#each data.agencies as a}
 								<div>
