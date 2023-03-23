@@ -37,7 +37,7 @@
 					['Character Designers', isEmptyArray(data.character_designers) ? '-' : data.character_designers.join('\n')],
 					['2D Modeler', isEmptyArray(data.character_2d_modelers) ? '-' : data.character_2d_modelers.join('\n')],
 					['3D Modeler', isEmptyArray(data.character_3d_modelers) ? '-' : data.character_3d_modelers.join('\n')],
-					['Agencies', isEmptyArray(data.agencies) ? '-' : data.agencies.map((a) => `${a.id} ${a.name}`).join('\n')],
+					['Agencies', isEmptyArray(data.agencies) ? '-' : ''],
 					['Affiliations', isEmptyArray(data.affiliations) ? '-' : data.affiliations.join('\n')],
 					['Channels', isEmptyArray(data.channels) ? '-' : ''],
 					['Social Medias', isEmptyArray(data.social_medias) ? '-' : ''],
@@ -88,10 +88,10 @@
 					<div class="col-span-3 whitespace-pre-line">
 						{#if d[0] === 'Agencies' && d[1] !== '-'}
 							<div class="grid">
-								{#each d[1].split('\n') as a}
+								{#each data.agencies as a}
 									<div>
-										<a href={`/agencies/${a.split(' ')[0]}/${a.split(' ').slice(1).join(' ')}`} class="underline">
-											{a.split(' ').slice(1).join(' ')}
+										<a href={`/agencies/${a.id}/${a.name}`} class="underline">
+											{a.name}
 										</a>
 									</div>
 								{/each}
