@@ -1,8 +1,8 @@
 <script lang="ts">
 	import InputCheckbox from '$lib/components/inputs/InputCheckbox.svelte';
 
-	export let has2D: boolean | undefined;
-	export let has3D: boolean | undefined;
+	export let has2D: boolean | string | undefined;
+	export let has3D: boolean | string | undefined;
 </script>
 
 <div>

@@ -1,11 +1,13 @@
 <script lang="ts">
 	import BarChart from '$lib/components/charts/BarChart.svelte';
-	import { onMount } from 'svelte';
+	import VtuberModal from '$lib/components/modals/VtuberModal.svelte';
+	import { onMount, SvelteComponent } from 'svelte';
 	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
 
 	export let data: Array<vtuberResponseData>;
 
-	let chartData: Array<{ name: string; value: number }> = [];
+	let chartData: Array<{ id: number; name: string; value: number }> = [];
+	let modals: Array<SvelteComponent> = [];
 
 	onMount(() => {
 		chartData = Object.entries(
@@ -22,10 +24,20 @@
 			.sort((a, b) => (a[1] < b[1] ? 1 : -1))
 			.slice(0, 20)
 			.map((d) => ({
+				id: data.find((v) => v.name === d[0])?.id || 0,
 				name: d[0],
 				value: d[1]
 			}));
 	});
+
+	const onClick = (d: any) => {
+		const i = d.detail;
+		modals[i].toggleOpen();
+	};
 </script>
 
-<BarChart data={chartData} seriesName="Years" />
+<BarChart data={chartData} seriesName="Years" on:click={onClick} />
+
+{#each chartData as d, i}
+	<VtuberModal id={d.id} title={d.name} bind:this={modals[i]} />
+{/each}

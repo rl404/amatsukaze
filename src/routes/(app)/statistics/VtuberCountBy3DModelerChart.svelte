@@ -24,6 +24,12 @@
 				value: d[1]
 			}));
 	});
+
+	const onClick = (d: any) => {
+		const i = d.detail;
+		const v = Object.values(chartData)[i];
+		window.open(`/vtubers?character_3d_modeler=${v.name}`, '_blank')?.focus();
+	};
 </script>
 
-<BarChart data={chartData} horizontal />
+<BarChart data={chartData} horizontal on:click={onClick} />

@@ -24,6 +24,24 @@
 			{ both: 0, has2D: 0, has3D: 0, none: 0 }
 		);
 	});
+
+	const onClick = (d: any) => {
+		const i = d.detail;
+		switch (d.detail) {
+			case 0:
+				window.open(`/vtubers?has_2d=true&has_3d=true`, '_blank')?.focus();
+				break;
+			case 1:
+				window.open(`/vtubers?has_2d=true&has_3d=false`, '_blank')?.focus();
+				break;
+			case 2:
+				window.open(`/vtubers?has_2d=false&has_3d=true`, '_blank')?.focus();
+				break;
+			case 3:
+				window.open(`/vtubers?has_2d=false&has_3d=false`, '_blank')?.focus();
+				break;
+		}
+	};
 </script>
 
 <DonutChart
@@ -33,4 +51,5 @@
 		{ name: '3D Only', value: chartData.has3D },
 		{ name: 'None', value: chartData.none }
 	]}
+	on:click={onClick}
 />

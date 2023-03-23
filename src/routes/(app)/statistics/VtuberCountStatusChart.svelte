@@ -20,6 +20,18 @@
 			{ active: 0, retired: 0 }
 		);
 	});
+
+	const onClick = (d: any) => {
+		const i = d.detail;
+		switch (d.detail) {
+			case 0:
+				window.open(`/vtubers?exclude_retired=true`, '_blank')?.focus();
+				break;
+			case 1:
+				window.open(`/vtubers?exclude_active=true`, '_blank')?.focus();
+				break;
+		}
+	};
 </script>
 
 <DonutChart
@@ -27,4 +39,5 @@
 		{ name: 'Active', value: chartData.active },
 		{ name: 'Retired', value: chartData.retired }
 	]}
+	on:click={onClick}
 />

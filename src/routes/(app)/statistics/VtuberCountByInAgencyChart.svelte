@@ -16,6 +16,18 @@
 			}
 		});
 	});
+
+	const onClick = (d: any) => {
+		const i = d.detail;
+		switch (d.detail) {
+			case 0:
+				window.open(`/vtubers?in_agency=false`, '_blank')?.focus();
+				break;
+			case 1:
+				window.open(`/vtubers?in_agency=true`, '_blank')?.focus();
+				break;
+		}
+	};
 </script>
 
 <DonutChart
@@ -23,4 +35,5 @@
 		{ name: 'Independent', value: chartData.independent },
 		{ name: 'In Agency', value: chartData.inAgency }
 	]}
+	on:click={onClick}
 />

@@ -33,12 +33,12 @@
 		retired_year: Array<number>;
 		start_retired_year: number;
 		end_retired_year: number;
-		has_2d?: boolean;
-		has_3d?: boolean;
+		has_2d?: boolean | string;
+		has_3d?: boolean | string;
 		character_designer: string;
 		character_2d_modeler: string;
 		character_3d_modeler: string;
-		in_agency?: boolean;
+		in_agency?: boolean | string;
 		agency: string;
 		channel_types: Array<string>;
 	};
@@ -72,11 +72,22 @@
 	let maxRetiredYear: number = 0;
 
 	onMount(() => {
-		const params = Array.from($page.url.searchParams.entries()).reduce((res: any, curr) => {
-			res[curr[0]] = curr[1];
-			return res;
-		}, {});
-		query = { ...query, ...params };
+		const params = Array.from($page.url.searchParams.entries());
+		if (params.length === 0) return;
+
+		query = {
+			...query,
+			...params.reduce((res: any, curr) => {
+				res[curr[0]] = curr[1];
+				return res;
+			}, {})
+		};
+
+		query.include_active = !query.exclude_active;
+		query.include_retired = !query.exclude_retired;
+		query.has_2d = !query.has_2d || query.has_2d === '' ? undefined : query.has_2d === 'true';
+		query.has_3d = !query.has_3d || query.has_3d === '' ? undefined : query.has_3d === 'true';
+		query.in_agency = !query.in_agency || query.in_agency === '' ? undefined : query.in_agency === 'true';
 	});
 
 	const toggleOpen = () => {

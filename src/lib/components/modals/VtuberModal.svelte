@@ -22,6 +22,9 @@
 	let error: string = '';
 
 	export const toggleOpen = () => {
+		loading = true;
+		error = '';
+
 		modal.toggleOpen();
 
 		axios

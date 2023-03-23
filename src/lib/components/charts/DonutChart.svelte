@@ -1,8 +1,11 @@
 <script lang="ts">
 	import { ThemeMode } from '$lib/utils';
 	import { theme } from '$lib/utils/store';
+	import { createEventDispatcher } from 'svelte';
 	import Chart from './Chart.svelte';
 	import { chartBorderColors, chartColors, chartTextColors, getChartColorsByCount } from './colors';
+
+	const dispatch = createEventDispatcher<{ click: number }>();
 
 	export let data: Array<{
 		name: string;
@@ -29,7 +32,12 @@
 	options={{
 		chart: {
 			height: 350,
-			type: 'donut'
+			type: 'donut',
+			events: {
+				dataPointSelection: (_, __, options) => {
+					dispatch('click', options.dataPointIndex);
+				}
+			}
 		},
 		colors: colors,
 		series: data.map((d) => d.value),

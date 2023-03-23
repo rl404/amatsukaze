@@ -1,8 +1,11 @@
 <script lang="ts">
 	import { ThemeMode } from '$lib/utils';
 	import { theme } from '$lib/utils/store';
+	import { createEventDispatcher } from 'svelte';
 	import Chart from './Chart.svelte';
 	import { chartBorderColors, chartColors, chartTextColors } from './colors';
+
+	const dispatch = createEventDispatcher<{ click: number }>();
 
 	export let data: Array<{
 		name: string;
@@ -32,6 +35,11 @@
 			type: 'bar',
 			toolbar: {
 				show: false
+			},
+			events: {
+				click: (_, __, options) => {
+					dispatch('click', options.dataPointIndex);
+				}
 			}
 		},
 		colors: colors,

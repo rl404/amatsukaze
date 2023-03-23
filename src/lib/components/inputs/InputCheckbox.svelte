@@ -3,7 +3,7 @@
 	export let value: string = '';
 	export let checked: boolean = false;
 	export let useIndeterminate: boolean = false;
-	export let state: boolean | undefined = undefined;
+	export let state: boolean | string | undefined = undefined;
 
 	let element: HTMLInputElement;
 
