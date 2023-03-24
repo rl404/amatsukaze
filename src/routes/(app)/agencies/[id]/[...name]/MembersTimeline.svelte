@@ -3,6 +3,7 @@
 	import Timeline from '$lib/components/timelines/Timeline.svelte';
 	import TimelineItem from '$lib/components/timelines/TimelineItem.svelte';
 	import { isScreen, monthNames } from '$lib/utils';
+	import { onMount } from 'svelte';
 	import type { vtuberResponseData } from '../../../../api/vtubers/[id]/+server';
 
 	export let data: Array<vtuberResponseData>;
@@ -54,11 +55,15 @@
 				return v;
 			}));
 
-	$: isMD = isScreen('md');
+	let isMD: boolean = true;
 
 	const updateIsMD = () => {
 		isMD = isScreen('md');
 	};
+
+	onMount(() => {
+		updateIsMD();
+	});
 </script>
 
 <svelte:window on:resize={updateIsMD} />

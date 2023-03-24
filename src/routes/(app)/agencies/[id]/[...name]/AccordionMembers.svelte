@@ -1,67 +1,42 @@
 <script lang="ts">
 	import Accordion from '$lib/components/Accordion.svelte';
-	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
 	import VtuberCard from '$lib/components/layouts/VtuberCard.svelte';
 	import VtuberGrid from '$lib/components/layouts/VtuberGrid.svelte';
 	import VtuberList from '$lib/components/layouts/VtuberList.svelte';
 	import Border from '$lib/components/Border.svelte';
 	import UserGroupIcon from '$lib/components/icons/UserGroupIcon.svelte';
-	import { getAxiosError, vtuberSorter } from '$lib/utils';
-	import axios from 'axios';
+	import { vtuberSorter } from '$lib/utils';
 	import type { vtuberResponseData } from '../../../../api/vtubers/[id]/+server';
 	import MembersTimeline from './MembersTimeline.svelte';
 	import Layout from './Layout.svelte';
 	import Sort from './Sort.svelte';
 
-	export let agency: string;
+	export let data: Array<vtuberResponseData>;
 
-	let vtubers: Array<vtuberResponseData> = [];
-	let loading: boolean = true;
-	let error: string = '';
 	let sort: string = 'debut_date';
 	let layout: string = 'timeline';
 
-	axios
-		.get(`/api/vtubers?agency=${agency}&limit=-1`)
-		.then((resp) => {
-			vtubers = resp.data.data;
-		})
-		.catch((err) => {
-			error = getAxiosError(err);
-		})
-		.finally(() => {
-			loading = false;
-		});
-
-	$: vtubers = vtubers.sort(vtuberSorter(sort));
+	$: data = data.sort(vtuberSorter(sort));
 </script>
 
 <Accordion title="Members" icon={UserGroupIcon} open>
 	<div class="grid grid-cols-6 gap-2">
-		{#if loading}
-			<div class="col-span-6">
-				<SpinnerIcon class="w-6 h-6 m-auto text-gray-200 animate-spin dark:text-gray-600 fill-pink-500 dark:fill-indigo-600" />
-			</div>
-		{:else if error !== ''}
-			<div class="col-span-6 text-center text-red-500">
-				{error}
-			</div>
-		{:else if vtubers.length === 0}
+		{#if data.length === 0}
 			<div class="col-span-6 text-center">no vtubers found...</div>
 		{:else}
 			<div class="col-span-6 flex items-center gap-2">
 				<Border>
-					<span class="px-4 font-bold whitespace-nowrap">{vtubers.length.toLocaleString()} members</span>
+					<span class="px-4 font-bold whitespace-nowrap">{data.length.toLocaleString()} members</span>
 				</Border>
 				<Sort bind:value={sort} {layout} />
 				<Layout bind:value={layout} bind:sort />
 			</div>
 			{#if layout === 'timeline'}
 				<div class="col-span-6">
-					<MembersTimeline data={vtubers} bind:sort />
+					<MembersTimeline {data} bind:sort />
 				</div>
 			{:else}
-				{#each vtubers as vtuber}
+				{#each data as vtuber}
 					{#if layout === 'grid'}
 						<VtuberGrid
 							class="col-span-2 sm:col-span-2 md:col-span-1"

@@ -1,7 +1,8 @@
 <script lang="ts">
 	import Border from '$lib/components/Border.svelte';
 	import Chart from '$lib/components/charts/Chart.svelte';
-	import { getTheme, ThemeMode } from '$lib/utils';
+	import { chartBorderColors, chartColors, chartTextColors } from '$lib/components/charts/colors';
+	import { ThemeMode } from '$lib/utils';
 	import { theme } from '$lib/utils/store';
 	import type { vtuberResponseData } from '../../../../api/vtubers/[id]/+server';
 
@@ -58,22 +59,17 @@
 		data[key].total += data[prevKey].total;
 	});
 
-	let chartTheme = getTheme();
-	let chartColors = ['#22c55e', '#ef4444', '#4f46e5'];
-	let chartTextColor = chartTheme === ThemeMode.Dark ? '#e5e5e5' : '#404040';
-	let chartBorderColor = chartTheme === ThemeMode.Dark ? '#525252' : '#e5e7eb';
+	let currTheme = ThemeMode.Dark;
+	let colors = [chartColors.debut[0], chartColors.retired[0], chartColors[currTheme][0]];
+	let textColor = chartTextColors[currTheme];
+	let borderColor = chartBorderColors[currTheme];
 
 	theme.subscribe((v) => {
-		chartTheme = v;
-		if (v === ThemeMode.Dark) {
-			chartTextColor = '#e5e5e5';
-			chartBorderColor = '#525252';
-			chartColors[2] = '#4f46e5';
-		} else {
-			chartTextColor = '#404040';
-			chartBorderColor = '#e5e7eb';
-			chartColors[2] = '#ec4899';
-		}
+		if (!v) return;
+		currTheme = v;
+		textColor = chartTextColors[currTheme];
+		borderColor = chartBorderColors[currTheme];
+		colors[2] = chartColors[currTheme][0];
 	});
 </script>
 
@@ -100,7 +96,7 @@
 					}
 				}
 			},
-			colors: chartColors,
+			colors: colors,
 			dataLabels: {
 				enabled: false
 			},
@@ -116,7 +112,7 @@
 				}
 			},
 			grid: {
-				borderColor: chartBorderColor,
+				borderColor: borderColor,
 				strokeDashArray: 5,
 				xaxis: { lines: { show: false } },
 				yaxis: { lines: { show: true } }
@@ -140,7 +136,7 @@
 			],
 			legend: {
 				labels: {
-					colors: chartTextColor
+					colors: textColor
 				}
 			},
 			stroke: {
@@ -148,7 +144,7 @@
 				width: 2
 			},
 			tooltip: {
-				theme: chartTheme,
+				theme: currTheme,
 				intersect: false,
 				shared: true,
 				x: {
@@ -160,43 +156,43 @@
 				type: 'datetime',
 				categories: Object.keys(data),
 				labels: {
-					style: { colors: chartTextColor }
+					style: { colors: textColor }
 				},
-				axisBorder: { color: chartBorderColor },
-				axisTicks: { color: chartBorderColor }
+				axisBorder: { color: borderColor },
+				axisTicks: { color: borderColor }
 			},
 			yaxis: [
 				{
 					seriesName: 'Debut',
 					showAlways: true,
 					labels: {
-						style: { colors: chartTextColor }
+						style: { colors: textColor }
 					},
 					forceNiceScale: true,
 					max: Math.max(...Object.values(data).map((d) => d.debut), ...Object.values(data).map((d) => d.retired)),
-					axisBorder: { show: true, color: chartBorderColor },
-					axisTicks: { show: true, color: chartBorderColor }
+					axisBorder: { show: true, color: borderColor },
+					axisTicks: { show: true, color: borderColor }
 				},
 				{
 					seriesName: 'Retired',
 					show: false,
 					labels: {
-						style: { colors: chartTextColor }
+						style: { colors: textColor }
 					},
 					forceNiceScale: true,
 					max: Math.max(...Object.values(data).map((d) => d.debut), ...Object.values(data).map((d) => d.retired)),
-					axisBorder: { show: true, color: chartBorderColor },
-					axisTicks: { show: true, color: chartBorderColor }
+					axisBorder: { show: true, color: borderColor },
+					axisTicks: { show: true, color: borderColor }
 				},
 				{
 					seriesName: 'Total Active',
 					labels: {
-						style: { colors: chartTextColor }
+						style: { colors: textColor }
 					},
 					forceNiceScale: true,
 					opposite: true,
-					axisBorder: { show: true, color: chartBorderColor },
-					axisTicks: { show: true, color: chartBorderColor }
+					axisBorder: { show: true, color: borderColor },
+					axisTicks: { show: true, color: borderColor }
 				}
 			]
 		}}

@@ -3,13 +3,14 @@
 	import Border from '$lib/components/Border.svelte';
 	import Head from '$lib/components/Head.svelte';
 	import Image from '$lib/components/Image.svelte';
-	import type { agencyResponse } from '../../../../api/agencies/[id]/+server';
 	import AccordionStatistics from './AccordionStatistics.svelte';
 	import AccordionMembers from './AccordionMembers.svelte';
+	import type { agencyResponse } from './+page.server';
 
 	export let data: agencyResponse;
 
-	const agency = data.data;
+	const agency = data.agency.data;
+	const vtubers = data.vtubers.data;
 </script>
 
 <Head
@@ -41,7 +42,7 @@
 	</div>
 
 	<div class="col-span-4 sm:col-span-3 flex flex-col gap-4">
-		<div><AccordionStatistics agency={agency.name} /></div>
-		<div><AccordionMembers agency={agency.name} /></div>
+		<div><AccordionStatistics data={vtubers} /></div>
+		<div><AccordionMembers data={vtubers} /></div>
 	</div>
 </div>
