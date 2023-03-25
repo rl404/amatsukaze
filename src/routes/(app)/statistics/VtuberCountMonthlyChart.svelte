@@ -1,10 +1,11 @@
 <script lang="ts">
 	import Chart from '$lib/components/charts/Chart.svelte';
 	import { chartBorderColors, chartColors, chartTextColors } from '$lib/components/charts/colors';
-	import { ThemeMode } from '$lib/utils';
+	import { monthNames, ThemeMode } from '$lib/utils';
 	import { theme } from '$lib/utils/store';
-	import { onMount } from 'svelte';
+	import { onMount, SvelteComponent } from 'svelte';
 	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
+	import VtuberCountMonthlyModal from './VtuberCountMonthlyModal.svelte';
 
 	export let data: Array<vtuberResponseData>;
 
@@ -23,8 +24,8 @@
 
 	let chartData: {
 		[date: string]: {
-			debut: number;
-			retired: number;
+			debut: Array<vtuberResponseData>;
+			retired: Array<vtuberResponseData>;
 			debut_total: number;
 			retired_total: number;
 			active_total: number;
@@ -56,7 +57,7 @@
 
 		while (minDate.toISOString().slice(0, 7) != maxDate.toISOString().slice(0, 7)) {
 			const key = `${minDate.toISOString().slice(0, 7)}-01`;
-			chartData[key] = { debut: 0, retired: 0, debut_total: 0, retired_total: 0, active_total: 0 };
+			chartData[key] = { debut: [], retired: [], debut_total: 0, retired_total: 0, active_total: 0 };
 			minDate.setMonth(minDate.getMonth() + 1);
 		}
 
@@ -65,7 +66,7 @@
 				const debutDate = new Date(vtuber.debut_date);
 				if (debutDate.getFullYear() === 0) return;
 				const key = `${debutDate.toISOString().slice(0, 7)}-01`;
-				chartData[key].debut++;
+				chartData[key].debut.push(vtuber);
 				chartData[key].debut_total++;
 				chartData[key].active_total++;
 			}
@@ -74,7 +75,7 @@
 				const retiredDate = new Date(vtuber.retirement_date);
 				if (retiredDate.getFullYear() === 0) return;
 				const key = `${retiredDate.toISOString().slice(0, 7)}-01`;
-				chartData[key].retired++;
+				chartData[key].retired.push(vtuber);
 				chartData[key].retired_total++;
 				chartData[key].active_total--;
 			}
@@ -89,6 +90,20 @@
 			chartData[key].active_total += chartData[prevKey].active_total;
 		});
 	});
+
+	let modal: SvelteComponent;
+	let modalTitle: string = '';
+	let modalData: { debut: Array<vtuberResponseData>; retired: Array<vtuberResponseData> } = { debut: [], retired: [] };
+
+	const openModal = (i: number) => {
+		const key = Object.keys(chartData)[i];
+		if (!key) return;
+		const d = new Date(key);
+		modalTitle = `${monthNames[d.getMonth()]} ${d.getFullYear()}`;
+		modalData.debut = chartData[key].debut;
+		modalData.retired = chartData[key].retired;
+		modal.toggleOpen();
+	};
 </script>
 
 <Chart
@@ -101,6 +116,11 @@
 			},
 			zoom: {
 				enabled: false
+			},
+			events: {
+				click: (_, __, options) => {
+					openModal(options.dataPointIndex);
+				}
 			}
 		},
 		colors: colors,
@@ -128,12 +148,12 @@
 			{
 				name: 'Debut',
 				type: 'column',
-				data: Object.values(chartData).map((d) => d.debut)
+				data: Object.values(chartData).map((d) => d.debut.length)
 			},
 			{
 				name: 'Retired',
 				type: 'column',
-				data: Object.values(chartData).map((d) => d.retired)
+				data: Object.values(chartData).map((d) => d.retired.length)
 			},
 			{
 				name: 'Total Debut',
@@ -186,7 +206,7 @@
 					style: { colors: textColor }
 				},
 				forceNiceScale: true,
-				max: Math.max(...Object.values(chartData).map((d) => d.debut), ...Object.values(chartData).map((d) => d.retired)),
+				max: Math.max(...Object.values(chartData).map((d) => d.debut.length), ...Object.values(chartData).map((d) => d.retired.length)),
 				axisBorder: { show: true, color: borderColor },
 				axisTicks: { show: true, color: borderColor }
 			},
@@ -197,7 +217,7 @@
 					style: { colors: textColor }
 				},
 				forceNiceScale: true,
-				max: Math.max(...Object.values(chartData).map((d) => d.debut), ...Object.values(chartData).map((d) => d.retired)),
+				max: Math.max(...Object.values(chartData).map((d) => d.debut.length), ...Object.values(chartData).map((d) => d.retired.length)),
 				axisBorder: { show: true, color: borderColor },
 				axisTicks: { show: true, color: borderColor }
 			},
@@ -247,3 +267,5 @@
 		]
 	}}
 />
+
+<VtuberCountMonthlyModal title={modalTitle} data={modalData} bind:this={modal} />
