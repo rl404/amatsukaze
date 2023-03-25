@@ -41,6 +41,10 @@
 			if (chartData[m][d - 1] > maxCount) maxCount = chartData[m][d - 1];
 		});
 	});
+
+	const onClick = (x: number, y: number) => {
+		window.open(`/vtubers?birthday_day=${x + 1}&birthday_month=${y + 1}`, '_blank')?.focus();
+	};
 </script>
 
 <Chart
@@ -50,6 +54,11 @@
 			type: 'heatmap',
 			toolbar: {
 				show: false
+			},
+			events: {
+				click: (_, __, options) => {
+					onClick(options.dataPointIndex, options.seriesIndex);
+				}
 			}
 		},
 		dataLabels: { enabled: false },

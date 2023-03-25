@@ -32,6 +32,22 @@
 		chartData = chartData.slice(0, 12);
 		chartData.push({ name: 'Other', value: otherZodiacCount });
 	});
+
+	const onClick = (d: any) => {
+		const i = d.detail;
+		const zodiac = chartData[i].name;
+		if (zodiac !== 'Other') {
+			window.open(`/vtubers?zodiacs=${zodiac}`, '_blank')?.focus();
+			return;
+		}
+
+		const excludedZodiac = chartData
+			.filter((d) => d.name !== 'Other')
+			.map((d) => '-' + d.name)
+			.join(',');
+
+		window.open(`/vtubers?zodiacs=${excludedZodiac}`, '_blank')?.focus();
+	};
 </script>
 
-<DonutChart data={chartData} />
+<DonutChart data={chartData} on:click={onClick} />

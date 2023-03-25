@@ -23,6 +23,12 @@
 				value: d[1]
 			}));
 	});
+
+	const onClick = (d: any) => {
+		const i = d.detail;
+		const channelType = chartData[i].name;
+		window.open(`/vtubers?channel_types=${channelType}`, '_blank')?.focus();
+	};
 </script>
 
-<DonutChart data={chartData} />
+<DonutChart data={chartData} on:click={onClick} />

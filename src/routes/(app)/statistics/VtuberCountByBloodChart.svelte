@@ -32,6 +32,22 @@
 		chartData = chartData.slice(0, 5);
 		chartData.push({ name: 'Other', value: otherBloodTypeCount });
 	});
+
+	const onClick = (d: any) => {
+		const i = d.detail;
+		const bloodType = chartData[i].name;
+		if (bloodType !== 'Other') {
+			window.open(`/vtubers?blood_types=${bloodType}`, '_blank')?.focus();
+			return;
+		}
+
+		const excludedBloodType = chartData
+			.filter((d) => d.name !== 'Other')
+			.map((d) => '-' + d.name)
+			.join(',');
+
+		window.open(`/vtubers?blood_types=${excludedBloodType}`, '_blank')?.focus();
+	};
 </script>
 
-<DonutChart data={chartData} />
+<DonutChart data={chartData} on:click={onClick} />
