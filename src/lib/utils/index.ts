@@ -172,3 +172,5 @@ const screenSize: { [size: string]: number } = {
 export const isScreen = (size: string): boolean => {
 	return window.innerWidth >= screenSize[size];
 };
+
+export const zodiacs = ['Aries', 'Pisces', 'Cancer', 'Leo', 'Scorpio', 'Gemini', 'Libra', 'Sagittarius', 'Aquarius', 'Virgo', 'Taurus', 'Capricorn'];

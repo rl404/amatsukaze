@@ -19,5 +19,5 @@
 
 <div>
 	<label for="characterDesigner" class="block mb-2 font-medium">Character Designer</label>
-	<InputText id="characterDesigner" placeholder="all" class="w-full pl-2" bind:value datalist={options} />
+	<InputText id="characterDesigner" placeholder="any" class="w-full pl-2" bind:value datalist={options} />
 </div>

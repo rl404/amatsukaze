@@ -37,8 +37,8 @@
 
 	const fetchData = async (updateURL = true) => {
 		const queries = Object.entries({
-			...{ names: names, sort: sort, page: page, limit: limit },
-			...advQuery
+			...advQuery,
+			...{ names: names, sort: sort, page: page, limit: limit }
 		})
 			.map((v) => `${v[0]}=${v[1] ?? ''}`)
 			.join('&');

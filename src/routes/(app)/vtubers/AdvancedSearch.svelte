@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { createEventDispatcher, onMount, type SvelteComponent } from 'svelte';
-	import { resetObject } from '$lib/utils';
+	import { resetObject, zodiacs } from '$lib/utils';
 	import IconButton from '$lib/components/buttons/IconButton.svelte';
 	import Modal from '$lib/components/modals/Modal.svelte';
 	import Button from '$lib/components/buttons/Button.svelte';
@@ -18,6 +18,7 @@
 	import InputInAgency from './InputInAgency.svelte';
 	import InputAgency from './InputAgency.svelte';
 	import InputChannel from './InputChannel.svelte';
+	import InputBirthday from './InputBirthday.svelte';
 
 	type advancedQuery = {
 		name: string;
@@ -41,6 +42,11 @@
 		in_agency?: boolean | string;
 		agency: string;
 		channel_types: Array<string>;
+		birthday_day: number;
+		birthday_month: number;
+		blood_types: string;
+		genders: string;
+		zodiacs: string;
 	};
 
 	const dispatch = createEventDispatcher<{ submit: advancedQuery }>();
@@ -64,21 +70,34 @@
 		character_2d_modeler: '',
 		character_3d_modeler: '',
 		agency: '',
-		channel_types: []
+		channel_types: [],
+		birthday_day: 0,
+		birthday_month: 0,
+		blood_types: '',
+		genders: '',
+		zodiacs: ''
 	};
 	let minDebutYear: number = 0;
 	let maxDebutYear: number = 0;
 	let minRetiredYear: number = 0;
 	let maxRetiredYear: number = 0;
 
+	type advancedQueryKey = keyof typeof query;
+
 	onMount(() => {
-		const params = Array.from($page.url.searchParams.entries());
+		const params = Array.from($page.url.searchParams.entries()) as Array<[advancedQueryKey, any]>;
 		if (params.length === 0) return;
 
 		query = {
 			...query,
 			...params.reduce((res: any, curr) => {
-				res[curr[0]] = curr[1];
+				if (typeof query[curr[0]] === 'number') {
+					res[curr[0]] = parseInt(curr[1]);
+				} else if (typeof query[curr[0]] === 'boolean') {
+					res[curr[0]] = curr[1] === 'true';
+				} else {
+					res[curr[0]] = curr[1];
+				}
 				return res;
 			}, {})
 		};
@@ -163,8 +182,20 @@
 			<div>
 				<Input3DModeler bind:value={query.character_3d_modeler} />
 			</div>
-			<div class="col-span-3">
+			<div class="col-span-2">
 				<InputChannel bind:value={query.channel_types} />
+			</div>
+			<div>
+				<InputBirthday bind:birthdayDay={query.birthday_day} bind:birthdayMonth={query.birthday_month} />
+			</div>
+			<div>
+				<InputText id="gender" label="Gender" placeholder="any" bind:value={query.genders} datalist={['Male', 'Female']} />
+			</div>
+			<div>
+				<InputText id="bloodType" label="Blood Type" placeholder="any" bind:value={query.blood_types} datalist={['A', 'B', 'AB', 'O']} />
+			</div>
+			<div>
+				<InputText id="zodiac" label="Zodiac" placeholder="any" bind:value={query.zodiacs} datalist={zodiacs.sort()} />
 			</div>
 		</div>
 

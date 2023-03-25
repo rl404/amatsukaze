@@ -29,6 +29,11 @@ export const GET = (async ({ url }) => {
 		'in_agency',
 		'agency',
 		'channel_types',
+		'birthday_day',
+		'birthday_month',
+		'blood_types',
+		'genders',
+		'zodiacs',
 		'sort',
 		'page',
 		'limit'
