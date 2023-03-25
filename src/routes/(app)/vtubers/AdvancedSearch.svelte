@@ -145,56 +145,56 @@
 	<Modal bind:this={modal} maxWidthClass="max-w-3xl">
 		<span slot="title">Advanced Search</span>
 
-		<div slot="body" class="p-4 grid grid-cols-3 gap-4">
-			<div>
+		<div slot="body" class="p-4 grid grid-cols-6 gap-4">
+			<div class="col-span-6 sm:col-span-2">
 				<InputText id="name" label="Name" placeholder="name" bind:value={query.name} />
 			</div>
-			<div>
+			<div class="col-span-6 sm:col-span-2">
 				<InputText id="originalName" label="Original Name" placeholder="original name" bind:value={query.original_name} />
 			</div>
-			<div>
+			<div class="col-span-6 sm:col-span-2">
 				<InputText id="nickname" label="Nickname" placeholder="nickname" bind:value={query.nickname} />
 			</div>
-			<div>
+			<div class="col-span-6 sm:col-span-2">
 				<InputStatus bind:includeActive={query.include_active} bind:includeRetired={query.include_retired} />
 			</div>
-			<div>
+			<div class="col-span-6 sm:col-span-2">
 				<InputDebutYear bind:values={query.debut_year} bind:minValue={minDebutYear} bind:maxValue={maxDebutYear} />
 			</div>
-			<div>
+			<div class="col-span-6 sm:col-span-2">
 				<InputRetiredYear bind:values={query.retired_year} bind:minValue={minRetiredYear} bind:maxValue={maxRetiredYear} />
 			</div>
-			<div>
+			<div class="col-span-6 sm:col-span-2">
 				<InputInAgency bind:inAgency={query.in_agency} />
 			</div>
-			<div>
+			<div class="col-span-6 sm:col-span-2">
 				<InputAgency bind:value={query.agency} />
 			</div>
-			<div>
+			<div class="col-span-6 sm:col-span-2">
 				<InputModel bind:has2D={query.has_2d} bind:has3D={query.has_3d} />
 			</div>
-			<div>
+			<div class="col-span-6 sm:col-span-2">
 				<InputDesigner bind:value={query.character_designer} />
 			</div>
-			<div>
+			<div class="col-span-6 sm:col-span-2">
 				<Input2DModeler bind:value={query.character_2d_modeler} />
 			</div>
-			<div>
+			<div class="col-span-6 sm:col-span-2">
 				<Input3DModeler bind:value={query.character_3d_modeler} />
 			</div>
-			<div class="col-span-2">
+			<div class="col-span-6 sm:col-span-4">
 				<InputChannel bind:value={query.channel_types} />
 			</div>
-			<div>
+			<div class="col-span-6 sm:col-span-2">
 				<InputBirthday bind:birthdayDay={query.birthday_day} bind:birthdayMonth={query.birthday_month} />
 			</div>
-			<div>
+			<div class="col-span-6 sm:col-span-2">
 				<InputText id="gender" label="Gender" placeholder="any" bind:value={query.genders} datalist={['Male', 'Female']} />
 			</div>
-			<div>
+			<div class="col-span-6 sm:col-span-2">
 				<InputText id="bloodType" label="Blood Type" placeholder="any" bind:value={query.blood_types} datalist={['A', 'B', 'AB', 'O']} />
 			</div>
-			<div>
+			<div class="col-span-6 sm:col-span-2">
 				<InputText id="zodiac" label="Zodiac" placeholder="any" bind:value={query.zodiacs} datalist={zodiacs.sort()} />
 			</div>
 		</div>

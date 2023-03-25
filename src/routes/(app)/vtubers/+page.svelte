@@ -117,7 +117,7 @@
 			<div class="text-3xl font-bold">
 				Vtuber List <span class="text-xl font-normal opacity-70 hover:opacity-100">— {total.toLocaleString()}</span>
 			</div>
-			<div class="flex items-center justify-end gap-2 w-full sm:w-auto">
+			<div class="flex items-center justify-end gap-2 w-full md:w-auto">
 				<div class="w-full">
 					<InputSearch class="w-full" bind:value={names} placeholder="search vtuber name..." on:submit={onSubmit} />
 				</div>
