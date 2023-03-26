@@ -1,7 +1,13 @@
 import type { RequestHandler } from './$types';
-import { PUBLIC_SHIMAKAZE_HOST } from '$env/static/public';
+import { SHIMAKAZE_HOST } from '$env/static/private';
 
-export type Data = {
+export type vtuberResponse = {
+	status: number;
+	message: string;
+	data: vtuberResponseData;
+};
+
+export type vtuberResponseData = {
 	id: number;
 	name: string;
 	image: string;
@@ -21,7 +27,7 @@ export type Data = {
 		image: string;
 	}>;
 	affiliations: Array<string>;
-	channels: Array<{ type: string; url: string }>;
+	channels: Array<vtuberResponseDataChannel>;
 	social_medias: Array<string>;
 	official_websites: Array<string>;
 	gender: string;
@@ -32,10 +38,13 @@ export type Data = {
 	blood_type: string;
 	zodiac_sign: string;
 	emoji: string;
+	updated_at: Date;
 };
 
+export type vtuberResponseDataChannel = { type: string; url: string };
+
 export const GET = (async ({ params }) => {
-	const resp = await fetch(`${PUBLIC_SHIMAKAZE_HOST}/vtubers/${params.id}`);
+	const resp = await fetch(`${SHIMAKAZE_HOST}/vtubers/${params.id}`);
 	const data = await resp.json();
 	return new Response(JSON.stringify(data), {
 		headers: {
