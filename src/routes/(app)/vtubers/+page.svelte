@@ -109,7 +109,7 @@
 	};
 </script>
 
-<Head title="Vtuber List" description="Visualize vtuber data from wikia to a list." />
+<Head title="Vtuber List" description="Visualize vtuber data from wikia to a list." image="/vtubers.png" />
 
 <div class="grid grid-cols-6 gap-4">
 	<div class="col-span-6">
