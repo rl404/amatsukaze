@@ -1,4 +1,6 @@
 <script lang="ts">
+	import Analytics from './Analytics.svelte';
+
 	export let title = 'Home';
 	export let description = 'Visualize vtuber data from wikia to family tree, agency tree, and statistics.';
 	export let image = '/home.png';
@@ -18,3 +20,5 @@
 	<meta name="theme-color" content="#eab308" />
 	<meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
+
+<Analytics />
