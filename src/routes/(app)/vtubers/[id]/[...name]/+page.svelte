@@ -15,9 +15,10 @@
 
 	const vtuber = data.data;
 
-	const debutDate = !vtuber.debut_date ? '-' : vtuber.debut_date.toString().slice(0, 10);
-	const retiredDate = !vtuber.retirement_date ? '-' : vtuber.retirement_date.toString().slice(0, 10);
-	const headDescription = `Agency: ${vtuber.agencies.map((a) => a.name).join(', ')}. Debut: ${debutDate}. Retired: ${retiredDate}.`;
+	let headDescription = '';
+	headDescription += `Agency: ${vtuber.agencies.length === 0 ? 'independent' : vtuber.agencies.map((a) => a.name).join(', ')}. `;
+	headDescription += `Debut date: ${!vtuber.debut_date ? 'unknown' : vtuber.debut_date.toString().slice(0, 10)}. `;
+	vtuber.retirement_date && (headDescription += `Retirement date: ${vtuber.retirement_date.toString().slice(0, 10)}`);
 </script>
 
 <Head title={vtuber.name} description={headDescription} image={vtuber.image && `/api/wikia/image/${vtuber.image.split('?')[0]}?height=206`} />

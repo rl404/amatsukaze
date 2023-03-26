@@ -15,7 +15,7 @@
 
 <Head
 	title={agency.name}
-	description="Visualize agency data from wikia to a page."
+	description={`Agency with ${vtubers.length.toLocaleString()} members`}
 	image={agency.image && `/api/wikia/image/${agency.image.split('?')[0]}?height=206`}
 />
 
