@@ -1,6 +1,6 @@
 import type { RequestHandler } from './$types';
-import { PUBLIC_SHIMAKAZE_HOST } from '$env/static/public';
 import type { agencyResponseData } from './[id]/+server';
+import { SHIMAKAZE_HOST } from '$env/static/private';
 
 export type agenciesResponse = {
 	status: number;
@@ -9,7 +9,7 @@ export type agenciesResponse = {
 };
 
 export const GET = (async () => {
-	const resp = await fetch(`${PUBLIC_SHIMAKAZE_HOST}/agencies`);
+	const resp = await fetch(`${SHIMAKAZE_HOST}/agencies`);
 	const data = await resp.json();
 	return new Response(JSON.stringify(data), {
 		headers: {

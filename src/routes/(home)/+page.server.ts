@@ -1,5 +1,5 @@
 import type { PageServerLoad } from './$types';
-import { PUBLIC_SHIMAKAZE_HOST } from '$env/static/public';
+import { SHIMAKAZE_HOST } from '$env/static/private';
 
 export type vtuberImagesResponse = {
 	status: number;
@@ -14,6 +14,6 @@ export type vtuberImagesResponseData = {
 };
 
 export const load = (async () => {
-	const resp = await fetch(`${PUBLIC_SHIMAKAZE_HOST}/vtubers/images?shuffle=true&limit=60`);
+	const resp = await fetch(`${SHIMAKAZE_HOST}/vtubers/images?shuffle=true&limit=60`);
 	return await resp.json();
 }) satisfies PageServerLoad;

@@ -1,7 +1,7 @@
-import { PUBLIC_SHIMAKAZE_HOST } from '$env/static/public';
 import type { vtubersResponse } from '../../api/vtubers/+server';
 import type { agenciesResponse } from '../../api/agencies/+server';
 import type { PageServerLoad } from './$types';
+import { SHIMAKAZE_HOST } from '$env/static/private';
 
 export type statsResponse = {
 	vtubers: vtubersResponse;
@@ -10,8 +10,8 @@ export type statsResponse = {
 
 export const load = (async () => {
 	const [vtubersResp, agenciesResp] = await Promise.all([
-		fetch(`${PUBLIC_SHIMAKAZE_HOST}/vtubers?mode=stats&limit=-1`),
-		fetch(`${PUBLIC_SHIMAKAZE_HOST}/agencies`)
+		fetch(`${SHIMAKAZE_HOST}/vtubers?mode=stats&limit=-1`),
+		fetch(`${SHIMAKAZE_HOST}/agencies`)
 	]);
 	if (!vtubersResp.ok || !agenciesResp.ok) return;
 	return {

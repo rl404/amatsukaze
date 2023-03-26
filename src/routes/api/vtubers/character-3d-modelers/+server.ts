@@ -1,5 +1,5 @@
 import type { RequestHandler } from './$types';
-import { PUBLIC_SHIMAKAZE_HOST } from '$env/static/public';
+import { SHIMAKAZE_HOST } from '$env/static/private';
 
 export type vtuberCharacter3DModelersResponse = {
 	status: number;
@@ -8,7 +8,7 @@ export type vtuberCharacter3DModelersResponse = {
 };
 
 export const GET = (async () => {
-	const resp = await fetch(`${PUBLIC_SHIMAKAZE_HOST}/vtubers/character-3d-modelers`);
+	const resp = await fetch(`${SHIMAKAZE_HOST}/vtubers/character-3d-modelers`);
 	const data = await resp.json();
 	return new Response(JSON.stringify(data), {
 		headers: {
