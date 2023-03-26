@@ -8,6 +8,12 @@ export type statsResponse = {
 	agencies: agenciesResponse;
 };
 
+export const config = {
+	isr: {
+		expiration: 60 * 60
+	}
+};
+
 export const load = (async () => {
 	const [vtubersResp, agenciesResp] = await Promise.all([
 		fetch(`${SHIMAKAZE_HOST}/vtubers?mode=stats&limit=-1`),

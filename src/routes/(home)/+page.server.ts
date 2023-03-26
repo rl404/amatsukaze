@@ -13,6 +13,12 @@ export type vtuberImagesResponseData = {
 	image: string;
 };
 
+export const config = {
+	isr: {
+		expiration: 60 * 60
+	}
+};
+
 export const load = (async () => {
 	const resp = await fetch(`${SHIMAKAZE_HOST}/vtubers/images?shuffle=true&limit=60`);
 	return await resp.json();
