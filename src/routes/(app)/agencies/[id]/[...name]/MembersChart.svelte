@@ -1,0 +1,200 @@
+<script lang="ts">
+	import Border from '$lib/components/Border.svelte';
+	import Chart from '$lib/components/charts/Chart.svelte';
+	import { chartBorderColors, chartColors, chartTextColors } from '$lib/components/charts/colors';
+	import { ThemeMode } from '$lib/utils';
+	import { theme } from '$lib/utils/store';
+	import type { vtuberResponseData } from '../../../../api/vtubers/[id]/+server';
+
+	export let vtubers: Array<vtuberResponseData> = [];
+
+	let data: { [date: string]: { debut: number; retired: number; total: number } } = {};
+
+	let minDate = new Date();
+	let maxDate = new Date();
+
+	vtubers.forEach((vtuber) => {
+		if (vtuber.debut_date && new Date(vtuber.debut_date)) {
+			const debutDate = new Date(vtuber.debut_date);
+			if (debutDate < minDate) minDate = debutDate;
+			if (debutDate > maxDate) maxDate = debutDate;
+		}
+
+		if (vtuber.retirement_date && new Date(vtuber.retirement_date)) {
+			const retiredDate = new Date(vtuber.retirement_date);
+			if (retiredDate < minDate) minDate = retiredDate;
+			if (retiredDate > maxDate) maxDate = retiredDate;
+		}
+	});
+
+	minDate.setMonth(minDate.getMonth() - 1);
+	maxDate.setMonth(maxDate.getMonth() + 1);
+
+	while (minDate.toISOString().slice(0, 7) != maxDate.toISOString().slice(0, 7)) {
+		const key = `${minDate.toISOString().slice(0, 7)}-01`;
+		data[key] = { debut: 0, retired: 0, total: 0 };
+		minDate.setMonth(minDate.getMonth() + 1);
+	}
+
+	vtubers.forEach((vtuber) => {
+		if (vtuber.debut_date && new Date(vtuber.debut_date)) {
+			const debutDate = new Date(vtuber.debut_date).toISOString();
+			const key = `${debutDate.slice(0, 7)}-01`;
+			data[key].debut++;
+			data[key].total++;
+		}
+
+		if (vtuber.retirement_date && new Date(vtuber.retirement_date)) {
+			const retiredDate = new Date(vtuber.retirement_date).toISOString();
+			const key = `${retiredDate.slice(0, 7)}-01`;
+			data[key].retired++;
+			data[key].total--;
+		}
+	});
+
+	Object.entries(data).forEach((d, i) => {
+		if (i === 0) return;
+		const key = d[0];
+		const prevKey = Object.entries(data)[i - 1][0];
+		data[key].total += data[prevKey].total;
+	});
+
+	let currTheme = ThemeMode.Dark;
+	let colors = [chartColors.debut[0], chartColors.retired[0], chartColors[currTheme][0]];
+	let textColor = chartTextColors[currTheme];
+	let borderColor = chartBorderColors[currTheme];
+
+	theme.subscribe((v) => {
+		if (!v) return;
+		currTheme = v;
+		textColor = chartTextColors[currTheme];
+		borderColor = chartBorderColors[currTheme];
+		colors[2] = chartColors[currTheme][0];
+	});
+</script>
+
+<div>
+	<Border>
+		<span class="px-4 font-bold whitespace-nowrap">Member Count by Month</span>
+	</Border>
+	<Chart
+		options={{
+			chart: {
+				height: 350,
+				type: 'line',
+				toolbar: {
+					show: false
+				},
+				zoom: {
+					enabled: false
+				},
+				events: {
+					click: (_, __, cfg) => {
+						const id = Object.keys(data)[cfg.dataPointIndex];
+						const el = document.getElementById(id);
+						el?.scrollIntoView({ behavior: 'smooth' });
+					}
+				}
+			},
+			colors: colors,
+			dataLabels: {
+				enabled: false
+			},
+			fill: {
+				type: ['solid', 'solid', 'gradient'],
+				gradient: {
+					type: 'vertical',
+					shadeIntensity: 1,
+					inverseColors: false,
+					opacityFrom: 0.7,
+					opacityTo: 0,
+					stops: [20, 100]
+				}
+			},
+			grid: {
+				borderColor: borderColor,
+				strokeDashArray: 5,
+				xaxis: { lines: { show: false } },
+				yaxis: { lines: { show: true } }
+			},
+			series: [
+				{
+					name: 'Debut',
+					type: 'column',
+					data: Object.values(data).map((d) => d.debut)
+				},
+				{
+					name: 'Retired',
+					type: 'column',
+					data: Object.values(data).map((d) => d.retired)
+				},
+				{
+					name: 'Total Active',
+					type: 'area',
+					data: Object.values(data).map((d) => d.total)
+				}
+			],
+			legend: {
+				labels: {
+					colors: textColor
+				}
+			},
+			stroke: {
+				curve: 'smooth',
+				width: 2
+			},
+			tooltip: {
+				theme: currTheme,
+				intersect: false,
+				shared: true,
+				x: {
+					format: 'MMM yyyy'
+				},
+				y: { formatter: (v) => (!v ? '0' : v.toLocaleString()) }
+			},
+			xaxis: {
+				type: 'datetime',
+				categories: Object.keys(data),
+				labels: {
+					style: { colors: textColor }
+				},
+				axisBorder: { color: borderColor },
+				axisTicks: { color: borderColor }
+			},
+			yaxis: [
+				{
+					seriesName: 'Debut',
+					showAlways: true,
+					labels: {
+						style: { colors: textColor }
+					},
+					forceNiceScale: true,
+					max: Math.max(...Object.values(data).map((d) => d.debut), ...Object.values(data).map((d) => d.retired)),
+					axisBorder: { show: true, color: borderColor },
+					axisTicks: { show: true, color: borderColor }
+				},
+				{
+					seriesName: 'Retired',
+					show: false,
+					labels: {
+						style: { colors: textColor }
+					},
+					forceNiceScale: true,
+					max: Math.max(...Object.values(data).map((d) => d.debut), ...Object.values(data).map((d) => d.retired)),
+					axisBorder: { show: true, color: borderColor },
+					axisTicks: { show: true, color: borderColor }
+				},
+				{
+					seriesName: 'Total Active',
+					labels: {
+						style: { colors: textColor }
+					},
+					forceNiceScale: true,
+					opposite: true,
+					axisBorder: { show: true, color: borderColor },
+					axisTicks: { show: true, color: borderColor }
+				}
+			]
+		}}
+	/>
+</div>
