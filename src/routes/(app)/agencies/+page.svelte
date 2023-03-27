@@ -23,7 +23,7 @@
 	};
 </script>
 
-<Head title="Agency List" description="Visualize agency data from wikia to a list." image="/agencies.png" />
+<Head title="Agency List" description="Agency list and search." image="/agencies.png" />
 
 <div class="grid grid-cols-6 gap-4">
 	<div class="col-span-6">

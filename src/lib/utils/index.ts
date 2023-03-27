@@ -174,3 +174,17 @@ export const isScreen = (size: string): boolean => {
 };
 
 export const zodiacs = ['Aries', 'Pisces', 'Cancer', 'Leo', 'Scorpio', 'Gemini', 'Libra', 'Sagittarius', 'Aquarius', 'Virgo', 'Taurus', 'Capricorn'];
+
+const currentMonth = (): string => {
+	return (new Date().getMonth() + 1).toString();
+};
+
+export const parseMonth = (str: string | null): string => {
+	if (!str || str === '') return currentMonth();
+
+	const month = parseInt(str);
+	if (isNaN(month)) return currentMonth();
+	if (month <= 0 || month > 12) return currentMonth();
+
+	return month.toString();
+};
