@@ -22,7 +22,7 @@
 		modal.toggleOpen();
 
 		axios
-			.get(`/api/vtubers?agency=${title}&limit=-1`)
+			.get(`/api/vtubers?agency_id=${id}&limit=-1`)
 			.then((resp) => {
 				data = resp.data.data;
 			})

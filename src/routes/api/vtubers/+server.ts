@@ -32,6 +32,7 @@ export const GET = (async ({ url }) => {
 		'character_3d_modeler',
 		'in_agency',
 		'agency',
+		'agency_id',
 		'channel_types',
 		'birthday_day',
 		'start_birthday_month',

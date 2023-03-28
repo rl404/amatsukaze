@@ -2,6 +2,8 @@
 	import IconButton from '$lib/components/buttons/IconButton.svelte';
 	import SortLetterAscIcon from '$lib/components/icons/SortLetterAscIcon.svelte';
 	import SortLetterDescIcon from '$lib/components/icons/SortLetterDescIcon.svelte';
+	import SortNumberAscIcon from '$lib/components/icons/SortNumberAscIcon.svelte';
+	import SortNumberDescIcon from '$lib/components/icons/SortNumberDescIcon.svelte';
 	import InputRadio from '$lib/components/inputs/InputRadio.svelte';
 	import { clickAway } from '$lib/utils';
 	import { createEventDispatcher, type ComponentType } from 'svelte';
@@ -12,7 +14,9 @@
 
 	const sorts: { [key: string]: { label: string; value: string; component: ComponentType } } = {
 		name: { label: 'Name ASC', value: 'name', component: SortLetterAscIcon },
-		'-name': { label: 'Name DESC', value: '-name', component: SortLetterDescIcon }
+		'-name': { label: 'Name DESC', value: '-name', component: SortLetterDescIcon },
+		member: { label: 'Member ASC', value: 'member', component: SortNumberAscIcon },
+		'-member': { label: 'Member DESC', value: '-member', component: SortNumberDescIcon }
 	};
 
 	let hidden: boolean = true;

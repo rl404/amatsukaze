@@ -156,6 +156,10 @@ export const agencySorter =
 				return a.name < b.name ? -1 : 1;
 			case '-name':
 				return a.name > b.name ? -1 : 1;
+			case 'member':
+				return a.member < b.member ? -1 : 1;
+			case '-member':
+				return a.member > b.member ? -1 : 1;
 			default:
 				return a.name < b.name ? -1 : 1;
 		}

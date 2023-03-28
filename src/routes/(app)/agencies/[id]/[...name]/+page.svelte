@@ -33,12 +33,18 @@
 		<Border />
 	</div>
 
-	<div class="col-span-4 sm:col-span-1">
-		<Image
-			src={agency.image && `/api/wikia/image/${agency.image.split('?')[0]}?height=206`}
-			alt={agency.name}
-			class="p-2 m-auto w-full rounded-lg border dark:border-neutral-600 bg-neutral-100 dark:bg-neutral-800"
-		/>
+	<div class="col-span-4 sm:col-span-1 flex flex-col gap-4">
+		<div>
+			<Image
+				src={agency.image && `/api/wikia/image/${agency.image.split('?')[0]}?height=206`}
+				alt={agency.name}
+				class="p-2 m-auto w-full rounded-lg border dark:border-neutral-600 bg-neutral-100 dark:bg-neutral-800"
+			/>
+		</div>
+		<div class="font-bold flex justify-between gap-4">
+			<div>Member Count</div>
+			<div>{agency.member.toLocaleString()}</div>
+		</div>
 	</div>
 
 	<div class="col-span-4 sm:col-span-3 flex flex-col gap-4">
