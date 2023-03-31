@@ -18,16 +18,16 @@
 
 	<div slot="body" class="p-4 grid gap-4">
 		<div>
-			<a href="/vtubers" on:click={() => toggleOpen()}>Vtuber list</a>
+			<a href="/vtubers" data-sveltekit-reload>Vtuber list</a>
 		</div>
 		<div>
-			<a href="/agencies" on:click={() => toggleOpen()}>Agency list</a>
+			<a href="/agencies" data-sveltekit-reload>Agency list</a>
 		</div>
 		<div>
-			<a href="/statistics" on:click={() => toggleOpen()}>Statistics</a>
+			<a href="/statistics" data-sveltekit-reload>Statistics</a>
 		</div>
 		<div>
-			<a href="/events" on:click={() => toggleOpen()}>Events</a>
+			<a href="/events" data-sveltekit-reload>Events</a>
 		</div>
 	</div>
 

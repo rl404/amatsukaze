@@ -19,10 +19,10 @@
 			<span class="text-2xl font-bold">Amatsukaze</span>
 		</a>
 		<div class="hidden sm:flex items-center gap-4 text-white">
-			<a href="/vtubers">Vtubers</a>
-			<a href="/agencies">Agencies</a>
-			<a href="/events">Events</a>
-			<a href="/statistics">Statistics</a>
+			<a href="/vtubers" data-sveltekit-reload>Vtubers</a>
+			<a href="/agencies" data-sveltekit-reload>Agencies</a>
+			<a href="/events" data-sveltekit-reload>Events</a>
+			<a href="/statistics" data-sveltekit-reload>Statistics</a>
 			<div class="border-r border-white h-5 opacity-30" />
 			<button class="hover:opacity-70 block dark:hidden" on:click={() => setTheme(ThemeMode.Dark)} title="light mode">
 				<SunIcon class="w-6 h-6" />
