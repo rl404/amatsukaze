@@ -43,7 +43,7 @@
 	});
 
 	const onClick = (x: number, y: number) => {
-		window.open(`/vtubers?birthday_day=${x + 1}&birthday_month=${y + 1}`, '_blank')?.focus();
+		window.open(`/vtubers?birthday_day=${x + 1}&start_birthday_month=${y + 1}&end_birthday_month=${y + 1}`, '_blank')?.focus();
 	};
 </script>
 

@@ -44,6 +44,8 @@
 		channel_types: Array<string>;
 		birthday_day: number;
 		birthday_month: number;
+		start_birthday_month: number;
+		end_birthday_month: number;
 		blood_types: string;
 		genders: string;
 		zodiacs: string;
@@ -73,6 +75,8 @@
 		channel_types: [],
 		birthday_day: 0,
 		birthday_month: 0,
+		start_birthday_month: 0,
+		end_birthday_month: 0,
 		blood_types: '',
 		genders: '',
 		zodiacs: ''
@@ -107,6 +111,7 @@
 		query.has_2d = !query.has_2d || query.has_2d === '' ? undefined : query.has_2d === 'true';
 		query.has_3d = !query.has_3d || query.has_3d === '' ? undefined : query.has_3d === 'true';
 		query.in_agency = !query.in_agency || query.in_agency === '' ? undefined : query.in_agency === 'true';
+		query.birthday_month = query.start_birthday_month;
 	});
 
 	const toggleOpen = () => {
@@ -131,6 +136,8 @@
 		query.end_debut_year = query.debut_year[1] === maxDebutYear ? 0 : query.debut_year[1];
 		query.start_retired_year = query.retired_year[0] === minRetiredYear ? 0 : query.retired_year[0];
 		query.end_retired_year = query.retired_year[1] === maxRetiredYear ? 0 : query.retired_year[1];
+		query.start_birthday_month = query.birthday_month;
+		query.end_birthday_month = query.birthday_month;
 
 		modal.toggleOpen();
 		dispatch('submit', query);
