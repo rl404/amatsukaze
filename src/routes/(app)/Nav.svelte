@@ -21,6 +21,7 @@
 		<div class="hidden sm:flex items-center gap-4 text-white">
 			<a href="/vtubers">Vtubers</a>
 			<a href="/agencies">Agencies</a>
+			<a href="/events">Events</a>
 			<a href="/statistics">Statistics</a>
 			<div class="border-r border-white h-5 opacity-30" />
 			<button class="hover:opacity-70 block dark:hidden" on:click={() => setTheme(ThemeMode.Dark)} title="light mode">

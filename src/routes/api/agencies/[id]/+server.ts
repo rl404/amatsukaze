@@ -11,6 +11,7 @@ export type agencyResponseData = {
 	id: number;
 	name: string;
 	image: string;
+	member: number;
 	updated_at: Date;
 };
 

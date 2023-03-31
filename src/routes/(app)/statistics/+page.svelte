@@ -30,7 +30,7 @@
 	const agencies = data.agencies.data;
 </script>
 
-<Head title="Statistics" description="Visualize vtuber data from wikia to statistics." image="/statistics.png" />
+<Head title="Statistics" description="Vtuber and agency statistics." image="/statistics.png" />
 
 <div class="grid grid-cols-6 gap-4">
 	<div class="col-span-6 text-3xl font-bold">

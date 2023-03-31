@@ -26,6 +26,9 @@
 		<div>
 			<a href="/statistics" on:click={() => toggleOpen()}>Statistics</a>
 		</div>
+		<div>
+			<a href="/events" on:click={() => toggleOpen()}>Events</a>
+		</div>
 	</div>
 
 	<div slot="footer" class="p-4 border-t dark:border-neutral-600 flex justify-end gap-4">
