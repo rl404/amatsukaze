@@ -41,7 +41,24 @@ export type vtuberResponseData = {
 	updated_at: Date;
 };
 
-export type vtuberResponseDataChannel = { type: string; url: string };
+export type vtuberResponseDataChannel = {
+	id: string;
+	name: string;
+	type: string;
+	url: string;
+	image: string;
+	subscriber: number;
+	videos: Array<vtuberResponseDataChannelVideo>;
+};
+
+export type vtuberResponseDataChannelVideo = {
+	id: string;
+	title: string;
+	url: string;
+	image: string;
+	start_date?: Date;
+	end_date?: Date;
+};
 
 export const GET = (async ({ params }) => {
 	const resp = await fetch(`${SHIMAKAZE_HOST}/vtubers/${params.id}`);

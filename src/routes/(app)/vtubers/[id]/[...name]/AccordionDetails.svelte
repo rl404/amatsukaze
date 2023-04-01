@@ -98,7 +98,7 @@
 				{:else}
 					{#each data.channels.sort(channelSorter) as channel}
 						<div>
-							<ChannelBadge type={channel.type} url={channel.url} />
+							<ChannelBadge data={channel} />
 						</div>
 					{/each}
 				{/if}
