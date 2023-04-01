@@ -1,5 +1,6 @@
 <script lang="ts">
 	import DonutChart from '$lib/components/charts/DonutChart.svelte';
+	import { toTitleCase } from '$lib/utils';
 	import { onMount } from 'svelte';
 	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
 
@@ -19,14 +20,14 @@
 		)
 			.sort((a, b) => (a[1] < b[1] ? 1 : -1))
 			.map((d) => ({
-				name: d[0],
+				name: toTitleCase(d[0]),
 				value: d[1]
 			}));
 	});
 
 	const onClick = (d: any) => {
 		const i = d.detail;
-		const channelType = chartData[i].name;
+		const channelType = chartData[i].name.toUpperCase();
 		window.open(`/vtubers?channel_types=${channelType}`, '_blank')?.focus();
 	};
 </script>
