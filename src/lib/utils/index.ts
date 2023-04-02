@@ -214,3 +214,21 @@ export const compactInt = (n: number) => {
 	}
 	return (n / si[index].v).toFixed(2).replace(/\.0+$|(\.[0-9]*[1-9])0+$/, '$1') + si[index].s;
 };
+
+export const relativeTime = (d: Date): string => {
+	const now = new Date().getTime();
+	const diff = (now - d.getTime()) / 1000;
+	if (diff < 60) {
+		return `${diff} seconds ago`;
+	} else if (diff < 3600) {
+		return `${Math.floor(diff / 60)} minutes ago`;
+	} else if (diff < 86400) {
+		return `${Math.floor(diff / 3600)} hours ago`;
+	} else if (diff < 2620800) {
+		return `${Math.floor(diff / 86400)} days ago`;
+	} else if (diff < 31449600) {
+		return `${Math.floor(diff / 2620800)} months ago`;
+	} else {
+		return `${Math.floor(diff / 31449600)} years ago`;
+	}
+};

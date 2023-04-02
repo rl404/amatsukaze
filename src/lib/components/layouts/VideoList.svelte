@@ -31,17 +31,19 @@
 </script>
 
 <div class={className}>
-	<div class="flex flex-col gap-1 pb-4">
+	<div class="grid grid-cols-4 gap-2">
 		<div class="relative bg-neutral-100 dark:bg-neutral-800 rounded-lg">
 			<span class="absolute right-1 bottom-1 px-1 text-xs text-white bg-black rounded">{durationStr}</span>
 			<Image src={data.image && `/api/image/${data.image}`} alt={data.title} class="aspect-video h-full w-full object-cover object-top rounded-lg" />
 		</div>
-		<a class="text-sm line-clamp-2" href={data.url} target="_blank" rel="noreferrer" title={data.title}>
-			{data.title}
-		</a>
-		<div class="text-sm opacity-50 inline-flex gap-2 items-center">
-			<span><svelte:component this={icons[type].icon} class="w-4 h-4 {icons[type].color}" /></span>
-			<span title={startDate}>{!data.start_date ? '' : relativeTime(new Date(data.start_date))}</span>
+		<div class="col-span-3">
+			<a class="line-clamp-2" href={data.url} target="_blank" rel="noreferrer" title={data.title}>
+				{data.title}
+			</a>
+			<div class="text-sm opacity-50 inline-flex gap-2 items-center">
+				<span><svelte:component this={icons[type].icon} class="w-4 h-4 {icons[type].color}" /></span>
+				<span title={startDate}>{!data.start_date ? '' : relativeTime(new Date(data.start_date))}</span>
+			</div>
 		</div>
 	</div>
 </div>
