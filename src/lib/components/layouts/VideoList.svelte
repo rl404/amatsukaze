@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { relativeTime } from '$lib/utils';
+	import { relativeTime, toTitleCase } from '$lib/utils';
 	import type { vtuberResponseDataChannelVideo } from '../../../routes/api/vtubers/[id]/+server';
 	import BilibiliIcon from '../icons/BilibiliIcon.svelte';
 	import NiconicoIcon from '../icons/NiconicoIcon.svelte';
@@ -25,7 +25,7 @@
 		YOUTUBE: { icon: YoutubeIcon, color: 'text-red-500' },
 		TWITCH: { icon: TwitchIcon, color: 'text-purple-500' },
 		BILIBILI: { icon: BilibiliIcon, color: 'text-blue-500' },
-		NICONICO: { icon: NiconicoIcon, color: 'text-black' }
+		NICONICO: { icon: NiconicoIcon, color: 'text-black dark:text-white' }
 	};
 </script>
 
@@ -39,9 +39,9 @@
 			<a class="line-clamp-2" href={data.url} target="_blank" rel="noreferrer" title={data.title}>
 				{data.title}
 			</a>
-			<div class="text-sm opacity-50 inline-flex gap-2 items-center">
-				<span><svelte:component this={icons[type].icon} class="w-4 h-4 {icons[type].color}" /></span>
-				<span title={startDate}>{!data.start_date ? '' : relativeTime(new Date(data.start_date))}</span>
+			<div class="text-sm inline-flex gap-2 items-center">
+				<span title={toTitleCase(type)}><svelte:component this={icons[type].icon} class="w-4 h-4 {icons[type].color}" /></span>
+				<span title={startDate} class="opacity-50">{!data.start_date ? '' : relativeTime(new Date(data.start_date))}</span>
 			</div>
 		</div>
 	</div>
