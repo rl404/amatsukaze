@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { relativeTime } from '$lib/utils';
-	import type { ComponentType } from 'svelte';
 	import type { vtuberResponseDataChannelVideo } from '../../../routes/api/vtubers/[id]/+server';
 	import BilibiliIcon from '../icons/BilibiliIcon.svelte';
 	import NiconicoIcon from '../icons/NiconicoIcon.svelte';
@@ -22,7 +21,7 @@
 
 	const durationStr = duration === 0 ? 'upcoming' : new Date(duration).toISOString().slice(duration / 1000 >= 3600 ? 11 : 14, 19);
 
-	const icons: { [key: string]: { icon: ComponentType; color: string } } = {
+	const icons: { [key: string]: { icon: any; color: string } } = {
 		YOUTUBE: { icon: YoutubeIcon, color: 'text-red-500' },
 		TWITCH: { icon: TwitchIcon, color: 'text-purple-500' },
 		BILIBILI: { icon: BilibiliIcon, color: 'text-blue-500' },
@@ -32,10 +31,10 @@
 
 <div class={className}>
 	<div class="grid grid-cols-4 gap-2">
-		<div class="relative bg-neutral-100 dark:bg-neutral-800 rounded-lg">
+		<a class="relative bg-neutral-100 dark:bg-neutral-800 rounded-lg" href={data.url} target="_blank" rel="noreferrer">
 			<span class="absolute right-1 bottom-1 px-1 text-xs text-white bg-black rounded">{durationStr}</span>
 			<Image src={data.image && `/api/image/${data.image}`} alt={data.title} class="aspect-video h-full w-full object-cover object-top rounded-lg" />
-		</div>
+		</a>
 		<div class="col-span-3">
 			<a class="line-clamp-2" href={data.url} target="_blank" rel="noreferrer" title={data.title}>
 				{data.title}

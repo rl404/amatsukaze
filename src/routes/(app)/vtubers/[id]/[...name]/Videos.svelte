@@ -23,7 +23,7 @@
 <div class="grid grid-cols-6 gap-2">
 	<div class="col-span-6 flex gap-2">
 		<Border>
-			<span class="px-4 font-bold whitespace-nowrap" title="recent 2 months">Recent Videos ({videos.length.toLocaleString()})</span>
+			<span class="px-4 font-bold whitespace-nowrap" title="in the last 2 months">Recent Videos ({videos.length.toLocaleString()})</span>
 		</Border>
 		<VideoLayoutButton bind:value={layout} class="w-4 h-4" />
 	</div>
