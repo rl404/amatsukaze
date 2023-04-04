@@ -20,8 +20,15 @@
 	};
 
 	const onClickJump = () => {
-		month = (new Date().getMonth() + 1).toString();
-		onChangeMonth();
+		const monthNow = (new Date().getMonth() + 1).toString();
+		if (month === monthNow) {
+			const id = `${new Date().toISOString().slice(0, 10)}`;
+			const el = document.getElementById(id);
+			el?.scrollIntoView({ behavior: 'smooth' });
+		} else {
+			month = monthNow;
+			onChangeMonth();
+		}
 	};
 </script>
 
