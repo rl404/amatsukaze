@@ -23,6 +23,7 @@
 	import VtuberCountByZodiacChart from './VtuberCountByZodiacChart.svelte';
 	import VtuberCountMonthlyChart from './VtuberCountMonthlyChart.svelte';
 	import VtuberCountStatusChart from './VtuberCountStatusChart.svelte';
+	import VtuberCountVideoFrequencyChart from './VtuberCountVideoFrequencyChart.svelte';
 	import VtuberCountYearlyChart from './VtuberCountYearlyChart.svelte';
 	import VtuberLongestActiveTimeChart from './VtuberLongestActiveTimeChart.svelte';
 	import VtuberMostVideoCount from './VtuberMostVideoCount.svelte';
@@ -85,6 +86,9 @@
 	</Card>
 	<Card class="col-span-6 sm:col-span-3" title="Vtuber Average Video Length">
 		<VtuberAvgVideoLength data={vtubers} />
+	</Card>
+	<Card class="col-span-6 sm:col-span-6" title="Vtuber Video Upload Frequency">
+		<VtuberCountVideoFrequencyChart data={vtubers} />
 	</Card>
 	<Card class="col-span-6 sm:col-span-3" title="Vtuber Most Video Count">
 		<VtuberMostVideoCount data={vtubers} />

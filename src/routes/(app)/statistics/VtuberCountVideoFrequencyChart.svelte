@@ -3,10 +3,9 @@
 	import { chartBorderColors, chartColors, chartStrokeColors, chartTextColors } from '$lib/components/charts/colors';
 	import { dayNames, ThemeMode } from '$lib/utils';
 	import { theme } from '$lib/utils/store';
-	import { onMount } from 'svelte';
-	import type { vtuberResponseDataChannel } from '../../../../api/vtubers/[id]/+server';
+	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
 
-	export let data: Array<vtuberResponseDataChannel>;
+	export let data: Array<vtuberResponseData>;
 
 	let currTheme = ThemeMode.Dark;
 	let colors = [...chartColors[currTheme]].reverse();
@@ -23,30 +22,31 @@
 		borderColor = chartBorderColors[currTheme];
 	});
 
-	type chartDataType = { [day: string]: Array<number> };
-
-	let chart: Chart;
 	let maxCount = 0;
 
-	const chartData: chartDataType = data.reduce((res, c) => {
-		c.videos.forEach((v) => {
-			if (!v.start_date) return;
-			const startDate = new Date(v.start_date);
-			const day = startDate.getDay();
-			const startHour = startDate.getHours();
-			res[dayNames[day]][startHour]++;
+	const chartData = data.reduce(
+		(res, vtuber) => {
+			vtuber.channels.forEach((c) => {
+				c.videos.forEach((v) => {
+					if (!v.start_date) return;
+					const startDate = new Date(v.start_date);
+					const day = startDate.getDay();
+					const startHour = startDate.getHours();
+					res[dayNames[day]][startHour]++;
 
-			if (res[dayNames[day]][startHour] > maxCount) maxCount = res[dayNames[day]][startHour];
-		});
-		return res;
-	}, dayNames.reduce((res, d) => ({ ...res, [d]: Array(24).fill(0) }), {}) as chartDataType);
+					if (res[dayNames[day]][startHour] > maxCount) maxCount = res[dayNames[day]][startHour];
+				});
+			});
+			return res;
+		},
+		dayNames.reduce((res, d) => ({ ...res, [d]: Array(24).fill(0) }), {} as { [day: string]: Array<number> })
+	);
 </script>
 
 <Chart
-	bind:this={chart}
 	options={{
 		chart: {
-			height: 250,
+			height: 300,
 			type: 'heatmap',
 			toolbar: {
 				show: false

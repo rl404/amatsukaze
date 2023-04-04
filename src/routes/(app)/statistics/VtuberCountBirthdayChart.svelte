@@ -47,7 +47,7 @@
 <Chart
 	options={{
 		chart: {
-			height: 350,
+			height: 400,
 			type: 'heatmap',
 			toolbar: {
 				show: false
