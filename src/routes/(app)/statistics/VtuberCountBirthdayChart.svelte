@@ -3,7 +3,6 @@
 	import { chartBorderColors, chartColors, chartStrokeColors, chartTextColors } from '$lib/components/charts/colors';
 	import { monthNames, ThemeMode } from '$lib/utils';
 	import { theme } from '$lib/utils/store';
-	import { onMount } from 'svelte';
 	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
 
 	export let data: Array<vtuberResponseData>;
@@ -23,24 +22,22 @@
 		borderColor = chartBorderColors[currTheme];
 	});
 
-	let chartData: { [month: string]: Array<number> } = {};
 	let maxCount = 0;
 
-	monthNames.forEach((m) => {
-		chartData[m.slice(0, 3)] = Array(31).fill(0);
-	});
-
-	onMount(() => {
-		data.forEach((vtuber) => {
-			if (!vtuber.birthday || !new Date(vtuber.birthday)) return;
+	const chartData = data.reduce(
+		(res, vtuber) => {
+			if (!vtuber.birthday || !new Date(vtuber.birthday)) return res;
 			const birthday = new Date(vtuber.birthday);
 			const m = monthNames[birthday.getMonth()].slice(0, 3);
 			const d = birthday.getDate();
-			chartData[m][d - 1]++;
+			res[m][d - 1]++;
 
-			if (chartData[m][d - 1] > maxCount) maxCount = chartData[m][d - 1];
-		});
-	});
+			if (res[m][d - 1] > maxCount) maxCount = res[m][d - 1];
+
+			return res;
+		},
+		monthNames.reduce((res, m) => ({ ...res, [m.slice(0, 3)]: Array(31).fill(0) }), {} as { [month: string]: Array<number> })
+	);
 
 	const onClick = (x: number, y: number) => {
 		window.open(`/vtubers?birthday_day=${x + 1}&start_birthday_month=${y + 1}&end_birthday_month=${y + 1}`, '_blank')?.focus();

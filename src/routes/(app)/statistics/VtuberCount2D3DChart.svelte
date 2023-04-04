@@ -1,29 +1,24 @@
 <script lang="ts">
 	import DonutChart from '$lib/components/charts/DonutChart.svelte';
-	import { onMount } from 'svelte';
 	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
 
 	export let data: Array<vtuberResponseData>;
 
-	let chartData: { both: number; has2D: number; has3D: number; none: number } = { both: 0, has2D: 0, has3D: 0, none: 0 };
-
-	onMount(() => {
-		chartData = data.reduce(
-			(res: { both: number; has2D: number; has3D: number; none: number }, curr) => {
-				if (curr.has_2d && curr.has_3d) {
-					res.both++;
-				} else if (curr.has_2d) {
-					res.has2D++;
-				} else if (curr.has_3d) {
-					res.has3D++;
-				} else {
-					res.none++;
-				}
-				return res;
-			},
-			{ both: 0, has2D: 0, has3D: 0, none: 0 }
-		);
-	});
+	const chartData: { both: number; has2D: number; has3D: number; none: number } = data.reduce(
+		(res, curr) => {
+			if (curr.has_2d && curr.has_3d) {
+				res.both++;
+			} else if (curr.has_2d) {
+				res.has2D++;
+			} else if (curr.has_3d) {
+				res.has3D++;
+			} else {
+				res.none++;
+			}
+			return res;
+		},
+		{ both: 0, has2D: 0, has3D: 0, none: 0 }
+	);
 
 	const onClick = (d: any) => {
 		const i = d.detail;
