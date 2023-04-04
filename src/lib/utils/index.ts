@@ -218,18 +218,32 @@ export const compactInt = (n: number) => {
 
 export const relativeTime = (d: Date): string => {
 	const now = new Date().getTime();
-	const diff = (now - d.getTime()) / 1000;
-	if (diff < 60) {
-		return `${diff} seconds ago`;
-	} else if (diff < 3600) {
-		return `${Math.floor(diff / 60)} minutes ago`;
-	} else if (diff < 86400) {
-		return `${Math.floor(diff / 3600)} hours ago`;
-	} else if (diff < 2620800) {
-		return `${Math.floor(diff / 86400)} days ago`;
-	} else if (diff < 31449600) {
-		return `${Math.floor(diff / 2620800)} months ago`;
-	} else {
-		return `${Math.floor(diff / 31449600)} years ago`;
+	let diff = (now - d.getTime()) / 1000;
+
+	let prefix = '';
+	let suffix = ' ago';
+
+	if (diff < 0) {
+		diff *= -1;
+		prefix = 'in ';
+		suffix = '';
 	}
+
+	if (diff < 60) {
+		return `${prefix}${diff} seconds${suffix}`;
+	} else if (diff < 3600) {
+		return `${prefix}${Math.floor(diff / 60)} minutes${suffix}`;
+	} else if (diff < 86400) {
+		return `${prefix}${Math.floor(diff / 3600)} hours${suffix}`;
+	} else if (diff < 2620800) {
+		return `${prefix}${Math.floor(diff / 86400)} days${suffix}`;
+	} else if (diff < 31449600) {
+		return `${prefix}${Math.floor(diff / 2620800)} months${suffix}`;
+	} else {
+		return `${prefix}${Math.floor(diff / 31449600)} years${suffix}`;
+	}
+};
+
+export const intToDurationStr = (dur: number): string => {
+	return new Date(dur).toISOString().slice(dur / 1000 >= 3600 ? 11 : 14, 19);
 };
