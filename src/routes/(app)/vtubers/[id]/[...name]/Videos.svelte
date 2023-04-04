@@ -18,7 +18,18 @@
 			return a.start_date < b.start_date ? 1 : -1;
 		});
 
+	const avgLength = videoData
+		.filter((v) => v.start_date && v.end_date)
+		.reduce(
+			(avg, v, _, { length }) =>
+				!v.start_date || !v.end_date ? avg : avg + (new Date(v.end_date).getTime() - new Date(v.start_date).getTime()) / length,
+			0
+		);
+
+	const avgLengthStr = new Date(avgLength).toISOString().slice(avgLength / 1000 >= 3600 ? 11 : 14, 19);
+
 	let videos = videoData.length > 12 ? videoData.slice(0, 12) : videoData;
+
 	let layout = 'grid';
 	let show = false;
 
@@ -34,10 +45,11 @@
 </script>
 
 <div class="grid grid-cols-6 gap-2">
-	<div class="col-span-6 flex gap-2">
+	<div class="col-span-6 flex gap-2 items-center">
 		<Border>
 			<span class="px-4 font-bold whitespace-nowrap" title="in the last 2 months">Recent Videos ({videoData.length.toLocaleString()})</span>
 		</Border>
+		<div class="text-sm" title="average video length">{avgLengthStr}</div>
 		<VideoLayoutButton bind:value={layout} class="w-4 h-4" />
 	</div>
 	{#each videos as video}
