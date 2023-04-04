@@ -37,7 +37,7 @@
 				show: false
 			},
 			events: {
-				click: (_, __, options) => {
+				dataPointSelection: (_, __, options) => {
 					dispatch('click', options.dataPointIndex);
 				}
 			}
