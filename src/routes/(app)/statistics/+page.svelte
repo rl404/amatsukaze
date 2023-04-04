@@ -20,12 +20,14 @@
 	import VtuberCountByDesignerChart from './VtuberCountByDesignerChart.svelte';
 	import VtuberCountByGenderChart from './VtuberCountByGenderChart.svelte';
 	import VtuberCountByInAgencyChart from './VtuberCountByInAgencyChart.svelte';
+	import VtuberCountBySubsChart from './VtuberCountBySubsChart.svelte';
 	import VtuberCountByZodiacChart from './VtuberCountByZodiacChart.svelte';
 	import VtuberCountMonthlyChart from './VtuberCountMonthlyChart.svelte';
 	import VtuberCountStatusChart from './VtuberCountStatusChart.svelte';
 	import VtuberCountVideoFrequencyChart from './VtuberCountVideoFrequencyChart.svelte';
 	import VtuberCountYearlyChart from './VtuberCountYearlyChart.svelte';
 	import VtuberLongestActiveTimeChart from './VtuberLongestActiveTimeChart.svelte';
+	import VtuberMostSubsChart from './VtuberMostSubsChart.svelte';
 	import VtuberMostVideoCount from './VtuberMostVideoCount.svelte';
 	import VtuberMostVideoLength from './VtuberMostVideoLength.svelte';
 
@@ -68,6 +70,12 @@
 	</Card>
 	<Card class="col-span-6 sm:col-span-3" title="Vtuber Count by Agency">
 		<VtuberCountByAgencyChart data={vtubers} />
+	</Card>
+	<Card class="col-span-6 sm:col-span-3" title="Vtuber Most Subscriber">
+		<VtuberMostSubsChart data={vtubers} />
+	</Card>
+	<Card class="col-span-6 sm:col-span-3" title="Vtuber Count by Subscriber">
+		<VtuberCountBySubsChart data={vtubers} />
 	</Card>
 	<Card class="col-span-6 sm:col-span-6" title="Top Longest Active Time Vtuber (Years)">
 		<VtuberLongestActiveTimeChart data={vtubers} />
