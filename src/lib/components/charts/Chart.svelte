@@ -18,6 +18,11 @@
 	onDestroy(() => {
 		if (chart) chart.destroy();
 	});
+
+	export const updateOptions = (opts: ApexOptions) => {
+		if (!chart) return;
+		chart.updateOptions(opts);
+	};
 </script>
 
 <div bind:this={chartNode} />

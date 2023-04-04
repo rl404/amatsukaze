@@ -44,6 +44,7 @@ export const getAxiosError = (error: Error | AxiosError): string => {
 	return error.response.data.message;
 };
 
+export const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 export const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 export const formatBirthday = (d: Date | undefined): string => {
