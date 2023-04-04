@@ -4,6 +4,7 @@
 	import VideoLayoutButton from '$lib/components/buttons/VideoLayoutButton.svelte';
 	import VideoGrid from '$lib/components/layouts/VideoGrid.svelte';
 	import VideoList from '$lib/components/layouts/VideoList.svelte';
+	import { intToDurationStr } from '$lib/utils';
 	import type { vtuberResponseDataChannel, vtuberResponseDataChannelVideo } from '../../../../api/vtubers/[id]/+server';
 
 	export let data: Array<vtuberResponseDataChannel>;
@@ -26,8 +27,6 @@
 			0
 		);
 
-	const avgLengthStr = new Date(avgLength).toISOString().slice(avgLength / 1000 >= 3600 ? 11 : 14, 19);
-
 	let videos = videoData.length > 12 ? videoData.slice(0, 12) : videoData;
 
 	let layout = 'grid';
@@ -49,7 +48,7 @@
 		<Border>
 			<span class="px-4 font-bold whitespace-nowrap" title="in the last 2 months">Recent Videos ({videoData.length.toLocaleString()})</span>
 		</Border>
-		<div class="text-sm" title="average video length">{avgLengthStr}</div>
+		<div class="text-sm" title="average video length">{intToDurationStr(avgLength)}</div>
 		<VideoLayoutButton bind:value={layout} class="w-4 h-4" />
 	</div>
 	{#each videos as video}

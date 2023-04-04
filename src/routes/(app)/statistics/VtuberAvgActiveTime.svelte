@@ -21,5 +21,5 @@
 </script>
 
 <div class="text-center font-bold text-5xl" title={`${parseInt(avgDays.toFixed(0)).toLocaleString()} days`}>
-	{avgYears.toFixed(1).toLocaleString()} years
+	{parseFloat(avgYears.toFixed(1)).toLocaleString()} years
 </div>

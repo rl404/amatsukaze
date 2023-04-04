@@ -6,6 +6,8 @@
 	import Card from './Card.svelte';
 	import VtuberAvgActiveTime from './VtuberAvgActiveTime.svelte';
 	import VtuberAvgHeight from './VtuberAvgHeight.svelte';
+	import VtuberAvgVideoCount from './VtuberAvgVideoCount.svelte';
+	import VtuberAvgVideoLength from './VtuberAvgVideoLength.svelte';
 	import VtuberAvgWeight from './VtuberAvgWeight.svelte';
 	import VtuberCount from './VtuberCount.svelte';
 	import VtuberCount2D3DChart from './VtuberCount2D3DChart.svelte';
@@ -23,6 +25,8 @@
 	import VtuberCountStatusChart from './VtuberCountStatusChart.svelte';
 	import VtuberCountYearlyChart from './VtuberCountYearlyChart.svelte';
 	import VtuberLongestActiveTimeChart from './VtuberLongestActiveTimeChart.svelte';
+	import VtuberMostVideoCount from './VtuberMostVideoCount.svelte';
+	import VtuberMostVideoLength from './VtuberMostVideoLength.svelte';
 
 	export let data: statsResponse;
 
@@ -67,9 +71,6 @@
 	<Card class="col-span-6 sm:col-span-6" title="Top Longest Active Time Vtuber (Years)">
 		<VtuberLongestActiveTimeChart data={vtubers} />
 	</Card>
-	<Card class="col-span-6 sm:col-span-6" title="Vtuber Count by Birthday">
-		<VtuberCountBirthdayChart data={vtubers} />
-	</Card>
 	<Card class="col-span-6 sm:col-span-2" title="Vtuber Count by Character Designer">
 		<VtuberCountByDesignerChart data={vtubers} />
 	</Card>
@@ -78,6 +79,21 @@
 	</Card>
 	<Card class="col-span-6 sm:col-span-2" title="Vtuber Count by Character 3D Modeler">
 		<VtuberCountBy3DModelerChart data={vtubers} />
+	</Card>
+	<Card class="col-span-6 sm:col-span-3" title="Vtuber Average Video Count">
+		<VtuberAvgVideoCount data={vtubers} />
+	</Card>
+	<Card class="col-span-6 sm:col-span-3" title="Vtuber Average Video Length">
+		<VtuberAvgVideoLength data={vtubers} />
+	</Card>
+	<Card class="col-span-6 sm:col-span-3" title="Vtuber Most Video Count">
+		<VtuberMostVideoCount data={vtubers} />
+	</Card>
+	<Card class="col-span-6 sm:col-span-3" title="Vtuber Longest Average Video Length">
+		<VtuberMostVideoLength data={vtubers} />
+	</Card>
+	<Card class="col-span-6 sm:col-span-6" title="Vtuber Count by Birthday">
+		<VtuberCountBirthdayChart data={vtubers} />
 	</Card>
 	<Card class="col-span-3 sm:col-span-3" title="Vtuber Average Height">
 		<VtuberAvgHeight data={vtubers} />

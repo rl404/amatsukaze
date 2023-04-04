@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Chart from '$lib/components/charts/Chart.svelte';
 	import { chartBorderColors, chartChannelColors, chartTextColors } from '$lib/components/charts/colors';
-	import { dayNames, relativeTime, ThemeMode } from '$lib/utils';
+	import { dayNames, intToDurationStr, relativeTime, ThemeMode } from '$lib/utils';
 	import { theme } from '$lib/utils/store';
 	import { onMount } from 'svelte';
 	import type { vtuberResponseDataChannel, vtuberResponseDataChannelVideo } from '../../../../api/vtubers/[id]/+server';
@@ -159,13 +159,12 @@
 				if (!v) return '';
 
 				const duration = d.endDate - d.startDate;
-				const durationStr = new Date(duration).toISOString().slice(duration / 1000 >= 3600 ? 11 : 14, 19);
 
 				return `
 				<div class="w-52 h-auto p-2">
 					<div class="flex flex-col gap-1">
 						<div class="relative bg-neutral-100 dark:bg-neutral-800 rounded">
-							<span class="absolute right-1 bottom-1 px-1 text-xs text-white bg-black rounded">${durationStr}</span>
+							<span class="absolute right-1 bottom-1 px-1 text-xs text-white bg-black rounded">${intToDurationStr(duration)}</span>
 							<img src="${v.image && `/api/image/${v.image}`}" class="aspect-video h-full w-full object-cover object-top rounded"/>
 						</div>
 						<div class="text-sm line-clamp-2 whitespace-normal">

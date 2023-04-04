@@ -13,6 +13,8 @@
 	}>;
 	export let seriesName: string = 'Count';
 	export let horizontal: boolean = false;
+	export let xaxisFormatter: ((value: string, timestamp?: number, opts?: any) => string | string[]) | undefined = undefined;
+	export let tooltipYFormatter: (val: number, opts?: any) => string = (v) => (!v ? '0' : v.toLocaleString());
 
 	let currTheme = ThemeMode.Dark;
 	let colors = chartColors[currTheme];
@@ -62,13 +64,14 @@
 			theme: currTheme,
 			intersect: false,
 			y: {
-				formatter: (v) => (!v ? '0' : v.toLocaleString())
+				formatter: tooltipYFormatter
 			}
 		},
 		xaxis: {
 			categories: data.map((d) => d.name),
 			labels: {
-				style: { colors: textColor }
+				style: { colors: textColor },
+				formatter: xaxisFormatter
 			},
 			axisBorder: { color: borderColor },
 			axisTicks: { color: borderColor }
