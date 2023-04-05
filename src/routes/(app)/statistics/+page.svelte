@@ -3,6 +3,7 @@
 	import Head from '$lib/components/Head.svelte';
 	import type { statsResponse } from './+page.server';
 	import AgencyCount from './AgencyCount.svelte';
+	import AgencyMostSubsChart from './AgencyMostSubsChart.svelte';
 	import Card from './Card.svelte';
 	import VtuberAvgActiveTime from './VtuberAvgActiveTime.svelte';
 	import VtuberAvgHeight from './VtuberAvgHeight.svelte';
@@ -71,11 +72,14 @@
 	<Card class="col-span-6 sm:col-span-3" title="Vtuber Count by Agency">
 		<VtuberCountByAgencyChart data={vtubers} />
 	</Card>
+	<Card class="col-span-6 sm:col-span-6" title="Vtuber Count by Subscriber">
+		<VtuberCountBySubsChart data={vtubers} />
+	</Card>
 	<Card class="col-span-6 sm:col-span-3" title="Vtuber Most Subscriber">
 		<VtuberMostSubsChart data={vtubers} />
 	</Card>
-	<Card class="col-span-6 sm:col-span-3" title="Vtuber Count by Subscriber">
-		<VtuberCountBySubsChart data={vtubers} />
+	<Card class="col-span-6 sm:col-span-3" title="Agency Most Subscriber">
+		<AgencyMostSubsChart data={agencies} />
 	</Card>
 	<Card class="col-span-6 sm:col-span-6" title="Top Longest Active Time Vtuber (Years)">
 		<VtuberLongestActiveTimeChart data={vtubers} />

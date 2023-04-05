@@ -12,6 +12,7 @@ export type agencyResponseData = {
 	name: string;
 	image: string;
 	member: number;
+	subscriber: number;
 	updated_at: Date;
 };
 

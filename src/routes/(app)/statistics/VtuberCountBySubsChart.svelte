@@ -4,30 +4,32 @@
 
 	export let data: Array<vtuberResponseData>;
 
+	const limits = [
+		{ min: 0, max: 1e3, label: '<1K' },
+		{ min: 1e3, max: 5e3, label: '1K-5K' },
+		{ min: 5e3, max: 10e3, label: '5K-10K' },
+		{ min: 10e3, max: 25e3, label: '10K-25K' },
+		{ min: 25e3, max: 5e4, label: '25K-50K' },
+		{ min: 5e4, max: 1e5, label: '50K-100K' },
+		{ min: 1e5, max: 25e4, label: '100K-250K' },
+		{ min: 25e4, max: 5e5, label: '250K-500K' },
+		{ min: 5e5, max: 1e6, label: '500K-1M' },
+		{ min: 1e6, max: 5e6, label: '1M-5M' },
+		{ min: 5e6, max: 0, label: '>5M' }
+	];
+
 	const chartData: Array<{ name: string; value: number }> = Object.entries(
 		data.reduce(
 			(res, vtuber) => {
 				const subs = vtuber.channels.reduce((max, c) => (c.subscriber > max ? c.subscriber : max), 0);
-				if (subs < 1e5) {
-					res['<100K']++;
-				} else if (1e5 <= subs && subs < 5e5) {
-					res['100K-500K']++;
-				} else if (5e5 <= subs && subs < 1e6) {
-					res['500K-1M']++;
-				} else if (1e6 <= subs && subs < 5e6) {
-					res['1M-5M']++;
-				} else {
-					res['>5M']++;
+				let i = 0;
+				for (i = 0; i < limits.length - 1; i++) {
+					if (limits[i].min <= subs && limits[i].max > subs) break;
 				}
+				res[limits[i].label]++;
 				return res;
 			},
-			{
-				'<100K': 0,
-				'100K-500K': 0,
-				'500K-1M': 0,
-				'1M-5M': 0,
-				'>5M': 0
-			}
+			limits.reduce((res, l) => ({ ...res, [l.label]: 0 }), {} as { [label: string]: number })
 		)
 	).map((d) => ({
 		name: d[0],
@@ -36,33 +38,8 @@
 
 	const onClick = (d: any) => {
 		const i = d.detail;
-		const key = Object.values(chartData)[i].name;
-
-		let startSubs = 0;
-		let endSubs = 0;
-		switch (key) {
-			case '<100K':
-				endSubs = 1e5;
-				break;
-			case '100K-500K':
-				startSubs = 1e5;
-				endSubs = 5e5;
-				break;
-			case '500K-1M':
-				startSubs = 5e5;
-				endSubs = 1e6;
-				break;
-			case '1M-5M':
-				startSubs = 1e6;
-				endSubs = 5e6;
-				break;
-			case '>5M':
-				startSubs = 5e6;
-				endSubs = 0;
-				break;
-		}
-
-		window.open(`/vtubers?start_subscriber=${startSubs}&end_subscriber=${endSubs}`, '_blank')?.focus();
+		const limit = limits[i];
+		window.open(`/vtubers?start_subscriber=${limit.min}&end_subscriber=${limit.max}&sort=-subscriber`, '_blank')?.focus();
 	};
 </script>
 
