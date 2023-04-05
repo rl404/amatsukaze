@@ -33,6 +33,37 @@
 		name: d[0],
 		value: d[1]
 	}));
+
+	const onClick = (d: any) => {
+		const i = d.detail;
+		const key = Object.values(chartData)[i].name;
+
+		let startSubs = 0;
+		let endSubs = 0;
+		switch (key) {
+			case '<100K':
+				endSubs = 1e5;
+				break;
+			case '100K-500K':
+				startSubs = 1e5;
+				endSubs = 5e5;
+				break;
+			case '500K-1M':
+				startSubs = 5e5;
+				endSubs = 1e6;
+				break;
+			case '1M-5M':
+				startSubs = 1e6;
+				endSubs = 5e6;
+				break;
+			case '>5M':
+				startSubs = 5e6;
+				endSubs = 0;
+				break;
+		}
+
+		window.open(`/vtubers?start_subscriber=${startSubs}&end_subscriber=${endSubs}`, '_blank')?.focus();
+	};
 </script>
 
-<BarChart data={chartData} />
+<BarChart data={chartData} on:clickArea={onClick} />

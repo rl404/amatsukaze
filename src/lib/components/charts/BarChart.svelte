@@ -5,7 +5,7 @@
 	import Chart from './Chart.svelte';
 	import { chartBorderColors, chartColors, chartTextColors } from './colors';
 
-	const dispatch = createEventDispatcher<{ click: number }>();
+	const dispatch = createEventDispatcher<{ click: number; clickArea: number }>();
 
 	export let data: Array<{
 		name: string;
@@ -39,6 +39,9 @@
 				show: false
 			},
 			events: {
+				click: (_, __, options) => {
+					dispatch('clickArea', options.dataPointIndex);
+				},
 				dataPointSelection: (_, __, options) => {
 					dispatch('click', options.dataPointIndex);
 				}
