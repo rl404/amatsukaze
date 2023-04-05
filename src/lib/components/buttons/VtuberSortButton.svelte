@@ -12,9 +12,14 @@
 
 	export let value: string;
 
+	export { className as class };
+	let className: string = '';
+
 	const sorts: { [key: string]: { label: string; value: string; component: ComponentType } } = {
 		name: { label: 'Name ASC', value: 'name', component: SortLetterAscIcon },
 		'-name': { label: 'Name DESC', value: '-name', component: SortLetterDescIcon },
+		subscriber: { label: 'Subscriber ASC', value: 'subscriber', component: SortNumberAscIcon },
+		'-subscriber': { label: 'Subscriber DESC', value: '-subscriber', component: SortNumberDescIcon },
 		debut_date: { label: 'Debut date ASC', value: 'debut_date', component: SortNumberAscIcon },
 		'-debut_date': { label: 'Debut date DESC', value: '-debut_date', component: SortNumberDescIcon },
 		retirement_date: { label: 'Retirement date ASC', value: 'retirement_date', component: SortNumberAscIcon },
@@ -38,7 +43,7 @@
 
 <div class="relative" use:clickAway on:clickAway={onClickAway}>
 	<IconButton title={sorts[value].label} on:click={toggle}>
-		<svelte:component this={sorts[value].component} class="w-5 h-5" />
+		<svelte:component this={sorts[value].component} class={className} />
 	</IconButton>
 
 	{#if !hidden}

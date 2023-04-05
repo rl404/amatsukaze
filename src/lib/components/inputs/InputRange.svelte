@@ -5,9 +5,11 @@
 	export let values: Array<number>;
 	export let minValue: number;
 	export let maxValue: number;
+	export let step: number = 1;
+	export let formatter: (v: number) => string = (v) => v.toString();
 </script>
 
-<RangeSlider {id} bind:values min={minValue} max={maxValue} range float pips />
+<RangeSlider {id} bind:values min={minValue} max={maxValue} range float pips {step} {formatter} />
 
 <style lang="postcss">
 	:global(.rangeSlider) {

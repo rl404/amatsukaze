@@ -19,6 +19,7 @@
 	import InputAgency from './InputAgency.svelte';
 	import InputChannel from './InputChannel.svelte';
 	import InputBirthday from './InputBirthday.svelte';
+	import InputSubscriber from './InputSubscriber.svelte';
 
 	type advancedQuery = {
 		name: string;
@@ -49,6 +50,9 @@
 		blood_types: string;
 		genders: string;
 		zodiacs: string;
+		subscriber: Array<number>;
+		start_subscriber: number;
+		end_subscriber: number;
 	};
 
 	const dispatch = createEventDispatcher<{ submit: advancedQuery }>();
@@ -79,12 +83,17 @@
 		end_birthday_month: 0,
 		blood_types: '',
 		genders: '',
-		zodiacs: ''
+		zodiacs: '',
+		subscriber: [0, 5e6],
+		start_subscriber: 0,
+		end_subscriber: 0
 	};
 	let minDebutYear: number = 0;
 	let maxDebutYear: number = 0;
 	let minRetiredYear: number = 0;
 	let maxRetiredYear: number = 0;
+	let minSubscriber: number = 0;
+	let maxSubscriber: number = 5e6;
 
 	type advancedQueryKey = keyof typeof query;
 
@@ -127,6 +136,7 @@
 		query.has_2d = undefined;
 		query.has_3d = undefined;
 		query.in_agency = undefined;
+		query.subscriber = [minSubscriber, maxSubscriber];
 	};
 
 	const onSubmit = () => {
@@ -138,6 +148,8 @@
 		query.end_retired_year = query.retired_year[1] === maxRetiredYear ? 0 : query.retired_year[1];
 		query.start_birthday_month = query.birthday_month;
 		query.end_birthday_month = query.birthday_month;
+		query.start_subscriber = query.subscriber[0] === minSubscriber ? 0 : query.subscriber[0];
+		query.end_subscriber = query.subscriber[1] === maxSubscriber ? 0 : query.subscriber[1];
 
 		modal.toggleOpen();
 		dispatch('submit', query);
@@ -191,6 +203,9 @@
 			</div>
 			<div class="col-span-6 sm:col-span-4">
 				<InputChannel bind:value={query.channel_types} />
+			</div>
+			<div class="col-span-6 sm:col-span-2">
+				<InputSubscriber bind:values={query.subscriber} bind:minValue={minSubscriber} bind:maxValue={maxSubscriber} />
 			</div>
 			<div class="col-span-6 sm:col-span-2">
 				<InputBirthday bind:birthdayDay={query.birthday_day} bind:birthdayMonth={query.birthday_month} />

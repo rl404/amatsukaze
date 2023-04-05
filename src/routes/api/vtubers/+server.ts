@@ -40,6 +40,8 @@ export const GET = (async ({ url }) => {
 		'blood_types',
 		'genders',
 		'zodiacs',
+		'start_subscriber',
+		'end_subscriber',
 		'sort',
 		'page',
 		'limit'

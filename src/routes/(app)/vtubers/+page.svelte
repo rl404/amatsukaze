@@ -15,8 +15,8 @@
 	import axios from 'axios';
 	import InputSearch from './InputSearch.svelte';
 	import AdvancedSearch from './AdvancedSearch.svelte';
-	import Layout from './Layout.svelte';
-	import Sort from './Sort.svelte';
+	import VtuberSortButton from '$lib/components/buttons/VtuberSortButton.svelte';
+	import VtuberLayoutButton from '$lib/components/buttons/VtuberLayoutButton.svelte';
 
 	export let data: vtubersResponse;
 
@@ -24,7 +24,7 @@
 	let page = 1;
 	let limit = 36;
 	let total = data.meta.total;
-	let layoutName: string = 'grid';
+	let layout: string = 'grid';
 	let sort: string = 'name';
 	let loading = false;
 	let error = '';
@@ -125,19 +125,19 @@
 					<AdvancedSearch on:submit={onSubmitAdvanced} />
 				</div>
 				<div>
-					<Sort bind:value={sort} on:submit={onSort} />
+					<VtuberSortButton class="w-5 h-5" bind:value={sort} on:submit={onSort} />
 				</div>
 				<div>
-					<Layout bind:layoutName />
+					<VtuberLayoutButton class="w-5 h-5" bind:value={layout} />
 				</div>
 			</div>
 		</div>
 	</div>
 	<Border class="col-span-6" />
 	{#each vtubers as vtuber}
-		{#if layoutName === 'grid'}
+		{#if layout === 'grid'}
 			<VtuberGrid class="col-span-3 sm:col-span-2 md:col-span-1" id={vtuber.id} name={vtuber.name} image={vtuber.image} height={206} />
-		{:else if layoutName === 'card'}
+		{:else if layout === 'card'}
 			<VtuberCard
 				class="col-span-6 sm:col-span-3 lg:col-span-2"
 				id={vtuber.id}
@@ -150,7 +150,7 @@
 				retirementDate={vtuber.retirement_date}
 				height={206}
 			/>
-		{:else if layoutName === 'list'}
+		{:else if layout === 'list'}
 			<VtuberList
 				class="col-span-6"
 				id={vtuber.id}
