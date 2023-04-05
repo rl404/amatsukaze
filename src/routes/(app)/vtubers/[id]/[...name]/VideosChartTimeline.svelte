@@ -3,7 +3,6 @@
 	import { chartBorderColors, chartChannelColors, chartTextColors } from '$lib/components/charts/colors';
 	import { dayNames, intToDurationStr, relativeTime, ThemeMode } from '$lib/utils';
 	import { theme } from '$lib/utils/store';
-	import { onMount } from 'svelte';
 	import type { vtuberResponseDataChannel, vtuberResponseDataChannelVideo } from '../../../../api/vtubers/[id]/+server';
 
 	export let data: Array<vtuberResponseDataChannel>;
@@ -28,29 +27,26 @@
 	type chartDataType = { [type: string]: Array<{ id: string; day: string; startDate: number; endDate: number; url: string }> };
 
 	let chart: Chart;
-	let chartData: chartDataType = {};
 	let chartStartWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
 	let chartEndWeek = now;
 
-	onMount(() => {
-		chartData = data.reduce((res, c) => {
-			if (c.videos.length === 0) return res;
-			if (!res[c.type]) res[c.type] = [];
+	const chartData: chartDataType = data.reduce((res, c) => {
+		if (c.videos.length === 0) return res;
+		if (!res[c.type]) res[c.type] = [];
 
-			c.videos.forEach((v) => {
-				if (!v.start_date || !v.end_date) return;
-				res[c.type].push({
-					id: v.id,
-					day: dayNames[new Date(v.start_date).getDay()],
-					startDate: new Date(v.start_date).getTime(),
-					endDate: new Date(v.end_date).getTime(),
-					url: v.url
-				});
+		c.videos.forEach((v) => {
+			if (!v.start_date || !v.end_date) return;
+			res[c.type].push({
+				id: v.id,
+				day: dayNames[new Date(v.start_date).getDay()],
+				startDate: new Date(v.start_date).getTime(),
+				endDate: new Date(v.end_date).getTime(),
+				url: v.url
 			});
+		});
 
-			return res;
-		}, {} as chartDataType);
-	});
+		return res;
+	}, {} as chartDataType);
 
 	export const showAll = () => {
 		if (!chart) return;

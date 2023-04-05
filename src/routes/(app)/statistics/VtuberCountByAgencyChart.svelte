@@ -1,30 +1,33 @@
 <script lang="ts">
 	import BarChart from '$lib/components/charts/BarChart.svelte';
+	import type { SvelteComponent } from 'svelte';
 	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
+	import AgencyModal from '$lib/components/modals/AgencyModal.svelte';
 
 	export let data: Array<vtuberResponseData>;
 
-	let chartData: Array<{ name: string; value: number }> = Object.entries(
-		data.reduce((res: { [name: string]: number }, curr) => {
+	let modals: Array<SvelteComponent> = [];
+
+	const chartData: Array<{ id: number; name: string; image: string; value: number }> = Object.values(
+		data.reduce((res, curr) => {
 			curr.agencies?.forEach((a) => {
-				if (!res[a.name]) res[a.name] = 0;
-				res[a.name]++;
+				if (!res[a.id]) res[a.id] = { id: a.id, name: a.name, image: a.image, value: 0 };
+				res[a.id].value++;
 			});
 			return res;
-		}, {})
+		}, {} as { [id: number]: { id: number; name: string; image: string; value: number } })
 	)
-		.sort((a, b) => (a[1] < b[1] ? 1 : -1))
-		.slice(0, 10)
-		.map((d) => ({
-			name: d[0],
-			value: d[1]
-		}));
+		.sort((a, b) => (a.value < b.value ? 1 : -1))
+		.slice(0, 10);
 
 	const onClick = (d: any) => {
 		const i = d.detail;
-		const agency = Object.values(chartData)[i];
-		window.open(`/vtubers?agency=${agency.name}`, '_blank')?.focus();
+		modals[i].toggleOpen();
 	};
 </script>
 
 <BarChart data={chartData} horizontal on:click={onClick} />
+
+{#each chartData as d, i}
+	<AgencyModal id={d.id} title={d.name} image={d.image} bind:this={modals[i]} />
+{/each}

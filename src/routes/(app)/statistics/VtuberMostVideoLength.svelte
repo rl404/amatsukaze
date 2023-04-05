@@ -9,11 +9,11 @@
 
 	let modals: Array<SvelteComponent> = [];
 
-	let chartData: Array<{ id: number; name: string; value: number }> = Object.values(
+	const chartData: Array<{ id: number; name: string; value: number }> = Object.values(
 		data.reduce((res, vtuber) => {
-			if (!res[vtuber.id]) res[vtuber.id] = { id: vtuber.id, name: vtuber.name, avg: 0 };
+			if (!res[vtuber.id]) res[vtuber.id] = { id: vtuber.id, name: vtuber.name, value: 0 };
 
-			res[vtuber.id].avg = vtuber.channels
+			res[vtuber.id].value = vtuber.channels
 				.reduce((res2, c) => [...res2, ...c.videos], [] as Array<vtuberResponseDataChannelVideo>)
 				.filter((v) => v.start_date && v.end_date)
 				.reduce(
@@ -22,15 +22,10 @@
 					0
 				);
 			return res;
-		}, {} as { [id: number]: { id: number; name: string; avg: number } })
+		}, {} as { [id: number]: { id: number; name: string; value: number } })
 	)
-		.sort((a, b) => (a.avg < b.avg ? 1 : -1))
-		.slice(0, 10)
-		.map((d) => ({
-			id: d.id,
-			name: d.name,
-			value: d.avg
-		}));
+		.sort((a, b) => (a.value < b.value ? 1 : -1))
+		.slice(0, 10);
 
 	const onClick = (d: any) => {
 		const i = d.detail;
