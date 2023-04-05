@@ -144,6 +144,14 @@ export const vtuberSorter =
 				const da4 = new Date(a.retirement_date);
 				const db4 = new Date(b.retirement_date);
 				return da4 > db4 ? -1 : 1;
+			case 'subscriber':
+				const sa1 = a.channels.reduce((max, c) => (max > c.subscriber ? max : c.subscriber), 0);
+				const sa2 = b.channels.reduce((max, c) => (max > c.subscriber ? max : c.subscriber), 0);
+				return sa1 < sa2 ? -1 : 1;
+			case '-subscriber':
+				const sb1 = a.channels.reduce((max, c) => (max > c.subscriber ? max : c.subscriber), 0);
+				const sb2 = b.channels.reduce((max, c) => (max > c.subscriber ? max : c.subscriber), 0);
+				return sb1 > sb2 ? -1 : 1;
 			default:
 				return a.name < b.name ? -1 : 1;
 		}
@@ -161,6 +169,10 @@ export const agencySorter =
 				return a.member < b.member ? -1 : 1;
 			case '-member':
 				return a.member > b.member ? -1 : 1;
+			case 'subscriber':
+				return a.subscriber < b.subscriber ? -1 : 1;
+			case '-subscriber':
+				return a.subscriber > b.subscriber ? -1 : 1;
 			default:
 				return a.name < b.name ? -1 : 1;
 		}

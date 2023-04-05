@@ -1,11 +1,11 @@
 <script lang="ts">
 	import Border from '$lib/components/Border.svelte';
 	import Head from '$lib/components/Head.svelte';
+	import AgencySortButton from '$lib/components/buttons/AgencySortButton.svelte';
 	import AgencyGrid from '$lib/components/layouts/AgencyGrid.svelte';
 	import { agencySorter } from '$lib/utils';
 	import type { agenciesResponse } from '../../api/agencies/+server';
 	import InputSearch from './InputSearch.svelte';
-	import Sort from './Sort.svelte';
 
 	export let data: agenciesResponse;
 
@@ -36,7 +36,7 @@
 					<InputSearch class="w-full" bind:value={name} placeholder="search agency name..." on:submit={onSubmit} />
 				</div>
 				<div>
-					<Sort bind:value={sort} on:submit={onSort} />
+					<AgencySortButton bind:value={sort} on:submit={onSort} class="w-5 h-5" />
 				</div>
 			</div>
 		</div>

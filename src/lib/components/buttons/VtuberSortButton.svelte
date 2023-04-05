@@ -15,15 +15,29 @@
 	export { className as class };
 	let className: string = '';
 
-	const sorts: { [key: string]: { label: string; value: string; component: ComponentType } } = {
-		name: { label: 'Name ASC', value: 'name', component: SortLetterAscIcon },
-		'-name': { label: 'Name DESC', value: '-name', component: SortLetterDescIcon },
-		subscriber: { label: 'Subscriber ASC', value: 'subscriber', component: SortNumberAscIcon },
-		'-subscriber': { label: 'Subscriber DESC', value: '-subscriber', component: SortNumberDescIcon },
-		debut_date: { label: 'Debut date ASC', value: 'debut_date', component: SortNumberAscIcon },
-		'-debut_date': { label: 'Debut date DESC', value: '-debut_date', component: SortNumberDescIcon },
-		retirement_date: { label: 'Retirement date ASC', value: 'retirement_date', component: SortNumberAscIcon },
-		'-retirement_date': { label: 'Retirement date DESC', value: '-retirement_date', component: SortNumberDescIcon }
+	export let hideKeys: Array<string> = [];
+
+	let sorts: { [key: string]: { label: string; value: string; component: ComponentType; hidden: boolean } } = {};
+
+	$: sorts = {
+		name: { label: 'Name ASC', value: 'name', component: SortLetterAscIcon, hidden: hideKeys.includes('name') },
+		'-name': { label: 'Name DESC', value: '-name', component: SortLetterDescIcon, hidden: hideKeys.includes('-name') },
+		subscriber: { label: 'Subscriber ASC', value: 'subscriber', component: SortNumberAscIcon, hidden: hideKeys.includes('subscriber') },
+		'-subscriber': { label: 'Subscriber DESC', value: '-subscriber', component: SortNumberDescIcon, hidden: hideKeys.includes('-subscriber') },
+		debut_date: { label: 'Debut date ASC', value: 'debut_date', component: SortNumberAscIcon, hidden: hideKeys.includes('debut_date') },
+		'-debut_date': { label: 'Debut date DESC', value: '-debut_date', component: SortNumberDescIcon, hidden: hideKeys.includes('-debut_date') },
+		retirement_date: {
+			label: 'Retirement date ASC',
+			value: 'retirement_date',
+			component: SortNumberAscIcon,
+			hidden: hideKeys.includes('retirement_date')
+		},
+		'-retirement_date': {
+			label: 'Retirement date DESC',
+			value: '-retirement_date',
+			component: SortNumberDescIcon,
+			hidden: hideKeys.includes('-retirement_date')
+		}
 	};
 
 	let hidden: boolean = true;
@@ -51,7 +65,9 @@
 			class="absolute mt-2 -right-10 grid grid-cols-1 gap-2 z-10 p-2 rounded-lg bg-white dark:bg-neutral-800 border dark:border-neutral-600 text-sm w-max"
 		>
 			{#each Object.values(sorts) as sort}
-				<InputRadio label={sort.label} value={sort.value} bind:group={value} on:change={onSubmit} />
+				{#if !sort.hidden}
+					<InputRadio label={sort.label} value={sort.value} bind:group={value} on:change={onSubmit} />
+				{/if}
 			{/each}
 		</div>
 	{/if}

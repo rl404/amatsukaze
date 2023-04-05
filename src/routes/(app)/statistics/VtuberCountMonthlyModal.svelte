@@ -6,8 +6,8 @@
 	import { vtuberSorter } from '$lib/utils';
 	import { onMount, type SvelteComponent } from 'svelte';
 	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
-	import Layout from './Layout.svelte';
-	import Sort from './Sort.svelte';
+	import VtuberSortButton from '$lib/components/buttons/VtuberSortButton.svelte';
+	import VtuberLayoutButton from '$lib/components/buttons/VtuberLayoutButton.svelte';
 
 	export let title: string = 'Vtubers';
 	export let data: { debut: Array<vtuberResponseData>; retired: Array<vtuberResponseData> };
@@ -56,8 +56,8 @@
 				{/each}
 			</div>
 			<div class="flex items-center gap-2">
-				<div><Sort bind:value={sort} on:submit={onSort} /></div>
-				<div><Layout bind:layoutName={layout} /></div>
+				<VtuberSortButton bind:value={sort} on:submit={onSort} class="w-4 h-4" />
+				<VtuberLayoutButton bind:value={layout} class="w-4 h-4" />
 			</div>
 		</div>
 		<div class="grid grid-cols-6 gap-2" class:hidden={!tabs[0].active}>
