@@ -1,21 +1,8 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import axios from 'axios';
 	import InputText from '$lib/components/inputs/InputText.svelte';
-	import type { agencyResponseData } from '../../api/agencies/[id]/+server';
 
 	export let value: string;
-
-	let options: Array<string> = [];
-
-	onMount(() => {
-		axios
-			.get(`/api/agencies`)
-			.then((resp) => {
-				options = [...options, ...resp.data.data.map((d: agencyResponseData) => d.name)];
-			})
-			.catch(() => {});
-	});
+	export let options: Array<string>;
 </script>
 
 <div>

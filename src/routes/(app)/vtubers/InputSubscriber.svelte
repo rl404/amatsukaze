@@ -9,5 +9,5 @@
 
 <div>
 	<label for="subscriber" class="block mb-2 font-medium">Subscriber</label>
-	<InputRange id="subscriber" bind:values bind:minValue bind:maxValue step={2e5} formatter={(v) => compactInt(v)} />
+	<InputRange id="subscriber" bind:values {minValue} {maxValue} step={2e5} formatter={(v) => compactInt(v)} />
 </div>

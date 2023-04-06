@@ -10,25 +10,33 @@
 	import InfiniteScroll from '$lib/components/InfiniteScroll.svelte';
 	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
 	import { getAxiosError } from '$lib/utils';
-	import type { vtubersResponse } from '../../api/vtubers/+server';
 	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
 	import axios from 'axios';
 	import InputSearch from './InputSearch.svelte';
 	import AdvancedSearch from './AdvancedSearch.svelte';
 	import VtuberSortButton from '$lib/components/buttons/VtuberSortButton.svelte';
 	import VtuberLayoutButton from '$lib/components/buttons/VtuberLayoutButton.svelte';
+	import type { vtuberSearchResponse } from './+page.server';
 
-	export let data: vtubersResponse;
+	export let data: vtuberSearchResponse;
+
+	const vtubersData = data.vtubers.data;
+	const agenciesData = data.agencies.data;
+	const characterDesignersData = data.characterDesigners.data;
+	const character2dModelersData = data.character2dModelers.data;
+	const character3dModelersData = data.character3dModelers.data;
+	const startDebutYear = !data.startDebut.data[0].debut_date ? 2000 : new Date(data.startDebut.data[0].debut_date).getFullYear();
+	const startRetiredYear = !data.startRetired.data[0].retirement_date ? 2000 : new Date(data.startRetired.data[0].retirement_date).getFullYear();
 
 	let names = '';
 	let page = 1;
 	let limit = 36;
-	let total = data.meta.total;
+	let total = data.vtubers.meta.total;
 	let layout: string = 'grid';
 	let sort: string = 'name';
 	let loading = false;
 	let error = '';
-	let vtubers: Array<vtuberResponseData> = data.data;
+	let vtubers: Array<vtuberResponseData> = vtubersData;
 	let newVtubers: Array<vtuberResponseData> = [];
 	let hasMore: boolean = true;
 	let advQuery: any = {};
@@ -122,7 +130,15 @@
 					<InputSearch class="w-full" bind:value={names} placeholder="search vtuber name..." on:submit={onSubmit} />
 				</div>
 				<div>
-					<AdvancedSearch on:submit={onSubmitAdvanced} />
+					<AdvancedSearch
+						on:submit={onSubmitAdvanced}
+						agencies={agenciesData.map((a) => a.name)}
+						characterDesigners={characterDesignersData}
+						character2dModelers={character2dModelersData}
+						character3dModelers={character3dModelersData}
+						{startDebutYear}
+						{startRetiredYear}
+					/>
 				</div>
 				<div>
 					<VtuberSortButton class="w-5 h-5" bind:value={sort} on:submit={onSort} />

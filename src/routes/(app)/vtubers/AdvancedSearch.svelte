@@ -57,6 +57,15 @@
 
 	const dispatch = createEventDispatcher<{ submit: advancedQuery }>();
 
+	export let agencies: Array<string>;
+	export let characterDesigners: Array<string>;
+	export let character2dModelers: Array<string>;
+	export let character3dModelers: Array<string>;
+	export let startDebutYear: number;
+	export let endDebutYear: number = new Date().getFullYear();
+	export let startRetiredYear: number;
+	export let endRetiredYear: number = new Date().getFullYear();
+
 	let modal: SvelteComponent;
 	let query: advancedQuery = {
 		name: '',
@@ -66,12 +75,12 @@
 		include_retired: true,
 		exclude_active: false,
 		exclude_retired: false,
-		debut_year: [0, 0],
-		start_debut_year: 0,
-		end_debut_year: 0,
-		retired_year: [0, 0],
-		start_retired_year: 0,
-		end_retired_year: 0,
+		debut_year: [startDebutYear, endDebutYear],
+		start_debut_year: startDebutYear,
+		end_debut_year: endDebutYear,
+		retired_year: [startRetiredYear, endRetiredYear],
+		start_retired_year: startRetiredYear,
+		end_retired_year: endRetiredYear,
 		character_designer: '',
 		character_2d_modeler: '',
 		character_3d_modeler: '',
@@ -88,12 +97,6 @@
 		start_subscriber: 0,
 		end_subscriber: 0
 	};
-	let minDebutYear: number = 0;
-	let maxDebutYear: number = 0;
-	let minRetiredYear: number = 0;
-	let maxRetiredYear: number = 0;
-	let minSubscriber: number = 0;
-	let maxSubscriber: number = 5e6;
 
 	type advancedQueryKey = keyof typeof query;
 
@@ -131,25 +134,25 @@
 		query = resetObject(query);
 		query.include_active = true;
 		query.include_retired = true;
-		query.debut_year = [minDebutYear, maxDebutYear];
-		query.retired_year = [minRetiredYear, maxRetiredYear];
+		query.debut_year = [startDebutYear, endDebutYear];
+		query.retired_year = [startRetiredYear, endRetiredYear];
 		query.has_2d = undefined;
 		query.has_3d = undefined;
 		query.in_agency = undefined;
-		query.subscriber = [minSubscriber, maxSubscriber];
+		query.subscriber = [0, 5e6];
 	};
 
 	const onSubmit = () => {
 		query.exclude_active = !query.include_active;
 		query.exclude_retired = !query.include_retired;
-		query.start_debut_year = query.debut_year[0] === minDebutYear ? 0 : query.debut_year[0];
-		query.end_debut_year = query.debut_year[1] === maxDebutYear ? 0 : query.debut_year[1];
-		query.start_retired_year = query.retired_year[0] === minRetiredYear ? 0 : query.retired_year[0];
-		query.end_retired_year = query.retired_year[1] === maxRetiredYear ? 0 : query.retired_year[1];
+		query.start_debut_year = query.debut_year[0] === startDebutYear ? 0 : query.debut_year[0];
+		query.end_debut_year = query.debut_year[1] === endDebutYear ? 0 : query.debut_year[1];
+		query.start_retired_year = query.retired_year[0] === startRetiredYear ? 0 : query.retired_year[0];
+		query.end_retired_year = query.retired_year[1] === endRetiredYear ? 0 : query.retired_year[1];
 		query.start_birthday_month = query.birthday_month;
 		query.end_birthday_month = query.birthday_month;
-		query.start_subscriber = query.subscriber[0] === minSubscriber ? 0 : query.subscriber[0];
-		query.end_subscriber = query.subscriber[1] === maxSubscriber ? 0 : query.subscriber[1];
+		query.start_subscriber = query.subscriber[0] === 0 ? 0 : query.subscriber[0];
+		query.end_subscriber = query.subscriber[1] === 5e6 ? 0 : query.subscriber[1];
 
 		modal.toggleOpen();
 		dispatch('submit', query);
@@ -178,34 +181,34 @@
 				<InputStatus bind:includeActive={query.include_active} bind:includeRetired={query.include_retired} />
 			</div>
 			<div class="col-span-6 sm:col-span-2">
-				<InputDebutYear bind:values={query.debut_year} bind:minValue={minDebutYear} bind:maxValue={maxDebutYear} />
+				<InputDebutYear bind:values={query.debut_year} bind:minValue={startDebutYear} bind:maxValue={endDebutYear} />
 			</div>
 			<div class="col-span-6 sm:col-span-2">
-				<InputRetiredYear bind:values={query.retired_year} bind:minValue={minRetiredYear} bind:maxValue={maxRetiredYear} />
+				<InputRetiredYear bind:values={query.retired_year} bind:minValue={startRetiredYear} bind:maxValue={endRetiredYear} />
 			</div>
 			<div class="col-span-6 sm:col-span-2">
 				<InputInAgency bind:inAgency={query.in_agency} />
 			</div>
 			<div class="col-span-6 sm:col-span-2">
-				<InputAgency bind:value={query.agency} />
+				<InputAgency bind:value={query.agency} options={agencies} />
 			</div>
 			<div class="col-span-6 sm:col-span-2">
 				<InputModel bind:has2D={query.has_2d} bind:has3D={query.has_3d} />
 			</div>
 			<div class="col-span-6 sm:col-span-2">
-				<InputDesigner bind:value={query.character_designer} />
+				<InputDesigner bind:value={query.character_designer} options={characterDesigners} />
 			</div>
 			<div class="col-span-6 sm:col-span-2">
-				<Input2DModeler bind:value={query.character_2d_modeler} />
+				<Input2DModeler bind:value={query.character_2d_modeler} options={character2dModelers} />
 			</div>
 			<div class="col-span-6 sm:col-span-2">
-				<Input3DModeler bind:value={query.character_3d_modeler} />
+				<Input3DModeler bind:value={query.character_3d_modeler} options={character3dModelers} />
 			</div>
 			<div class="col-span-6 sm:col-span-4">
 				<InputChannel bind:value={query.channel_types} />
 			</div>
 			<div class="col-span-6 sm:col-span-2">
-				<InputSubscriber bind:values={query.subscriber} bind:minValue={minSubscriber} bind:maxValue={maxSubscriber} />
+				<InputSubscriber bind:values={query.subscriber} minValue={0} maxValue={5e6} />
 			</div>
 			<div class="col-span-6 sm:col-span-2">
 				<InputBirthday bind:birthdayDay={query.birthday_day} bind:birthdayMonth={query.birthday_month} />
