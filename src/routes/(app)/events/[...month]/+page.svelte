@@ -13,10 +13,10 @@
 	const birthdayData = data.birthday.data;
 	const anniversaryData = data.anniversary.data;
 
-	let month: string = parseMonth($page.url.searchParams.get('month'));
+	let month: string = parseMonth($page.params.month);
 
 	const onChangeMonth = () => {
-		window.location.href = `/events?month=${month}`;
+		window.location.href = `/events/${month}`;
 	};
 
 	const onClickJump = () => {

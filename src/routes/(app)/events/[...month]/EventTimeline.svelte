@@ -4,7 +4,7 @@
 	import TimelineItem from '$lib/components/timelines/TimelineItem.svelte';
 	import { isScreen, monthNames } from '$lib/utils';
 	import { onMount } from 'svelte';
-	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
+	import type { vtuberResponseData } from '../../../api/vtubers/[id]/+server';
 
 	export let birthdayData: Array<vtuberResponseData>;
 	export let anniversaryData: Array<vtuberResponseData>;

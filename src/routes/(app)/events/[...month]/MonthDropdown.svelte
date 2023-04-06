@@ -15,7 +15,7 @@
 	};
 </script>
 
-<select bind:value on:change={onChange} class="bg-transparent pr-2 hover:opacity-70">
+<select bind:value on:change={onChange} class="bg-white dark:bg-neutral-900 pr-2 hover:opacity-70">
 	{#each options as option}
 		<option value={option.value}>{option.label}</option>
 	{/each}
