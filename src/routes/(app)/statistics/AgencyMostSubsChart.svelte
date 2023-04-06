@@ -1,7 +1,7 @@
 <script lang="ts">
 	import BarChart from '$lib/components/charts/BarChart.svelte';
 	import { compactInt } from '$lib/utils';
-	import type { SvelteComponent } from 'svelte';
+	import { onMount, type SvelteComponent } from 'svelte';
 	import type { agencyResponseData } from '../../api/agencies/[id]/+server';
 	import AgencyModal from '$lib/components/modals/AgencyModal.svelte';
 
@@ -9,15 +9,19 @@
 
 	let modals: Array<SvelteComponent> = [];
 
-	const chartData: Array<{ id: number; name: string; image: string; value: number }> = data
-		.map((a) => ({
-			id: a.id,
-			name: a.name,
-			image: a.image,
-			value: a.subscriber
-		}))
-		.sort((a, b) => (a.value < b.value ? 1 : -1))
-		.slice(0, 10);
+	let chartData: Array<{ id: number; name: string; image: string; value: number }> = [];
+
+	onMount(() => {
+		chartData = data
+			.map((a) => ({
+				id: a.id,
+				name: a.name,
+				image: a.image,
+				value: a.subscriber
+			}))
+			.sort((a, b) => (a.value < b.value ? 1 : -1))
+			.slice(0, 10);
+	});
 
 	const onClick = (d: any) => {
 		const i = d.detail;
