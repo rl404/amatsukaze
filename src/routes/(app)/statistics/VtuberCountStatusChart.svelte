@@ -1,20 +1,22 @@
 <script lang="ts">
 	import DonutChart from '$lib/components/charts/DonutChart.svelte';
+	import { onMount } from 'svelte';
 	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
 
 	export let data: Array<vtuberResponseData>;
 
-	const chartData: { active: number; retired: number } = data.reduce(
-		(res: { active: number; retired: number }, curr) => {
+	let chartData: { active: number; retired: number } = { active: 0, retired: 0 };
+
+	onMount(() => {
+		chartData = data.reduce((res: { active: number; retired: number }, curr) => {
 			if (curr.retirement_date) {
 				res.retired++;
 			} else {
 				res.active++;
 			}
 			return res;
-		},
-		{ active: 0, retired: 0 }
-	);
+		}, chartData);
+	});
 
 	const onClick = (d: any) => {
 		const i = d.detail;

@@ -3,6 +3,7 @@
 	import { chartBorderColors, chartColors, chartStrokeColors, chartTextColors } from '$lib/components/charts/colors';
 	import { dayNames, ThemeMode } from '$lib/utils';
 	import { theme } from '$lib/utils/store';
+	import { onMount } from 'svelte';
 	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
 
 	export let data: Array<vtuberResponseData>;
@@ -24,23 +25,27 @@
 
 	let maxCount = 0;
 
-	const chartData = data.reduce(
-		(res, vtuber) => {
-			vtuber.channels.forEach((c) => {
-				c.videos.forEach((v) => {
-					if (!v.start_date) return;
-					const startDate = new Date(v.start_date);
-					const day = startDate.getDay();
-					const startHour = startDate.getHours();
-					res[dayNames[day]][startHour]++;
+	let chartData: { [day: string]: Array<number> } = {};
 
-					if (res[dayNames[day]][startHour] > maxCount) maxCount = res[dayNames[day]][startHour];
+	onMount(() => {
+		chartData = data.reduce(
+			(res, vtuber) => {
+				vtuber.channels.forEach((c) => {
+					c.videos.forEach((v) => {
+						if (!v.start_date) return;
+						const startDate = new Date(v.start_date);
+						const day = startDate.getDay();
+						const startHour = startDate.getHours();
+						res[dayNames[day]][startHour]++;
+
+						if (res[dayNames[day]][startHour] > maxCount) maxCount = res[dayNames[day]][startHour];
+					});
 				});
-			});
-			return res;
-		},
-		dayNames.reduce((res, d) => ({ ...res, [d]: Array(24).fill(0) }), {} as { [day: string]: Array<number> })
-	);
+				return res;
+			},
+			dayNames.reduce((res, d) => ({ ...res, [d]: Array(24).fill(0) }), chartData)
+		);
+	});
 </script>
 
 <Chart

@@ -1,11 +1,14 @@
 <script lang="ts">
 	import DonutChart from '$lib/components/charts/DonutChart.svelte';
+	import { onMount } from 'svelte';
 	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
 
 	export let data: Array<vtuberResponseData>;
 
-	const chartData: { both: number; has2D: number; has3D: number; none: number } = data.reduce(
-		(res, curr) => {
+	let chartData: { both: number; has2D: number; has3D: number; none: number } = { both: 0, has2D: 0, has3D: 0, none: 0 };
+
+	onMount(() => {
+		chartData = data.reduce((res, curr) => {
 			if (curr.has_2d && curr.has_3d) {
 				res.both++;
 			} else if (curr.has_2d) {
@@ -16,9 +19,8 @@
 				res.none++;
 			}
 			return res;
-		},
-		{ both: 0, has2D: 0, has3D: 0, none: 0 }
-	);
+		}, chartData);
+	});
 
 	const onClick = (d: any) => {
 		const i = d.detail;
