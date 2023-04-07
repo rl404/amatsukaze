@@ -1,6 +1,5 @@
 <script lang="ts">
 	import BarChart from '$lib/components/charts/BarChart.svelte';
-	import { onMount } from 'svelte';
 	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
 
 	export let data: Array<vtuberResponseData>;
@@ -19,27 +18,23 @@
 		{ min: 5e6, max: 0, label: '>5M' }
 	];
 
-	let chartData: Array<{ name: string; value: number }> = [];
-
-	onMount(() => {
-		chartData = Object.entries(
-			data.reduce(
-				(res, vtuber) => {
-					const subs = vtuber.channels.reduce((max, c) => (c.subscriber > max ? c.subscriber : max), 0);
-					let i = 0;
-					for (i = 0; i < limits.length - 1; i++) {
-						if (limits[i].min <= subs && limits[i].max > subs) break;
-					}
-					res[limits[i].label]++;
-					return res;
-				},
-				limits.reduce((res, l) => ({ ...res, [l.label]: 0 }), {} as { [label: string]: number })
-			)
-		).map((d) => ({
-			name: d[0],
-			value: d[1]
-		}));
-	});
+	const chartData: Array<{ name: string; value: number }> = Object.entries(
+		data.reduce(
+			(res, vtuber) => {
+				const subs = vtuber.channels.reduce((max, c) => (c.subscriber > max ? c.subscriber : max), 0);
+				let i = 0;
+				for (i = 0; i < limits.length - 1; i++) {
+					if (limits[i].min <= subs && limits[i].max > subs) break;
+				}
+				res[limits[i].label]++;
+				return res;
+			},
+			limits.reduce((res, l) => ({ ...res, [l.label]: 0 }), {} as { [label: string]: number })
+		)
+	).map((d) => ({
+		name: d[0],
+		value: d[1]
+	}));
 
 	const onClick = (d: any) => {
 		const i = d.detail;
