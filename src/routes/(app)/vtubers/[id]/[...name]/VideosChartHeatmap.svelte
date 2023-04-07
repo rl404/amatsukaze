@@ -97,7 +97,7 @@
 				colorScale: {
 					ranges: colors.map((c, i) => ({
 						from: (maxCount / colors.length) * i,
-						to: (maxCount / colors.length) * (i + 1),
+						to: Math.ceil(maxCount / colors.length) * (i + 1),
 						color: c
 					}))
 				}
