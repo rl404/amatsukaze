@@ -1,27 +1,25 @@
 <script lang="ts">
 	import BarChart from '$lib/components/charts/BarChart.svelte';
 	import { onMount, type SvelteComponent } from 'svelte';
-	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
 	import AgencyModal from '$lib/components/modals/AgencyModal.svelte';
+	import type { agencyResponseData } from '../../api/agencies/[id]/+server';
+	import axios from 'axios';
+	import { getAxiosError } from '$lib/utils';
+	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
 
-	export let data: Array<vtuberResponseData>;
-
+	let data: Array<agencyResponseData> = [];
+	let loading: boolean = true;
+	let error: string = '';
 	let modals: Array<SvelteComponent> = [];
 
-	let chartData: Array<{ id: number; name: string; image: string; value: number }> = [];
-
 	onMount(() => {
-		chartData = Object.values(
-			data.reduce((res, curr) => {
-				curr.agencies?.forEach((a) => {
-					if (!res[a.id]) res[a.id] = { id: a.id, name: a.name, image: a.image, value: 0 };
-					res[a.id].value++;
-				});
-				return res;
-			}, {} as { [id: number]: { id: number; name: string; image: string; value: number } })
-		)
-			.sort((a, b) => (a.value < b.value ? 1 : -1))
-			.slice(0, 10);
+		axios
+			.get(`/api/agencies?sort=-member&limit=10`)
+			.then((resp) => {
+				data = resp.data.data;
+			})
+			.catch((err) => (error = getAxiosError(err)))
+			.finally(() => (loading = false));
 	});
 
 	const onClick = (d: any) => {
@@ -30,8 +28,14 @@
 	};
 </script>
 
-<BarChart data={chartData} horizontal on:click={onClick} />
+{#if loading}
+	<div><SpinnerIcon class="w-8 h-8 m-auto text-gray-200 animate-spin dark:text-gray-600 fill-pink-500 dark:fill-indigo-600" /></div>
+{:else if error !== ''}
+	<div class="text-center text-red-500">{error}</div>
+{:else}
+	<BarChart data={data.map((d) => ({ name: d.name, value: d.member }))} horizontal on:click={onClick} seriesName="Members" />
 
-{#each chartData as d, i}
-	<AgencyModal id={d.id} title={d.name} image={d.image} bind:this={modals[i]} />
-{/each}
+	{#each data as d, i}
+		<AgencyModal id={d.id} title={d.name} image={d.image} bind:this={modals[i]} />
+	{/each}
+{/if}

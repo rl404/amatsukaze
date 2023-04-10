@@ -2,31 +2,23 @@
 	import BarChart from '$lib/components/charts/BarChart.svelte';
 	import VtuberModal from '$lib/components/modals/VtuberModal.svelte';
 	import { onMount, type SvelteComponent } from 'svelte';
-	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
+	import axios from 'axios';
+	import { getAxiosError } from '$lib/utils';
+	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
 
-	export let data: Array<vtuberResponseData>;
-
+	let data: Array<{ id: number; name: string; count: number }> = [];
+	let loading: boolean = true;
+	let error: string = '';
 	let modals: Array<SvelteComponent> = [];
 
-	let chartData: Array<{ id: number; name: string; value: number }> = [];
-
 	onMount(() => {
-		chartData = Object.values(
-			data.reduce((res, vtuber) => {
-				if (!res[vtuber.id]) res[vtuber.id] = { id: vtuber.id, name: vtuber.name, count: 0 };
-				vtuber.channels.forEach((c) => {
-					res[vtuber.id].count += c.videos.length;
-				});
-				return res;
-			}, {} as { [id: number]: { id: number; name: string; count: number } })
-		)
-			.sort((a, b) => (a.count < b.count ? 1 : -1))
-			.slice(0, 10)
-			.map((d) => ({
-				id: d.id,
-				name: d.name,
-				value: d.count
-			}));
+		axios
+			.get(`/api/statistics/vtubers/video-count?top=10`)
+			.then((resp) => {
+				data = resp.data.data;
+			})
+			.catch((err) => (error = getAxiosError(err)))
+			.finally(() => (loading = false));
 	});
 
 	const onClick = (d: any) => {
@@ -35,8 +27,14 @@
 	};
 </script>
 
-<BarChart data={chartData} horizontal on:click={onClick} />
+{#if loading}
+	<div><SpinnerIcon class="w-8 h-8 m-auto text-gray-200 animate-spin dark:text-gray-600 fill-pink-500 dark:fill-indigo-600" /></div>
+{:else if error !== ''}
+	<div class="text-center text-red-500">{error}</div>
+{:else}
+	<BarChart data={data.map((d) => ({ name: d.name, value: d.count }))} horizontal on:click={onClick} />
 
-{#each chartData as d, i}
-	<VtuberModal id={d.id} title={d.name} bind:this={modals[i]} />
-{/each}
+	{#each data as d, i}
+		<VtuberModal id={d.id} title={d.name} bind:this={modals[i]} />
+	{/each}
+{/if}

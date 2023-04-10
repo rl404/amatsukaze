@@ -6,7 +6,7 @@ export const GET = (async ({ params }) => {
 	return new Response(blob, {
 		headers: {
 			'content-type': 'image/webp',
-			'cache-control': 'max-age=604800, stale-while-revalidate=86400'
+			'cache-control': 'max-age=604800, s-maxage=86400, stale-while-revalidate=86400'
 		},
 		status: resp.status
 	});

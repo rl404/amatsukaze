@@ -1,22 +1,28 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
+	import axios from 'axios';
+	import { getAxiosError } from '$lib/utils';
+	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
 
-	export let data: Array<vtuberResponseData>;
-
-	let avg: number = 0;
+	let data: number = 0;
+	let loading: boolean = true;
+	let error: string = '';
 
 	onMount(() => {
-		avg = Object.values(
-			data.reduce((res, vtuber) => {
-				if (!res[vtuber.id]) res[vtuber.id] = 0;
-				vtuber.channels.forEach((c) => {
-					res[vtuber.id] += c.videos.length;
-				});
-				return res;
-			}, {} as { [id: number]: number })
-		).reduce((avg, v, _, { length }) => avg + v / length, 0);
+		axios
+			.get(`/api/statistics/vtubers/average-video-count`)
+			.then((resp) => (data = resp.data.data))
+			.catch((err) => (error = getAxiosError(err)))
+			.finally(() => (loading = false));
 	});
 </script>
 
-<div class="text-center font-bold text-5xl">{parseFloat(avg.toFixed(1)).toLocaleString()}</div>
+{#if loading}
+	<div><SpinnerIcon class="w-8 h-8 m-auto text-gray-200 animate-spin dark:text-gray-600 fill-pink-500 dark:fill-indigo-600" /></div>
+{:else if error !== ''}
+	<div class="text-center text-red-500">{error}</div>
+{:else}
+	<div class="text-center font-bold text-5xl" title="in the last 2 months">
+		{parseFloat(data.toFixed(1)).toLocaleString()}
+	</div>
+{/if}

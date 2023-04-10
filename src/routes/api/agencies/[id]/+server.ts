@@ -22,7 +22,7 @@ export const GET = (async ({ params }) => {
 	return new Response(JSON.stringify(data), {
 		headers: {
 			'content-type': 'application/json',
-			'cache-control': 'max-age=86400, stale-while-revalidate=86400'
+			'cache-control': 'max-age=86400, s-maxage=86400, stale-while-revalidate=86400'
 		},
 		status: resp.status
 	});

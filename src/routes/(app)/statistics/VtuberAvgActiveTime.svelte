@@ -1,31 +1,28 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
+	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
+	import axios from 'axios';
+	import { getAxiosError } from '$lib/utils';
 
-	export let data: Array<vtuberResponseData>;
-
-	let avgDays: number = 0;
-	let avgYears: number = 0;
+	let data: number = 0;
+	let loading: boolean = true;
+	let error: string = '';
 
 	onMount(() => {
-		const sumCount = data.reduce(
-			(res: { sum: number; count: number }, curr) => {
-				if (!curr.debut_date) return res;
-				const debut = new Date(curr.debut_date);
-				const retired = !curr.retirement_date ? new Date() : new Date(curr.retirement_date);
-				const diff = retired.getTime() - debut.getTime();
-				res.sum += diff / (1000 * 3600 * 24);
-				res.count++;
-				return res;
-			},
-			{ sum: 0, count: 0 }
-		);
-
-		avgDays = sumCount.sum / sumCount.count;
-		avgYears = avgDays / (30 * 12);
+		axios
+			.get(`/api/statistics/vtubers/average-active-time`)
+			.then((resp) => (data = resp.data.data))
+			.catch((err) => (error = getAxiosError(err)))
+			.finally(() => (loading = false));
 	});
 </script>
 
-<div class="text-center font-bold text-5xl" title={`${parseInt(avgDays.toFixed(0)).toLocaleString()} days`}>
-	{parseFloat(avgYears.toFixed(1)).toLocaleString()} years
-</div>
+{#if loading}
+	<div><SpinnerIcon class="w-8 h-8 m-auto text-gray-200 animate-spin dark:text-gray-600 fill-pink-500 dark:fill-indigo-600" /></div>
+{:else if error !== ''}
+	<div class="text-center text-red-500">{error}</div>
+{:else}
+	<div class="text-center font-bold text-5xl" title={`${parseInt(data.toFixed(0)).toLocaleString()} days`}>
+		{parseFloat((data / (30 * 12)).toFixed(1)).toLocaleString()} years
+	</div>
+{/if}
