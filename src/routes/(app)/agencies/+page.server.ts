@@ -8,6 +8,6 @@ export const config = {
 };
 
 export const load = (async () => {
-	const resp = await fetch(`${SHIMAKAZE_HOST}/agencies`);
+	const resp = await fetch(`${SHIMAKAZE_HOST}/agencies?limit=-1`);
 	return await resp.json();
 }) satisfies PageServerLoad;
