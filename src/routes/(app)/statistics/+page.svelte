@@ -38,10 +38,8 @@
 <Head title="Statistics" description="Vtuber and agency statistics." image="/statistics.png" />
 
 <div class="grid grid-cols-6 gap-4">
-	<div class="col-span-6 text-3xl font-bold">
-		Statistics
-		<Border />
-	</div>
+	<div class="col-span-6 text-3xl font-bold">Statistics</div>
+	<Border class="col-span-6" />
 	<Card class="col-span-3 sm:col-span-2 {statCardHeight}" title="Vtuber Count">
 		<VtuberCount />
 	</Card>

@@ -6,7 +6,7 @@
 	let className = '';
 </script>
 
-<RenderIfVisible class="{className} rounded-lg border dark:border-neutral-600 p-2 grid gap-2">
+<RenderIfVisible class="{className} bg-white dark:bg-neutral-900 rounded-lg border dark:border-neutral-600 p-2 grid gap-2">
 	<div class="text-center font-bold">{title}</div>
 	<slot />
 </RenderIfVisible>
