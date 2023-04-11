@@ -5,6 +5,7 @@
 	import Image from '../Image.svelte';
 	import Model2DBadge from '../badges/Model2DBadge.svelte';
 	import Model3DBadge from '../badges/Model3DBadge.svelte';
+	import RenderIfVisible from '../RenderIfVisible.svelte';
 
 	export let id: number;
 	export let name: string;
@@ -32,7 +33,7 @@
 <div
 	class="bg-neutral-50 dark:bg-neutral-800 rounded-lg hover:outline hover:outline-pink-500 dark:hover:outline-indigo-600 shadow hover:shadow-lg {className}"
 >
-	<div class="flex items-center cursor-pointer" style="aspect-ratio: 2/1;" on:click={() => modal.toggleOpen()}>
+	<RenderIfVisible class="flex items-center cursor-pointer" style="aspect-ratio: 2/1;" on:click={() => modal.toggleOpen()}>
 		<Image
 			src={image && `/api/wikia/image/${image.split('?')[0]}?height=${height}`}
 			alt={name}
@@ -61,6 +62,6 @@
 				</div>
 			{/each}
 		</div>
-	</div>
+	</RenderIfVisible>
 	<VtuberModal {id} title={name} bind:this={modal} />
 </div>

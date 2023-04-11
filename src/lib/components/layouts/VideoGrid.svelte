@@ -6,6 +6,7 @@
 	import TwitchIcon from '../icons/TwitchIcon.svelte';
 	import YoutubeIcon from '../icons/YoutubeIcon.svelte';
 	import Image from '../Image.svelte';
+	import RenderIfVisible from '../RenderIfVisible.svelte';
 
 	export let data: vtuberResponseDataChannelVideo;
 	export let type: string;
@@ -30,7 +31,7 @@
 </script>
 
 <div class={className}>
-	<div class="flex flex-col gap-1 pb-4">
+	<RenderIfVisible class="flex flex-col gap-1 pb-4">
 		<a class="relative bg-neutral-100 dark:bg-neutral-800 rounded-lg" href={data.url} target="_blank" rel="noreferrer">
 			<span class="absolute right-1 bottom-1 px-1 text-xs text-white bg-black rounded">{durationStr}</span>
 			<Image src={data.image && `/api/image/${data.image}`} alt={data.title} class="aspect-video h-full w-full object-cover object-top rounded-lg" />
@@ -42,5 +43,5 @@
 			<span title={toTitleCase(type)}><svelte:component this={icons[type].icon} class="w-4 h-4 {icons[type].color}" /></span>
 			<span title={startDate} class="opacity-50">{!data.start_date ? '' : relativeTime(new Date(data.start_date))}</span>
 		</div>
-	</div>
+	</RenderIfVisible>
 </div>

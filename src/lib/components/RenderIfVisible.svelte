@@ -1,8 +1,11 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
+
+	const dispatch = createEventDispatcher<{ click: never }>();
 
 	export { className as class };
 	let className = '';
+	export let style: string = '';
 
 	let done: boolean = false;
 	let isVisible: boolean = false;
@@ -24,7 +27,7 @@
 	});
 </script>
 
-<div class={className} bind:this={element}>
+<div class={className} {style} bind:this={element} on:click={() => dispatch('click')}>
 	{#if isVisible || done}
 		<slot />
 	{/if}
