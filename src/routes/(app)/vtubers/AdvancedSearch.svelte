@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { createEventDispatcher, onMount, type SvelteComponent } from 'svelte';
-	import { resetObject, zodiacs } from '$lib/utils';
+	import { isArrayTypeOf, resetObject, zodiacs } from '$lib/utils';
 	import IconButton from '$lib/components/buttons/IconButton.svelte';
 	import Modal from '$lib/components/modals/Modal.svelte';
 	import Button from '$lib/components/buttons/Button.svelte';
@@ -111,6 +111,13 @@
 					res[curr[0]] = parseInt(curr[1]);
 				} else if (typeof query[curr[0]] === 'boolean') {
 					res[curr[0]] = curr[1] === 'true';
+				} else if (query[curr[0]] instanceof Array) {
+					if (isArrayTypeOf(query[curr[0]], 'number')) {
+						res[curr[0]] = curr[1].split(',').map((v: string) => parseInt(v));
+					}
+					if (isArrayTypeOf(query[curr[0]], 'string')) {
+						res[curr[0]] = curr[1].split(',');
+					}
 				} else {
 					res[curr[0]] = curr[1];
 				}
@@ -169,13 +176,13 @@
 
 		<div slot="body" class="p-4 grid grid-cols-6 gap-4">
 			<div class="col-span-6 sm:col-span-2">
-				<InputText id="name" label="Name" placeholder="name" bind:value={query.name} />
+				<InputText id="name" label="Name" placeholder="any" bind:value={query.name} />
 			</div>
 			<div class="col-span-6 sm:col-span-2">
-				<InputText id="originalName" label="Original Name" placeholder="original name" bind:value={query.original_name} />
+				<InputText id="originalName" label="Original Name" placeholder="any" bind:value={query.original_name} />
 			</div>
 			<div class="col-span-6 sm:col-span-2">
-				<InputText id="nickname" label="Nickname" placeholder="nickname" bind:value={query.nickname} />
+				<InputText id="nickname" label="Nickname" placeholder="any" bind:value={query.nickname} />
 			</div>
 			<div class="col-span-6 sm:col-span-2">
 				<InputStatus bind:includeActive={query.include_active} bind:includeRetired={query.include_retired} />

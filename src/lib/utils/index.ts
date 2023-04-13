@@ -259,3 +259,10 @@ export const relativeTime = (d: Date): string => {
 export const intToDurationStr = (dur: number): string => {
 	return new Date(dur).toISOString().slice(dur / 1000 >= 3600 ? 11 : 14, 19);
 };
+
+export const isArrayTypeOf = (arr: any, type: string): boolean => {
+	if (!(arr instanceof Array)) {
+		return false;
+	}
+	return arr.every((v) => typeof v === type);
+};
