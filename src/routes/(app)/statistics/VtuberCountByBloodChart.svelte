@@ -1,48 +1,34 @@
 <script lang="ts">
 	import DonutChart from '$lib/components/charts/DonutChart.svelte';
 	import { onMount } from 'svelte';
-	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
+	import axios from 'axios';
+	import { getAxiosError } from '$lib/utils';
+	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
 
-	export let data: Array<vtuberResponseData>;
-
-	let chartData: Array<{ name: string; value: number }> = [];
+	let data: Array<{ name: string; value: number }> = [];
+	let loading: boolean = true;
+	let error: string = '';
 
 	onMount(() => {
-		chartData = Object.entries(
-			data.reduce((res: { [blood: string]: number }, curr) => {
-				if (curr.blood_type === '') return res;
-				if (!res[curr.blood_type]) res[curr.blood_type] = 0;
-				res[curr.blood_type]++;
-				return res;
-			}, {})
-		)
-			.sort((a, b) => (a[1] < b[1] ? 1 : -1))
-			.map((d) => ({
-				name: d[0],
-				value: d[1]
-			}));
-
-		const topBloodTypes = chartData.slice(0, 5).map((d) => d.name);
-
-		const otherBloodTypeCount = chartData.reduce((res, curr) => {
-			if (!topBloodTypes.includes(curr.name)) res += curr.value;
-			return res;
-		}, 0);
-
-		chartData = chartData.slice(0, 5);
-		chartData.push({ name: 'Other', value: otherBloodTypeCount });
+		axios
+			.get(`/api/statistics/vtubers/blood-type-count?top=5`)
+			.then((resp) => {
+				data = resp.data.data.map((d: { blood_type: string; count: number }) => ({ name: d.blood_type, value: d.count }));
+			})
+			.catch((err) => (error = getAxiosError(err)))
+			.finally(() => (loading = false));
 	});
 
 	const onClick = (d: any) => {
 		const i = d.detail;
-		const bloodType = chartData[i].name;
-		if (bloodType !== 'Other') {
+		const bloodType = data[i].name;
+		if (bloodType !== 'other') {
 			window.open(`/vtubers?blood_types=${bloodType}`, '_blank')?.focus();
 			return;
 		}
 
-		const excludedBloodType = chartData
-			.filter((d) => d.name !== 'Other')
+		const excludedBloodType = data
+			.filter((d) => d.name !== 'other')
 			.map((d) => '-' + d.name)
 			.join(',');
 
@@ -50,4 +36,10 @@
 	};
 </script>
 
-<DonutChart data={chartData} on:click={onClick} />
+{#if loading}
+	<div><SpinnerIcon class="w-8 h-8 m-auto text-gray-200 animate-spin dark:text-gray-600 fill-pink-500 dark:fill-indigo-600" /></div>
+{:else if error !== ''}
+	<div class="text-center text-red-500">{error}</div>
+{:else}
+	<DonutChart {data} on:click={onClick} />
+{/if}

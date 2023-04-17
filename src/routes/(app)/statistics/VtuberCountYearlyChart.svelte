@@ -1,12 +1,22 @@
 <script lang="ts">
 	import Chart from '$lib/components/charts/Chart.svelte';
 	import { chartBorderColors, chartColors, chartTextColors } from '$lib/components/charts/colors';
-	import { ThemeMode } from '$lib/utils';
+	import { ThemeMode, getAxiosError } from '$lib/utils';
 	import { theme } from '$lib/utils/store';
 	import { onMount } from 'svelte';
-	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
+	import type { vtuberDebutRetireCountYearlyResponseData } from '../../api/statistics/vtubers/debut-retire-count-yearly/+server';
+	import axios from 'axios';
+	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
 
-	export let data: Array<vtuberResponseData>;
+	type chartData = vtuberDebutRetireCountYearlyResponseData & {
+		debut_total: number;
+		retire_total: number;
+		active_total: number;
+	};
+
+	let data: Array<chartData> = [];
+	let loading: boolean = true;
+	let error: string = '';
 
 	let currTheme = ThemeMode.Dark;
 	let colors = [chartColors.debut[0], chartColors.retired[0], chartColors.debut[1], chartColors.retired[1], chartColors[currTheme][0]];
@@ -21,229 +31,192 @@
 		colors[4] = chartColors[currTheme][0];
 	});
 
-	let chartData: {
-		[year: string]: {
-			debut: Array<vtuberResponseData>;
-			retired: Array<vtuberResponseData>;
-			debut_total: number;
-			retired_total: number;
-			active_total: number;
-		};
-	} = {};
-
-	let minDate = new Date();
-	let maxDate = new Date();
-
 	onMount(() => {
-		data.forEach((vtuber) => {
-			if (vtuber.debut_date && new Date(vtuber.debut_date)) {
-				const debutDate = new Date(vtuber.debut_date);
-				if (debutDate.getFullYear() === 0) return;
-				if (debutDate < minDate) minDate = debutDate;
-				if (debutDate > maxDate) maxDate = debutDate;
-			}
+		axios
+			.get(`/api/statistics/vtubers/debut-retire-count-yearly`)
+			.then((resp) => {
+				const rawData: Array<vtuberDebutRetireCountYearlyResponseData> = resp.data.data;
 
-			if (vtuber.retirement_date && new Date(vtuber.retirement_date)) {
-				const retiredDate = new Date(vtuber.retirement_date);
-				if (retiredDate.getFullYear() === 0) return;
-				if (retiredDate < minDate) minDate = retiredDate;
-				if (retiredDate > maxDate) maxDate = retiredDate;
-			}
-		});
+				let tmpData = rawData.map((d) => ({
+					...d,
+					debut_total: d.debut,
+					retire_total: d.retire,
+					active_total: d.debut - d.retire
+				}));
 
-		minDate.setFullYear(minDate.getFullYear() - 1);
-		maxDate.setFullYear(maxDate.getFullYear() + 1);
+				tmpData.forEach((_, i) => {
+					if (i === 0) return;
+					tmpData[i].debut_total += tmpData[i - 1].debut_total;
+					tmpData[i].retire_total += tmpData[i - 1].retire_total;
+					tmpData[i].active_total += tmpData[i - 1].active_total;
+				});
 
-		while (minDate.toISOString().slice(0, 7) != maxDate.toISOString().slice(0, 7)) {
-			const key = minDate.getFullYear();
-			chartData[key] = { debut: [], retired: [], debut_total: 0, retired_total: 0, active_total: 0 };
-			minDate.setMonth(minDate.getMonth() + 1);
-		}
-
-		data.forEach((vtuber) => {
-			if (vtuber.debut_date && new Date(vtuber.debut_date)) {
-				const debutDate = new Date(vtuber.debut_date);
-				if (debutDate.getFullYear() === 0) return;
-				const key = debutDate.getFullYear();
-				chartData[key].debut.push(vtuber);
-				chartData[key].debut_total++;
-				chartData[key].active_total++;
-			}
-
-			if (vtuber.retirement_date && new Date(vtuber.retirement_date)) {
-				const retiredDate = new Date(vtuber.retirement_date);
-				if (retiredDate.getFullYear() === 0) return;
-				const key = retiredDate.getFullYear();
-				chartData[key].retired.push(vtuber);
-				chartData[key].retired_total++;
-				chartData[key].active_total--;
-			}
-		});
-
-		Object.entries(chartData).forEach((d, i) => {
-			if (i === 0) return;
-			const key = d[0];
-			const prevKey = Object.entries(chartData)[i - 1][0];
-			chartData[key].debut_total += chartData[prevKey].debut_total;
-			chartData[key].retired_total += chartData[prevKey].retired_total;
-			chartData[key].active_total += chartData[prevKey].active_total;
-		});
+				data = tmpData;
+			})
+			.catch((err) => {
+				error = getAxiosError(err);
+			})
+			.finally(() => {
+				loading = false;
+			});
 	});
 </script>
 
-<Chart
-	options={{
-		chart: {
-			height: 350,
-			type: 'line',
-			toolbar: {
-				show: false
+{#if loading}
+	<div class="h-full flex justify-center items-center">
+		<SpinnerIcon class="w-10 h-10 text-gray-200 animate-spin dark:text-gray-600 fill-pink-500 dark:fill-indigo-600" />
+	</div>
+{:else if error !== ''}
+	<div class="h-full flex justify-center items-center">
+		<div class="text-center text-red-500">{error}</div>
+	</div>
+{:else}
+	<Chart
+		options={{
+			chart: {
+				height: 350,
+				type: 'line',
+				toolbar: {
+					show: false
+				},
+				zoom: {
+					enabled: false
+				}
 			},
-			zoom: {
+			colors: colors,
+			dataLabels: {
 				enabled: false
-			}
-		},
-		colors: colors,
-		dataLabels: {
-			enabled: false
-		},
-		fill: {
-			type: ['solid', 'solid', 'gradient', 'gradient', 'gradient'],
-			gradient: {
-				type: 'vertical',
-				shadeIntensity: 1,
-				inverseColors: false,
-				opacityFrom: 0.7,
-				opacityTo: 0,
-				stops: [20, 100]
-			}
-		},
-		grid: {
-			borderColor: borderColor,
-			strokeDashArray: 5,
-			xaxis: { lines: { show: false } },
-			yaxis: { lines: { show: true } }
-		},
-		series: [
-			{
-				name: 'Debut',
-				type: 'column',
-				data: Object.values(chartData).map((d) => d.debut.length)
 			},
-			{
-				name: 'Retired',
-				type: 'column',
-				data: Object.values(chartData).map((d) => d.retired.length)
+			fill: {
+				type: ['solid', 'solid', 'gradient', 'gradient', 'gradient'],
+				gradient: {
+					type: 'vertical',
+					shadeIntensity: 1,
+					inverseColors: false,
+					opacityFrom: 0.7,
+					opacityTo: 0,
+					stops: [20, 100]
+				}
 			},
-			{
-				name: 'Total Debut',
-				type: 'area',
-				data: Object.values(chartData).map((d) => d.debut_total)
+			grid: {
+				borderColor: borderColor,
+				strokeDashArray: 5,
+				xaxis: { lines: { show: false } },
+				yaxis: { lines: { show: true } }
 			},
-			{
-				name: 'Total Retired',
-				type: 'area',
-				data: Object.values(chartData).map((d) => d.retired_total)
+			series: [
+				{
+					name: 'Debut',
+					type: 'column',
+					data: data.map((d) => d.debut)
+				},
+				{
+					name: 'Retire',
+					type: 'column',
+					data: data.map((d) => d.retire)
+				},
+				{
+					name: 'Total Debut',
+					type: 'area',
+					data: data.map((d) => d.debut_total)
+				},
+				{
+					name: 'Total Retire',
+					type: 'area',
+					data: data.map((d) => d.retire_total)
+				},
+				{
+					name: 'Total Active',
+					type: 'area',
+					data: data.map((d) => d.active_total)
+				}
+			],
+			legend: {
+				labels: {
+					colors: textColor
+				}
 			},
-			{
-				name: 'Total Active',
-				type: 'area',
-				data: Object.values(chartData).map((d) => d.active_total)
-			}
-		],
-		legend: {
-			labels: {
-				colors: textColor
-			}
-		},
-		stroke: {
-			curve: 'smooth',
-			width: 2
-		},
-		tooltip: {
-			theme: currTheme,
-			intersect: false,
-			shared: true,
-			x: {
-				format: 'yyyy'
+			stroke: {
+				curve: 'smooth',
+				width: 2
 			},
-			y: { formatter: (v) => (!v ? '0' : v.toLocaleString()) }
-		},
-		xaxis: {
-			type: 'datetime',
-			categories: Object.keys(chartData),
-			labels: {
-				style: { colors: textColor }
+			tooltip: {
+				theme: currTheme,
+				intersect: false,
+				shared: true,
+				x: {
+					format: 'yyyy'
+				},
+				y: { formatter: (v) => (!v ? '0' : v.toLocaleString()) }
 			},
-			axisBorder: { color: borderColor },
-			axisTicks: { color: borderColor }
-		},
-		yaxis: [
-			{
-				seriesName: 'Debut',
-				showAlways: true,
+			xaxis: {
+				type: 'datetime',
+				categories: data.map((d) => new Date(d.year, 1, 1).toISOString().slice(0, 10)),
 				labels: {
 					style: { colors: textColor }
 				},
-				forceNiceScale: true,
-				max: Math.max(...Object.values(chartData).map((d) => d.debut.length), ...Object.values(chartData).map((d) => d.retired.length)),
-				axisBorder: { show: true, color: borderColor },
-				axisTicks: { show: true, color: borderColor }
+				axisBorder: { color: borderColor },
+				axisTicks: { color: borderColor }
 			},
-			{
-				seriesName: 'Retired',
-				show: false,
-				labels: {
-					style: { colors: textColor }
+			yaxis: [
+				{
+					seriesName: 'Debut',
+					showAlways: true,
+					labels: {
+						style: { colors: textColor }
+					},
+					forceNiceScale: true,
+					max: Math.max(...data.map((d) => d.debut), ...data.map((d) => d.retire)),
+					axisBorder: { show: true, color: borderColor },
+					axisTicks: { show: true, color: borderColor }
 				},
-				forceNiceScale: true,
-				max: Math.max(...Object.values(chartData).map((d) => d.debut.length), ...Object.values(chartData).map((d) => d.retired.length)),
-				axisBorder: { show: true, color: borderColor },
-				axisTicks: { show: true, color: borderColor }
-			},
-			{
-				seriesName: 'Debut Total',
-				show: false,
-				labels: {
-					style: { colors: textColor }
+				{
+					seriesName: 'Retire',
+					show: false,
+					labels: {
+						style: { colors: textColor }
+					},
+					forceNiceScale: true,
+					max: Math.max(...data.map((d) => d.debut), ...data.map((d) => d.retire)),
+					axisBorder: { show: true, color: borderColor },
+					axisTicks: { show: true, color: borderColor }
 				},
-				max: Math.max(
-					...Object.values(chartData).map((d) => d.debut_total),
-					...Object.values(chartData).map((d) => d.retired_total),
-					...Object.values(chartData).map((d) => d.active_total)
-				),
-				forceNiceScale: true,
-				opposite: true,
-				axisBorder: { show: true, color: borderColor },
-				axisTicks: { show: true, color: borderColor }
-			},
-			{
-				seriesName: 'Retired Total',
-				show: false,
-				labels: {
-					style: { colors: textColor }
+				{
+					seriesName: 'Debut Total',
+					show: false,
+					labels: {
+						style: { colors: textColor }
+					},
+					max: Math.max(...data.map((d) => d.debut_total), ...data.map((d) => d.retire_total), ...data.map((d) => d.active_total)),
+					forceNiceScale: true,
+					opposite: true,
+					axisBorder: { show: true, color: borderColor },
+					axisTicks: { show: true, color: borderColor }
 				},
-				max: Math.max(
-					...Object.values(chartData).map((d) => d.debut_total),
-					...Object.values(chartData).map((d) => d.retired_total),
-					...Object.values(chartData).map((d) => d.active_total)
-				),
-				forceNiceScale: true,
-				opposite: true,
-				axisBorder: { show: true, color: borderColor },
-				axisTicks: { show: true, color: borderColor }
-			},
-			{
-				seriesName: 'Total Active',
-				showAlways: true,
-				labels: {
-					style: { colors: textColor }
+				{
+					seriesName: 'Retire Total',
+					show: false,
+					labels: {
+						style: { colors: textColor }
+					},
+					max: Math.max(...data.map((d) => d.debut_total), ...data.map((d) => d.retire_total), ...data.map((d) => d.active_total)),
+					forceNiceScale: true,
+					opposite: true,
+					axisBorder: { show: true, color: borderColor },
+					axisTicks: { show: true, color: borderColor }
 				},
-				forceNiceScale: true,
-				opposite: true,
-				axisBorder: { show: true, color: borderColor },
-				axisTicks: { show: true, color: borderColor }
-			}
-		]
-	}}
-/>
+				{
+					seriesName: 'Total Active',
+					showAlways: true,
+					labels: {
+						style: { colors: textColor }
+					},
+					forceNiceScale: true,
+					opposite: true,
+					axisBorder: { show: true, color: borderColor },
+					axisTicks: { show: true, color: borderColor }
+				}
+			]
+		}}
+	/>
+{/if}

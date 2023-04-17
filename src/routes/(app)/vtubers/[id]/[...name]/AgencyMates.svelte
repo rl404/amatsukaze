@@ -10,8 +10,8 @@
 	import { getAxiosError, vtuberSorter } from '$lib/utils';
 	import axios from 'axios';
 	import type { vtuberResponseData } from '../../../../api/vtubers/[id]/+server';
-	import Layout from './Layout.svelte';
-	import Sort from './Sort.svelte';
+	import VtuberSortButton from '$lib/components/buttons/VtuberSortButton.svelte';
+	import VtuberLayoutButton from '$lib/components/buttons/VtuberLayoutButton.svelte';
 
 	export let id: number;
 	export let agency: string;
@@ -52,8 +52,8 @@
 			<span class="px-4 font-bold whitespace-nowrap">{agency} ({vtubers.length.toLocaleString()})</span>
 		</Border>
 		{#if open}
-			<Sort bind:value={sort} />
-			<Layout bind:value={layout} />
+			<VtuberSortButton bind:value={sort} class="w-4 h-4" />
+			<VtuberLayoutButton bind:value={layout} class="w-4 h-4" />
 		{/if}
 		<div>
 			<IconButton on:click={toggleOpen} title={open ? 'hide' : 'show'}>

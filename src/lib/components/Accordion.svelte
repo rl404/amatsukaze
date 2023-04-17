@@ -33,7 +33,7 @@
 			{/if}
 		</span>
 	</button>
-	<div class="p-4" hidden={!open}>
+	<div class="p-4 bg-white dark:bg-neutral-900 rounded-b-lg" hidden={!open}>
 		<slot />
 	</div>
 </div>

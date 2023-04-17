@@ -10,25 +10,33 @@
 	import InfiniteScroll from '$lib/components/InfiniteScroll.svelte';
 	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
 	import { getAxiosError } from '$lib/utils';
-	import type { vtubersResponse } from '../../api/vtubers/+server';
 	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
 	import axios from 'axios';
 	import InputSearch from './InputSearch.svelte';
 	import AdvancedSearch from './AdvancedSearch.svelte';
-	import Layout from './Layout.svelte';
-	import Sort from './Sort.svelte';
+	import VtuberSortButton from '$lib/components/buttons/VtuberSortButton.svelte';
+	import VtuberLayoutButton from '$lib/components/buttons/VtuberLayoutButton.svelte';
+	import type { vtuberSearchResponse } from './+page.server';
 
-	export let data: vtubersResponse;
+	export let data: vtuberSearchResponse;
+
+	const vtubersData = data.vtubers.data;
+	const agenciesData = data.agencies.data;
+	const characterDesignersData = data.characterDesigners.data;
+	const character2dModelersData = data.character2dModelers.data;
+	const character3dModelersData = data.character3dModelers.data;
+	const startDebutYear = !data.startDebut.data[0].debut_date ? 2000 : new Date(data.startDebut.data[0].debut_date).getFullYear();
+	const startRetiredYear = !data.startRetired.data[0].retirement_date ? 2000 : new Date(data.startRetired.data[0].retirement_date).getFullYear();
 
 	let names = '';
 	let page = 1;
 	let limit = 36;
-	let total = data.meta.total;
-	let layoutName: string = 'grid';
+	let total = data.vtubers.meta.total;
+	let layout: string = 'grid';
 	let sort: string = 'name';
 	let loading = false;
 	let error = '';
-	let vtubers: Array<vtuberResponseData> = data.data;
+	let vtubers: Array<vtuberResponseData> = vtubersData;
 	let newVtubers: Array<vtuberResponseData> = [];
 	let hasMore: boolean = true;
 	let advQuery: any = {};
@@ -122,22 +130,30 @@
 					<InputSearch class="w-full" bind:value={names} placeholder="search vtuber name..." on:submit={onSubmit} />
 				</div>
 				<div>
-					<AdvancedSearch on:submit={onSubmitAdvanced} />
+					<AdvancedSearch
+						on:submit={onSubmitAdvanced}
+						agencies={agenciesData.map((a) => a.name)}
+						characterDesigners={characterDesignersData}
+						character2dModelers={character2dModelersData}
+						character3dModelers={character3dModelersData}
+						{startDebutYear}
+						{startRetiredYear}
+					/>
 				</div>
 				<div>
-					<Sort bind:value={sort} on:submit={onSort} />
+					<VtuberSortButton class="w-5 h-5" bind:value={sort} on:submit={onSort} />
 				</div>
 				<div>
-					<Layout bind:layoutName />
+					<VtuberLayoutButton class="w-5 h-5" bind:value={layout} />
 				</div>
 			</div>
 		</div>
 	</div>
 	<Border class="col-span-6" />
 	{#each vtubers as vtuber}
-		{#if layoutName === 'grid'}
+		{#if layout === 'grid'}
 			<VtuberGrid class="col-span-3 sm:col-span-2 md:col-span-1" id={vtuber.id} name={vtuber.name} image={vtuber.image} height={206} />
-		{:else if layoutName === 'card'}
+		{:else if layout === 'card'}
 			<VtuberCard
 				class="col-span-6 sm:col-span-3 lg:col-span-2"
 				id={vtuber.id}
@@ -150,7 +166,7 @@
 				retirementDate={vtuber.retirement_date}
 				height={206}
 			/>
-		{:else if layoutName === 'list'}
+		{:else if layout === 'list'}
 			<VtuberList
 				class="col-span-6"
 				id={vtuber.id}

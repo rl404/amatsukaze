@@ -84,6 +84,21 @@ export const chartStrokeColors = {
 	[ThemeMode.Light]: '#ffffff'
 };
 
+export const chartChannelColors: { [t: string]: { [type: string]: string } } = {
+	[ThemeMode.Dark]: {
+		YOUTUBE: '#ef4444',
+		TWITCH: '#a855f7',
+		BILIBILI: '#3b82f6',
+		NICONICO: '#fff'
+	},
+	[ThemeMode.Light]: {
+		YOUTUBE: '#ef4444',
+		TWITCH: '#a855f7',
+		BILIBILI: '#3b82f6',
+		NICONICO: '#000'
+	}
+};
+
 export const getChartColorsByCount = (n: number, currTheme: string): Array<string> => {
 	if (n === 0) return chartColors[currTheme];
 	return Array(n)

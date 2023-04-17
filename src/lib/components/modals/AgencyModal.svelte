@@ -12,6 +12,7 @@
 	export let id: number = 0;
 	export let title: string = '';
 	export let image: string = '';
+	export let sort: string = 'name';
 
 	let modal: SvelteComponent;
 	let data: Array<vtuberResponseData> = [];
@@ -22,7 +23,7 @@
 		modal.toggleOpen();
 
 		axios
-			.get(`/api/vtubers?agency_id=${id}&limit=-1`)
+			.get(`/api/vtubers?agency_id=${id}&sort=${sort}&limit=-1`)
 			.then((resp) => {
 				data = resp.data.data;
 			})

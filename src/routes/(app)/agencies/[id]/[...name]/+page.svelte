@@ -6,6 +6,7 @@
 	import AccordionStatistics from './AccordionStatistics.svelte';
 	import AccordionMembers from './AccordionMembers.svelte';
 	import type { agencyResponse } from './+page.server';
+	import { compactInt } from '$lib/utils';
 
 	export let data: agencyResponse;
 
@@ -44,6 +45,10 @@
 		<div class="font-bold flex justify-between gap-4">
 			<div>Member Count</div>
 			<div>{agency.member.toLocaleString()}</div>
+		</div>
+		<div class="font-bold flex justify-between gap-4">
+			<div>Total Subscriber</div>
+			<div title={agency.subscriber.toLocaleString()}>{compactInt(agency.subscriber)}</div>
 		</div>
 	</div>
 

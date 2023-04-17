@@ -9,7 +9,7 @@
 	import type { vtuberResponseData } from '../../../../api/vtubers/[id]/+server';
 	import MembersTimeline from './MembersTimeline.svelte';
 	import Layout from './Layout.svelte';
-	import Sort from './Sort.svelte';
+	import VtuberSortButton from '$lib/components/buttons/VtuberSortButton.svelte';
 
 	export let data: Array<vtuberResponseData>;
 
@@ -28,7 +28,7 @@
 				<Border>
 					<span class="px-4 font-bold whitespace-nowrap">{data.length.toLocaleString()} members</span>
 				</Border>
-				<Sort bind:value={sort} {layout} />
+				<VtuberSortButton bind:value={sort} class="w-4 h-4" hideKeys={layout === 'timeline' ? ['name', '-name', 'subscriber', '-subscriber'] : []} />
 				<Layout bind:value={layout} bind:sort />
 			</div>
 			{#if layout === 'timeline'}
