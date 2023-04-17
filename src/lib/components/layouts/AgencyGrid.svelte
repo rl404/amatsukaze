@@ -2,6 +2,7 @@
 	import type { SvelteComponent } from 'svelte';
 	import Image from '../Image.svelte';
 	import AgencyModal from '../modals/AgencyModal.svelte';
+	import RenderIfVisible from '../RenderIfVisible.svelte';
 
 	export let id: number;
 	export let name: string;
@@ -18,7 +19,7 @@
 </script>
 
 <div class={className}>
-	<div
+	<RenderIfVisible
 		class="{className2} aspect-video group bg-neutral-100 dark:bg-neutral-800 rounded-lg hover:outline hover:outline-pink-500 dark:hover:outline-indigo-600 drop-shadow hover:drop-shadow-lg cursor-pointer"
 		on:click={() => modal.toggleOpen()}
 	>
@@ -33,6 +34,6 @@
 		>
 			{name}
 		</div>
-	</div>
+	</RenderIfVisible>
 	<AgencyModal {id} title={name} {image} bind:this={modal} />
 </div>

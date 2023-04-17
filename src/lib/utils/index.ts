@@ -44,6 +44,7 @@ export const getAxiosError = (error: Error | AxiosError): string => {
 	return error.response.data.message;
 };
 
+export const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 export const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 export const formatBirthday = (d: Date | undefined): string => {
@@ -143,6 +144,14 @@ export const vtuberSorter =
 				const da4 = new Date(a.retirement_date);
 				const db4 = new Date(b.retirement_date);
 				return da4 > db4 ? -1 : 1;
+			case 'subscriber':
+				const sa1 = a.channels.reduce((max, c) => (max > c.subscriber ? max : c.subscriber), 0);
+				const sa2 = b.channels.reduce((max, c) => (max > c.subscriber ? max : c.subscriber), 0);
+				return sa1 < sa2 ? -1 : 1;
+			case '-subscriber':
+				const sb1 = a.channels.reduce((max, c) => (max > c.subscriber ? max : c.subscriber), 0);
+				const sb2 = b.channels.reduce((max, c) => (max > c.subscriber ? max : c.subscriber), 0);
+				return sb1 > sb2 ? -1 : 1;
 			default:
 				return a.name < b.name ? -1 : 1;
 		}
@@ -160,6 +169,10 @@ export const agencySorter =
 				return a.member < b.member ? -1 : 1;
 			case '-member':
 				return a.member > b.member ? -1 : 1;
+			case 'subscriber':
+				return a.subscriber < b.subscriber ? -1 : 1;
+			case '-subscriber':
+				return a.subscriber > b.subscriber ? -1 : 1;
 			default:
 				return a.name < b.name ? -1 : 1;
 		}
@@ -191,4 +204,65 @@ export const parseMonth = (str: string | null): string => {
 	if (month <= 0 || month > 12) return currentMonth();
 
 	return month.toString();
+};
+
+export const compactInt = (n: number) => {
+	const num = n.toString().replace(/[^0-9.]/g, '');
+	if (n < 1000) {
+		return num;
+	}
+	let si = [
+		{ v: 1e3, s: 'K' },
+		{ v: 1e6, s: 'M' },
+		{ v: 1e9, s: 'B' },
+		{ v: 1e12, s: 'T' },
+		{ v: 1e15, s: 'P' },
+		{ v: 1e18, s: 'E' }
+	];
+	let index;
+	for (index = si.length - 1; index > 0; index--) {
+		if (n >= si[index].v) {
+			break;
+		}
+	}
+	return (n / si[index].v).toFixed(2).replace(/\.0+$|(\.[0-9]*[1-9])0+$/, '$1') + si[index].s;
+};
+
+export const relativeTime = (d: Date): string => {
+	const now = new Date().getTime();
+	let diff = (now - d.getTime()) / 1000;
+
+	let prefix = '';
+	let suffix = ' ago';
+
+	if (diff < 0) {
+		diff *= -1;
+		prefix = 'in ';
+		suffix = '';
+	}
+
+	if (diff < 60) {
+		return `${prefix}${diff} seconds${suffix}`;
+	} else if (diff < 3600) {
+		return `${prefix}${Math.floor(diff / 60)} minutes${suffix}`;
+	} else if (diff < 86400) {
+		return `${prefix}${Math.floor(diff / 3600)} hours${suffix}`;
+	} else if (diff < 2620800) {
+		return `${prefix}${Math.floor(diff / 86400)} days${suffix}`;
+	} else if (diff < 31449600) {
+		return `${prefix}${Math.floor(diff / 2620800)} months${suffix}`;
+	} else {
+		return `${prefix}${Math.floor(diff / 31449600)} years${suffix}`;
+	}
+};
+
+export const intToDurationStr = (dur: number): string => {
+	return new Date(dur).toISOString().slice(dur / 1000 >= 3600 ? 11 : 14, 19);
+};
+
+export const isArrayTypeOf = (arr: any, type: string): boolean => {
+	if (!(arr instanceof Array)) {
+		return false;
+	}
+	return arr.every((v) => typeof v === type);
 };

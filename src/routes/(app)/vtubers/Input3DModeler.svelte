@@ -1,20 +1,8 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import axios from 'axios';
 	import InputText from '$lib/components/inputs/InputText.svelte';
 
 	export let value: string;
-
-	let options: Array<string> = [];
-
-	onMount(() => {
-		axios
-			.get(`/api/vtubers/character-3d-modelers`)
-			.then((resp) => {
-				options = [...options, ...resp.data.data];
-			})
-			.catch(() => {});
-	});
+	export let options: Array<string>;
 </script>
 
 <div>

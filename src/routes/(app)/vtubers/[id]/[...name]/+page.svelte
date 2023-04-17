@@ -10,6 +10,7 @@
 	import AccordionAgencyMates from './AccordionAgencyMates.svelte';
 	import AccordionDetails from './AccordionDetails.svelte';
 	import AccordionFamilies from './AccordionFamilies.svelte';
+	import AccordionVideos from './AccordionVideos.svelte';
 
 	export let data: vtuberResponse;
 
@@ -65,5 +66,6 @@
 		<div><AccordionDetails data={vtuber} /></div>
 		<div><AccordionAgencyMates id={vtuber.id} agencies={vtuber.agencies.map((a) => a.name)} /></div>
 		<div><AccordionFamilies id={vtuber.id} designers={vtuber.character_designers || []} /></div>
+		<div><AccordionVideos data={vtuber} /></div>
 	</div>
 </div>

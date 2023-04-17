@@ -2,47 +2,34 @@
 	import DonutChart from '$lib/components/charts/DonutChart.svelte';
 	import { onMount } from 'svelte';
 	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
+	import axios from 'axios';
+	import { getAxiosError } from '$lib/utils';
+	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
 
-	export let data: Array<vtuberResponseData>;
-
-	let chartData: Array<{ name: string; value: number }> = [];
+	let data: Array<{ name: string; value: number }> = [];
+	let loading: boolean = true;
+	let error: string = '';
 
 	onMount(() => {
-		chartData = Object.entries(
-			data.reduce((res: { [name: string]: number }, curr) => {
-				if (curr.zodiac_sign === '') return res;
-				if (!res[curr.zodiac_sign]) res[curr.zodiac_sign] = 0;
-				res[curr.zodiac_sign]++;
-				return res;
-			}, {})
-		)
-			.sort((a, b) => (a[1] < b[1] ? 1 : -1))
-			.map((d) => ({
-				name: d[0],
-				value: d[1]
-			}));
-
-		const topZodiacs = chartData.slice(0, 12).map((d) => d.name);
-
-		const otherZodiacCount = chartData.reduce((res, curr) => {
-			if (!topZodiacs.includes(curr.name)) res += curr.value;
-			return res;
-		}, 0);
-
-		chartData = chartData.slice(0, 12);
-		chartData.push({ name: 'Other', value: otherZodiacCount });
+		axios
+			.get(`/api/statistics/vtubers/zodiac-count`)
+			.then((resp) => {
+				data = resp.data.data.map((d: { zodiac: string; count: number }) => ({ name: d.zodiac, value: d.count }));
+			})
+			.catch((err) => (error = getAxiosError(err)))
+			.finally(() => (loading = false));
 	});
 
 	const onClick = (d: any) => {
 		const i = d.detail;
-		const zodiac = chartData[i].name;
-		if (zodiac !== 'Other') {
+		const zodiac = data[i].name;
+		if (zodiac !== 'other') {
 			window.open(`/vtubers?zodiacs=${zodiac}`, '_blank')?.focus();
 			return;
 		}
 
-		const excludedZodiac = chartData
-			.filter((d) => d.name !== 'Other')
+		const excludedZodiac = data
+			.filter((d) => d.name !== 'other')
 			.map((d) => '-' + d.name)
 			.join(',');
 
@@ -50,4 +37,10 @@
 	};
 </script>
 
-<DonutChart data={chartData} on:click={onClick} />
+{#if loading}
+	<div><SpinnerIcon class="w-8 h-8 m-auto text-gray-200 animate-spin dark:text-gray-600 fill-pink-500 dark:fill-indigo-600" /></div>
+{:else if error !== ''}
+	<div class="text-center text-red-500">{error}</div>
+{:else}
+	<DonutChart {data} on:click={onClick} />
+{/if}

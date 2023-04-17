@@ -40,6 +40,8 @@ export const GET = (async ({ url }) => {
 		'blood_types',
 		'genders',
 		'zodiacs',
+		'start_subscriber',
+		'end_subscriber',
 		'sort',
 		'page',
 		'limit'
@@ -52,7 +54,7 @@ export const GET = (async ({ url }) => {
 	return new Response(JSON.stringify(data), {
 		headers: {
 			'content-type': 'application/json',
-			'cache-control': 'max-age=3600, stale-while-revalidate=3600'
+			'cache-control': 'max-age=3600, s-maxage=86400, stale-while-revalidate=3600'
 		},
 		status: resp.status
 	});

@@ -93,7 +93,7 @@
 							<div class="grid">
 								{#each data.character_designers as a}
 									<div>
-										<a href={`/vtubers?character_designer=${a}`} class="underline">
+										<a href={`/vtubers?character_designer=${a}`} class="underline" data-sveltekit-reload>
 											{a}
 										</a>
 									</div>
@@ -103,7 +103,7 @@
 							<div class="grid">
 								{#each data.character_2d_modelers as a}
 									<div>
-										<a href={`/vtubers?character_2d_modeler=${a}`} class="underline">
+										<a href={`/vtubers?character_2d_modeler=${a}`} class="underline" data-sveltekit-reload>
 											{a}
 										</a>
 									</div>
@@ -113,7 +113,7 @@
 							<div class="grid">
 								{#each data.character_3d_modelers as a}
 									<div>
-										<a href={`/vtubers?character_3d_modeler=${a}`} class="underline">
+										<a href={`/vtubers?character_3d_modeler=${a}`} class="underline" data-sveltekit-reload>
 											{a}
 										</a>
 									</div>
@@ -133,7 +133,7 @@
 							<div class="grid grid-cols-1 gap-1">
 								{#each data.channels.sort(channelSorter) as channel}
 									<div>
-										<ChannelBadge type={channel.type} url={channel.url} />
+										<ChannelBadge data={channel} />
 									</div>
 								{/each}
 							</div>
