@@ -5,6 +5,7 @@ import type { vtubersResponse } from '../../../api/vtubers/+server';
 import { error } from '@sveltejs/kit';
 
 export type eventResponse = {
+	month: string;
 	birthday: vtubersResponse;
 	anniversary: vtubersResponse;
 };
@@ -24,6 +25,7 @@ export const load = (async ({ params }) => {
 	]);
 	if (!birthdayResp || !anniversaryResp) return;
 	return {
+		month: month,
 		birthday: await birthdayResp.json(),
 		anniversary: await anniversaryResp.json()
 	};

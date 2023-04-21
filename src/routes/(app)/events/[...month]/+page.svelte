@@ -1,9 +1,7 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import Border from '$lib/components/Border.svelte';
 	import Button from '$lib/components/buttons/Button.svelte';
 	import Head from '$lib/components/Head.svelte';
-	import { parseMonth } from '$lib/utils';
 	import type { eventResponse } from './+page.server';
 	import EventTimeline from './EventTimeline.svelte';
 	import MonthDropdown from './MonthDropdown.svelte';
@@ -13,7 +11,7 @@
 	const birthdayData = data.birthday.data;
 	const anniversaryData = data.anniversary.data;
 
-	let month: string = parseMonth($page.params.month);
+	let month: string = data.month;
 
 	const onChangeMonth = () => {
 		window.location.href = `/events/${month}`;
