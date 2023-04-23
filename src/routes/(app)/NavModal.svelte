@@ -5,6 +5,9 @@
 	import SunIcon from '$lib/components/icons/SunIcon.svelte';
 	import Modal from '$lib/components/modals/Modal.svelte';
 	import { setTheme, ThemeMode } from '$lib/utils';
+	import ChartIcon from '$lib/components/icons/ChartIcon.svelte';
+	import CalendarIcon from '$lib/components/icons/CalendarIcon.svelte';
+	import ListIcon from '$lib/components/icons/ListIcon.svelte';
 
 	let modal: SvelteComponent;
 
@@ -18,16 +21,16 @@
 
 	<div slot="body" class="p-4 grid gap-4">
 		<div>
-			<a href="/vtubers" data-sveltekit-reload>Vtuber list</a>
+			<a href="/vtubers" data-sveltekit-reload class="flex gap-2 items-center"><ListIcon class="w-4 h-4" />Vtuber list</a>
 		</div>
 		<div>
-			<a href="/agencies" data-sveltekit-reload>Agency list</a>
+			<a href="/agencies" data-sveltekit-reload class="flex gap-2 items-center"><ListIcon class="w-4 h-4" />Agency list</a>
 		</div>
 		<div>
-			<a href="/statistics" data-sveltekit-reload>Statistics</a>
+			<a href="/events" data-sveltekit-reload class="flex gap-2 items-center"><CalendarIcon class="w-4 h-4" />Events</a>
 		</div>
 		<div>
-			<a href="/events" data-sveltekit-reload>Events</a>
+			<a href="/statistics" data-sveltekit-reload class="flex gap-2 items-center"><ChartIcon class="w-4 h-4" /> Statistics</a>
 		</div>
 	</div>
 
