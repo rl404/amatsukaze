@@ -15,7 +15,6 @@
 	<meta property="og:type" content="website" />
 	<meta property="og:site_name" content="Amatsukaze" />
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
-	<meta name="robots" content="noindex, nofollow" />
 	<meta http-equiv="Content-Type" content="text/html charset=utf-8" />
 	<meta name="theme-color" content="#4f46e5" />
 	<meta name="twitter:card" content="summary_large_image" />
