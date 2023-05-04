@@ -28,7 +28,7 @@ export const config = {
 export const load = (async () => {
 	const [vtubersResp, agenciesResp, characterDesignersResp, character2dResp, character3dResp, startDebutResp, startRetiredResp] = await Promise.all([
 		await fetch(`${SHIMAKAZE_HOST}/vtubers?page=1&limit=36`),
-		await fetch(`${SHIMAKAZE_HOST}/agencies`),
+		await fetch(`${SHIMAKAZE_HOST}/agencies?limit=-1`),
 		await fetch(`${SHIMAKAZE_HOST}/vtubers/character-designers`),
 		await fetch(`${SHIMAKAZE_HOST}/vtubers/character-2d-modelers`),
 		await fetch(`${SHIMAKAZE_HOST}/vtubers/character-3d-modelers`),
