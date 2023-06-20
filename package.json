@@ -16,7 +16,7 @@
 		"@sveltejs/kit": "^1.20.4",
 		"@types/gtag.js": "^0.0.12",
 		"@types/svelte-range-slider-pips": "^2.0.0",
-		"@typescript-eslint/eslint-plugin": "^5.59.11",
+		"@typescript-eslint/eslint-plugin": "^5.60.0",
 		"@typescript-eslint/parser": "^5.60.0",
 		"autoprefixer": "^10.4.14",
 		"eslint": "^8.42.0",
