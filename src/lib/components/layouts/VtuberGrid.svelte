@@ -15,7 +15,7 @@
 	export let dir: string = 'ltr';
 </script>
 
-<a href="/vtubers/{id}/{name}" class={className} {dir} data-sveltekit-reload>
+<a href="/vtubers/{id}/{name}" class={className} {dir} data-sveltekit-reload title={name}>
 	<RenderIfVisible
 		class="{className2} aspect-square group bg-neutral-100 dark:bg-neutral-800 rounded-lg hover:outline hover:outline-pink-500 dark:hover:outline-indigo-600 drop-shadow hover:drop-shadow-lg cursor-pointer"
 	>

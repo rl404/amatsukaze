@@ -21,6 +21,7 @@
 
 <a
 	href="/vtubers/{id}/{name}"
+	title={name}
 	data-sveltekit-reload
 	class="bg-neutral-50 dark:bg-neutral-800 rounded-lg hover:outline hover:outline-pink-500 dark:hover:outline-indigo-600 shadow hover:shadow-lg {className}"
 >
