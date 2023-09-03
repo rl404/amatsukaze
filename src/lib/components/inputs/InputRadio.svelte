@@ -5,7 +5,7 @@
 	export let value: string;
 	export let group: string;
 
-	const dispatch = createEventDispatcher<{ change: never }>();
+	const dispatch = createEventDispatcher<{ change: null }>();
 
 	const onChange = () => {
 		dispatch('change');

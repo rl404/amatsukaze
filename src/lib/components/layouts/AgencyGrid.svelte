@@ -1,7 +1,5 @@
 <script lang="ts">
-	import type { SvelteComponent } from 'svelte';
 	import Image from '../Image.svelte';
-	import AgencyModal from '../modals/AgencyModal.svelte';
 	import RenderIfVisible from '../RenderIfVisible.svelte';
 
 	export let id: number;
@@ -14,14 +12,11 @@
 	export { className2 as class2 };
 	let className2: string = '';
 	export let smallText: boolean = false;
-
-	let modal: SvelteComponent;
 </script>
 
-<div class={className}>
+<a href="/agencies/{id}/{name}" class={className} data-sveltekit-reload title={name}>
 	<RenderIfVisible
 		class="{className2} aspect-video group bg-neutral-100 dark:bg-neutral-800 rounded-lg hover:outline hover:outline-pink-500 dark:hover:outline-indigo-600 drop-shadow hover:drop-shadow-lg cursor-pointer"
-		on:click={() => modal.toggleOpen()}
 	>
 		<Image
 			src={image && `/api/wikia/image/${image.split('?')[0]}?height=${height}`}
@@ -35,5 +30,4 @@
 			{name}
 		</div>
 	</RenderIfVisible>
-	<AgencyModal {id} title={name} {image} bind:this={modal} />
-</div>
+</a>

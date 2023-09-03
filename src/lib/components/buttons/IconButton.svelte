@@ -5,7 +5,7 @@
 	export { className as class };
 	let className: string = '';
 
-	const dispatch = createEventDispatcher<{ click: never }>();
+	const dispatch = createEventDispatcher<{ click: null }>();
 
 	const onClick = () => {
 		dispatch('click');

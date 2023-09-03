@@ -3,7 +3,7 @@
 
 	export let color: boolean = false;
 
-	const dispatch = createEventDispatcher<{ click: never }>();
+	const dispatch = createEventDispatcher<{ click: null }>();
 
 	const onClick = () => {
 		dispatch('click');
