@@ -8,7 +8,7 @@
 		value: (i + 1).toString()
 	}));
 
-	const dispatch = createEventDispatcher<{ change: never }>();
+	const dispatch = createEventDispatcher<{ change: null }>();
 
 	const onChange = () => {
 		dispatch('change');

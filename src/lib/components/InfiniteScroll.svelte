@@ -8,7 +8,7 @@
 	export let reverse: boolean | undefined = false;
 	export let window: boolean | undefined = false;
 
-	const dispatch = createEventDispatcher<{ loadMore: never }>();
+	const dispatch = createEventDispatcher<{ loadMore: null }>();
 
 	let isLoadMore: boolean = false;
 	let component: HTMLElement;

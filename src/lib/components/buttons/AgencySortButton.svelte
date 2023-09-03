@@ -8,7 +8,7 @@
 	import { clickAway } from '$lib/utils';
 	import { createEventDispatcher, type ComponentType } from 'svelte';
 
-	const dispatch = createEventDispatcher<{ submit: never }>();
+	const dispatch = createEventDispatcher<{ submit: null }>();
 
 	export let value: string;
 

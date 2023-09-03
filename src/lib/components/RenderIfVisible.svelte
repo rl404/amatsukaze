@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher, onMount } from 'svelte';
 
-	const dispatch = createEventDispatcher<{ click: never }>();
+	const dispatch = createEventDispatcher<{ click: null }>();
 
 	export { className as class };
 	let className = '';

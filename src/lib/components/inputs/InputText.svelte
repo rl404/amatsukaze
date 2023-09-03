@@ -9,7 +9,7 @@
 	export { className as class };
 	let className: string = '';
 
-	const dispatch = createEventDispatcher<{ enter: never; reset: never }>();
+	const dispatch = createEventDispatcher<{ enter: null; reset: null }>();
 
 	const onEnter = (e: KeyboardEvent) => {
 		if (e.key !== 'Enter') return;
