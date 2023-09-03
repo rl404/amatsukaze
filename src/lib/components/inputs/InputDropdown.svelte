@@ -6,7 +6,7 @@
 	export { className as class };
 	let className: string = '';
 
-	const dispatch = createEventDispatcher<{ change: never }>();
+	const dispatch = createEventDispatcher<{ change: null }>();
 
 	const onChange = () => {
 		dispatch('change');

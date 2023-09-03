@@ -8,7 +8,7 @@
 	export { className as class };
 	let className: string = '';
 
-	const dispatch = createEventDispatcher<{ submit: never }>();
+	const dispatch = createEventDispatcher<{ submit: null }>();
 
 	const onSubmit = () => {
 		dispatch('submit');

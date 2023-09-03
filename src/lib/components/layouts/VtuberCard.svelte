@@ -1,6 +1,4 @@
 <script lang="ts">
-	import type { SvelteComponent } from 'svelte';
-	import VtuberModal from '$lib/components/modals/VtuberModal.svelte';
 	import Border from '../Border.svelte';
 	import Image from '../Image.svelte';
 	import Model2DBadge from '../badges/Model2DBadge.svelte';
@@ -21,8 +19,6 @@
 	let className: string;
 	export let smallText: boolean = false;
 
-	let modal: SvelteComponent;
-
 	$: rows = [
 		{ name: 'Agency', value: agencies.length === 0 ? '-' : agencies.join(', ') },
 		{ name: 'Debut', value: !debutDate ? '-' : debutDate.toString().slice(0, 10) },
@@ -30,10 +26,13 @@
 	];
 </script>
 
-<div
+<a
+	href="/vtubers/{id}/{name}"
+	title={name}
+	data-sveltekit-reload
 	class="bg-neutral-50 dark:bg-neutral-800 rounded-lg hover:outline hover:outline-pink-500 dark:hover:outline-indigo-600 shadow hover:shadow-lg {className}"
 >
-	<RenderIfVisible class="flex items-center cursor-pointer" style="aspect-ratio: 2/1;" on:click={() => modal.toggleOpen()}>
+	<RenderIfVisible class="flex items-center cursor-pointer" style="aspect-ratio: 2/1;">
 		<Image
 			src={image && `/api/wikia/image/${image.split('?')[0]}?height=${height}`}
 			alt={name}
@@ -63,5 +62,4 @@
 			{/each}
 		</div>
 	</RenderIfVisible>
-	<VtuberModal {id} title={name} bind:this={modal} />
-</div>
+</a>

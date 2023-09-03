@@ -1,6 +1,4 @@
 <script lang="ts">
-	import type { SvelteComponent } from 'svelte';
-	import VtuberModal from '$lib/components/modals/VtuberModal.svelte';
 	import Image from '../Image.svelte';
 	import Model2DBadge from '../badges/Model2DBadge.svelte';
 	import Model3DBadge from '../badges/Model3DBadge.svelte';
@@ -19,14 +17,15 @@
 	export { className as class };
 	let className: string;
 	export let smallText: boolean = false;
-
-	let modal: SvelteComponent;
 </script>
 
-<div
+<a
+	href="/vtubers/{id}/{name}"
+	title={name}
+	data-sveltekit-reload
 	class="bg-neutral-50 dark:bg-neutral-800 rounded-lg hover:outline hover:outline-pink-500 dark:hover:outline-indigo-600 shadow hover:shadow-lg {className}"
 >
-	<RenderIfVisible class="grid grid-cols-9 cursor-pointer gap-2 p-2 text-center items-center" on:click={() => modal.toggleOpen()}>
+	<RenderIfVisible class="grid grid-cols-9 cursor-pointer gap-2 p-2 text-center items-center">
 		<div class="col-span-9 md:col-span-3 text-lg text-left font-bold text-ellipsis whitespace-nowrap overflow-hidden flex gap-2" title={name}>
 			<Image
 				src={image && `/api/wikia/image/${image.split('?')[0]}?height=${height}`}
@@ -54,5 +53,4 @@
 			{/if}
 		</div>
 	</RenderIfVisible>
-	<VtuberModal {id} title={name} bind:this={modal} />
-</div>
+</a>
