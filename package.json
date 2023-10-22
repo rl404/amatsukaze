@@ -13,7 +13,7 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.1.0",
-		"@sveltejs/kit": "^1.20.5",
+		"@sveltejs/kit": "^1.26.0",
 		"@types/gtag.js": "^0.0.17",
 		"@types/svelte-range-slider-pips": "^2.0.0",
 		"@typescript-eslint/eslint-plugin": "^6.0.0",
