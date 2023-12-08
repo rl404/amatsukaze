@@ -252,3 +252,30 @@ export const isArrayTypeOf = (arr: any, type: string): boolean => {
 	}
 	return arr.every((v) => typeof v === type);
 };
+
+const dec2hex = (dec: number): string => {
+	return dec.toString(16).padStart(2, '0');
+};
+
+export const generateRandomStr = (len: number): string => {
+	var arr = new Uint8Array((len || 40) / 2);
+	window.crypto.getRandomValues(arr);
+	return Array.from(arr, dec2hex).join('');
+};
+
+export const TierColors = [
+	'bg-red-500 dark:bg-red-600',
+	'bg-orange-500 dark:bg-orange-600',
+	'bg-yellow-500 dark:bg-yellow-600',
+	'bg-lime-500 dark:bg-lime-600',
+	'bg-green-500 dark:bg-green-600',
+	'bg-sky-500 dark:bg-sky-600',
+	'bg-blue-500 dark:bg-blue-600',
+	'bg-violet-500 dark:bg-violet-600',
+	'bg-purple-500 dark:bg-purple-600',
+	'bg-black',
+	'bg-neutral-500 dark:bg-neutral-600',
+	'bg-white'
+];
+
+export const TierSize = ['text-xs', 'text-base', 'text-xl', 'text-3xl'];

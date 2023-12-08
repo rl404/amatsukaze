@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { SvelteComponent } from 'svelte';
+	import { onMount, type SvelteComponent } from 'svelte';
 	import GithubIcon from '$lib/components/icons/GithubIcon.svelte';
 	import MoonIcon from '$lib/components/icons/MoonIcon.svelte';
 	import SunIcon from '$lib/components/icons/SunIcon.svelte';
@@ -8,8 +8,16 @@
 	import ChartIcon from '$lib/components/icons/ChartIcon.svelte';
 	import CalendarIcon from '$lib/components/icons/CalendarIcon.svelte';
 	import ListIcon from '$lib/components/icons/ListIcon.svelte';
+	import { getAccessToken } from '$lib/utils/oauth';
+	import UserIcon from '$lib/components/icons/UserIcon.svelte';
+	import SignInIcon from '$lib/components/icons/SignInIcon.svelte';
 
 	let modal: SvelteComponent;
+	let isLogin: boolean = false;
+
+	onMount(() => {
+		if (getAccessToken()) isLogin = true;
+	});
 
 	export const toggleOpen = () => {
 		modal.toggleOpen();
@@ -44,5 +52,14 @@
 		<a href="https://github.com/rl404/amatsukaze" target="_blank" rel="noreferrer" title="github source code">
 			<GithubIcon class="w-6 h-6" />
 		</a>
+		{#if isLogin}
+			<a href="/profile" title="profile">
+				<UserIcon class="w-6 h-6" />
+			</a>
+		{:else}
+			<a href="/auth/sign-in" title="sign-in">
+				<SignInIcon class="w-6 h-6" />
+			</a>
+		{/if}
 	</div>
 </Modal>

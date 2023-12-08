@@ -1,15 +1,23 @@
 <script lang="ts">
-	import type { SvelteComponent } from 'svelte';
-	import { setTheme, ThemeMode } from '$lib/utils';
 	import logo from '$lib/assets/logo.png';
-	import Image from '$lib/components/Image.svelte';
-	import GithubIcon from '$lib/components/icons/GithubIcon.svelte';
-	import SunIcon from '$lib/components/icons/SunIcon.svelte';
-	import MoonIcon from '$lib/components/icons/MoonIcon.svelte';
 	import EllipsisVerticalIcon from '$lib/components/icons/EllipsisVerticalIcon.svelte';
+	import GithubIcon from '$lib/components/icons/GithubIcon.svelte';
+	import MoonIcon from '$lib/components/icons/MoonIcon.svelte';
+	import SignInIcon from '$lib/components/icons/SignInIcon.svelte';
+	import SunIcon from '$lib/components/icons/SunIcon.svelte';
+	import UserIcon from '$lib/components/icons/UserIcon.svelte';
+	import Image from '$lib/components/Image.svelte';
+	import { setTheme, ThemeMode } from '$lib/utils';
+	import { getAccessToken } from '$lib/utils/oauth';
+	import { onMount, type SvelteComponent } from 'svelte';
 	import NavModal from './NavModal.svelte';
 
 	let modal: SvelteComponent;
+	let isLogin: boolean = false;
+
+	onMount(() => {
+		if (getAccessToken()) isLogin = true;
+	});
 </script>
 
 <nav class="bg-gradient-to-r from-white to-pink-500 dark:from-neutral-900 dark:to-indigo-600 drop-shadow-lg">
@@ -33,6 +41,15 @@
 			<a href="https://github.com/rl404/amatsukaze" target="_blank" rel="noreferrer" title="github source code">
 				<GithubIcon class="w-6 h-6" />
 			</a>
+			{#if isLogin}
+				<a href="/profile" title="profile">
+					<UserIcon class="w-6 h-6" />
+				</a>
+			{:else}
+				<a href="/auth/sign-in" title="sign-in">
+					<SignInIcon class="w-6 h-6" />
+				</a>
+			{/if}
 		</div>
 		<div class="sm:hidden flex items-center text-white">
 			<button class="hover:opacity-70" on:click={() => modal.toggleOpen()} title="navigation">
