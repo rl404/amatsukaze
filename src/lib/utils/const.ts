@@ -54,7 +54,8 @@ export const ChartColors = {
 		'#ec48991a',
 		'#ec489900'
 	],
-	debut: ['#22c55e', '#4ade80']
+	debut: ['#22c55e', '#4ade80'],
+	retired: ['#ef4444', '#f87171']
 };
 
 export const ChartTextColors = {

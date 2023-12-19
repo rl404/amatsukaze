@@ -11,7 +11,7 @@ export type MetaAPIResponse = {
 
 export type BadgeSize = '' | 'sm';
 
-export type VtuberLayout = 'grid' | 'card' | 'list';
+export type VtuberLayout = 'grid' | 'card' | 'list' | 'timeline';
 export type VtuberSort =
 	| 'name'
 	| '-name'
@@ -21,6 +21,9 @@ export type VtuberSort =
 	| '-retirement_date'
 	| 'subscriber'
 	| '-subscriber';
+
+export type AgencyLayout = 'grid' | 'list';
+export type AgencySort = 'name' | '-name' | 'member' | '-member' | 'subscriber' | '-subscriber';
 
 export type VideoChartLayout = 'heatmap' | 'timeline';
 export type VideoLayout = 'grid' | 'list';

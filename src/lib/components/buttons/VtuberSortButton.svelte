@@ -15,14 +15,16 @@
 	export let hideKeys: VtuberSort[] = [];
 	export { className as class };
 
-	const sorts: {
+	let sorts: {
 		[key in VtuberSort]: {
 			label: string;
 			value: string;
 			component: ComponentType;
 			hidden: boolean;
 		};
-	} = {
+	};
+
+	$: sorts = {
 		name: {
 			label: 'Name ASC',
 			value: 'name',

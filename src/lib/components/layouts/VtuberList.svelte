@@ -44,10 +44,10 @@
 		>
 			{agencies.length === 0 ? '-' : agencies.join(', ')}
 		</div>
-		<div class="col-span-2 hidden lg:block">
+		<div class="col-span-2 hidden lg:block" title="debut date">
 			{!debutDate ? '-' : debutDate.toISOString().slice(0, 10)}
 		</div>
-		<div class="col-span-2 hidden lg:block">
+		<div class="col-span-2 hidden lg:block" title="retired date">
 			{!retirementDate ? '-' : retirementDate.toISOString().slice(0, 10)}
 		</div>
 		<div class="col-span-2 hidden items-center justify-center gap-1 md:flex lg:col-span-1">

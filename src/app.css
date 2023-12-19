@@ -34,6 +34,14 @@
 	.line-clamp-2 {
 		@apply break-all;
 	}
+
+	.rtl {
+		direction: rtl;
+	}
+
+	.ltr {
+		direction: ltr;
+	}
 }
 
 @layer utilities {

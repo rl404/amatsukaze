@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { defaultVtubersQuery, type VtuberSort, type VtubersQuery } from '$lib/types';
+import {
+	defaultVtubersQuery,
+	type AgencySort,
+	type VtuberSort,
+	type VtubersQuery
+} from '$lib/types';
+import type { AgencyResponseData } from '../../routes/api/agencies/[id]/+server';
 import type {
 	VtuberResponseData,
 	VtuberResponseDataChannel
@@ -147,6 +153,27 @@ export const vtuberSorter =
 				const sb2 = b.channels.reduce((max, c) => (max > c.subscriber ? max : c.subscriber), 0);
 				return sb1 > sb2 ? -1 : 1;
 			}
+			default:
+				return a.name < b.name ? -1 : 1;
+		}
+	};
+
+export const agencySorter =
+	(sort: AgencySort) =>
+	(a: AgencyResponseData, b: AgencyResponseData): number => {
+		switch (sort) {
+			case 'name':
+				return a.name < b.name ? -1 : 1;
+			case '-name':
+				return a.name > b.name ? -1 : 1;
+			case 'member':
+				return a.member < b.member ? -1 : 1;
+			case '-member':
+				return a.member > b.member ? -1 : 1;
+			case 'subscriber':
+				return a.subscriber < b.subscriber ? -1 : 1;
+			case '-subscriber':
+				return a.subscriber > b.subscriber ? -1 : 1;
 			default:
 				return a.name < b.name ? -1 : 1;
 		}

@@ -36,8 +36,9 @@
 			<span itemprop="name">{vtuber.name}</span>
 			<span title="Emoji" itemprop="identifier">{vtuber.emoji}</span>
 		</a>
-		<Border />
 	</h1>
+
+	<Border class="col-span-4" />
 
 	<div class="col-span-4 flex flex-col gap-4 sm:col-span-1">
 		<Image

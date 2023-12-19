@@ -7,29 +7,19 @@
 	export let name: string;
 	export let image: string;
 	export { className as class };
-	export let itemprop: string = '';
-
 	let className: string = '';
 </script>
 
-<a
-	href="/vtubers/{id}/{name}"
-	class={className}
-	title={name}
-	{itemprop}
-	itemscope
-	itemtype="https://schema.org/Person"
->
+<a href="/agencies/{id}/{name}" class={className} title={name}>
 	<RenderIfVisible
-		class="group relative aspect-square rounded-lg bg-card shadow hover:outline hover:outline-primary dark:bg-card-dark dark:hover:outline-primary-dark"
+		class="group relative aspect-video rounded-lg bg-card shadow hover:outline hover:outline-primary dark:bg-card-dark dark:hover:outline-primary-dark"
 	>
 		<Image
 			src={getWikiImg(image)}
 			alt={name}
-			class="h-full w-full rounded-lg object-cover object-top"
+			class="h-full w-full rounded-lg object-contain object-center p-2"
 		/>
 		<div
-			itemprop="name"
 			class="pointer-events-none absolute bottom-0 line-clamp-1 w-full bg-primary p-0.5 text-center font-bold text-white opacity-0 group-hover:opacity-100 dark:bg-primary-dark"
 		>
 			{name}
