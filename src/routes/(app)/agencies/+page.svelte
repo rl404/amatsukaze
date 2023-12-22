@@ -13,6 +13,8 @@
 	import type { AgencyResponseData } from '../../api/agencies/[id]/+server';
 	import InputSearch from './InputSearch.svelte';
 
+	// TODO: fix reactive url query.
+
 	export let data: AgenciesResponse;
 
 	let name: string = '';

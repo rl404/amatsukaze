@@ -20,6 +20,8 @@
 	import AdvancedSearch from './AdvancedSearch.svelte';
 	import InputSearch from './InputSearch.svelte';
 
+	// TODO: fix reactive url query.
+
 	export let data: VtuberSearchResponse;
 
 	let query: VtubersQuery = defaultVtubersQuery;
