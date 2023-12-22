@@ -32,7 +32,7 @@
 		[type: string]: { id: string; day: string; startDate: number; endDate: number; url: string }[];
 	};
 
-	const chartData: ChartDataType = data.reduce((res, c) => {
+	$: chartData = data.reduce((res, c) => {
 		if (c.videos.length === 0) return res;
 		if (!res[c.type]) res[c.type] = [];
 

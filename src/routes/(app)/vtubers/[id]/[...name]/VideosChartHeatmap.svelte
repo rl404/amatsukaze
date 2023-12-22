@@ -25,7 +25,7 @@
 		chartColors = [...ChartColors[currTheme]].reverse();
 	});
 
-	const chartData: ChartDataType = data.reduce(
+	$: chartData = data.reduce(
 		(res, c) => {
 			c.videos.forEach((v) => {
 				if (!v.start_date) return;

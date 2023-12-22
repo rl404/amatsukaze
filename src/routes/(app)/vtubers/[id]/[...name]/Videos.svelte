@@ -15,7 +15,7 @@
 
 	type VtuberVideo = VtuberResponseDataChannelVideo & { type: string };
 
-	const videoData = data
+	$: videoData = data
 		.reduce(
 			(res, c) => [...res, ...c.videos.map((v) => ({ ...v, type: c.type }))],
 			[] as VtuberVideo[]
@@ -26,7 +26,7 @@
 			return a.start_date < b.start_date ? 1 : -1;
 		});
 
-	const avgLength = videoData
+	$: avgLength = videoData
 		.filter((v) => v.start_date && v.end_date)
 		.reduce(
 			(avg, v, _, { length }) =>
@@ -36,7 +36,7 @@
 			0
 		);
 
-	let videos = videoData.length > 12 ? videoData.slice(0, 12) : videoData;
+	$: videos = videoData.length > 12 && !show ? videoData.slice(0, 12) : videoData;
 
 	let layout: VideoLayout = 'grid';
 	let show: boolean = false;

@@ -13,7 +13,6 @@
 	import { getAxiosError } from '$lib/utils/api';
 	import { vtuberSorter } from '$lib/utils/utils';
 	import axios from 'axios';
-	import { onMount } from 'svelte';
 	import type { VtuberResponseData } from '../../../../api/vtubers/[id]/+server';
 
 	export let id: number;
@@ -26,13 +25,12 @@
 	let sort: VtuberSort = 'name';
 	let layout: VtuberLayout = 'grid';
 
-	onMount(() => {
+	$: agency,
 		axios
 			.get(`/api/vtubers?agency=${agency}&limit=-1`)
 			.then((resp) => (vtubers = resp.data.data.filter((d: VtuberResponseData) => d.id !== id)))
 			.catch((err) => (error = getAxiosError(err)))
 			.finally(() => (loading = false));
-	});
 
 	const toggleOpen = () => (open = !open);
 </script>
