@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Button from '$lib/components/buttons/Button.svelte';
 	import IconButton from '$lib/components/buttons/IconButton.svelte';
-	import Modal from '$lib/components/commons/Modal.svelte';
 	import ConfigIcon from '$lib/components/icons/ConfigIcon.svelte';
 	import SearchIcon from '$lib/components/icons/SearchIcon.svelte';
+	import Modal from '$lib/components/modals/Modal.svelte';
 	import { defaultVtubersQuery, type VtubersQuery } from '$lib/types';
 	import { Zodiacs } from '$lib/utils/const';
 	import { createEventDispatcher, SvelteComponent } from 'svelte';

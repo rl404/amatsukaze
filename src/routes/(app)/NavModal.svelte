@@ -2,13 +2,13 @@
 	import DarkThemeButton from '$lib/components/buttons/DarkThemeButton.svelte';
 	import GithubButton from '$lib/components/buttons/GithubButton.svelte';
 	import LightThemeButton from '$lib/components/buttons/LightThemeButton.svelte';
-	import Modal from '$lib/components/commons/Modal.svelte';
 	import CalendarIcon from '$lib/components/icons/CalendarIcon.svelte';
 	import ChartIcon from '$lib/components/icons/ChartIcon.svelte';
 	import ListIcon from '$lib/components/icons/ListIcon.svelte';
 	import SignInIcon from '$lib/components/icons/SignInIcon.svelte';
 	import SignOutIcon from '$lib/components/icons/SignOutIcon.svelte';
 	import UserIcon from '$lib/components/icons/UserIcon.svelte';
+	import Modal from '$lib/components/modals/Modal.svelte';
 	import { getAccessToken } from '$lib/utils/auth';
 	import { onMount, type SvelteComponent } from 'svelte';
 

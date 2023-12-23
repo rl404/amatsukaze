@@ -20,7 +20,7 @@
 				<div class="subtitle font-bold">Original Names</div>
 				<div class="flex flex-col">
 					{#if isEmptyArray(data.original_names)}
-						-
+						<span>-</span>
 					{:else}
 						{#each data.original_names as name}
 							<span itemprop="alternateName">{name}</span>
@@ -44,26 +44,26 @@
 
 			<div class="col-span-3 flex flex-col md:col-span-2">
 				<div class="subtitle font-bold">Debut Date</div>
-				<div class="flex flex-col">
+				<div>
 					{#if !data.debut_date}
 						<span>-</span>
 					{:else}
-						<time itemprop="birthDate" datetime={data.debut_date.slice(0, 10)}
-							>{data.debut_date.slice(0, 10)}</time
-						>
+						<time itemprop="birthDate" datetime={data.debut_date.slice(0, 10)}>
+							{data.debut_date.slice(0, 10)}
+						</time>
 					{/if}
 				</div>
 			</div>
 
 			<div class="col-span-3 flex flex-col md:col-span-2">
 				<div class="subtitle font-bold">Retirement Date</div>
-				<div class="flex flex-col">
+				<div>
 					{#if !data.retirement_date}
 						<span>-</span>
 					{:else}
-						<time itemprop="deathDate" datetime={data.retirement_date.slice(0, 10)}
-							>{data.retirement_date.slice(0, 10)}</time
-						>
+						<time itemprop="deathDate" datetime={data.retirement_date.slice(0, 10)}>
+							{data.retirement_date.slice(0, 10)}
+						</time>
 					{/if}
 				</div>
 			</div>
@@ -83,8 +83,8 @@
 									itemscope
 									itemtype="https://schema.org/Person"
 								>
-									<span itemprop="name">{name}</span></a
-								>
+									<span itemprop="name">{name}</span>
+								</a>
 							</div>
 						{/each}
 					{/if}
@@ -100,8 +100,8 @@
 						{#each data.character_2d_modelers as name}
 							<div>
 								<a href={`/vtubers?character_2d_modeler=${name}`} class="clickable underline">
-									{name}</a
-								>
+									{name}
+								</a>
 							</div>
 						{/each}
 					{/if}
@@ -117,8 +117,8 @@
 						{#each data.character_3d_modelers as name}
 							<div>
 								<a href={`/vtubers?character_3d_modeler=${name}`} class="clickable underline">
-									{name}</a
-								>
+									{name}
+								</a>
 							</div>
 						{/each}
 					{/if}
@@ -140,8 +140,8 @@
 									itemscope
 									itemtype="https://schema.org/Organization"
 								>
-									<span itemprop="name">{agency.name}</span></a
-								>
+									<span itemprop="name">{agency.name}</span>
+								</a>
 							</div>
 						{/each}
 					{/if}
@@ -156,8 +156,8 @@
 					{:else}
 						{#each data.affiliations as name}
 							<span itemprop="affiliation" itemscope itemtype="https://schema.org/Organization">
-								<span itemprop="name">{name}</span></span
-							>
+								<span itemprop="name">{name}</span>
+							</span>
 						{/each}
 					{/if}
 				</div>
@@ -232,7 +232,7 @@
 
 			<div class="col-span-3 flex flex-col md:col-span-2">
 				<div class="subtitle font-bold">Gender</div>
-				<div class="flex flex-col">
+				<div>
 					{#if !data.gender}
 						<span>-</span>
 					{:else}

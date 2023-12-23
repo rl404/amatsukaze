@@ -3,6 +3,8 @@
 	import XmarkIcon from '$lib/components/icons/XmarkIcon.svelte';
 	import { clickAway } from '$lib/utils/utils';
 
+	// TODO: fix clickaway.
+
 	export { className as class };
 	export const toggleOpen = () => (open = !open);
 

@@ -23,7 +23,8 @@ export default {
 				'modal-dark': theme('colors.neutral[700]')
 			}),
 			aspectRatio: {
-				card: '2/1'
+				card: '2/1',
+				card2: '3/1'
 			}
 		}
 	},
