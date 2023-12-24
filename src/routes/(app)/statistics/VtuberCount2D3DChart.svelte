@@ -44,7 +44,7 @@
 </script>
 
 {#if loading}
-	<div><Loading class="h-10 w-10" /></div>
+	<div><Loading class="h-8 w-8" /></div>
 {:else if error !== ''}
 	<div class="text-center text-red-500">{error}</div>
 {:else}

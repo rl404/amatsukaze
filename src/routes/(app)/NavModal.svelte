@@ -9,15 +9,13 @@
 	import SignOutIcon from '$lib/components/icons/SignOutIcon.svelte';
 	import UserIcon from '$lib/components/icons/UserIcon.svelte';
 	import Modal from '$lib/components/modals/Modal.svelte';
-	import { getAccessToken } from '$lib/utils/auth';
-	import { onMount, type SvelteComponent } from 'svelte';
+	import { isLogin } from '$lib/utils/auth';
+	import type { SvelteComponent } from 'svelte';
 
 	let modal: SvelteComponent;
-	let isLogin: boolean = false;
+	let login: boolean = false;
 
-	onMount(() => {
-		if (getAccessToken()) isLogin = true;
-	});
+	isLogin.subscribe((v) => (login = v));
 
 	export const toggleOpen = () => {
 		modal.toggleOpen();
@@ -49,7 +47,7 @@
 		<LightThemeButton class="h-6 w-6" />
 		<DarkThemeButton class="h-6 w-6" />
 		<GithubButton class="h-6 w-6" />
-		{#if isLogin}
+		{#if login}
 			<a href="/profile" class="clickable" title="profile">
 				<UserIcon class="h-6 w-6" />
 			</a>

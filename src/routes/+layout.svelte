@@ -1,9 +1,13 @@
 <script lang="ts">
+	import { setIsLogin } from '$lib/utils/auth';
 	import { setTheme } from '$lib/utils/theme';
 	import { onMount } from 'svelte';
 	import '../app.css';
 
-	onMount(() => setTheme());
+	onMount(() => {
+		setTheme();
+		setIsLogin();
+	});
 </script>
 
 <slot />

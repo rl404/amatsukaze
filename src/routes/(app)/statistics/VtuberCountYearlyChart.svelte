@@ -61,7 +61,7 @@
 
 {#if loading}
 	<div class="flex h-full items-center justify-center">
-		<Loading class="h-10 w-10" />
+		<Loading class="h-8 w-8" />
 	</div>
 {:else if error !== ''}
 	<div class="flex h-full items-center justify-center">

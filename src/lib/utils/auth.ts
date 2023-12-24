@@ -3,6 +3,7 @@ import {
 	PUBLIC_SSO_CLIENT_ID,
 	PUBLIC_SSO_REDIRECT_URI
 } from '$env/static/public';
+import { writable } from 'svelte/store';
 import { generateRandomStr } from './utils';
 
 const accessTokenKey = 'access-token';
@@ -65,4 +66,14 @@ export const getUserID = (): number => {
 	const userID = localStorage.getItem(userIDKey);
 	if (!userID) return 0;
 	return JSON.parse(userID);
+};
+
+export const isLogin = writable<boolean>();
+
+export const setIsLogin = () => {
+	if (getAccessToken()) {
+		isLogin.set(true);
+	} else {
+		isLogin.set(false);
+	}
 };
