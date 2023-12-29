@@ -12,7 +12,8 @@
 	}
 
 	input,
-	select {
+	select,
+	textarea {
 		@apply rounded-lg border border-border bg-card p-1 focus:outline focus:outline-1 focus:outline-primary disabled:opacity-70 dark:border-border-dark dark:bg-card-dark dark:focus:outline-primary-dark;
 	}
 

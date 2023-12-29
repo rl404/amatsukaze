@@ -35,6 +35,10 @@ export const generateRandomStr = (len: number): string => {
 	return Array.from(arr, dec2hex).join('');
 };
 
+export const quickRandomStr = (): string => {
+	return Math.random().toString(36).slice(2, 7);
+};
+
 export const generateVtuberDescription = (vtuber: VtuberResponseData): string => {
 	let desc = '';
 	desc += `Agency: ${

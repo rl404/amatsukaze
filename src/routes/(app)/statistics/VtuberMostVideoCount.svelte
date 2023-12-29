@@ -25,10 +25,7 @@
 			.finally(() => (loading = false));
 	});
 
-	const onClick = (d: any) => {
-		const i = d.detail;
-		modals[i].toggleOpen();
-	};
+	const onClick = (d: any) => modals[d.detail].toggleOpen();
 </script>
 
 {#if loading}

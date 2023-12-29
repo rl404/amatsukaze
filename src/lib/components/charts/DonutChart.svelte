@@ -25,9 +25,7 @@
 			height: '100%',
 			type: 'donut',
 			events: {
-				dataPointSelection: (_, __, options) => {
-					dispatch('click', options.dataPointIndex);
-				}
+				dataPointSelection: (_, __, options) => dispatch('click', options.dataPointIndex)
 			}
 		},
 		colors: getChartColorsByCount(data.length, currTheme),

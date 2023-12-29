@@ -29,8 +29,7 @@
 	});
 
 	const onClick = (d: any) => {
-		const i = d.detail;
-		const gender = data[i].name;
+		const gender = data[d.detail].name;
 		if (gender !== 'other') {
 			window.open(`/vtubers?genders=${gender}`, '_blank')?.focus();
 			return;

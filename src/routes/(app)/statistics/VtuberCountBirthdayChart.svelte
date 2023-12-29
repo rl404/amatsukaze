@@ -63,9 +63,7 @@
 				type: 'heatmap',
 				toolbar: { show: false },
 				events: {
-					click: (_, __, options) => {
-						onClick(options.dataPointIndex, options.seriesIndex);
-					}
+					click: (_, __, options) => onClick(options.dataPointIndex, options.seriesIndex)
 				}
 			},
 			dataLabels: { enabled: false },

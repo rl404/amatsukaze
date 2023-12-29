@@ -29,8 +29,7 @@
 	});
 
 	const onClick = (d: any) => {
-		const i = d.detail;
-		window.open(`/vtubers?character_3d_modeler=${data[i].name}`, '_blank')?.focus();
+		window.open(`/vtubers?character_3d_modeler=${data[d.detail].name}`, '_blank')?.focus();
 	};
 </script>
 

@@ -29,8 +29,7 @@
 	});
 
 	const onClick = (d: any) => {
-		const i = d.detail;
-		const zodiac = data[i].name;
+		const zodiac = data[d.detail].name;
 		if (zodiac !== 'other') {
 			window.open(`/vtubers?zodiacs=${zodiac}`, '_blank')?.focus();
 			return;

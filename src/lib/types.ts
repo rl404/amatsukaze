@@ -1,3 +1,8 @@
+import type {
+	TierListResponseDataTier,
+	TierListResponseDataVtuber
+} from '../routes/(app)/tier-lists/[id]/[...title]/+page.server';
+
 export type BaseAPIResponse = {
 	status: number;
 	message: string;
@@ -92,4 +97,13 @@ export const defaultVtubersQuery: VtubersQuery = {
 export type SelectOption = {
 	label: string;
 	value: string;
+};
+
+export type Tier = TierListResponseDataTier & {
+	id: string;
+	vtubers: TierVtuber[];
+};
+
+export type TierVtuber = TierListResponseDataVtuber & {
+	isDndShadowItem?: boolean;
 };

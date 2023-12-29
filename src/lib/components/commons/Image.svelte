@@ -29,7 +29,7 @@
 
 {#if src === '' || error}
 	<div
-		class="{className} subtitle flex aspect-square items-center justify-center overflow-hidden p-1 text-center text-xs"
+		class="{className} subtitle pointer-events-none flex aspect-square items-center justify-center overflow-hidden p-1 text-center text-xs"
 	>
 		{alt}
 	</div>

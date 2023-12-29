@@ -17,9 +17,7 @@
 
 	isLogin.subscribe((v) => (login = v));
 
-	export const toggleOpen = () => {
-		modal.toggleOpen();
-	};
+	export const toggleOpen = () => modal.toggleOpen();
 </script>
 
 <Modal bind:this={modal} class="max-w-md">

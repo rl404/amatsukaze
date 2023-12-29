@@ -86,9 +86,7 @@
 				toolbar: { show: false },
 				zoom: { enabled: false },
 				events: {
-					click: (_, __, options) => {
-						openModal(options.dataPointIndex);
-					}
+					click: (_, __, options) => openModal(options.dataPointIndex)
 				}
 			},
 			colors: chartColors,

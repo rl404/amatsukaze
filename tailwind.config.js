@@ -25,7 +25,10 @@ export default {
 			aspectRatio: {
 				card: '2/1',
 				card2: '3/1'
-			}
+			},
+			minHeight: ({ theme }) => ({
+				24: theme('spacing[24]')
+			})
 		}
 	},
 	plugins: []

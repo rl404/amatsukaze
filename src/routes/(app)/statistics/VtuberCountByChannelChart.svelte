@@ -30,9 +30,7 @@
 	});
 
 	const onClick = (d: any) => {
-		const i = d.detail;
-		const channelType = data[i].name.toUpperCase();
-		window.open(`/vtubers?channel_types=${channelType}`, '_blank')?.focus();
+		window.open(`/vtubers?channel_types=${data[d.detail].name.toUpperCase()}`, '_blank')?.focus();
 	};
 </script>
 

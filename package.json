@@ -36,6 +36,7 @@
 	"type": "module",
 	"dependencies": {
 		"apexcharts": "^3.44.2",
-		"axios": "^1.6.2"
+		"axios": "^1.6.2",
+		"svelte-dnd-action": "^0.9.38"
 	}
 }
