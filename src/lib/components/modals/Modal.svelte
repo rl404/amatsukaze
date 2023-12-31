@@ -1,9 +1,6 @@
 <script lang="ts">
 	import IconButton from '$lib/components/buttons/IconButton.svelte';
 	import XmarkIcon from '$lib/components/icons/XmarkIcon.svelte';
-	import { clickAway } from '$lib/utils/utils';
-
-	// TODO: fix clickaway.
 
 	export { className as class };
 	export const toggleOpen = () => (open = !open);
@@ -16,12 +13,13 @@
 
 {#if open}
 	<div class="fixed left-0 top-0 z-20 h-full w-full p-4">
-		<div class="fixed left-0 top-0 h-full w-full bg-neutral-800 opacity-70" />
+		<button
+			class="fixed left-0 top-0 h-full w-full cursor-default bg-neutral-800 opacity-70"
+			on:click={onClose}
+		/>
 
 		<div
 			class="{className} relative m-auto h-auto max-h-full w-full overflow-y-scroll rounded-lg bg-modal dark:bg-modal-dark"
-			use:clickAway
-			on:clickAway={onClose}
 		>
 			<div
 				class="sticky top-0 z-10 flex items-start justify-between border-b border-border bg-modal p-4 dark:border-border-dark dark:bg-modal-dark"

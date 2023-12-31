@@ -227,12 +227,21 @@ export const getVtubersQueryFromURLParam = (param: URLSearchParams): VtubersQuer
 		end_debut_year: parseInt(param.get('end_debut_year') || '0'),
 		start_retired_year: parseInt(param.get('start_retired_year') || '0'),
 		end_retired_year: parseInt(param.get('end_retired_year') || '0'),
-		has_2d: param.get('has_2d') === null ? undefined : param.get('has_2d') === 'true',
-		has_3d: param.get('has_3d') === null ? undefined : param.get('has_3d') === 'true',
+		has_2d:
+			param.get('has_2d') === null || param.get('has_2d') === ''
+				? undefined
+				: param.get('has_2d') === 'true',
+		has_3d:
+			param.get('has_3d') === null || param.get('has_3d') === ''
+				? undefined
+				: param.get('has_3d') === 'true',
 		character_designer: param.get('character_designer') || '',
 		character_2d_modeler: param.get('character_2d_modeler') || '',
 		character_3d_modeler: param.get('character_3d_modeler') || '',
-		in_agency: param.get('in_agency') === null ? undefined : param.get('in_agency') === 'true',
+		in_agency:
+			param.get('in_agency') === null || param.get('in_agency') === ''
+				? undefined
+				: param.get('in_agency') === 'true',
 		agency: param.get('agency') || '',
 		channel_types: param.get('channel_types') || '',
 		birthday_day: parseInt(param.get('birthday_day') || '0'),

@@ -9,8 +9,6 @@
 	import type { VtuberDebutRetireCountMonthlyResponseData } from '../../api/statistics/vtubers/debut-retire-count-monthly/+server';
 	import VtuberCountMonthlyModal from './VtuberCountMonthlyModal.svelte';
 
-	// TODO: fix on click.
-
 	type ChartData = VtuberDebutRetireCountMonthlyResponseData & {
 		debut_total: number;
 		retire_total: number;

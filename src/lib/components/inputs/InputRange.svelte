@@ -7,8 +7,6 @@
 	export let maxValue: number;
 	export let step: number = 1;
 	export let formatter: (v: number) => string = (v) => v.toString();
-
-	// TODO: fix reactive values.
 </script>
 
 <RangeSlider {id} bind:values min={minValue} max={maxValue} range float pips {step} {formatter} />

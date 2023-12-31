@@ -13,6 +13,7 @@
 		})
 		.filter((v) => v !== '')
 		.join(',');
+	$: value, setChannelChecked();
 
 	let channelChecked = ChannelTypes.map((ct) => {
 		const valueSplit = value.split(',');
@@ -20,6 +21,14 @@
 		if (valueSplit.includes('-' + ct)) return false;
 		return undefined;
 	});
+
+	const setChannelChecked = () =>
+		(channelChecked = ChannelTypes.map((ct) => {
+			const valueSplit = value.split(',');
+			if (valueSplit.includes(ct)) return true;
+			if (valueSplit.includes('-' + ct)) return false;
+			return undefined;
+		}));
 </script>
 
 <div class="grid gap-1">
@@ -29,9 +38,10 @@
 			<InputCheckbox
 				label={toTitleCase(ct)}
 				value={ct}
-				bind:checked={channelChecked[i]}
-				useIndeterminate
 				class="w-full"
+				checked={channelChecked[i]}
+				useIndeterminate
+				bind:state={channelChecked[i]}
 			/>
 		{/each}
 	</div>

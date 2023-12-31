@@ -8,11 +8,18 @@
 
 	$: startSubscriber = values[0] === minValue ? 0 : values[0];
 	$: endSubscriber = values[1] === maxValue ? 0 : values[1];
+	$: startSubscriber, endSubscriber, setValues();
 
 	let values: number[] = [
 		startSubscriber === 0 ? minValue : startSubscriber,
 		endSubscriber === 0 ? maxValue : endSubscriber
 	];
+
+	const setValues = () =>
+		(values = [
+			startSubscriber === 0 ? minValue : startSubscriber,
+			endSubscriber === 0 ? maxValue : endSubscriber
+		]);
 </script>
 
 <div class="grid gap-1">

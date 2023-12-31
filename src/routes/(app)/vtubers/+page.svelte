@@ -24,7 +24,7 @@
 
 	export let data: VtuberSearchResponse;
 
-	let query: VtubersQuery = defaultVtubersQuery;
+	let query: VtubersQuery = { ...defaultVtubersQuery };
 	let total: number = data.vtubers.meta.total;
 	let layout: VtuberLayout = 'grid';
 	let loading: boolean = false;

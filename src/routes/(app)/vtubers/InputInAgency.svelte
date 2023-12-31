@@ -6,5 +6,5 @@
 
 <div class="grid gap-1">
 	<label class="font-bold" for="agency">Agency</label>
-	<InputCheckbox label="In Agency" bind:checked={inAgency} useIndeterminate />
+	<InputCheckbox label="In Agency" checked={inAgency} bind:state={inAgency} useIndeterminate />
 </div>

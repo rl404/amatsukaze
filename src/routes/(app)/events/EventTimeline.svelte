@@ -13,6 +13,7 @@
 		birthday: VtuberResponseData[];
 		anniversary: VtuberResponseData[];
 	};
+
 	type TimelineData = { [date: string]: TimelineCount };
 
 	const today = new Date();

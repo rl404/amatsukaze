@@ -33,7 +33,7 @@
 
 	const toggleOpen = () => modal.toggleOpen();
 
-	const onReset = () => (query = defaultVtubersQuery);
+	const onReset = () => (query = { ...defaultVtubersQuery });
 
 	const onSubmit = () => {
 		dispatch('submit');

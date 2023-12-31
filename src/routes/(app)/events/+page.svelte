@@ -11,8 +11,6 @@
 	import EventTimeline from './EventTimeline.svelte';
 	import MonthDropdown from './MonthDropdown.svelte';
 
-	// TODO: fix jump on mount.
-
 	export let data: EventResponse;
 
 	const monthNow = (new Date().getMonth() + 1).toString();
