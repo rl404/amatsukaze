@@ -8,13 +8,12 @@
 	export let value: string;
 	export { className as class };
 
-	let className: string = '';
-
 	const layouts: { name: VideoLayout; component: ComponentType }[] = [
 		{ name: 'grid', component: Grid1Icon },
 		{ name: 'list', component: ListIcon }
 	];
 
+	let className: string = '';
 	let layoutIndex: number = layouts.findIndex((l) => l.name === value);
 
 	const nextLayout = () => {

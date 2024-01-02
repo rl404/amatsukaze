@@ -3,7 +3,10 @@ import {
 	defaultVtubersQuery,
 	type AgencySort,
 	type VtuberSort,
-	type VtubersQuery
+	type VtubersQuery,
+	type TierListQuery,
+	defaultTierListQuery,
+	type TierListSort
 } from '$lib/types';
 import type { AgencyResponseData } from '../../routes/api/agencies/[id]/+server';
 import type {
@@ -255,5 +258,15 @@ export const getVtubersQueryFromURLParam = (param: URLSearchParams): VtubersQuer
 		page: parseInt(param.get('page') || defaultVtubersQuery.page.toString()),
 		limit: parseInt(param.get('limit') || defaultVtubersQuery.limit.toString()),
 		sort: (param.get('sort') || defaultVtubersQuery.sort) as VtuberSort
+	};
+};
+
+export const getTierListsQueryFromURLParam = (param: URLSearchParams): TierListQuery => {
+	return {
+		query: param.get('query') || '',
+		user_id: param.get('user_id') || '',
+		sort: (param.get('sort') || defaultTierListQuery.sort) as TierListSort,
+		page: parseInt(param.get('page') || defaultTierListQuery.page.toString()),
+		limit: parseInt(param.get('limit') || defaultTierListQuery.limit.toString())
 	};
 };

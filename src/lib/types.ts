@@ -33,6 +33,9 @@ export type AgencySort = 'name' | '-name' | 'member' | '-member' | 'subscriber' 
 export type VideoChartLayout = 'heatmap' | 'timeline';
 export type VideoLayout = 'grid' | 'list';
 
+export type TierListSort = 'title' | '-title' | 'updated_at' | '-updated_at';
+export type TierListLayout = 'grid' | 'list';
+
 export type VtubersQuery = {
 	names: string;
 	name: string;
@@ -109,4 +112,20 @@ export type Tier = TierListResponseDataTier & {
 
 export type TierVtuber = TierListResponseDataVtuber & {
 	isDndShadowItem?: boolean;
+};
+
+export type TierListQuery = {
+	query: string;
+	user_id: string;
+	sort: TierListSort;
+	page: number;
+	limit: number;
+};
+
+export const defaultTierListQuery: TierListQuery = {
+	query: '',
+	user_id: '',
+	sort: '-updated_at',
+	page: 1,
+	limit: 28
 };
