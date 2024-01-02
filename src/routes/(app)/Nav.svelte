@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { PUBLIC_ENABLE_LOGIN } from '$env/static/public';
 	import logo from '$lib/assets/logo.png';
 	import DarkThemeButton from '$lib/components/buttons/DarkThemeButton.svelte';
 	import GithubButton from '$lib/components/buttons/GithubButton.svelte';
@@ -33,17 +34,19 @@
 			<LightThemeButton class="h-6 w-6" />
 			<DarkThemeButton class="h-6 w-6" />
 			<GithubButton class="h-6 w-6" />
-			{#if login}
-				<a href="/profile" class="clickable" title="profile">
-					<UserIcon class="h-6 w-6" />
-				</a>
-				<a href="/auth/sign-out" class="clickable" title="sign-out">
-					<SignOutIcon class="h-6 w-6" />
-				</a>
-			{:else}
-				<a href="/auth/sign-in" class="clickable" title="sign-in">
-					<SignInIcon class="h-6 w-6" />
-				</a>
+			{#if PUBLIC_ENABLE_LOGIN === 'true'}
+				{#if login}
+					<a href="/profile" class="clickable" title="profile">
+						<UserIcon class="h-6 w-6" />
+					</a>
+					<a href="/auth/sign-out" class="clickable" title="sign-out">
+						<SignOutIcon class="h-6 w-6" />
+					</a>
+				{:else}
+					<a href="/auth/sign-in" class="clickable" title="sign-in">
+						<SignInIcon class="h-6 w-6" />
+					</a>
+				{/if}
 			{/if}
 		</div>
 		<div class="flex items-center sm:hidden">
