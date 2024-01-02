@@ -1,8 +1,8 @@
 <script lang="ts">
+	import Grid1Icon from '$lib/components/icons/Grid1Icon.svelte';
+	import ListIcon from '$lib/components/icons/ListIcon.svelte';
 	import type { AgencyLayout } from '$lib/types';
 	import type { ComponentType } from 'svelte';
-	import Grid1Icon from '../icons/Grid1Icon.svelte';
-	import ListIcon from '../icons/ListIcon.svelte';
 	import IconButton from './IconButton.svelte';
 
 	export let value: AgencyLayout;

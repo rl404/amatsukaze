@@ -10,6 +10,7 @@
 	import { amatsukazeAxios } from '$lib/utils/axios';
 	import { onMount } from 'svelte';
 	import type { ProfileResponse } from '../../api/user/+server';
+	import TierList from './TierList.svelte';
 
 	let userID: number = 0;
 	let username: string = '';
@@ -45,11 +46,12 @@
 				{username}
 				<span class="subtitle text-xl font-normal" title="user id">— #{userID}</span>
 			</div>
-			<IconButton title="sign-out" on:click={onSignOut} class="gap-1">
+			<IconButton title="sign-out" on:click={onSignOut} class="p-1 px-2">
 				<SignOutIcon class="h-5 w-5 sm:hidden" />
 				<span class="hidden sm:inline-block">Sign-out</span>
 			</IconButton>
 		</div>
 		<Border />
+		<TierList {userID} />
 	</div>
 {/if}

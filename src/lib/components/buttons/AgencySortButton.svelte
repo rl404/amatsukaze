@@ -3,10 +3,10 @@
 	import SortLetterDescIcon from '$lib/components/icons/SortLetterDescIcon.svelte';
 	import SortNumberAscIcon from '$lib/components/icons/SortNumberAscIcon.svelte';
 	import SortNumberDescIcon from '$lib/components/icons/SortNumberDescIcon.svelte';
+	import InputRadio from '$lib/components/inputs/InputRadio.svelte';
 	import type { AgencySort } from '$lib/types';
 	import { clickAway } from '$lib/utils/utils';
 	import type { ComponentType } from 'svelte';
-	import InputRadio from '../inputs/InputRadio.svelte';
 	import IconButton from './IconButton.svelte';
 
 	export let value: AgencySort;

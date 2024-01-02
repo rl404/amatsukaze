@@ -1,5 +1,5 @@
 <script lang="ts">
-	import GithubIcon from '../icons/GithubIcon.svelte';
+	import GithubIcon from '$lib/components/icons/GithubIcon.svelte';
 
 	export { className as class };
 	let className: string = '';

@@ -1,6 +1,6 @@
 <script lang="ts">
+	import XmarkIcon from '$lib/components/icons/XmarkIcon.svelte';
 	import { createEventDispatcher } from 'svelte';
-	import XmarkIcon from '../icons/XmarkIcon.svelte';
 
 	const dispatch = createEventDispatcher<{ enter: null; reset: null }>();
 

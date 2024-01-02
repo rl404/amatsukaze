@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ChannelBadge from '$lib/components/badges/ChannelBadge.svelte';
 	import Border from '$lib/components/commons/Border.svelte';
 	import Image from '$lib/components/commons/Image.svelte';
 	import Loading from '$lib/components/commons/Loading.svelte';
@@ -13,7 +14,6 @@
 	import axios from 'axios';
 	import type { SvelteComponent } from 'svelte';
 	import type { VtuberResponseData } from '../../../routes/api/vtubers/[id]/+server';
-	import ChannelBadge from '../badges/ChannelBadge.svelte';
 	import Modal from './Modal.svelte';
 
 	export let id: number;
