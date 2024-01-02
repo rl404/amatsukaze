@@ -25,13 +25,13 @@
 	const onURLChange = () => {
 		name = $appPage.url.searchParams.get('name') || '';
 		sort = ($appPage.url.searchParams.get('sort') as AgencySort) || 'name';
-		onSubmit();
+		updateAgencies();
 	};
 
-	const onSubmit = (updateURL = false) => {
-		agencies = data.data.filter((a) => a.name.toLowerCase().includes(name.toLowerCase()));
-		updateURL && goto(`?name=${name}&sort=${sort}`);
-	};
+	const updateAgencies = () =>
+		(agencies = data.data.filter((a) => a.name.toLowerCase().includes(name.toLowerCase())));
+
+	const onSubmit = () => goto(`?name=${name}&sort=${sort}`);
 </script>
 
 <Head title="Agency List" description="Agency list and search." image="/agencies.png" />
@@ -48,8 +48,8 @@
 				class="w-full"
 				placeholder="search agency name..."
 				bind:value={name}
-				on:enter={() => onSubmit(true)}
-				on:reset={() => onSubmit(true)}
+				on:enter={onSubmit}
+				on:reset={onSubmit}
 			/>
 			<AgencySortButton bind:value={sort} class="h-5 w-5" />
 			<AgencyLayoutButton bind:value={layout} class="h-5 w-5" />
