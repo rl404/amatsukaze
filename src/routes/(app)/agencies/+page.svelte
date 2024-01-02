@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { page as appPage } from '$app/stores';
 	import AgencyLayoutButton from '$lib/components/buttons/AgencyLayoutButton.svelte';
 	import AgencySortButton from '$lib/components/buttons/AgencySortButton.svelte';
@@ -8,12 +9,9 @@
 	import AgencyList from '$lib/components/layouts/AgencyList.svelte';
 	import type { AgencyLayout, AgencySort } from '$lib/types';
 	import { agencySorter } from '$lib/utils/utils';
-	import { onMount } from 'svelte';
 	import type { AgenciesResponse } from '../../api/agencies/+server';
 	import type { AgencyResponseData } from '../../api/agencies/[id]/+server';
 	import InputSearch from './InputSearch.svelte';
-
-	// TODO: fix reactive url query.
 
 	export let data: AgenciesResponse;
 
@@ -22,18 +20,18 @@
 	let layout: AgencyLayout = 'grid';
 	let agencies: AgencyResponseData[] = data.data;
 
-	onMount(() => {
-		const nameParam = $appPage.url.searchParams.get('name');
-		if (nameParam) name = nameParam;
+	$: $appPage.url.searchParams, onURLChange();
 
-		const sortParam = $appPage.url.searchParams.get('sort');
-		if (sortParam) sort = sortParam as AgencySort;
-
+	const onURLChange = () => {
+		name = $appPage.url.searchParams.get('name') || '';
+		sort = ($appPage.url.searchParams.get('sort') as AgencySort) || 'name';
 		onSubmit();
-	});
+	};
 
-	const onSubmit = () =>
-		(agencies = data.data.filter((a) => a.name.toLowerCase().includes(name.toLowerCase())));
+	const onSubmit = (updateURL = false) => {
+		agencies = data.data.filter((a) => a.name.toLowerCase().includes(name.toLowerCase()));
+		updateURL && goto(`?name=${name}&sort=${sort}`);
+	};
 </script>
 
 <Head title="Agency List" description="Agency list and search." image="/agencies.png" />
@@ -50,8 +48,8 @@
 				class="w-full"
 				placeholder="search agency name..."
 				bind:value={name}
-				on:enter={onSubmit}
-				on:reset={onSubmit}
+				on:enter={() => onSubmit(true)}
+				on:reset={() => onSubmit(true)}
 			/>
 			<AgencySortButton bind:value={sort} class="h-5 w-5" />
 			<AgencyLayoutButton bind:value={layout} class="h-5 w-5" />
