@@ -14,13 +14,10 @@
 	import { getAxiosError } from '$lib/utils/api';
 	import { getVtubersQueryFromURLParam } from '$lib/utils/utils';
 	import axios from 'axios';
-	import { onMount } from 'svelte';
 	import type { VtuberResponseData } from '../../api/vtubers/[id]/+server';
 	import type { VtuberSearchResponse } from './+page.server';
 	import AdvancedSearch from './AdvancedSearch.svelte';
 	import InputSearch from './InputSearch.svelte';
-
-	// TODO: fix reactive url query.
 
 	export let data: VtuberSearchResponse;
 
@@ -34,16 +31,35 @@
 	let hasMore: boolean = true;
 
 	$: vtubers = [...vtubers, ...newVtubers];
+	$: $appPage.url.searchParams, onURLChange();
 
-	const fetchData = (updateURL = true) => {
-		const queries = Object.entries(query)
-			.map((v) => `${v[0]}=${v[1] ?? ''}`)
-			.join('&');
+	const onURLChange = () => {
+		const params = Array.from($appPage.url.searchParams.entries());
+		if (params.length === 0) {
+			query = { ...defaultVtubersQuery };
+			total = data.vtubers.meta.total;
+			vtubers = data.vtubers.data;
+			newVtubers = [];
+			hasMore = true;
+			return;
+		}
 
+		query = getVtubersQueryFromURLParam($appPage.url.searchParams);
+
+		vtubers = [];
+		newVtubers = [];
+		query.page = 1;
+
+		fetchData();
+	};
+
+	const fetchData = () => {
 		loading = true;
 		error = '';
 
-		updateURL && goto(`?${queries}`);
+		const queries = Object.entries(query)
+			.map((v) => `${v[0]}=${v[1] ?? ''}`)
+			.join('&');
 
 		axios
 			.get(`/api/vtubers?${queries}`)
@@ -56,25 +72,17 @@
 			.finally(() => (loading = false));
 	};
 
-	onMount(() => {
-		const params = Array.from($appPage.url.searchParams.entries());
-		if (params.length === 0) return;
-
-		query = getVtubersQueryFromURLParam($appPage.url.searchParams);
-
-		onSubmit();
-	});
-
 	const loadMore = () => {
 		query.page++;
-		fetchData(false);
+		fetchData();
 	};
 
 	const onSubmit = () => {
-		vtubers = [];
-		newVtubers = [];
-		query.page = 1;
-		fetchData();
+		const queries = Object.entries(query)
+			.map((v) => `${v[0]}=${v[1] ?? ''}`)
+			.join('&');
+
+		goto(`?${queries}`);
 	};
 </script>
 
