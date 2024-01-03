@@ -23,7 +23,7 @@
 	});
 </script>
 
-<Head title="Sign-Out" description="User sign-out." />
+<Head title="Sign-Out" description="User sign-out." image="" />
 
 {#if loading}
 	<div><Loading class="h-8 w-8" /></div>

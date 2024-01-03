@@ -32,7 +32,11 @@
 	import VtuberMostVideoLength from './VtuberMostVideoLength.svelte';
 </script>
 
-<Head title="Statistics" description="Vtuber and agency statistics." image="/statistics.png" />
+<Head
+	title="Statistics"
+	description="Explore in-depth Vtuber and agency statistics with our comprehensive charts. Discover total Vtuber and agency counts, average active times, monthly debut and retirement trends, 2D and 3D model preferences, subscriber ranks, and more. Dive into the data shaping the virtual entertainment landscape."
+	image="/statistics.png"
+/>
 
 <div class="grid grid-cols-6 gap-4">
 	<h1 class="col-span-6 text-3xl font-bold">Statistics</h1>
@@ -64,7 +68,7 @@
 	<Card class="col-span-6 aspect-video sm:col-span-3" title="Vtuber Count by Agency">
 		<VtuberCountByAgencyChart />
 	</Card>
-	<Card class="aspect-card2 col-span-6" title="Vtuber Count by Subscriber">
+	<Card class="col-span-6 aspect-card2" title="Vtuber Count by Subscriber">
 		<VtuberCountBySubsChart />
 	</Card>
 	<Card class="col-span-6 aspect-video sm:col-span-3" title="Vtuber Most Subscriber">
@@ -73,7 +77,7 @@
 	<Card class="col-span-6 aspect-video sm:col-span-3" title="Agency Most Subscriber">
 		<AgencyMostSubsChart />
 	</Card>
-	<Card class="aspect-card2 col-span-6" title="Top Longest Active Time Vtuber (Years)">
+	<Card class="col-span-6 aspect-card2" title="Top Longest Active Time Vtuber (Years)">
 		<VtuberLongestActiveTimeChart />
 	</Card>
 	<Card class="col-span-6 aspect-square sm:col-span-2" title="Vtuber Count by Designer">
@@ -91,7 +95,7 @@
 	<Card class="col-span-6 sm:col-span-3" title="Vtuber Average Video Duration">
 		<VtuberAvgVideoLength />
 	</Card>
-	<Card class="aspect-card2 col-span-6" title="Vtuber Most Video Count">
+	<Card class="col-span-6 aspect-card2" title="Vtuber Most Video Count">
 		<VtuberCountVideoFrequencyChart />
 	</Card>
 	<Card class="col-span-6 aspect-video sm:col-span-3" title="Vtuber Average Video Count">

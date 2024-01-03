@@ -44,7 +44,7 @@
 	});
 </script>
 
-<Head title="Auth Callback" description="Auth callback." />
+<Head title="Auth Callback" description="Auth callback." image="" />
 
 {#if loading}
 	<div><Loading class="h-8 w-8" /></div>

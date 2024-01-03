@@ -34,7 +34,11 @@
 	const onSubmit = () => goto(`?name=${name}&sort=${sort}`);
 </script>
 
-<Head title="Agency List" description="Agency list and search." image="/agencies.png" />
+<Head
+	title="Agency List"
+	description="Discover top Vtuber agencies with searchable, sortable list. Find by name, sort by member count, total subscribers, and explore the agencies in the virtual realm."
+	image="/agencies.png"
+/>
 
 <div class="grid grid-cols-6 gap-4">
 	<div class="col-span-6 flex flex-wrap items-center justify-between gap-4">

@@ -33,7 +33,7 @@
 	const onSignOut = () => goto('/auth/sign-out');
 </script>
 
-<Head title="Profile" description="User profile." />
+<Head title="Profile" description="User profile." image="" />
 
 {#if loading}
 	<div><Loading class="h-8 w-8" /></div>

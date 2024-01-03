@@ -81,7 +81,11 @@
 	};
 </script>
 
-<Head title="Vtuber Tier List" description="Vtuber tier list and search." image="" />
+<Head
+	title="Vtuber Tier List"
+	description="Explore the ultimate Vtuber tier list search page. Easily find by title or description, and sort by title or latest updates. Discover top-tier Vtubers and stay updated with ease."
+	image=""
+/>
 
 <div class="grid grid-cols-12 gap-4">
 	<div class="col-span-12 flex flex-wrap items-center justify-between gap-4">

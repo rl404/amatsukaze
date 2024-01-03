@@ -16,7 +16,7 @@
 	});
 </script>
 
-<Head title="Sign-In" description="User sign-in." />
+<Head title="Sign-In" description="User sign-in." image="" />
 
 {#if loading}
 	<div><Loading class="h-8 w-8" /></div>

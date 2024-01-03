@@ -43,12 +43,17 @@ export const quickRandomStr = (): string => {
 };
 
 export const generateVtuberDescription = (vtuber: VtuberResponseData): string => {
-	let desc = '';
-	desc += `Agency: ${
-		vtuber.agencies.length === 0 ? 'independent' : vtuber.agencies.map((a) => a.name).join(', ')
-	}. `;
-	desc += `Debut date: ${!vtuber.debut_date ? 'unknown' : vtuber.debut_date.slice(0, 10)}.`;
-	vtuber.retirement_date && (desc += ` Retirement date: ${vtuber.retirement_date.slice(0, 10)}.`);
+	let desc = `Meet ${vtuber.name}`;
+	desc +=
+		vtuber.agencies.length === 0
+			? ', an independent vtuber, '
+			: ` from ${vtuber.agencies.map((a) => a.name).join(', ')} agency `;
+	desc += `who entertained fans since ${
+		!vtuber.debut_date ? 'unknown' : vtuber.debut_date.slice(0, 10)
+	}`;
+	vtuber.retirement_date && (desc += ` to ${vtuber.retirement_date.slice(0, 10)}`);
+	desc +=
+		'. Discover their unique details, designer, modeler, agency mates, families, and channel videos.';
 	return desc;
 };
 

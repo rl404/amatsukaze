@@ -16,7 +16,11 @@
 
 <Head
 	title={agency.name}
-	description={`Agency with ${vtubers.length.toLocaleString()} members`}
+	description={`Explore ${
+		agency.name
+	} agency housing ${agency.member.toLocaleString()} incredible talents cherished by ${compactInt(
+		agency.subscriber
+	)} fans. Discover their monthly member count insights and debut-to-retirement timelines for each member, unraveling the agency's journey in the virtual universe.`}
 	image={getWikiImg(agency.image)}
 />
 

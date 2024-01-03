@@ -86,7 +86,11 @@
 	};
 </script>
 
-<Head title="Vtuber List" description="Vtuber list and search." image="/vtubers.png" />
+<Head
+	title="Vtuber List"
+	description="Discover the comprehensive Vtuber list and advanced search tool. Filter by name, status, debut & retirement year, agency, designer, channel type, subscriber count, etc. Sort results by name, subscriber count, debut, or retirement for a tailored Vtuber exploration experience."
+	image="/vtubers.png"
+/>
 
 <div class="grid grid-cols-6 gap-4">
 	<div class="col-span-6 flex flex-wrap items-center justify-between gap-4">

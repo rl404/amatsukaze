@@ -46,7 +46,7 @@
 	const toggleEdit = () => (editMode = !editMode);
 </script>
 
-<Head title="{tierListData.title} Tier-List" description={tierListData.description} />
+<Head title="{tierListData.title} Tier-List" description={tierListData.description} image="" />
 
 <div class="grid gap-4">
 	<div class="flex flex-wrap items-center justify-between gap-4">
