@@ -48,6 +48,7 @@
 							id={vtuber.id}
 							name={vtuber.name}
 							image={vtuber.image}
+							itemprop="member"
 						/>
 					{:else if layout === 'card'}
 						<VtuberCard
@@ -60,6 +61,7 @@
 							agencies={vtuber.agencies.map((a) => a.name)}
 							debutDate={vtuber.debut_date ? new Date(vtuber.debut_date) : undefined}
 							retirementDate={vtuber.retirement_date ? new Date(vtuber.retirement_date) : undefined}
+							itemprop="member"
 						/>
 					{:else if layout === 'list'}
 						<VtuberList
@@ -72,6 +74,7 @@
 							agencies={vtuber.agencies.map((a) => a.name)}
 							debutDate={vtuber.debut_date ? new Date(vtuber.debut_date) : undefined}
 							retirementDate={vtuber.retirement_date ? new Date(vtuber.retirement_date) : undefined}
+							itemprop="member"
 						/>
 					{/if}
 				{/each}

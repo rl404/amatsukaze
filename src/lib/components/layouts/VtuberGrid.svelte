@@ -20,6 +20,8 @@
 	itemscope
 	itemtype="https://schema.org/Person"
 >
+	<meta itemprop="name" content={name} />
+	<meta itemprop="image" content={getWikiImg(image)} />
 	<RenderIfVisible
 		class="group relative aspect-square rounded-lg bg-card shadow hover:outline hover:outline-primary dark:bg-card-dark dark:hover:outline-primary-dark"
 	>
@@ -29,7 +31,6 @@
 			class="h-full w-full rounded-lg object-cover object-top"
 		/>
 		<div
-			itemprop="name"
 			class="pointer-events-none absolute bottom-0 line-clamp-1 w-full bg-primary p-0.5 text-center font-bold text-white opacity-0 group-hover:opacity-100 dark:bg-primary-dark"
 		>
 			{name}

@@ -27,6 +27,8 @@
 	itemscope
 	itemtype="https://schema.org/Person"
 >
+	<meta itemprop="name" content={name} />
+	<meta itemprop="image" content={getWikiImg(image)} />
 	<RenderIfVisible
 		class="grid grid-cols-10 items-center gap-2 rounded-lg bg-card p-2 text-center shadow hover:outline hover:outline-primary dark:bg-card-dark dark:hover:outline-primary-dark"
 	>
@@ -36,7 +38,7 @@
 				alt={name}
 				class="h-7 w-7 rounded-full bg-body object-cover object-top dark:bg-body-dark"
 			/>
-			<span class="line-clamp-1 font-bold" itemprop="name">{name}</span>
+			<span class="line-clamp-1 font-bold">{name}</span>
 		</div>
 		<div
 			class="col-span-5 hidden text-right sm:line-clamp-1 md:col-span-3 md:text-center lg:col-span-2"

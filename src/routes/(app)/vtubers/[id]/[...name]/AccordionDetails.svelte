@@ -210,15 +210,13 @@
 						<span>-</span>
 					{:else}
 						{#each data.official_websites as url}
-							<div itemprop="publishingPrinciples" itemscope itemtype="https://schema.org/URL">
-								<a
-									href={url}
-									class="clickable underline"
-									target="_blank"
-									rel="noreferrer"
-									itemprop="url">{getHostname(url)}</a
-								>
-							</div>
+							<a
+								href={url}
+								class="clickable underline"
+								target="_blank"
+								rel="noreferrer"
+								itemprop="url">{getHostname(url)}</a
+							>
 						{/each}
 					{/if}
 				</div>

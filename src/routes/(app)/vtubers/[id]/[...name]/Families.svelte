@@ -74,7 +74,7 @@
 						name={vtuber.name}
 						image={vtuber.image}
 						class="col-span-2 text-sm sm:col-span-2 md:col-span-1"
-						itemprop="colleague"
+						itemprop="sibling"
 					/>
 				{:else if layout === 'card'}
 					<VtuberCard
@@ -87,7 +87,7 @@
 						debutDate={vtuber.debut_date ? new Date(vtuber.debut_date) : undefined}
 						retirementDate={vtuber.retirement_date ? new Date(vtuber.retirement_date) : undefined}
 						class="col-span-6 sm:col-span-3 sm:text-xs lg:col-span-2"
-						itemprop="colleague"
+						itemprop="sibling"
 					/>
 				{:else if layout === 'list'}
 					<VtuberList
@@ -100,7 +100,7 @@
 						debutDate={vtuber.debut_date ? new Date(vtuber.debut_date) : undefined}
 						retirementDate={vtuber.retirement_date ? new Date(vtuber.retirement_date) : undefined}
 						class="col-span-6"
-						itemprop="colleague"
+						itemprop="sibling"
 					/>
 				{/if}
 			{/each}
