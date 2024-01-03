@@ -1,4 +1,5 @@
 import type {
+	TierListResponseData,
 	TierListResponseDataTier,
 	TierListResponseDataVtuber
 } from '../routes/(app)/tier-lists/[id]/[...title]/+page.server';
@@ -128,4 +129,53 @@ export const defaultTierListQuery: TierListQuery = {
 	sort: '-updated_at',
 	page: 1,
 	limit: 28
+};
+
+export const defaultTierList: TierListResponseData = {
+	id: '',
+	title: 'Title',
+	description: 'Tier list description...',
+	tiers: [
+		{
+			label: 'S',
+			description: '',
+			color: 'bg-red-500 dark:bg-red-600',
+			size: 'text-3xl',
+			vtubers: []
+		},
+		{
+			label: 'A',
+			description: '',
+			color: 'bg-orange-500 dark:bg-orange-600',
+			size: 'text-3xl',
+			vtubers: []
+		},
+		{
+			label: 'B',
+			description: '',
+			color: 'bg-yellow-500 dark:bg-yellow-600',
+			size: 'text-3xl',
+			vtubers: []
+		},
+		{
+			label: 'C',
+			description: '',
+			color: 'bg-green-500 dark:bg-green-600',
+			size: 'text-3xl',
+			vtubers: []
+		},
+		{
+			label: 'D',
+			description: '',
+			color: 'bg-blue-500 dark:bg-blue-600',
+			size: 'text-3xl',
+			vtubers: []
+		}
+	],
+	options: [],
+	user: {
+		id: 0,
+		username: ''
+	},
+	updated_at: ''
 };
