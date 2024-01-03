@@ -1,13 +1,12 @@
-import type { RequestHandler } from './$types';
 import { SHIMAKAZE_HOST } from '$env/static/private';
+import type { BaseAPIResponse } from '$lib/types';
+import type { RequestHandler } from './$types';
 
-export type agencyResponse = {
-	status: number;
-	message: string;
-	data: agencyResponseData;
+export type AgencyResponse = BaseAPIResponse & {
+	data: AgencyResponseData;
 };
 
-export type agencyResponseData = {
+export type AgencyResponseData = {
 	id: number;
 	name: string;
 	image: string;

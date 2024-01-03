@@ -3,12 +3,12 @@
 
 	export let id: string = '';
 	export let label: string;
-	export let placeholder: string;
+	export let placeholder: string = 'any';
 	export let value: string;
-	export let datalist: Array<string> = [];
+	export let datalist: string[] = [];
 </script>
 
-<div>
-	<label for={id} class="block mb-2 font-medium">{label}</label>
-	<InputText {id} {placeholder} bind:value class="w-full pl-2" {datalist} />
+<div class="grid gap-1">
+	<label for={id} class="font-bold">{label}</label>
+	<InputText {id} {placeholder} bind:value {datalist} class="w-full pl-2" />
 </div>

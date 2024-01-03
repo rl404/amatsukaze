@@ -1,16 +1,16 @@
 <script lang="ts">
 	import BarChart from '$lib/components/charts/BarChart.svelte';
-	import { onMount, type SvelteComponent } from 'svelte';
+	import Loading from '$lib/components/commons/Loading.svelte';
 	import AgencyModal from '$lib/components/modals/AgencyModal.svelte';
-	import type { agencyResponseData } from '../../api/agencies/[id]/+server';
+	import { getAxiosError } from '$lib/utils/api';
 	import axios from 'axios';
-	import { getAxiosError } from '$lib/utils';
-	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
+	import { onMount, type SvelteComponent } from 'svelte';
+	import type { AgencyResponseData } from '../../api/agencies/[id]/+server';
 
-	let data: Array<agencyResponseData> = [];
+	let data: AgencyResponseData[] = [];
 	let loading: boolean = true;
 	let error: string = '';
-	let modals: Array<SvelteComponent> = [];
+	let modals: SvelteComponent[] = [];
 
 	onMount(() => {
 		axios
@@ -29,13 +29,18 @@
 </script>
 
 {#if loading}
-	<div><SpinnerIcon class="w-8 h-8 m-auto text-gray-200 animate-spin dark:text-gray-600 fill-pink-500 dark:fill-indigo-600" /></div>
+	<div><Loading class="h-8 w-8" /></div>
 {:else if error !== ''}
 	<div class="text-center text-red-500">{error}</div>
 {:else}
-	<BarChart data={data.map((d) => ({ name: d.name, value: d.member }))} horizontal on:click={onClick} seriesName="Members" />
+	<BarChart
+		data={data.map((d) => ({ name: d.name, value: d.member }))}
+		horizontal
+		on:click={onClick}
+		seriesName="Members"
+	/>
 
 	{#each data as d, i}
-		<AgencyModal id={d.id} title={d.name} image={d.image} bind:this={modals[i]} />
+		<AgencyModal id={d.id} name={d.name} image={d.image} bind:this={modals[i]} />
 	{/each}
 {/if}

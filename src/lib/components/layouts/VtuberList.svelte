@@ -1,53 +1,59 @@
 <script lang="ts">
-	import Image from '../Image.svelte';
-	import Model2DBadge from '../badges/Model2DBadge.svelte';
-	import Model3DBadge from '../badges/Model3DBadge.svelte';
-	import RenderIfVisible from '../RenderIfVisible.svelte';
+	import Model2DBadge from '$lib/components/badges/Model2DBadge.svelte';
+	import Model3DBadge from '$lib/components/badges/Model3DBadge.svelte';
+	import Image from '$lib/components/commons/Image.svelte';
+	import RenderIfVisible from '$lib/components/commons/RenderIfVisible.svelte';
+	import { getWikiImg } from '$lib/utils/utils';
 
 	export let id: number;
 	export let name: string;
 	export let image: string;
-	export let has2d: boolean = false;
-	export let has3d: boolean = false;
-	export let agencies: Array<string> = [];
+	export let has2d: boolean;
+	export let has3d: boolean;
+	export let agencies: string[];
 	export let debutDate: Date | undefined;
 	export let retirementDate: Date | undefined;
-
-	export let height: number;
+	export let itemprop: string = '';
 	export { className as class };
+
 	let className: string;
-	export let smallText: boolean = false;
 </script>
 
 <a
 	href="/vtubers/{id}/{name}"
+	class={className}
 	title={name}
-	data-sveltekit-reload
-	class="bg-neutral-50 dark:bg-neutral-800 rounded-lg hover:outline hover:outline-pink-500 dark:hover:outline-indigo-600 shadow hover:shadow-lg {className}"
+	{itemprop}
+	itemscope
+	itemtype="https://schema.org/Person"
 >
-	<RenderIfVisible class="grid grid-cols-9 cursor-pointer gap-2 p-2 text-center items-center">
-		<div class="col-span-9 md:col-span-3 text-lg text-left font-bold text-ellipsis whitespace-nowrap overflow-hidden flex gap-2" title={name}>
+	<RenderIfVisible
+		class="grid grid-cols-10 items-center gap-2 rounded-lg bg-card p-2 text-center shadow hover:outline hover:outline-primary dark:bg-card-dark dark:hover:outline-primary-dark"
+	>
+		<div class="col-span-10 flex items-center gap-2 sm:col-span-5 lg:col-span-3">
 			<Image
-				src={image && `/api/wikia/image/${image.split('?')[0]}?height=${height}`}
+				src={getWikiImg(image)}
 				alt={name}
-				class="h-7 w-7 object-cover object-top rounded-full bg-white shadow-lg"
-			/><span>{name}</span>
+				class="h-7 w-7 rounded-full bg-body object-cover object-top dark:bg-body-dark"
+			/>
+			<span class="line-clamp-1 font-bold" itemprop="name">{name}</span>
 		</div>
-		<div class="col-span-3 md:col-span-2 text-sm {!smallText && 'md:text-base'}" title="agencies">
+		<div
+			class="col-span-5 hidden text-right sm:line-clamp-1 md:col-span-3 md:text-center lg:col-span-2"
+			title={agencies && agencies.join(', ')}
+		>
 			{agencies.length === 0 ? '-' : agencies.join(', ')}
 		</div>
-		<div class="col-span-2 md:col-span-1 text-sm {!smallText && 'md:text-base'}" title="debut date">
-			{!debutDate ? '-' : debutDate.toString().slice(0, 10)}
+		<div class="col-span-2 hidden lg:block" title="debut date">
+			{!debutDate ? '-' : debutDate.toISOString().slice(0, 10)}
 		</div>
-		<div class="col-span-2 md:col-span-1 text-sm {!smallText && 'md:text-base'}" title="retirement date">
-			{!retirementDate ? '-' : retirementDate.toString().slice(0, 10)}
+		<div class="col-span-2 hidden lg:block" title="retired date">
+			{!retirementDate ? '-' : retirementDate.toISOString().slice(0, 10)}
 		</div>
-		<div class="text-sm {!smallText && 'md:text-base'}">
+		<div class="col-span-2 hidden items-center justify-center gap-1 md:flex lg:col-span-1">
 			{#if has2d}
 				<Model2DBadge size="sm" />
 			{/if}
-		</div>
-		<div class="text-sm {!smallText && 'md:text-base'}">
 			{#if has3d}
 				<Model3DBadge size="sm" />
 			{/if}

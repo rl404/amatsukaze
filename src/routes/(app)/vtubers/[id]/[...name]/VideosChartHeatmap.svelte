@@ -1,56 +1,54 @@
 <script lang="ts">
 	import Chart from '$lib/components/charts/Chart.svelte';
-	import { chartBorderColors, chartColors, chartStrokeColors, chartTextColors } from '$lib/components/charts/colors';
-	import { dayNames, ThemeMode } from '$lib/utils';
-	import { theme } from '$lib/utils/store';
-	import { onMount } from 'svelte';
-	import type { vtuberResponseDataChannel } from '../../../../api/vtubers/[id]/+server';
+	import {
+		ChartBorderColors,
+		ChartColors,
+		ChartStrokeColors,
+		ChartTextColors,
+		DayNames
+	} from '$lib/utils/const';
+	import { ThemeMode, theme } from '$lib/utils/theme';
+	import type { VtuberResponseDataChannel } from '../../../../api/vtubers/[id]/+server';
 
-	export let data: Array<vtuberResponseDataChannel>;
+	type ChartDataType = { [day: string]: number[] };
 
-	let currTheme = ThemeMode.Dark;
-	let colors = [...chartColors[currTheme]].reverse();
-	let strokeColor = chartStrokeColors[currTheme];
-	let textColor = chartTextColors[currTheme];
-	let borderColor = chartBorderColors[currTheme];
+	export let data: VtuberResponseDataChannel[];
+
+	let chart: Chart;
+	let maxCount: number = 0;
+	let currTheme: ThemeMode = ThemeMode.Dark;
+	let chartColors: string[] = [...ChartColors[currTheme]].reverse();
 
 	theme.subscribe((v) => {
 		if (!v) return;
 		currTheme = v;
-		colors = [...chartColors[currTheme]].reverse();
-		strokeColor = chartStrokeColors[currTheme];
-		textColor = chartTextColors[currTheme];
-		borderColor = chartBorderColors[currTheme];
+		chartColors = [...ChartColors[currTheme]].reverse();
 	});
 
-	type chartDataType = { [day: string]: Array<number> };
+	$: chartData = data.reduce(
+		(res, c) => {
+			c.videos.forEach((v) => {
+				if (!v.start_date) return;
+				const startDate = new Date(v.start_date);
+				const day = startDate.getDay();
+				const startHour = startDate.getHours();
+				res[DayNames[day]][startHour]++;
 
-	let chart: Chart;
-	let maxCount = 0;
-
-	const chartData: chartDataType = data.reduce((res, c) => {
-		c.videos.forEach((v) => {
-			if (!v.start_date) return;
-			const startDate = new Date(v.start_date);
-			const day = startDate.getDay();
-			const startHour = startDate.getHours();
-			res[dayNames[day]][startHour]++;
-
-			if (res[dayNames[day]][startHour] > maxCount) maxCount = res[dayNames[day]][startHour];
-		});
-		return res;
-	}, dayNames.reduce((res, d) => ({ ...res, [d]: Array(24).fill(0) }), {}) as chartDataType);
+				if (res[DayNames[day]][startHour] > maxCount) maxCount = res[DayNames[day]][startHour];
+			});
+			return res;
+		},
+		DayNames.reduce((res, d) => ({ ...res, [d]: Array(24).fill(0) }), {}) as ChartDataType
+	);
 </script>
 
 <Chart
 	bind:this={chart}
 	options={{
 		chart: {
-			height: 250,
+			height: '100%',
 			type: 'heatmap',
-			toolbar: {
-				show: false
-			}
+			toolbar: { show: false }
 		},
 		dataLabels: { enabled: false },
 		legend: { show: false },
@@ -64,40 +62,33 @@
 			categories: Array(24)
 				.fill(0)
 				.map((_, i) => i),
-			labels: {
-				style: { colors: textColor }
-			},
-			axisBorder: { show: true, color: borderColor },
-			axisTicks: { show: true, color: borderColor }
+			labels: { style: { colors: ChartTextColors[currTheme] } },
+			axisBorder: { show: true, color: ChartBorderColors[currTheme] },
+			axisTicks: { show: true, color: ChartBorderColors[currTheme] }
 		},
 		yaxis: {
-			labels: {
-				style: { colors: textColor }
-			},
-			axisBorder: { show: true, color: borderColor },
-			axisTicks: { show: true, color: borderColor }
+			labels: { style: { colors: ChartTextColors[currTheme] } },
+			axisBorder: { show: true, color: ChartBorderColors[currTheme] },
+			axisTicks: { show: true, color: ChartBorderColors[currTheme] }
 		},
 		tooltip: {
 			theme: currTheme,
 			y: {
-				title: {
-					formatter: () => ''
-				},
-				formatter: (v, opt) => {
-					return `${dayNames[opt.seriesIndex]} at ${opt.dataPointIndex}:00 : ${v.toLocaleString()}`;
-				}
+				title: { formatter: () => '' },
+				formatter: (v, opt) =>
+					`${DayNames[opt.seriesIndex]} at ${opt.dataPointIndex}:00 : ${v.toLocaleString()}`
 			}
 		},
-		stroke: { colors: [strokeColor] },
+		stroke: { colors: [ChartStrokeColors[currTheme]] },
 		plotOptions: {
 			heatmap: {
 				radius: 5,
 				enableShades: false,
 				useFillColorAsStroke: false,
 				colorScale: {
-					ranges: colors.map((c, i) => ({
-						from: (maxCount / colors.length) * i,
-						to: Math.ceil(maxCount / colors.length) * (i + 1),
+					ranges: chartColors.map((c, i) => ({
+						from: (maxCount / chartColors.length) * i,
+						to: Math.ceil(maxCount / chartColors.length) * (i + 1),
 						color: c
 					}))
 				}

@@ -1,22 +1,22 @@
 <script lang="ts">
 	import BarChart from '$lib/components/charts/BarChart.svelte';
+	import Loading from '$lib/components/commons/Loading.svelte';
 	import VtuberModal from '$lib/components/modals/VtuberModal.svelte';
-	import { onMount, type SvelteComponent } from 'svelte';
-	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
+	import { getAxiosError } from '$lib/utils/api';
 	import axios from 'axios';
-	import { getAxiosError } from '$lib/utils';
-	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
+	import { onMount, type SvelteComponent } from 'svelte';
+	import type { VtuberResponseData } from '../../api/vtubers/[id]/+server';
 
-	let data: Array<vtuberResponseData> = [];
+	let data: VtuberResponseData[] = [];
 	let loading: boolean = true;
 	let error: string = '';
-	let modals: Array<SvelteComponent> = [];
+	let modals: SvelteComponent[] = [];
 
 	onMount(() => {
 		axios
 			.get(`/api/vtubers?sort=debut_date&exclude_retired=true&start_debut_year=1&limit=20`)
 			.then((resp) => {
-				data = resp.data.data.map((d: vtuberResponseData) => ({
+				data = resp.data.data.map((d: VtuberResponseData) => ({
 					...d,
 					debut_date: !d.debut_date ? new Date() : new Date(d.debut_date),
 					retirement_date: new Date()
@@ -26,27 +26,28 @@
 			.finally(() => (loading = false));
 	});
 
-	const onClick = (d: any) => {
-		const i = d.detail;
-		modals[i].toggleOpen();
-	};
+	const onClick = (d: any) => modals[d.detail].toggleOpen();
 </script>
 
 {#if loading}
-	<div><SpinnerIcon class="w-8 h-8 m-auto text-gray-200 animate-spin dark:text-gray-600 fill-pink-500 dark:fill-indigo-600" /></div>
+	<div><Loading class="h-8 w-8" /></div>
 {:else if error !== ''}
 	<div class="text-center text-red-500">{error}</div>
 {:else}
 	<BarChart
 		data={data.map((d) => ({
 			name: d.name,
-			value: !d.debut_date || !d.retirement_date ? 0 : (d.retirement_date.getTime() - d.debut_date.getTime()) / (1000 * 3600 * 24 * 30 * 12)
+			value:
+				!d.debut_date || !d.retirement_date
+					? 0
+					: (new Date(d.retirement_date).getTime() - new Date(d.debut_date).getTime()) /
+					  (1000 * 3600 * 24 * 30 * 12)
 		}))}
 		seriesName="Years"
 		on:click={onClick}
 	/>
 
 	{#each data as d, i}
-		<VtuberModal id={d.id} title={d.name} bind:this={modals[i]} />
+		<VtuberModal id={d.id} name={d.name} bind:this={modals[i]} />
 	{/each}
 {/if}

@@ -1,42 +1,50 @@
 <script lang="ts">
 	import Chart from '$lib/components/charts/Chart.svelte';
-	import { chartBorderColors, chartColors, chartTextColors } from '$lib/components/charts/colors';
-	import { getAxiosError, ThemeMode } from '$lib/utils';
-	import { theme } from '$lib/utils/store';
-	import { SvelteComponent, onMount } from 'svelte';
+	import Loading from '$lib/components/commons/Loading.svelte';
+	import { getAxiosError } from '$lib/utils/api';
+	import { ChartBorderColors, ChartColors, ChartTextColors } from '$lib/utils/const';
+	import { ThemeMode, theme } from '$lib/utils/theme';
 	import axios from 'axios';
-	import type { vtuberDebutRetireCountMonthlyResponseData } from '../../api/statistics/vtubers/debut-retire-count-monthly/+server';
-	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
+	import { onMount, type SvelteComponent } from 'svelte';
+	import type { VtuberDebutRetireCountMonthlyResponseData } from '../../api/statistics/vtubers/debut-retire-count-monthly/+server';
 	import VtuberCountMonthlyModal from './VtuberCountMonthlyModal.svelte';
 
-	type chartData = vtuberDebutRetireCountMonthlyResponseData & {
+	type ChartData = VtuberDebutRetireCountMonthlyResponseData & {
 		debut_total: number;
 		retire_total: number;
 		active_total: number;
 	};
 
-	let data: Array<chartData> = [];
+	let modal: SvelteComponent;
+	let data: ChartData[] = [];
 	let loading: boolean = true;
 	let error: string = '';
-
-	let currTheme = ThemeMode.Dark;
-	let colors = [chartColors.debut[0], chartColors.retired[0], chartColors.debut[1], chartColors.retired[1], chartColors[currTheme][0]];
-	let textColor = chartTextColors[currTheme];
-	let borderColor = chartBorderColors[currTheme];
+	let currTheme: ThemeMode = ThemeMode.Dark;
+	let chartColors: string[] = [
+		ChartColors.debut[0],
+		ChartColors.retired[0],
+		ChartColors.debut[1],
+		ChartColors.retired[1],
+		ChartColors[currTheme][0]
+	];
 
 	theme.subscribe((v) => {
 		if (!v) return;
 		currTheme = v;
-		textColor = chartTextColors[currTheme];
-		borderColor = chartBorderColors[currTheme];
-		colors[4] = chartColors[currTheme][0];
+		chartColors[4] = ChartColors[currTheme][0];
 	});
+
+	const openModal = (i: number) => {
+		const d = data[i];
+		if (!d) return;
+		modal.toggleOpen(d.year, d.month);
+	};
 
 	onMount(() => {
 		axios
 			.get(`/api/statistics/vtubers/debut-retire-count-monthly`)
 			.then((resp) => {
-				const rawData: Array<vtuberDebutRetireCountMonthlyResponseData> = resp.data.data;
+				const rawData: VtuberDebutRetireCountMonthlyResponseData[] = resp.data.data;
 
 				let tmpData = rawData.map((d) => ({
 					...d,
@@ -54,53 +62,33 @@
 
 				data = tmpData;
 			})
-			.catch((err) => {
-				error = getAxiosError(err);
-			})
-			.finally(() => {
-				loading = false;
-			});
+			.catch((err) => (error = getAxiosError(err)))
+			.finally(() => (loading = false));
 	});
-
-	let modal: SvelteComponent;
-
-	const openModal = (i: number) => {
-		const d = data[i];
-		if (!d) return;
-		modal.toggleOpen(d.year, d.month);
-	};
 </script>
 
 {#if loading}
-	<div class="h-full flex justify-center items-center">
-		<SpinnerIcon class="w-10 h-10 text-gray-200 animate-spin dark:text-gray-600 fill-pink-500 dark:fill-indigo-600" />
+	<div class="flex h-full items-center justify-center">
+		<Loading class="h-8 w-8" />
 	</div>
 {:else if error !== ''}
-	<div class="h-full flex justify-center items-center">
+	<div class="flex h-full items-center justify-center">
 		<div class="text-center text-red-500">{error}</div>
 	</div>
 {:else}
 	<Chart
 		options={{
 			chart: {
-				height: 350,
+				height: '100%',
 				type: 'line',
-				toolbar: {
-					show: false
-				},
-				zoom: {
-					enabled: false
-				},
+				toolbar: { show: false },
+				zoom: { enabled: false },
 				events: {
-					click: (_, __, options) => {
-						openModal(options.dataPointIndex);
-					}
+					click: (_, __, options) => openModal(options.dataPointIndex)
 				}
 			},
-			colors: colors,
-			dataLabels: {
-				enabled: false
-			},
+			colors: chartColors,
+			dataLabels: { enabled: false },
 			fill: {
 				type: ['solid', 'solid', 'gradient', 'gradient', 'gradient'],
 				gradient: {
@@ -113,7 +101,7 @@
 				}
 			},
 			grid: {
-				borderColor: borderColor,
+				borderColor: ChartBorderColors[currTheme],
 				strokeDashArray: 5,
 				xaxis: { lines: { show: false } },
 				yaxis: { lines: { show: true } }
@@ -145,11 +133,7 @@
 					data: data.map((d) => d.active_total)
 				}
 			],
-			legend: {
-				labels: {
-					colors: textColor
-				}
-			},
+			legend: { labels: { colors: ChartTextColors[currTheme] } },
 			stroke: {
 				curve: 'smooth',
 				width: 2
@@ -158,81 +142,74 @@
 				theme: currTheme,
 				intersect: false,
 				shared: true,
-				x: {
-					format: 'MMM yyyy'
-				},
+				x: { format: 'MMM yyyy' },
 				y: { formatter: (v) => (!v ? '0' : v.toLocaleString()) }
 			},
 			xaxis: {
 				type: 'datetime',
 				categories: data.map((d) => new Date(d.year, d.month, 1).toISOString().slice(0, 10)),
-				labels: {
-					style: { colors: textColor }
-				},
-				axisBorder: { color: borderColor },
-				axisTicks: { color: borderColor }
+				labels: { style: { colors: ChartTextColors[currTheme] } },
+				axisBorder: { color: ChartBorderColors[currTheme] },
+				axisTicks: { color: ChartBorderColors[currTheme] }
 			},
 			yaxis: [
 				{
 					seriesName: 'Debut',
 					showAlways: true,
-					labels: {
-						style: { colors: textColor }
-					},
+					labels: { style: { colors: ChartTextColors[currTheme] } },
 					forceNiceScale: true,
 					max: Math.max(...data.map((d) => d.debut), ...data.map((d) => d.retire)),
-					axisBorder: { show: true, color: borderColor },
-					axisTicks: { show: true, color: borderColor }
+					axisBorder: { show: true, color: ChartBorderColors[currTheme] },
+					axisTicks: { show: true, color: ChartBorderColors[currTheme] }
 				},
 				{
 					seriesName: 'Retire',
 					show: false,
-					labels: {
-						style: { colors: textColor }
-					},
+					labels: { style: { colors: ChartTextColors[currTheme] } },
 					forceNiceScale: true,
 					max: Math.max(...data.map((d) => d.debut), ...data.map((d) => d.retire)),
-					axisBorder: { show: true, color: borderColor },
-					axisTicks: { show: true, color: borderColor }
+					axisBorder: { show: true, color: ChartBorderColors[currTheme] },
+					axisTicks: { show: true, color: ChartBorderColors[currTheme] }
 				},
 				{
 					seriesName: 'Debut Total',
 					show: false,
-					labels: {
-						style: { colors: textColor }
-					},
-					max: Math.max(...data.map((d) => d.debut_total), ...data.map((d) => d.retire_total), ...data.map((d) => d.active_total)),
+					labels: { style: { colors: ChartTextColors[currTheme] } },
+					max: Math.max(
+						...data.map((d) => d.debut_total),
+						...data.map((d) => d.retire_total),
+						...data.map((d) => d.active_total)
+					),
 					forceNiceScale: true,
 					opposite: true,
-					axisBorder: { show: true, color: borderColor },
-					axisTicks: { show: true, color: borderColor }
+					axisBorder: { show: true, color: ChartBorderColors[currTheme] },
+					axisTicks: { show: true, color: ChartBorderColors[currTheme] }
 				},
 				{
 					seriesName: 'Retire Total',
 					show: false,
-					labels: {
-						style: { colors: textColor }
-					},
-					max: Math.max(...data.map((d) => d.debut_total), ...data.map((d) => d.retire_total), ...data.map((d) => d.active_total)),
+					labels: { style: { colors: ChartTextColors[currTheme] } },
+					max: Math.max(
+						...data.map((d) => d.debut_total),
+						...data.map((d) => d.retire_total),
+						...data.map((d) => d.active_total)
+					),
 					forceNiceScale: true,
 					opposite: true,
-					axisBorder: { show: true, color: borderColor },
-					axisTicks: { show: true, color: borderColor }
+					axisBorder: { show: true, color: ChartBorderColors[currTheme] },
+					axisTicks: { show: true, color: ChartBorderColors[currTheme] }
 				},
 				{
 					seriesName: 'Total Active',
 					showAlways: true,
-					labels: {
-						style: { colors: textColor }
-					},
+					labels: { style: { colors: ChartTextColors[currTheme] } },
 					forceNiceScale: true,
 					opposite: true,
-					axisBorder: { show: true, color: borderColor },
-					axisTicks: { show: true, color: borderColor }
+					axisBorder: { show: true, color: ChartBorderColors[currTheme] },
+					axisTicks: { show: true, color: ChartBorderColors[currTheme] }
 				}
 			]
 		}}
 	/>
-
 	<VtuberCountMonthlyModal bind:this={modal} />
 {/if}

@@ -1,19 +1,27 @@
 <script lang="ts">
 	import InputCheckbox from '$lib/components/inputs/InputCheckbox.svelte';
 
-	export let includeActive: boolean;
-	export let includeRetired: boolean;
+	export let excludeActive: boolean;
+	export let excludeRetired: boolean;
+
+	let active: boolean = !excludeActive;
+	let retired: boolean = !excludeRetired;
+
+	$: active, setExcludeActive();
+	$: retired, setExcludeRetired();
+	$: excludeActive, setActive();
+	$: excludeRetired, setRetired();
+
+	const setActive = () => (active = !excludeActive);
+	const setRetired = () => (retired = !excludeRetired);
+	const setExcludeActive = () => (excludeActive = !active);
+	const setExcludeRetired = () => (excludeRetired = !retired);
 </script>
 
-<div>
-	<div class="block mb-2 font-medium pointer-events-none">Status</div>
-
-	<div class="flex gap-2 justify-center">
-		<div class="w-full">
-			<InputCheckbox label="Active" bind:checked={includeActive} />
-		</div>
-		<div class="w-full">
-			<InputCheckbox label="Retired" bind:checked={includeRetired} />
-		</div>
+<div class="grid gap-1">
+	<label class="font-bold" for="status">Status</label>
+	<div id="status" class="grid grid-cols-2 gap-2">
+		<InputCheckbox label="Active" bind:checked={active} />
+		<InputCheckbox label="Retired" bind:checked={retired} />
 	</div>
 </div>

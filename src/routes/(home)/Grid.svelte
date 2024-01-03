@@ -1,18 +1,19 @@
 <script lang="ts">
-	import type { vtuberImagesResponseData } from './+page.server';
 	import VtuberGrid from '$lib/components/layouts/VtuberGrid.svelte';
+	import type { VtuberImagesResponseData } from './+page.server';
 
-	export let data: Array<vtuberImagesResponseData>;
+	export let data: VtuberImagesResponseData[];
 </script>
 
-<div class="grid xl:grid-cols-10 lg:grid-cols-7 md:grid-cols-6 sm:grid-cols-5 grid-cols-3 gap-1 p-1 h-screen overflow-y-hidden">
+<div
+	class="grid h-screen grid-cols-3 gap-1 overflow-y-hidden p-1 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 xl:grid-cols-10"
+>
 	{#each data as vtuber}
 		<VtuberGrid
-			class2="transition opacity-20 hover:opacity-100 grayscale hover:grayscale-0"
 			id={vtuber.id}
 			name={vtuber.name}
 			image={vtuber.image}
-			height={206}
+			class="opacity-20 grayscale transition hover:opacity-100 hover:grayscale-0"
 		/>
 	{/each}
 </div>

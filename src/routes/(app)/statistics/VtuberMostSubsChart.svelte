@@ -1,40 +1,39 @@
 <script lang="ts">
 	import BarChart from '$lib/components/charts/BarChart.svelte';
+	import Loading from '$lib/components/commons/Loading.svelte';
 	import VtuberModal from '$lib/components/modals/VtuberModal.svelte';
-	import { compactInt, getAxiosError } from '$lib/utils';
-	import { onMount, type SvelteComponent } from 'svelte';
-	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
+	import { getAxiosError } from '$lib/utils/api';
+	import { compactInt } from '$lib/utils/utils';
 	import axios from 'axios';
-	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
+	import { onMount, type SvelteComponent } from 'svelte';
+	import type { VtuberResponseData } from '../../api/vtubers/[id]/+server';
 
-	let data: Array<vtuberResponseData> = [];
+	let data: VtuberResponseData[] = [];
 	let loading: boolean = true;
 	let error: string = '';
-	let modals: Array<SvelteComponent> = [];
+	let modals: SvelteComponent[] = [];
 
 	onMount(() => {
 		axios
 			.get(`/api/vtubers?sort=-subscriber&limit=10`)
-			.then((resp) => {
-				data = resp.data.data;
-			})
+			.then((resp) => (data = resp.data.data))
 			.catch((err) => (error = getAxiosError(err)))
 			.finally(() => (loading = false));
 	});
 
-	const onClick = (d: any) => {
-		const i = d.detail;
-		modals[i].toggleOpen();
-	};
+	const onClick = (d: any) => modals[d.detail].toggleOpen();
 </script>
 
 {#if loading}
-	<div><SpinnerIcon class="w-8 h-8 m-auto text-gray-200 animate-spin dark:text-gray-600 fill-pink-500 dark:fill-indigo-600" /></div>
+	<div><Loading class="h-8 w-8" /></div>
 {:else if error !== ''}
 	<div class="text-center text-red-500">{error}</div>
 {:else}
 	<BarChart
-		data={data.map((d) => ({ name: d.name, value: d.channels.reduce((max, c) => (c.subscriber > max ? c.subscriber : max), 0) }))}
+		data={data.map((d) => ({
+			name: d.name,
+			value: d.channels.reduce((max, c) => (c.subscriber > max ? c.subscriber : max), 0)
+		}))}
 		horizontal
 		xaxisFormatter={(v) => compactInt(parseInt(v))}
 		tooltipYFormatter={(v) => (!v ? '0' : compactInt(v))}
@@ -42,6 +41,6 @@
 	/>
 
 	{#each data as d, i}
-		<VtuberModal id={d.id} title={d.name} bind:this={modals[i]} />
+		<VtuberModal id={d.id} name={d.name} bind:this={modals[i]} />
 	{/each}
 {/if}

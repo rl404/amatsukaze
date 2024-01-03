@@ -1,38 +1,39 @@
 <script lang="ts">
 	import Chart from '$lib/components/charts/Chart.svelte';
-	import { chartBorderColors, chartColors, chartStrokeColors, chartTextColors } from '$lib/components/charts/colors';
-	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
-	import { dayNames, getAxiosError, ThemeMode } from '$lib/utils';
-	import { theme } from '$lib/utils/store';
+	import Loading from '$lib/components/commons/Loading.svelte';
+	import { getAxiosError } from '$lib/utils/api';
+	import {
+		ChartBorderColors,
+		ChartColors,
+		ChartStrokeColors,
+		ChartTextColors,
+		DayNames
+	} from '$lib/utils/const';
+	import { ThemeMode, theme } from '$lib/utils/theme';
 	import axios from 'axios';
 	import { onMount } from 'svelte';
 
-	let currTheme = ThemeMode.Dark;
-	let colors = [...chartColors[currTheme]].reverse();
-	let strokeColor = chartStrokeColors[currTheme];
-	let textColor = chartTextColors[currTheme];
-	let borderColor = chartBorderColors[currTheme];
+	type ChartData = { [day: string]: number[] };
+
+	let data: ChartData = DayNames.reduce((res, d) => ({ ...res, [d]: Array(24).fill(0) }), {});
+	let maxCount: number = 0;
+	let loading: boolean = true;
+	let error: string = '';
+	let currTheme: ThemeMode = ThemeMode.Dark;
+	let chartColors: string[] = [...ChartColors[currTheme]].reverse();
 
 	theme.subscribe((v) => {
 		if (!v) return;
 		currTheme = v;
-		colors = [...chartColors[currTheme]].reverse();
-		strokeColor = chartStrokeColors[currTheme];
-		textColor = chartTextColors[currTheme];
-		borderColor = chartBorderColors[currTheme];
+		chartColors = [...ChartColors[currTheme]].reverse();
 	});
-
-	let data: { [day: string]: Array<number> } = dayNames.reduce((res, d) => ({ ...res, [d]: Array(24).fill(0) }), {});
-	let maxCount: number = 0;
-	let loading: boolean = true;
-	let error: string = '';
 
 	onMount(() => {
 		axios
 			.get(`/api/statistics/vtubers/video-count-by-date?hourly=true&daily=true`)
 			.then((resp) => {
 				resp.data.data.forEach((d: { day: number; hour: number; count: number }) => {
-					data[dayNames[d.day - 1]][d.hour] = d.count;
+					data[DayNames[d.day - 1]][d.hour] = d.count;
 					if (d.count > maxCount) maxCount = d.count;
 				});
 			})
@@ -42,18 +43,16 @@
 </script>
 
 {#if loading}
-	<div><SpinnerIcon class="w-8 h-8 m-auto text-gray-200 animate-spin dark:text-gray-600 fill-pink-500 dark:fill-indigo-600" /></div>
+	<div><Loading class="h-8 w-8" /></div>
 {:else if error !== ''}
 	<div class="text-center text-red-500">{error}</div>
 {:else}
 	<Chart
 		options={{
 			chart: {
-				height: 300,
+				height: '100%',
 				type: 'heatmap',
-				toolbar: {
-					show: false
-				}
+				toolbar: { show: false }
 			},
 			dataLabels: { enabled: false },
 			legend: { show: false },
@@ -67,40 +66,33 @@
 				categories: Array(24)
 					.fill(0)
 					.map((_, i) => i),
-				labels: {
-					style: { colors: textColor }
-				},
-				axisBorder: { show: true, color: borderColor },
-				axisTicks: { show: true, color: borderColor }
+				labels: { style: { colors: ChartTextColors[currTheme] } },
+				axisBorder: { show: true, color: ChartBorderColors[currTheme] },
+				axisTicks: { show: true, color: ChartBorderColors[currTheme] }
 			},
 			yaxis: {
-				labels: {
-					style: { colors: textColor }
-				},
-				axisBorder: { show: true, color: borderColor },
-				axisTicks: { show: true, color: borderColor }
+				labels: { style: { colors: ChartTextColors[currTheme] } },
+				axisBorder: { show: true, color: ChartBorderColors[currTheme] },
+				axisTicks: { show: true, color: ChartBorderColors[currTheme] }
 			},
 			tooltip: {
 				theme: currTheme,
 				y: {
-					title: {
-						formatter: () => ''
-					},
-					formatter: (v, opt) => {
-						return `${dayNames[opt.seriesIndex]} at ${opt.dataPointIndex}:00 : ${v.toLocaleString()}`;
-					}
+					title: { formatter: () => '' },
+					formatter: (v, opt) =>
+						`${DayNames[opt.seriesIndex]} at ${opt.dataPointIndex}:00 : ${v.toLocaleString()}`
 				}
 			},
-			stroke: { colors: [strokeColor] },
+			stroke: { colors: [ChartStrokeColors[currTheme]] },
 			plotOptions: {
 				heatmap: {
 					radius: 5,
 					enableShades: false,
 					useFillColorAsStroke: false,
 					colorScale: {
-						ranges: colors.map((c, i) => ({
-							from: (maxCount / colors.length) * i,
-							to: Math.ceil(maxCount / colors.length) * (i + 1),
+						ranges: chartColors.map((c, i) => ({
+							from: (maxCount / chartColors.length) * i,
+							to: Math.ceil(maxCount / chartColors.length) * (i + 1),
 							color: c
 						}))
 					}

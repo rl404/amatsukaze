@@ -1,13 +1,7 @@
 import type { RequestHandler } from './$types';
 import { SHIMAKAZE_HOST } from '$env/static/private';
 
-type vtuberDebutRetireCountMonthlyResponse = {
-	status: number;
-	message: string;
-	data: Array<vtuberDebutRetireCountMonthlyResponseData>;
-};
-
-export type vtuberDebutRetireCountMonthlyResponseData = {
+export type VtuberDebutRetireCountMonthlyResponseData = {
 	year: number;
 	month: number;
 	debut: number;

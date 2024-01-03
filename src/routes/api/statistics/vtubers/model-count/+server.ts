@@ -1,17 +1,6 @@
 import type { RequestHandler } from './$types';
 import { SHIMAKAZE_HOST } from '$env/static/private';
 
-type vtuberModelCountResponse = {
-	status: number;
-	message: string;
-	data: {
-		none: number;
-		has_2d_only: number;
-		has_3d_only: number;
-		both: number;
-	};
-};
-
 export const GET = (async () => {
 	const resp = await fetch(`${SHIMAKAZE_HOST}/statistics/vtubers/model-count`);
 	const data = await resp.json();

@@ -1,29 +1,33 @@
 <script lang="ts">
 	import { PUBLIC_VTUBER_WIKI_HOST } from '$env/static/public';
-	import Border from '$lib/components/Border.svelte';
-	import Head from '$lib/components/Head.svelte';
-	import Image from '$lib/components/Image.svelte';
-	import AccordionStatistics from './AccordionStatistics.svelte';
+	import Border from '$lib/components/commons/Border.svelte';
+	import Head from '$lib/components/commons/Head.svelte';
+	import Image from '$lib/components/commons/Image.svelte';
+	import { compactInt, getWikiImg } from '$lib/utils/utils';
+	import type { AgencyPageResponse } from './+page.server';
 	import AccordionMembers from './AccordionMembers.svelte';
-	import type { agencyResponse } from './+page.server';
-	import { compactInt } from '$lib/utils';
+	import AccordionStatistics from './AccordionStatistics.svelte';
 
-	export let data: agencyResponse;
+	export let data: AgencyPageResponse;
 
-	const agency = data.agency.data;
-	const vtubers = data.vtubers.data;
+	$: agency = data.agency.data;
+	$: vtubers = data.vtubers.data;
 </script>
 
 <Head
 	title={agency.name}
-	description={`Agency with ${vtubers.length.toLocaleString()} members`}
-	image={agency.image && `/api/wikia/image/${agency.image.split('?')[0]}?height=206`}
+	description={`Explore ${
+		agency.name
+	} agency housing ${agency.member.toLocaleString()} incredible talents cherished by ${compactInt(
+		agency.subscriber
+	)} fans. Discover their monthly member count insights and debut-to-retirement timelines for each member, unraveling the agency's journey in the virtual universe.`}
+	image={getWikiImg(agency.image)}
 />
 
 <div class="grid grid-cols-4 gap-4">
-	<div class="col-span-4">
+	<h1 class="col-span-4">
 		<a
-			class="text-3xl font-bold"
+			class="clickable text-3xl font-bold"
 			href="{PUBLIC_VTUBER_WIKI_HOST}/{agency.name}"
 			target="_blank"
 			rel="noreferrer"
@@ -31,29 +35,30 @@
 		>
 			{agency.name}
 		</a>
-		<Border />
-	</div>
+	</h1>
 
-	<div class="col-span-4 sm:col-span-1 flex flex-col gap-4">
+	<Border class="col-span-4" />
+
+	<div class="col-span-4 flex flex-col gap-4 sm:col-span-1">
 		<div>
 			<Image
-				src={agency.image && `/api/wikia/image/${agency.image.split('?')[0]}?height=206`}
+				src={getWikiImg(agency.image)}
 				alt={agency.name}
-				class="p-2 m-auto w-full rounded-lg border dark:border-neutral-600 bg-neutral-100 dark:bg-neutral-800"
+				class="m-auto w-full rounded-lg border border-border bg-card p-2 dark:border-border-dark dark:bg-card-dark"
 			/>
 		</div>
-		<div class="font-bold flex justify-between gap-4">
-			<div>Member Count</div>
-			<div>{agency.member.toLocaleString()}</div>
+		<div class="flex justify-between gap-4 font-bold">
+			<span>Member Count</span>
+			<span>{agency.member.toLocaleString()}</span>
 		</div>
-		<div class="font-bold flex justify-between gap-4">
-			<div>Total Subscriber</div>
-			<div title={agency.subscriber.toLocaleString()}>{compactInt(agency.subscriber)}</div>
+		<div class="flex justify-between gap-4 font-bold">
+			<span>Total Subscriber</span>
+			<span title={agency.subscriber.toLocaleString()}>{compactInt(agency.subscriber)}</span>
 		</div>
 	</div>
 
-	<div class="col-span-4 sm:col-span-3 flex flex-col gap-4">
-		<div><AccordionStatistics data={vtubers} /></div>
-		<div><AccordionMembers data={vtubers} /></div>
+	<div class="col-span-4 flex flex-col gap-4 sm:col-span-3">
+		<AccordionStatistics data={vtubers} />
+		<AccordionMembers data={vtubers} />
 	</div>
 </div>

@@ -1,18 +1,20 @@
 <script lang="ts">
-	import Accordion from '$lib/components/Accordion.svelte';
-	import UserGroupIcon from '$lib/components/icons/UserGroupIcon.svelte';
+	import Accordion from '$lib/components/commons/Accordion.svelte';
+	import OfficeIcon from '$lib/components/icons/OfficeIcon.svelte';
 	import AgencyMates from './AgencyMates.svelte';
 
 	export let id: number;
-	export let agencies: Array<string>;
+	export let agencies: string[];
 </script>
 
-<Accordion title="Agency-mates" icon={UserGroupIcon}>
+<Accordion title="Agency-mates" icon={OfficeIcon}>
 	{#if agencies.length === 0}
 		<div class="text-center">not in agency...</div>
 	{:else}
-		{#each agencies as agency}
-			<AgencyMates {id} {agency} open={agencies.length === 1} />
-		{/each}
+		<div class="grid gap-4">
+			{#each agencies as agency}
+				<AgencyMates {id} {agency} open={agencies.length === 1} />
+			{/each}
+		</div>
 	{/if}
 </Accordion>

@@ -1,31 +1,66 @@
 <script lang="ts">
-	import IconButton from '$lib/components/buttons/IconButton.svelte';
 	import SortLetterAscIcon from '$lib/components/icons/SortLetterAscIcon.svelte';
 	import SortLetterDescIcon from '$lib/components/icons/SortLetterDescIcon.svelte';
 	import SortNumberAscIcon from '$lib/components/icons/SortNumberAscIcon.svelte';
 	import SortNumberDescIcon from '$lib/components/icons/SortNumberDescIcon.svelte';
 	import InputRadio from '$lib/components/inputs/InputRadio.svelte';
-	import { clickAway } from '$lib/utils';
+	import type { VtuberSort } from '$lib/types';
+	import { clickAway } from '$lib/utils/utils';
 	import { createEventDispatcher, type ComponentType } from 'svelte';
+	import IconButton from './IconButton.svelte';
 
-	const dispatch = createEventDispatcher<{ submit: null }>();
+	const dispatch = createEventDispatcher<{ change: null }>();
 
-	export let value: string;
-
+	export let value: VtuberSort;
+	export let hideKeys: VtuberSort[] = [];
 	export { className as class };
-	let className: string = '';
 
-	export let hideKeys: Array<string> = [];
-
-	let sorts: { [key: string]: { label: string; value: string; component: ComponentType; hidden: boolean } } = {};
+	let sorts: {
+		[key in VtuberSort]: {
+			label: string;
+			value: string;
+			component: ComponentType;
+			hidden: boolean;
+		};
+	};
 
 	$: sorts = {
-		name: { label: 'Name ASC', value: 'name', component: SortLetterAscIcon, hidden: hideKeys.includes('name') },
-		'-name': { label: 'Name DESC', value: '-name', component: SortLetterDescIcon, hidden: hideKeys.includes('-name') },
-		subscriber: { label: 'Subscriber ASC', value: 'subscriber', component: SortNumberAscIcon, hidden: hideKeys.includes('subscriber') },
-		'-subscriber': { label: 'Subscriber DESC', value: '-subscriber', component: SortNumberDescIcon, hidden: hideKeys.includes('-subscriber') },
-		debut_date: { label: 'Debut date ASC', value: 'debut_date', component: SortNumberAscIcon, hidden: hideKeys.includes('debut_date') },
-		'-debut_date': { label: 'Debut date DESC', value: '-debut_date', component: SortNumberDescIcon, hidden: hideKeys.includes('-debut_date') },
+		name: {
+			label: 'Name ASC',
+			value: 'name',
+			component: SortLetterAscIcon,
+			hidden: hideKeys.includes('name')
+		},
+		'-name': {
+			label: 'Name DESC',
+			value: '-name',
+			component: SortLetterDescIcon,
+			hidden: hideKeys.includes('-name')
+		},
+		subscriber: {
+			label: 'Subscriber ASC',
+			value: 'subscriber',
+			component: SortNumberAscIcon,
+			hidden: hideKeys.includes('subscriber')
+		},
+		'-subscriber': {
+			label: 'Subscriber DESC',
+			value: '-subscriber',
+			component: SortNumberDescIcon,
+			hidden: hideKeys.includes('-subscriber')
+		},
+		debut_date: {
+			label: 'Debut date ASC',
+			value: 'debut_date',
+			component: SortNumberAscIcon,
+			hidden: hideKeys.includes('debut_date')
+		},
+		'-debut_date': {
+			label: 'Debut date DESC',
+			value: '-debut_date',
+			component: SortNumberDescIcon,
+			hidden: hideKeys.includes('-debut_date')
+		},
 		retirement_date: {
 			label: 'Retirement date ASC',
 			value: 'retirement_date',
@@ -40,33 +75,35 @@
 		}
 	};
 
-	let hidden: boolean = true;
-	const toggle = () => {
-		hidden = !hidden;
-	};
+	let className: string = '';
+	let open: boolean = false;
 
-	const onClickAway = () => {
-		hidden = true;
-	};
+	const onClick = () => (open = !open);
+	const onClickAway = () => (open = false);
 
-	const onSubmit = () => {
-		hidden = true;
-		dispatch('submit');
+	const onChange = () => {
+		dispatch('change');
+		open = false;
 	};
 </script>
 
 <div class="relative" use:clickAway on:clickAway={onClickAway}>
-	<IconButton title={sorts[value].label} on:click={toggle}>
+	<IconButton title={sorts[value].label} on:click={onClick} class="p-1.5">
 		<svelte:component this={sorts[value].component} class={className} />
 	</IconButton>
 
-	{#if !hidden}
+	{#if open}
 		<div
-			class="absolute mt-2 -right-10 grid grid-cols-1 gap-2 z-10 p-2 rounded-lg bg-white dark:bg-neutral-800 border dark:border-neutral-600 text-sm w-max"
+			class="absolute -right-10 z-10 mt-2 grid w-max gap-2 rounded-lg border border-border bg-body p-2 text-sm dark:border-border-dark dark:bg-body-dark"
 		>
 			{#each Object.values(sorts) as sort}
 				{#if !sort.hidden}
-					<InputRadio label={sort.label} value={sort.value} bind:group={value} on:change={onSubmit} />
+					<InputRadio
+						label={sort.label}
+						value={sort.value}
+						bind:group={value}
+						on:change={onChange}
+					/>
 				{/if}
 			{/each}
 		</div>

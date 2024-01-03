@@ -1,69 +1,68 @@
-import type { RequestHandler } from './$types';
 import { SHIMAKAZE_HOST } from '$env/static/private';
+import type { BaseAPIResponse } from '$lib/types';
+import type { RequestHandler } from './$types';
 
-export type vtuberResponse = {
-	status: number;
-	message: string;
-	data: vtuberResponseData;
+export type VtuberResponse = BaseAPIResponse & {
+	data: VtuberResponseData;
 };
 
-export type vtuberResponseData = {
+export type VtuberResponseData = {
 	id: number;
 	name: string;
 	image: string;
-	original_names: Array<string>;
-	nicknames: Array<string>;
+	original_names: string[];
+	nicknames: string[];
 	caption: string;
-	debut_date?: Date;
-	retirement_date?: Date;
+	debut_date?: string;
+	retirement_date?: string;
 	has_2d: boolean;
 	has_3d: boolean;
-	character_designers: Array<string>;
-	character_2d_modelers: Array<string>;
-	character_3d_modelers: Array<string>;
-	agencies: Array<{
+	character_designers: string[];
+	character_2d_modelers: string[];
+	character_3d_modelers: string[];
+	agencies: {
 		id: number;
 		name: string;
 		image: string;
-	}>;
-	affiliations: Array<string>;
-	channels: Array<vtuberResponseDataChannel>;
-	social_medias: Array<string>;
-	official_websites: Array<string>;
+	}[];
+	affiliations: string[];
+	channels: VtuberResponseDataChannel[];
+	social_medias: string[];
+	official_websites: string[];
 	gender: string;
 	age?: number;
-	birthday?: Date;
+	birthday?: string;
 	height?: number;
 	weight?: number;
 	blood_type: string;
 	zodiac_sign: string;
 	emoji: string;
-	updated_at: Date;
+	updated_at: string;
 };
 
-export type vtuberResponseDataChannel = {
+export type VtuberResponseDataChannel = {
 	id: string;
 	name: string;
 	type: string;
 	url: string;
 	image: string;
 	subscriber: number;
-	videos: Array<vtuberResponseDataChannelVideo>;
+	videos: VtuberResponseDataChannelVideo[];
 };
 
-export type vtuberResponseDataChannelVideo = {
+export type VtuberResponseDataChannelVideo = {
 	id: string;
 	title: string;
 	url: string;
 	image: string;
-	start_date?: Date;
-	end_date?: Date;
+	start_date?: string;
+	end_date?: string;
 };
 
 export const GET = (async ({ params }) => {
 	const resp = await fetch(`${SHIMAKAZE_HOST}/vtubers/${params.id}`);
-	const data = await resp.json();
-	return new Response(JSON.stringify(data), {
+	const body = await resp.json();
+	return new Response(JSON.stringify(body), {
 		headers: {
 			'content-type': 'application/json',
 			'cache-control': 'max-age=86400, s-maxage=86400, stale-while-revalidate=86400'

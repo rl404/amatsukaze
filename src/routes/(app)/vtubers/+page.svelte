@@ -1,158 +1,142 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { page as appPage } from '$app/stores';
 	import { goto } from '$app/navigation';
-	import Head from '$lib/components/Head.svelte';
-	import VtuberGrid from '$lib/components/layouts/VtuberGrid.svelte';
-	import VtuberCard from '$lib/components/layouts/VtuberCard.svelte';
-	import Border from '$lib/components/Border.svelte';
-	import VtuberList from '$lib/components/layouts/VtuberList.svelte';
-	import InfiniteScroll from '$lib/components/InfiniteScroll.svelte';
-	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
-	import { getAxiosError } from '$lib/utils';
-	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
-	import axios from 'axios';
-	import InputSearch from './InputSearch.svelte';
-	import AdvancedSearch from './AdvancedSearch.svelte';
-	import VtuberSortButton from '$lib/components/buttons/VtuberSortButton.svelte';
+	import { page as appPage } from '$app/stores';
 	import VtuberLayoutButton from '$lib/components/buttons/VtuberLayoutButton.svelte';
-	import type { vtuberSearchResponse } from './+page.server';
+	import VtuberSortButton from '$lib/components/buttons/VtuberSortButton.svelte';
+	import Border from '$lib/components/commons/Border.svelte';
+	import Head from '$lib/components/commons/Head.svelte';
+	import InfiniteScroll from '$lib/components/commons/InfiniteScroll.svelte';
+	import Loading from '$lib/components/commons/Loading.svelte';
+	import VtuberCard from '$lib/components/layouts/VtuberCard.svelte';
+	import VtuberGrid from '$lib/components/layouts/VtuberGrid.svelte';
+	import VtuberList from '$lib/components/layouts/VtuberList.svelte';
+	import { defaultVtubersQuery, type VtuberLayout, type VtubersQuery } from '$lib/types';
+	import { getAxiosError } from '$lib/utils/api';
+	import { getVtubersQueryFromURLParam } from '$lib/utils/utils';
+	import axios from 'axios';
+	import type { VtuberResponseData } from '../../api/vtubers/[id]/+server';
+	import type { VtuberSearchResponse } from './+page.server';
+	import AdvancedSearch from './AdvancedSearch.svelte';
+	import InputSearch from './InputSearch.svelte';
 
-	export let data: vtuberSearchResponse;
+	export let data: VtuberSearchResponse;
 
-	const vtubersData = data.vtubers.data;
-	const agenciesData = data.agencies.data;
-	const characterDesignersData = data.characterDesigners.data;
-	const character2dModelersData = data.character2dModelers.data;
-	const character3dModelersData = data.character3dModelers.data;
-	const startDebutYear = !data.startDebut.data[0].debut_date ? 2000 : new Date(data.startDebut.data[0].debut_date).getFullYear();
-	const startRetiredYear = !data.startRetired.data[0].retirement_date ? 2000 : new Date(data.startRetired.data[0].retirement_date).getFullYear();
-
-	let names = '';
-	let page = 1;
-	let limit = 36;
-	let total = data.vtubers.meta.total;
-	let layout: string = 'grid';
-	let sort: string = 'name';
-	let loading = false;
-	let error = '';
-	let vtubers: Array<vtuberResponseData> = vtubersData;
-	let newVtubers: Array<vtuberResponseData> = [];
+	let query: VtubersQuery = { ...defaultVtubersQuery };
+	let total: number = data.vtubers.meta.total;
+	let layout: VtuberLayout = 'grid';
+	let loading: boolean = false;
+	let error: string = '';
+	let vtubers: VtuberResponseData[] = data.vtubers.data;
+	let newVtubers: VtuberResponseData[] = [];
 	let hasMore: boolean = true;
-	let advQuery: any = {};
 
 	$: vtubers = [...vtubers, ...newVtubers];
+	$: $appPage.url.searchParams, onURLChange();
 
-	const fetchData = async (updateURL = true) => {
-		const queries = Object.entries({
-			...advQuery,
-			...{ names: names, sort: sort, page: page, limit: limit }
-		})
+	const onURLChange = () => {
+		const params = Array.from($appPage.url.searchParams.entries());
+		if (params.length === 0) {
+			query = { ...defaultVtubersQuery };
+			total = data.vtubers.meta.total;
+			vtubers = data.vtubers.data;
+			newVtubers = [];
+			hasMore = true;
+			return;
+		}
+
+		query = getVtubersQueryFromURLParam($appPage.url.searchParams);
+
+		vtubers = [];
+		newVtubers = [];
+		query.page = 1;
+
+		fetchData();
+	};
+
+	const fetchData = () => {
+		loading = true;
+		error = '';
+
+		const queries = Object.entries(query)
 			.map((v) => `${v[0]}=${v[1] ?? ''}`)
 			.join('&');
 
-		error = '';
-		loading = true;
-
-		updateURL && goto(`?${queries}`);
-
-		await axios
+		axios
 			.get(`/api/vtubers?${queries}`)
 			.then((resp) => {
 				newVtubers = resp.data.data;
 				total = resp.data.meta.total;
-				if (newVtubers.length > 0) {
-					hasMore = true;
-				} else {
-					hasMore = false;
-				}
+				hasMore = resp.data.data.length > 0;
 			})
-			.catch((err) => {
-				error = getAxiosError(err);
-			})
-			.finally(() => {
-				loading = false;
-			});
+			.catch((err) => (error = getAxiosError(err)))
+			.finally(() => (loading = false));
 	};
 
-	onMount(() => {
-		const params = Array.from($appPage.url.searchParams.entries());
-		if (params.length === 0) return;
-
-		onSubmitAdvanced({
-			detail: params.reduce((res: { [key: string]: any }, curr) => {
-				res[curr[0]] = curr[1];
-				return res;
-			}, {})
-		});
-	});
-
 	const loadMore = () => {
-		page++;
-		fetchData(false);
+		query.page++;
+		fetchData();
 	};
 
 	const onSubmit = () => {
-		vtubers = [];
-		newVtubers = [];
-		page = 1;
-		advQuery = {};
-		fetchData();
-	};
+		const queries = Object.entries(query)
+			.map((v) => `${v[0]}=${v[1] ?? ''}`)
+			.join('&');
 
-	const onSubmitAdvanced = (d: any) => {
-		vtubers = [];
-		newVtubers = [];
-		page = 1;
-		names = d.detail.names || '';
-		advQuery = d.detail;
-		fetchData();
-	};
-
-	const onSort = () => {
-		vtubers = [];
-		newVtubers = [];
-		page = 1;
-		fetchData();
+		goto(`?${queries}`);
 	};
 </script>
 
-<Head title="Vtuber List" description="Vtuber list and search." image="/vtubers.png" />
+<Head
+	title="Vtuber List"
+	description="Discover the comprehensive Vtuber list and advanced search tool. Filter by name, status, debut & retirement year, agency, designer, channel type, subscriber count, etc. Sort results by name, subscriber count, debut, or retirement for a tailored Vtuber exploration experience."
+	image="/vtubers.png"
+/>
 
 <div class="grid grid-cols-6 gap-4">
-	<div class="col-span-6">
-		<div class="flex flex-wrap items-center justify-between gap-4">
-			<div class="text-3xl font-bold">
-				Vtuber List <span class="text-xl font-normal opacity-70 hover:opacity-100">— {total.toLocaleString()}</span>
-			</div>
-			<div class="flex items-center justify-end gap-2 w-full md:w-auto">
-				<div class="w-full">
-					<InputSearch class="w-full" bind:value={names} placeholder="search vtuber name..." on:submit={onSubmit} />
-				</div>
-				<div>
-					<AdvancedSearch
-						on:submit={onSubmitAdvanced}
-						agencies={agenciesData.map((a) => a.name)}
-						characterDesigners={characterDesignersData}
-						character2dModelers={character2dModelersData}
-						character3dModelers={character3dModelersData}
-						{startDebutYear}
-						{startRetiredYear}
-					/>
-				</div>
-				<div>
-					<VtuberSortButton class="w-5 h-5" bind:value={sort} on:submit={onSort} />
-				</div>
-				<div>
-					<VtuberLayoutButton class="w-5 h-5" bind:value={layout} />
-				</div>
-			</div>
+	<div class="col-span-6 flex flex-wrap items-center justify-between gap-4">
+		<h1 class="basis-full text-3xl font-bold sm:basis-auto">
+			Vtuber List <span class="subtitle pointer-events-none text-xl font-normal"
+				>— {total.toLocaleString()}</span
+			>
+		</h1>
+		<div class="flex basis-full items-center justify-end gap-2 sm:basis-auto">
+			<InputSearch
+				class="w-full"
+				placeholder="search vtuber name..."
+				disabled={loading}
+				bind:value={query.names}
+				on:enter={onSubmit}
+				on:reset={onSubmit}
+			/>
+			<AdvancedSearch
+				bind:query
+				on:submit={onSubmit}
+				agencies={data.agencies.data.map((a) => a.name)}
+				characterDesigners={data.characterDesigners.data}
+				character2dModelers={data.character2dModelers.data}
+				character3dModelers={data.character3dModelers.data}
+				startDebutYear={!data.startDebut.data[0].debut_date
+					? 2000
+					: new Date(data.startDebut.data[0].debut_date).getFullYear()}
+				endDebutYear={new Date().getFullYear()}
+				startRetiredYear={!data.startRetired.data[0].retirement_date
+					? 2000
+					: new Date(data.startRetired.data[0].retirement_date).getFullYear()}
+				endRetiredYear={new Date().getFullYear()}
+			/>
+			<VtuberSortButton class="h-5 w-5" bind:value={query.sort} on:change={onSubmit} />
+			<VtuberLayoutButton class="h-5 w-5" bind:value={layout} />
 		</div>
 	</div>
 	<Border class="col-span-6" />
 	{#each vtubers as vtuber}
 		{#if layout === 'grid'}
-			<VtuberGrid class="col-span-3 sm:col-span-2 md:col-span-1" id={vtuber.id} name={vtuber.name} image={vtuber.image} height={206} />
+			<VtuberGrid
+				class="col-span-3 sm:col-span-2 md:col-span-1"
+				id={vtuber.id}
+				name={vtuber.name}
+				image={vtuber.image}
+			/>
 		{:else if layout === 'card'}
 			<VtuberCard
 				class="col-span-6 sm:col-span-3 lg:col-span-2"
@@ -162,9 +146,8 @@
 				has2d={vtuber.has_2d}
 				has3d={vtuber.has_3d}
 				agencies={vtuber.agencies.map((a) => a.name)}
-				debutDate={vtuber.debut_date}
-				retirementDate={vtuber.retirement_date}
-				height={206}
+				debutDate={vtuber.debut_date ? new Date(vtuber.debut_date) : undefined}
+				retirementDate={vtuber.retirement_date ? new Date(vtuber.retirement_date) : undefined}
 			/>
 		{:else if layout === 'list'}
 			<VtuberList
@@ -175,25 +158,21 @@
 				has2d={vtuber.has_2d}
 				has3d={vtuber.has_3d}
 				agencies={vtuber.agencies.map((a) => a.name)}
-				debutDate={vtuber.debut_date}
-				retirementDate={vtuber.retirement_date}
-				height={206}
+				debutDate={vtuber.debut_date ? new Date(vtuber.debut_date) : undefined}
+				retirementDate={vtuber.retirement_date ? new Date(vtuber.retirement_date) : undefined}
 			/>
 		{/if}
 	{/each}
-	{#if !loading && vtubers.length === 0 && error === ''}
-		<div class="col-span-6 text-center">no vtubers found...</div>
-	{/if}
-	{#if error !== ''}
+	{#if loading}
+		<div class="col-span-6">
+			<Loading class="h-8 w-8" />
+		</div>
+	{:else if error !== ''}
 		<div class="col-span-6 text-center text-red-500">
 			{error}
 		</div>
+	{:else if vtubers.length === 0}
+		<div class="col-span-6 text-center">no vtubers found...</div>
 	{/if}
-	{#if loading}
-		<div class="col-span-6">
-			<SpinnerIcon class="w-8 h-8 m-auto text-gray-200 animate-spin dark:text-gray-600 fill-pink-500 dark:fill-indigo-600" />
-		</div>
-	{/if}
-	<InfiniteScroll {hasMore} threshold={100} window={true} on:loadMore={loadMore} />
-	<Border class="col-span-6" />
+	<InfiniteScroll {hasMore} threshold={100} window on:loadMore={loadMore} />
 </div>

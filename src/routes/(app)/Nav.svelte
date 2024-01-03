@@ -1,42 +1,57 @@
 <script lang="ts">
-	import type { SvelteComponent } from 'svelte';
-	import { setTheme, ThemeMode } from '$lib/utils';
+	import { PUBLIC_ENABLE_LOGIN } from '$env/static/public';
 	import logo from '$lib/assets/logo.png';
-	import Image from '$lib/components/Image.svelte';
-	import GithubIcon from '$lib/components/icons/GithubIcon.svelte';
-	import SunIcon from '$lib/components/icons/SunIcon.svelte';
-	import MoonIcon from '$lib/components/icons/MoonIcon.svelte';
+	import DarkThemeButton from '$lib/components/buttons/DarkThemeButton.svelte';
+	import GithubButton from '$lib/components/buttons/GithubButton.svelte';
+	import LightThemeButton from '$lib/components/buttons/LightThemeButton.svelte';
+	import Image from '$lib/components/commons/Image.svelte';
 	import EllipsisVerticalIcon from '$lib/components/icons/EllipsisVerticalIcon.svelte';
+	import SignInIcon from '$lib/components/icons/SignInIcon.svelte';
+	import SignOutIcon from '$lib/components/icons/SignOutIcon.svelte';
+	import UserIcon from '$lib/components/icons/UserIcon.svelte';
+	import { isLogin } from '$lib/utils/auth';
+	import type { SvelteComponent } from 'svelte';
 	import NavModal from './NavModal.svelte';
 
 	let modal: SvelteComponent;
+	let login: boolean = false;
+
+	isLogin.subscribe((v) => (login = v));
 </script>
 
-<nav class="bg-gradient-to-r from-white to-pink-500 dark:from-neutral-900 dark:to-indigo-600 drop-shadow-lg">
-	<div class="container mx-auto max-w-5xl p-4 flex flex-wrap items-center justify-between gap-4">
-		<a href="/" class="flex items-center gap-4">
+<nav class="bg-gradient text-white drop-shadow-lg">
+	<div class="container mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 p-4">
+		<a href="/" class="clickable flex items-center gap-4">
 			<Image src={logo} alt="logo" class="h-6 rounded-full" />
 			<span class="text-2xl font-bold">Amatsukaze</span>
 		</a>
-		<div class="hidden sm:flex items-center gap-4 text-white">
-			<a href="/vtubers" data-sveltekit-reload>Vtubers</a>
-			<a href="/agencies" data-sveltekit-reload>Agencies</a>
-			<a href="/events" data-sveltekit-reload>Events</a>
-			<a href="/statistics" data-sveltekit-reload>Statistics</a>
-			<div class="border-r border-white h-5 opacity-30" />
-			<button class="hover:opacity-70 block dark:hidden" on:click={() => setTheme(ThemeMode.Dark)} title="light mode">
-				<SunIcon class="w-6 h-6" />
-			</button>
-			<button class="hover:opacity-70 hidden dark:block" on:click={() => setTheme(ThemeMode.Light)} title="dark mode">
-				<MoonIcon class="w-6 h-6" />
-			</button>
-			<a href="https://github.com/rl404/amatsukaze" target="_blank" rel="noreferrer" title="github source code">
-				<GithubIcon class="w-6 h-6" />
-			</a>
+		<div class="hidden items-center gap-4 sm:flex">
+			<a href="/vtubers" class="clickable" data-sveltekit-reload>Vtubers</a>
+			<a href="/agencies" class="clickable" data-sveltekit-reload>Agencies</a>
+			<a href="/events" class="clickable" data-sveltekit-reload>Events</a>
+			<a href="/statistics" class="clickable" data-sveltekit-reload>Statistics</a>
+			<div class="h-5 border-r border-white opacity-30" />
+			<LightThemeButton class="h-6 w-6" />
+			<DarkThemeButton class="h-6 w-6" />
+			<GithubButton class="h-6 w-6" />
+			{#if PUBLIC_ENABLE_LOGIN === 'true'}
+				{#if login}
+					<a href="/profile" class="clickable" title="profile">
+						<UserIcon class="h-6 w-6" />
+					</a>
+					<a href="/auth/sign-out" class="clickable" title="sign-out">
+						<SignOutIcon class="h-6 w-6" />
+					</a>
+				{:else}
+					<a href="/auth/sign-in" class="clickable" title="sign-in">
+						<SignInIcon class="h-6 w-6" />
+					</a>
+				{/if}
+			{/if}
 		</div>
-		<div class="sm:hidden flex items-center text-white">
-			<button class="hover:opacity-70" on:click={() => modal.toggleOpen()} title="navigation">
-				<EllipsisVerticalIcon class="w-6 h-6" />
+		<div class="flex items-center sm:hidden">
+			<button class="clickable" title="navigation" on:click={modal.toggleOpen}>
+				<EllipsisVerticalIcon class="h-6 w-6" />
 			</button>
 		</div>
 	</div>

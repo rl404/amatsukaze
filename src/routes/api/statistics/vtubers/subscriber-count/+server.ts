@@ -1,16 +1,6 @@
 import type { RequestHandler } from './$types';
 import { SHIMAKAZE_HOST } from '$env/static/private';
 
-type vtuberSubscriberCountResponse = {
-	status: number;
-	message: string;
-	data: {
-		min: number;
-		max: number;
-		count: number;
-	};
-};
-
 export const GET = (async ({ url }) => {
 	const queries = ['interval', 'max'].map((q) => `${q}=${url.searchParams.get(q) ?? ''}`).join('&');
 

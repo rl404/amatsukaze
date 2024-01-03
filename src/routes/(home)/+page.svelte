@@ -1,21 +1,14 @@
 <script lang="ts">
-	import type { vtuberImagesResponse } from './+page.server';
-	import Head from '$lib/components/Head.svelte';
+	import Head from '$lib/components/commons/Head.svelte';
+	import { shuffleArray } from '$lib/utils/utils';
+	import { onMount } from 'svelte';
+	import type { VtuberImagesResponse } from './+page.server';
 	import Grid from './Grid.svelte';
 	import Title from './Title.svelte';
 
-	export let data: vtuberImagesResponse;
+	export let data: VtuberImagesResponse;
 
-	const shuffleArray = (array: Array<any>) => {
-		for (var i = array.length - 1; i > 0; i--) {
-			var j = Math.floor(Math.random() * (i + 1));
-			var temp = array[i];
-			array[i] = array[j];
-			array[j] = temp;
-		}
-	};
-
-	shuffleArray(data.data);
+	onMount(() => shuffleArray(data.data));
 </script>
 
 <Head />

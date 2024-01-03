@@ -1,65 +1,75 @@
 <script lang="ts">
-	import Border from '../Border.svelte';
-	import Image from '../Image.svelte';
-	import Model2DBadge from '../badges/Model2DBadge.svelte';
-	import Model3DBadge from '../badges/Model3DBadge.svelte';
-	import RenderIfVisible from '../RenderIfVisible.svelte';
+	import Model2DBadge from '$lib/components/badges/Model2DBadge.svelte';
+	import Model3DBadge from '$lib/components/badges/Model3DBadge.svelte';
+	import Border from '$lib/components/commons/Border.svelte';
+	import Image from '$lib/components/commons/Image.svelte';
+	import RenderIfVisible from '$lib/components/commons/RenderIfVisible.svelte';
+	import { getWikiImg } from '$lib/utils/utils';
 
 	export let id: number;
 	export let name: string;
 	export let image: string;
 	export let has2d: boolean;
 	export let has3d: boolean;
-	export let agencies: Array<string>;
+	export let agencies: string[];
 	export let debutDate: Date | undefined;
 	export let retirementDate: Date | undefined;
-
-	export let height: number;
+	export let itemprop: string = '';
 	export { className as class };
-	let className: string;
-	export let smallText: boolean = false;
 
-	$: rows = [
-		{ name: 'Agency', value: agencies.length === 0 ? '-' : agencies.join(', ') },
-		{ name: 'Debut', value: !debutDate ? '-' : debutDate.toString().slice(0, 10) },
-		{ name: 'Retired', value: !retirementDate ? '-' : retirementDate.toString().slice(0, 10) }
-	];
+	let className: string;
 </script>
 
 <a
 	href="/vtubers/{id}/{name}"
+	class={className}
 	title={name}
-	data-sveltekit-reload
-	class="bg-neutral-50 dark:bg-neutral-800 rounded-lg hover:outline hover:outline-pink-500 dark:hover:outline-indigo-600 shadow hover:shadow-lg {className}"
+	{itemprop}
+	itemscope
+	itemtype="https://schema.org/Person"
 >
-	<RenderIfVisible class="flex items-center cursor-pointer" style="aspect-ratio: 2/1;">
+	<RenderIfVisible
+		class="flex aspect-card items-center rounded-lg bg-card shadow hover:outline hover:outline-primary dark:bg-card-dark dark:hover:outline-primary-dark"
+	>
 		<Image
-			src={image && `/api/wikia/image/${image.split('?')[0]}?height=${height}`}
+			src={getWikiImg(image)}
 			alt={name}
-			class="h-full w-1/3 object-cover object-top rounded-tl-lg bg-white shadow-lg"
+			class="h-full w-1/3 rounded-l-lg border-y-2 border-l-2 border-card bg-body object-cover object-top dark:border-card-dark dark:bg-body-dark"
 		/>
-		<div class="h-full w-2/3 p-2 flex flex-col overflow-hidden gap-1 {smallText && 'sm:gap-0.5'}">
+		<div class="flex h-full w-2/3 flex-col gap-2 p-2 sm:gap-1">
 			<div>
-				<div class="text-lg font-bold text-ellipsis whitespace-nowrap overflow-hidden {smallText && 'sm:text-base'}" title={name}>{name}</div>
+				<div class="line-clamp-1 text-base font-bold" itemprop="name">{name}</div>
 			</div>
 			<Border class="h-3">
 				{#if has2d || has3d}
 					<div class="flex gap-1 px-1.5">
 						{#if has2d}
-							<div><Model2DBadge size="sm" /></div>
+							<Model2DBadge size="sm" />
 						{/if}
 						{#if has3d}
-							<div><Model3DBadge size="sm" /></div>
+							<Model3DBadge size="sm" />
 						{/if}
 					</div>
 				{/if}
 			</Border>
-			{#each rows as row}
-				<div class="flex justify-between gap-1 {smallText && 'sm:text-sm'}">
-					<span class="opacity-40">{row.name}</span>
-					<span class="text-right">{row.value}</span>
+			<div class="flex justify-between gap-1">
+				<div class="subtitle">Agency</div>
+				<div class="line-clamp-1 text-right" title={agencies && agencies.join(', ')}>
+					{agencies.length === 0 ? '-' : agencies.join(', ')}
 				</div>
-			{/each}
+			</div>
+			<div class="flex justify-between gap-1">
+				<div class="subtitle">Debut</div>
+				<div class="text-right">
+					{!debutDate ? '-' : debutDate.toISOString().slice(0, 10)}
+				</div>
+			</div>
+			<div class="flex justify-between gap-1">
+				<div class="subtitle">Retired</div>
+				<div class="text-right">
+					{!retirementDate ? '-' : retirementDate.toISOString().slice(0, 10)}
+				</div>
+			</div>
 		</div>
 	</RenderIfVisible>
 </a>

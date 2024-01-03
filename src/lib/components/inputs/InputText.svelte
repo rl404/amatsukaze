@@ -1,20 +1,19 @@
 <script lang="ts">
+	import XmarkIcon from '$lib/components/icons/XmarkIcon.svelte';
 	import { createEventDispatcher } from 'svelte';
-	import XmarkIcon from '../icons/XmarkIcon.svelte';
-
-	export let id: string = '';
-	export let value: string = '';
-	export let placeholder: string = '';
-	export let datalist: Array<string> = [];
-	export { className as class };
-	let className: string = '';
 
 	const dispatch = createEventDispatcher<{ enter: null; reset: null }>();
 
-	const onEnter = (e: KeyboardEvent) => {
-		if (e.key !== 'Enter') return;
-		dispatch('enter');
-	};
+	export let id: string = '';
+	export let value: string;
+	export let placeholder: string = '';
+	export let disabled: boolean = false;
+	export let datalist: string[] = [];
+	export { className as class };
+
+	let className: string = '';
+
+	const onKeyPress = (e: KeyboardEvent) => e.key === 'Enter' && dispatch('enter');
 
 	const resetValue = () => {
 		value = '';
@@ -23,25 +22,29 @@
 </script>
 
 <div class="relative">
-	{#if value !== ''}
-		<div class="absolute inset-y-0 right-0 flex items-center pr-2 hover:text-red-500 cursor-pointer" title="clear search" on:click={resetValue}>
-			<XmarkIcon class="w-5 h-5" />
-		</div>
-	{/if}
-
 	<input
 		{id}
 		{placeholder}
+		{disabled}
 		type="text"
 		list="datalist-{id}"
-		class="{className} p-1 pr-9 bg-neutral-50 dark:bg-neutral-800 border dark:border-neutral-600 focus:outline focus:outline-2 focus:outline-pink-500 focus:dark:outline-indigo-600 rounded-lg"
+		class={className}
 		bind:value
-		on:keypress={onEnter}
+		on:keypress={onKeyPress}
 	/>
+	{#if value !== ''}
+		<button
+			class="clickable absolute inset-y-0 right-2 flex items-center"
+			title="clear"
+			on:click={resetValue}
+		>
+			<XmarkIcon class="h-4 w-4" />
+		</button>
+	{/if}
 </div>
 
 <datalist id="datalist-{id}">
-	{#each datalist as v}
-		<option>{v}</option>
+	{#each datalist as data}
+		<option>{data}</option>
 	{/each}
 </datalist>

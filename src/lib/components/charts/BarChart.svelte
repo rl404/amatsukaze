@@ -1,58 +1,45 @@
 <script lang="ts">
-	import { ThemeMode } from '$lib/utils';
-	import { theme } from '$lib/utils/store';
+	import { ChartBorderColors, ChartColors, ChartTextColors } from '$lib/utils/const';
+	import { ThemeMode, theme } from '$lib/utils/theme';
 	import { createEventDispatcher } from 'svelte';
 	import Chart from './Chart.svelte';
-	import { chartBorderColors, chartColors, chartTextColors } from './colors';
 
 	const dispatch = createEventDispatcher<{ click: number; clickArea: number }>();
 
-	export let data: Array<{
+	type ChartData = {
 		name: string;
 		value: number;
-	}>;
+	};
+
+	export let data: ChartData[];
 	export let seriesName: string = 'Count';
 	export let horizontal: boolean = false;
-	export let xaxisFormatter: ((value: string, timestamp?: number, opts?: any) => string | string[]) | undefined = undefined;
-	export let tooltipYFormatter: (val: number, opts?: any) => string = (v) => (!v ? '0' : v.toLocaleString());
+	export let xaxisFormatter:
+		| ((value: string, timestamp?: number, opts?: any) => string | string[])
+		| undefined = undefined;
+	export let tooltipYFormatter: (val: number, opts?: any) => string = (v) =>
+		!v ? '0' : v.toLocaleString();
 
-	let currTheme = ThemeMode.Dark;
-	let colors = chartColors[currTheme];
-	let textColor = chartTextColors[currTheme];
-	let borderColor = chartBorderColors[currTheme];
+	let currTheme: ThemeMode = ThemeMode.Dark;
 
-	theme.subscribe((v) => {
-		if (!v) return;
-		currTheme = v;
-		colors = chartColors[currTheme];
-		textColor = chartTextColors[currTheme];
-		borderColor = chartBorderColors[currTheme];
-	});
+	theme.subscribe((v) => (currTheme = v));
 </script>
 
 <Chart
 	options={{
 		chart: {
-			height: 350,
+			height: '100%',
 			type: 'bar',
-			toolbar: {
-				show: false
-			},
+			toolbar: { show: false },
 			events: {
-				click: (_, __, options) => {
-					dispatch('clickArea', options.dataPointIndex);
-				},
-				dataPointSelection: (_, __, options) => {
-					dispatch('click', options.dataPointIndex);
-				}
+				click: (_, __, options) => dispatch('clickArea', options.dataPointIndex),
+				dataPointSelection: (_, __, options) => dispatch('click', options.dataPointIndex)
 			}
 		},
-		colors: colors,
-		dataLabels: {
-			enabled: false
-		},
+		colors: ChartColors[currTheme],
+		dataLabels: { enabled: false },
 		grid: {
-			borderColor: borderColor,
+			borderColor: ChartBorderColors[currTheme],
 			strokeDashArray: 5,
 			xaxis: { lines: { show: false } },
 			yaxis: { lines: { show: true } }
@@ -73,20 +60,20 @@
 		xaxis: {
 			categories: data.map((d) => d.name),
 			labels: {
-				style: { colors: textColor },
+				style: { colors: ChartTextColors[currTheme] },
 				formatter: xaxisFormatter
 			},
-			axisBorder: { color: borderColor },
-			axisTicks: { color: borderColor }
+			axisBorder: { color: ChartBorderColors[currTheme] },
+			axisTicks: { color: ChartBorderColors[currTheme] }
 		},
 		yaxis: {
 			labels: {
-				style: { colors: textColor },
+				style: { colors: ChartTextColors[currTheme] },
 				formatter: (v) => v.toLocaleString()
 			},
 			forceNiceScale: true,
-			axisBorder: { show: true, color: borderColor },
-			axisTicks: { show: true, color: borderColor }
+			axisBorder: { show: true, color: ChartBorderColors[currTheme] },
+			axisTicks: { show: true, color: ChartBorderColors[currTheme] }
 		}
 	}}
 />
