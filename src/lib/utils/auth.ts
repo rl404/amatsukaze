@@ -5,11 +5,14 @@ import {
 } from '$env/static/public';
 import { writable } from 'svelte/store';
 import { generateRandomStr } from './utils';
+import type { TierListResponseData } from '../../routes/(app)/tier-lists/[id]/[...title]/+page.server';
+import { defaultTierList } from '$lib/types';
 
 const accessTokenKey = 'access-token';
 const refreshTokenKey = 'refresh-token';
 const userIDKey = 'user-id';
 const stateKey = 'sso-state';
+const tierListKey = 'tier-list';
 
 export const deleteStorage = () => {
 	localStorage.clear();
@@ -76,4 +79,18 @@ export const setIsLogin = () => {
 	} else {
 		isLogin.set(false);
 	}
+};
+
+export const saveTierList = (tierList: TierListResponseData) => {
+	localStorage.setItem(tierListKey, JSON.stringify(tierList));
+};
+
+export const getTierList = (): TierListResponseData => {
+	const tierList = localStorage.getItem(tierListKey);
+	if (!tierList) return { ...defaultTierList };
+	return JSON.parse(tierList) as TierListResponseData;
+};
+
+export const deleteTierList = () => {
+	localStorage.removeItem(tierListKey);
 };

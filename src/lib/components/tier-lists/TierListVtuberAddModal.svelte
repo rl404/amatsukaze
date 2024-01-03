@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Button from '$lib/components/buttons/Button.svelte';
 	import Loading from '$lib/components/commons/Loading.svelte';
 	import InputText from '$lib/components/inputs/InputText.svelte';
 	import Modal from '$lib/components/modals/Modal.svelte';
@@ -64,6 +65,8 @@
 			}
 		];
 	};
+
+	const onAddAll = () => vtubers.forEach((v) => onAdd(v));
 </script>
 
 <Modal bind:this={modal} class="max-w-3xl">
@@ -111,5 +114,11 @@
 				{/each}
 			{/if}
 		</div>
+	</div>
+
+	<div slot="footer" class="flex items-center justify-end p-4 {vtubers.length === 0 && 'hidden'}">
+		<Button color class="p-2 px-4 font-medium" on:click={onAddAll}>
+			Add All {vtubers.length.toLocaleString()} Vtubers
+		</Button>
 	</div>
 </Modal>
