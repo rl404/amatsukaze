@@ -1,12 +1,28 @@
 <script lang="ts">
 	import InputRange from '$lib/components/inputs/InputRange.svelte';
 
-	export let values: Array<number>;
+	export let startRetiredYear: number;
+	export let endRetiredYear: number;
 	export let minValue: number;
 	export let maxValue: number;
+
+	$: startRetiredYear = values[0] === minValue ? 0 : values[0];
+	$: endRetiredYear = values[1] === maxValue ? 0 : values[1];
+	$: startRetiredYear, endRetiredYear, setValues();
+
+	let values: number[] = [
+		startRetiredYear === 0 ? minValue : startRetiredYear,
+		endRetiredYear === 0 ? maxValue : endRetiredYear
+	];
+
+	const setValues = () =>
+		(values = [
+			startRetiredYear === 0 ? minValue : startRetiredYear,
+			endRetiredYear === 0 ? maxValue : endRetiredYear
+		]);
 </script>
 
-<div>
-	<label for="retiredYear" class="block mb-2 font-medium">Retired Year</label>
-	<InputRange id="retiredYear" bind:values bind:minValue bind:maxValue />
+<div class="grid gap-1">
+	<label for="retiredYear" class="font-bold">Retired Year</label>
+	<InputRange id="retiredYear" bind:values {minValue} {maxValue} />
 </div>

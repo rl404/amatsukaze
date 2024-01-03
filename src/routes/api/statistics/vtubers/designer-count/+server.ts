@@ -1,18 +1,8 @@
 import type { RequestHandler } from './$types';
 import { SHIMAKAZE_HOST } from '$env/static/private';
 
-type vtuberDesignerCountResponse = {
-	status: number;
-	message: string;
-	data: Array<{
-		name: string;
-		count: number;
-	}>;
-};
-
 export const GET = (async ({ url }) => {
 	const queries = ['top'].map((q) => `${q}=${url.searchParams.get(q) ?? ''}`).join('&');
-
 	const resp = await fetch(`${SHIMAKAZE_HOST}/statistics/vtubers/designer-count?${queries}`);
 	const data = await resp.json();
 	return new Response(JSON.stringify(data), {

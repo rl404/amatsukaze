@@ -1,11 +1,12 @@
 import { SHIMAKAZE_HOST } from '$env/static/private';
+import { handleAPIResponse } from '$lib/utils/api';
+import type { VtubersResponse } from '../../api/vtubers/+server';
 import type { PageServerLoad } from './$types';
-import type { vtubersResponse } from '../../api/vtubers/+server';
 
-export type eventResponse = {
+export type EventResponse = {
 	month: string;
-	birthday: vtubersResponse;
-	anniversary: vtubersResponse;
+	birthday: VtubersResponse;
+	anniversary: VtubersResponse;
 };
 
 export const config = {
@@ -17,13 +18,16 @@ export const config = {
 export const load = (async () => {
 	const month = (new Date().getMonth() + 1).toString();
 	const [birthdayResp, anniversaryResp] = await Promise.all([
-		await fetch(`${SHIMAKAZE_HOST}/vtubers?start_birthday_month=${month}&end_birthday_month=${month}&exclude_retired=true&limit=-1`),
-		await fetch(`${SHIMAKAZE_HOST}/vtubers?start_debut_month=${month}&end_debut_month=${month}&exclude_retired=true&limit=-1`)
+		await fetch(
+			`${SHIMAKAZE_HOST}/vtubers?start_birthday_month=${month}&end_birthday_month=${month}&exclude_retired=true&limit=-1`
+		),
+		await fetch(
+			`${SHIMAKAZE_HOST}/vtubers?start_debut_month=${month}&end_debut_month=${month}&exclude_retired=true&limit=-1`
+		)
 	]);
-	if (!birthdayResp || !anniversaryResp) return;
 	return {
 		month: month,
-		birthday: await birthdayResp.json(),
-		anniversary: await anniversaryResp.json()
+		birthday: handleAPIResponse(birthdayResp),
+		anniversary: handleAPIResponse(anniversaryResp)
 	};
 }) satisfies PageServerLoad;

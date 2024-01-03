@@ -1,18 +1,19 @@
 <script lang="ts">
-	import IconButton from '$lib/components/buttons/IconButton.svelte';
 	import Grid1Icon from '$lib/components/icons/Grid1Icon.svelte';
 	import ListIcon from '$lib/components/icons/ListIcon.svelte';
+	import type { VideoLayout } from '$lib/types';
+	import type { ComponentType } from 'svelte';
+	import IconButton from './IconButton.svelte';
 
 	export let value: string;
-
 	export { className as class };
-	let className: string = '';
 
-	const layouts = [
+	const layouts: { name: VideoLayout; component: ComponentType }[] = [
 		{ name: 'grid', component: Grid1Icon },
 		{ name: 'list', component: ListIcon }
 	];
 
+	let className: string = '';
 	let layoutIndex: number = layouts.findIndex((l) => l.name === value);
 
 	const nextLayout = () => {
@@ -21,12 +22,10 @@
 	};
 </script>
 
-<div>
-	{#each layouts as l, i}
-		{#if i === layoutIndex}
-			<IconButton title={l.name + ' layout'} on:click={nextLayout}>
-				<svelte:component this={l.component} class={className} />
-			</IconButton>
-		{/if}
-	{/each}
-</div>
+{#each layouts as l, i}
+	{#if i === layoutIndex}
+		<IconButton title={l.name + ' layout'} on:click={nextLayout} class="p-1.5">
+			<svelte:component this={l.component} class={className} />
+		</IconButton>
+	{/if}
+{/each}

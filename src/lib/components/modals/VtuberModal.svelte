@@ -1,181 +1,224 @@
 <script lang="ts">
-	import type { SvelteComponent } from 'svelte';
-	import type { vtuberResponseData } from '../../../routes/api/vtubers/[id]/+server';
-	import { channelSorter, formatBirthday, getAxiosError, getHostname, isEmptyArray } from '$lib/utils';
+	import ChannelBadge from '$lib/components/badges/ChannelBadge.svelte';
+	import Border from '$lib/components/commons/Border.svelte';
+	import Image from '$lib/components/commons/Image.svelte';
+	import Loading from '$lib/components/commons/Loading.svelte';
+	import { getAxiosError } from '$lib/utils/api';
+	import {
+		channelSorter,
+		formatBirthday,
+		getHostname,
+		getWikiImg,
+		isEmptyArray
+	} from '$lib/utils/utils';
 	import axios from 'axios';
-	import ChannelBadge from '../badges/ChannelBadge.svelte';
-	import VtuberModalLoading from './VtuberModalLoading.svelte';
+	import type { SvelteComponent } from 'svelte';
+	import type { VtuberResponseData } from '../../../routes/api/vtubers/[id]/+server';
 	import Modal from './Modal.svelte';
-	import Image from '../Image.svelte';
-	import Border from '../Border.svelte';
-	import Model2DBadge from '../badges/Model2DBadge.svelte';
-	import Model3DBadge from '../badges/Model3DBadge.svelte';
-	import RetiredBadge from '../badges/RetiredBadge.svelte';
 
-	export let id: number = 0;
-	export let title: string = '';
+	export let id: number;
+	export let name: string;
 
 	let modal: SvelteComponent;
-	let data: vtuberResponseData;
-	let titleData: Array<Array<string>>;
+	let data: VtuberResponseData;
 	let loading: boolean = true;
 	let error: string = '';
 
 	export const toggleOpen = () => {
+		modal.toggleOpen();
+
 		loading = true;
 		error = '';
 
-		modal.toggleOpen();
-
 		axios
 			.get(`/api/vtubers/${id}`)
-			.then((resp) => {
-				data = resp.data.data;
-
-				titleData = [
-					['Original Names', isEmptyArray(data.original_names) ? '-' : data.original_names.join('\n')],
-					['Nicknames', isEmptyArray(data.nicknames) ? '-' : data.nicknames.join('\n')],
-					['Debut Date', !data.debut_date ? '-' : data.debut_date.toString().slice(0, 10)],
-					['Retirement Date', !data.retirement_date ? '-' : data.retirement_date.toString().slice(0, 10)],
-					['Character Designers', isEmptyArray(data.character_designers) ? '-' : ''],
-					['2D Modeler', isEmptyArray(data.character_2d_modelers) ? '-' : ''],
-					['3D Modeler', isEmptyArray(data.character_3d_modelers) ? '-' : ''],
-					['Agencies', isEmptyArray(data.agencies) ? '-' : ''],
-					['Affiliations', isEmptyArray(data.affiliations) ? '-' : data.affiliations.join('\n')],
-					['Channels', isEmptyArray(data.channels) ? '-' : ''],
-					['Social Medias', isEmptyArray(data.social_medias) ? '-' : ''],
-					['Official Websites', isEmptyArray(data.official_websites) ? '-' : ''],
-					['Gender', data.gender || '-'],
-					['Age', !data.age ? '-' : data.age.toLocaleString()],
-					['Birthday', formatBirthday(data.birthday)],
-					['Height', !data.height ? '-' : data.height.toLocaleString() + ' cm'],
-					['Weight', !data.weight ? '-' : data.weight.toLocaleString() + ' kg'],
-					['Blood Type', data.blood_type || '-'],
-					['Zodiac Sign', data.zodiac_sign || '-']
-				];
-			})
-			.catch((err) => {
-				error = getAxiosError(err);
-			})
-			.finally(() => {
-				loading = false;
-			});
+			.then((resp) => (data = resp.data.data))
+			.catch((err) => (error = getAxiosError(err)))
+			.finally(() => (loading = false));
 	};
 </script>
 
-<Modal bind:this={modal}>
-	<span slot="title">
-		<a href="/vtubers/{id}/{title}">{title}</a>
-		<span title="Emoji">{data?.emoji || ''}</span>
-	</span>
-
-	<div slot="body" class="p-4">
-		{#if loading}
-			<VtuberModalLoading />
-		{:else if error !== ''}
-			<div class="text-red-500 text-center">
-				{error}
-			</div>
-		{:else}
-			<div class="grid grid-cols-5 gap-4">
-				<div class="col-span-5 h-52">
-					<Image
-						src={data.image && `/api/wikia/image/${data.image.split('?')[0]}?height=206`}
-						alt={data.name}
-						class="m-auto h-52 rounded-lg border dark:border-neutral-600 bg-neutral-100 dark:bg-neutral-800"
-					/>
-				</div>
-				<Border class="col-span-5" />
-				{#each titleData as d}
-					<div class="col-span-2 text-right opacity-40">{d[0]}</div>
-					<div class="col-span-3 whitespace-pre-line">
-						{#if d[0] === 'Character Designers' && d[1] !== '-'}
-							<div class="grid">
-								{#each data.character_designers as a}
-									<div>
-										<a href={`/vtubers?character_designer=${a}`} class="underline" data-sveltekit-reload>
-											{a}
-										</a>
-									</div>
-								{/each}
-							</div>
-						{:else if d[0] === '2D Modeler' && d[1] !== '-'}
-							<div class="grid">
-								{#each data.character_2d_modelers as a}
-									<div>
-										<a href={`/vtubers?character_2d_modeler=${a}`} class="underline" data-sveltekit-reload>
-											{a}
-										</a>
-									</div>
-								{/each}
-							</div>
-						{:else if d[0] === '3D Modeler' && d[1] !== '-'}
-							<div class="grid">
-								{#each data.character_3d_modelers as a}
-									<div>
-										<a href={`/vtubers?character_3d_modeler=${a}`} class="underline" data-sveltekit-reload>
-											{a}
-										</a>
-									</div>
-								{/each}
-							</div>
-						{:else if d[0] === 'Agencies' && d[1] !== '-'}
-							<div class="grid">
-								{#each data.agencies as a}
-									<div>
-										<a href={`/agencies/${a.id}/${a.name}`} class="underline">
-											{a.name}
-										</a>
-									</div>
-								{/each}
-							</div>
-						{:else if d[0] === 'Channels' && d[1] !== '-'}
-							<div class="grid grid-cols-1 gap-1">
-								{#each data.channels.sort(channelSorter) as channel}
-									<div>
-										<ChannelBadge data={channel} />
-									</div>
-								{/each}
-							</div>
-						{:else if d[0] === 'Social Medias' && d[1] !== '-'}
-							<div class="grid grid-cols-1 gap-1">
-								{#each data.social_medias as url}
-									<div>
-										<a href={url} class="underline" target="_blank" rel="noreferrer">{getHostname(url)}</a>
-									</div>
-								{/each}
-							</div>
-						{:else if d[0] === 'Official Websites' && d[1] !== '-'}
-							<div class="grid grid-cols-1 gap-1">
-								{#each data.official_websites as url}
-									<div>
-										<a href={url} class="underline" target="_blank" rel="noreferrer">{getHostname(url)}</a>
-									</div>
-								{/each}
-							</div>
-						{:else}
-							{d[1]}
-						{/if}
-					</div>
-				{/each}
-			</div>
-		{/if}
+<Modal bind:this={modal} class="max-w-md">
+	<div slot="header" class="text-xl font-bold">
+		<a href="/vtubers/{id}/{name}" class="clickable">{name}</a>
+		<span title="emoji">{data?.emoji || ''}</span>
 	</div>
 
-	<div slot="footer" class="sticky bottom-0 bg-white dark:bg-neutral-700 p-4 border-t dark:border-neutral-600 flex justify-between gap-2">
-		{#if !loading && error === '' && data}
-			<span class="text-ellipsis whitespace-nowrap overflow-hidden italic opacity-50" title={data.caption}>{data.caption}</span>
-			<div class="flex gap-2">
-				{#if data.has_2d}
-					<div><Model2DBadge /></div>
-				{/if}
-				{#if data.has_3d}
-					<div><Model3DBadge /></div>
-				{/if}
-				{#if data.retirement_date}
-					<div><RetiredBadge /></div>
+	<div slot="body" class="grid grid-cols-5 gap-4 p-4">
+		{#if loading}
+			<div class="col-span-5"><Loading class="h-8 w-8" /></div>
+		{:else if error !== ''}
+			<div class="col-span-5 text-center text-red-500">{error}</div>
+		{:else}
+			<div class="col-span-5 h-52">
+				<Image
+					src={getWikiImg(data.image)}
+					alt={data.name}
+					class="m-auto h-full rounded-lg border border-border bg-card object-contain object-center dark:border-border-dark dark:bg-card-dark"
+				/>
+			</div>
+
+			<Border class="col-span-5" />
+
+			<div class="subtitle col-span-2 text-right">Original Names</div>
+			<div class="col-span-3 flex flex-col">
+				{#if isEmptyArray(data.original_names)}
+					<span>-</span>
+				{:else}
+					{#each data.original_names as name}
+						<span>{name}</span>
+					{/each}
 				{/if}
 			</div>
+
+			<div class="subtitle col-span-2 text-right">Nicknames</div>
+			<div class="col-span-3 flex flex-col">
+				{#if isEmptyArray(data.nicknames)}
+					<span>-</span>
+				{:else}
+					{#each data.nicknames as name}
+						<span>{name}</span>
+					{/each}
+				{/if}
+			</div>
+
+			<div class="subtitle col-span-2 text-right">Debut Date</div>
+			<div class="col-span-3">
+				{#if !data.debut_date}
+					<span>-</span>
+				{:else}
+					<span>{data.debut_date.slice(0, 10)}</span>
+				{/if}
+			</div>
+
+			<div class="subtitle col-span-2 text-right">Retirement Date</div>
+			<div class="col-span-3">
+				{#if !data.retirement_date}
+					<span>-</span>
+				{:else}
+					<span>{data.retirement_date.slice(0, 10)}</span>
+				{/if}
+			</div>
+
+			<div class="subtitle col-span-2 text-right">Character Designers</div>
+			<div class="col-span-3 flex flex-col">
+				{#if isEmptyArray(data.character_designers)}
+					<span>-</span>
+				{:else}
+					{#each data.character_designers as name}
+						<a href={`/vtubers?character_designer=${name}`} class="clickable underline">
+							{name}
+						</a>
+					{/each}
+				{/if}
+			</div>
+
+			<div class="subtitle col-span-2 text-right">2D Modeler</div>
+			<div class="col-span-3 flex flex-col">
+				{#if isEmptyArray(data.character_2d_modelers)}
+					<span>-</span>
+				{:else}
+					{#each data.character_2d_modelers as name}
+						<a href={`/vtubers?character_2d_modeler=${name}`} class="clickable underline">
+							{name}
+						</a>
+					{/each}
+				{/if}
+			</div>
+
+			<div class="subtitle col-span-2 text-right">3D Modeler</div>
+			<div class="col-span-3 flex flex-col">
+				{#if isEmptyArray(data.character_3d_modelers)}
+					<span>-</span>
+				{:else}
+					{#each data.character_3d_modelers as name}
+						<a href={`/vtubers?character_3d_modeler=${name}`} class="clickable underline">
+							{name}
+						</a>
+					{/each}
+				{/if}
+			</div>
+
+			<div class="subtitle col-span-2 text-right">Affiliations</div>
+			<div class="col-span-3 flex flex-col">
+				{#if isEmptyArray(data.affiliations)}
+					<span>-</span>
+				{:else}
+					{#each data.affiliations as name}
+						<span>{name}</span>
+					{/each}
+				{/if}
+			</div>
+
+			<div class="subtitle col-span-2 text-right">Channels</div>
+			<div class="col-span-3 flex flex-col gap-2">
+				{#if isEmptyArray(data.channels)}
+					<span>-</span>
+				{:else}
+					{#each data.channels.sort(channelSorter) as channel}
+						<ChannelBadge data={channel} />
+					{/each}
+				{/if}
+			</div>
+
+			<div class="subtitle col-span-2 text-right">Social Medias</div>
+			<div class="col-span-3 flex flex-col">
+				{#if isEmptyArray(data.social_medias)}
+					<span>-</span>
+				{:else}
+					{#each data.social_medias as url}
+						<a
+							href={url}
+							class="clickable underline"
+							target="_blank"
+							rel="noreferrer"
+							itemprop="url"
+						>
+							{getHostname(url)}
+						</a>
+					{/each}
+				{/if}
+			</div>
+
+			<div class="subtitle col-span-2 text-right">Official Websites</div>
+			<div class="col-span-3 flex flex-col">
+				{#if isEmptyArray(data.official_websites)}
+					<span>-</span>
+				{:else}
+					{#each data.official_websites as url}
+						<a
+							href={url}
+							class="clickable underline"
+							target="_blank"
+							rel="noreferrer"
+							itemprop="url"
+						>
+							{getHostname(url)}
+						</a>
+					{/each}
+				{/if}
+			</div>
+
+			<div class="subtitle col-span-2 text-right">Gender</div>
+			<div class="col-span-3">{data.gender || '-'}</div>
+
+			<div class="subtitle col-span-2 text-right">Age</div>
+			<div class="col-span-3">{!data.age ? '-' : data.age.toLocaleString()}</div>
+
+			<div class="subtitle col-span-2 text-right">Birthday</div>
+			<div class="col-span-3">{formatBirthday(data.birthday)}</div>
+
+			<div class="subtitle col-span-2 text-right">Height</div>
+			<div class="col-span-3">{!data.height ? '-' : data.height.toLocaleString() + ' cm'}</div>
+
+			<div class="subtitle col-span-2 text-right">Weight</div>
+			<div class="col-span-3">{!data.weight ? '-' : data.weight.toLocaleString() + ' kg'}</div>
+
+			<div class="subtitle col-span-2 text-right">Blood Type</div>
+			<div class="col-span-3">{data.blood_type || '-'}</div>
+
+			<div class="subtitle col-span-2 text-right">Zodiac Sign</div>
+			<div class="col-span-3">{data.zodiac_sign || '-'}</div>
 		{/if}
 	</div>
 </Modal>

@@ -1,24 +1,20 @@
 <script lang="ts">
 	import SearchIcon from '$lib/components/icons/SearchIcon.svelte';
 	import InputText from '$lib/components/inputs/InputText.svelte';
-	import { createEventDispatcher } from 'svelte';
 
-	export let value: string = '';
-	export let placeholder: string = '';
+	export let value: string;
+	export let placeholder: string;
+	export let disabled: boolean;
 	export { className as class };
 	let className: string = '';
-
-	const dispatch = createEventDispatcher<{ submit: null }>();
-
-	const onSubmit = () => {
-		dispatch('submit');
-	};
 </script>
 
-<div class="relative">
-	<div class="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none z-10">
-		<SearchIcon class="w-4 h-4" />
+<div class="relative w-full">
+	<InputText class="{className} pl-9" bind:value {placeholder} {disabled} on:enter on:reset />
+	<div
+		class="{disabled &&
+			'opacity-70'} pointer-events-none absolute inset-y-0 left-2 flex items-center"
+	>
+		<SearchIcon class="h-4 w-4" />
 	</div>
-
-	<InputText class="pl-9 {className}" bind:value {placeholder} on:enter={onSubmit} on:reset={onSubmit} />
 </div>

@@ -1,38 +1,39 @@
 <script lang="ts">
 	import Chart from '$lib/components/charts/Chart.svelte';
-	import { chartBorderColors, chartColors, chartStrokeColors, chartTextColors } from '$lib/components/charts/colors';
-	import { getAxiosError, monthNames, ThemeMode } from '$lib/utils';
-	import { theme } from '$lib/utils/store';
-	import { onMount } from 'svelte';
+	import Loading from '$lib/components/commons/Loading.svelte';
+	import { getAxiosError } from '$lib/utils/api';
+	import {
+		ChartBorderColors,
+		ChartColors,
+		ChartStrokeColors,
+		ChartTextColors,
+		MonthNames
+	} from '$lib/utils/const';
+	import { ThemeMode, theme } from '$lib/utils/theme';
 	import axios from 'axios';
-	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
+	import { onMount } from 'svelte';
 
-	let currTheme = ThemeMode.Dark;
-	let colors = [...chartColors[currTheme]].reverse();
-	let strokeColor = chartStrokeColors[currTheme];
-	let textColor = chartTextColors[currTheme];
-	let borderColor = chartBorderColors[currTheme];
+	type ChartData = { [month: string]: number[] };
+
+	let data: ChartData = MonthNames.reduce((res, d) => ({ ...res, [d]: Array(31).fill(0) }), {});
+	let maxCount: number = 0;
+	let loading: boolean = true;
+	let error: string = '';
+	let currTheme: ThemeMode = ThemeMode.Dark;
+	let chartColors: string[] = [...ChartColors[currTheme]].reverse();
 
 	theme.subscribe((v) => {
 		if (!v) return;
 		currTheme = v;
-		colors = [...chartColors[currTheme]].reverse();
-		strokeColor = chartStrokeColors[currTheme];
-		textColor = chartTextColors[currTheme];
-		borderColor = chartBorderColors[currTheme];
+		chartColors = [...ChartColors[currTheme]].reverse();
 	});
-
-	let data: { [month: string]: Array<number> } = monthNames.reduce((res, d) => ({ ...res, [d]: Array(31).fill(0) }), {});
-	let maxCount: number = 0;
-	let loading: boolean = true;
-	let error: string = '';
 
 	onMount(() => {
 		axios
 			.get(`/api/statistics/vtubers/birthday-count`)
 			.then((resp) => {
 				resp.data.data.forEach((d: { month: number; day: number; count: number }) => {
-					data[monthNames[d.month - 1]][d.day - 1] = d.count;
+					data[MonthNames[d.month - 1]][d.day - 1] = d.count;
 					if (d.count > maxCount) maxCount = d.count;
 				});
 			})
@@ -41,27 +42,28 @@
 	});
 
 	const onClick = (x: number, y: number) => {
-		window.open(`/vtubers?birthday_day=${x + 1}&start_birthday_month=${y + 1}&end_birthday_month=${y + 1}`, '_blank')?.focus();
+		window
+			.open(
+				`/vtubers?birthday_day=${x + 1}&start_birthday_month=${y + 1}&end_birthday_month=${y + 1}`,
+				'_blank'
+			)
+			?.focus();
 	};
 </script>
 
 {#if loading}
-	<div><SpinnerIcon class="w-8 h-8 m-auto text-gray-200 animate-spin dark:text-gray-600 fill-pink-500 dark:fill-indigo-600" /></div>
+	<div><Loading class="h-8 w-8" /></div>
 {:else if error !== ''}
 	<div class="text-center text-red-500">{error}</div>
 {:else}
 	<Chart
 		options={{
 			chart: {
-				height: 400,
+				height: '100%',
 				type: 'heatmap',
-				toolbar: {
-					show: false
-				},
+				toolbar: { show: false },
 				events: {
-					click: (_, __, options) => {
-						onClick(options.dataPointIndex, options.seriesIndex);
-					}
+					click: (_, __, options) => onClick(options.dataPointIndex, options.seriesIndex)
 				}
 			},
 			dataLabels: { enabled: false },
@@ -76,40 +78,36 @@
 				categories: Array(31)
 					.fill(0)
 					.map((_, i) => i + 1),
-				labels: {
-					style: { colors: textColor }
-				},
-				axisBorder: { show: true, color: borderColor },
-				axisTicks: { show: true, color: borderColor }
+				labels: { style: { colors: ChartTextColors[currTheme] } },
+				axisBorder: { show: true, color: ChartBorderColors[currTheme] },
+				axisTicks: { show: true, color: ChartBorderColors[currTheme] }
 			},
 			yaxis: {
-				labels: {
-					style: { colors: textColor }
-				},
-				axisBorder: { show: true, color: borderColor },
-				axisTicks: { show: true, color: borderColor }
+				labels: { style: { colors: ChartTextColors[currTheme] } },
+				axisBorder: { show: true, color: ChartBorderColors[currTheme] },
+				axisTicks: { show: true, color: ChartBorderColors[currTheme] }
 			},
 			tooltip: {
 				theme: currTheme,
 				y: {
-					title: {
-						formatter: () => ''
-					},
-					formatter: (v, opt) => {
-						return `${opt.dataPointIndex + 1} ${monthNames[opt.seriesIndex].slice(0, 3)}: ${v.toLocaleString()}`;
-					}
+					title: { formatter: () => '' },
+					formatter: (v, opt) =>
+						`${opt.dataPointIndex + 1} ${MonthNames[opt.seriesIndex].slice(
+							0,
+							3
+						)}: ${v.toLocaleString()}`
 				}
 			},
-			stroke: { colors: [strokeColor] },
+			stroke: { colors: [ChartStrokeColors[currTheme]] },
 			plotOptions: {
 				heatmap: {
 					radius: 5,
 					enableShades: false,
 					useFillColorAsStroke: false,
 					colorScale: {
-						ranges: colors.map((c, i) => ({
-							from: (maxCount / colors.length) * i,
-							to: Math.ceil(maxCount / colors.length) * (i + 1),
+						ranges: chartColors.map((c, i) => ({
+							from: (maxCount / chartColors.length) * i,
+							to: Math.ceil(maxCount / chartColors.length) * (i + 1),
 							color: c
 						}))
 					}

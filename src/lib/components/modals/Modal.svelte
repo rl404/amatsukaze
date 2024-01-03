@@ -1,31 +1,42 @@
 <script lang="ts">
-	import IconButton from '../buttons/IconButton.svelte';
-	import XmarkIcon from '../icons/XmarkIcon.svelte';
+	import IconButton from '$lib/components/buttons/IconButton.svelte';
+	import XmarkIcon from '$lib/components/icons/XmarkIcon.svelte';
 
-	export let maxWidthClass: string = 'max-w-md';
+	export { className as class };
+	export const toggleOpen = () => (open = !open);
 
 	let open: boolean = false;
+	let className: string = '';
 
-	export const toggleOpen = () => {
-		open = !open;
-	};
+	const onClose = () => (open = false);
 </script>
 
-<div class="fixed top-0 left-0 z-20 p-4 w-full h-full" class:hidden={!open}>
-	<div class="fixed top-0 left-0 w-full h-full bg-neutral-800 opacity-70" on:click={toggleOpen} />
+{#if open}
+	<div class="fixed left-0 top-0 z-20 h-full w-full p-4">
+		<button
+			class="fixed left-0 top-0 h-full w-full cursor-default bg-neutral-800 opacity-70"
+			on:click={onClose}
+		/>
 
-	<div class="relative w-full h-auto {maxWidthClass} max-h-full m-auto rounded-lg z-10 bg-white dark:bg-neutral-700 shadow overflow-y-scroll">
-		<div class="sticky top-0 z-10 bg-white dark:bg-neutral-700 flex items-start justify-between p-4 border-b dark:border-neutral-600">
-			<div class="text-xl font-bold">
-				<slot name="title">Vtuber</slot>
+		<div
+			class="{className} relative m-auto h-auto max-h-full w-full overflow-y-scroll rounded-lg bg-modal dark:bg-modal-dark"
+		>
+			<div
+				class="sticky top-0 z-10 flex items-start justify-between border-b border-border bg-modal p-4 dark:border-border-dark dark:bg-modal-dark"
+			>
+				<slot name="header">Vtuber</slot>
+				<IconButton title="close" on:click={onClose} class="p-1">
+					<XmarkIcon class="h-5 w-5" />
+				</IconButton>
 			</div>
-			<IconButton title="close" on:click={toggleOpen}>
-				<XmarkIcon class="w-5 h-5" />
-			</IconButton>
+
+			<slot name="body" />
+
+			<div
+				class="sticky bottom-0 z-10 border-t border-border bg-modal dark:border-border-dark dark:bg-modal-dark"
+			>
+				<slot name="footer" />
+			</div>
 		</div>
-
-		<slot name="body" />
-
-		<slot name="footer" />
 	</div>
-</div>
+{/if}

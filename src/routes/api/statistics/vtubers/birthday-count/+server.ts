@@ -1,16 +1,6 @@
 import type { RequestHandler } from './$types';
 import { SHIMAKAZE_HOST } from '$env/static/private';
 
-type vtuberBirthdayCountResponse = {
-	status: number;
-	message: string;
-	data: Array<{
-		month: number;
-		day: number;
-		count: number;
-	}>;
-};
-
 export const GET = (async () => {
 	const resp = await fetch(`${SHIMAKAZE_HOST}/statistics/vtubers/birthday-count`);
 	const data = await resp.json();

@@ -1,10 +1,9 @@
 <script lang="ts">
 	import DonutChart from '$lib/components/charts/DonutChart.svelte';
-	import { onMount } from 'svelte';
-	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
+	import Loading from '$lib/components/commons/Loading.svelte';
+	import { getAxiosError } from '$lib/utils/api';
 	import axios from 'axios';
-	import { getAxiosError } from '$lib/utils';
-	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
+	import { onMount } from 'svelte';
 
 	let inAgencyData: number = 0;
 	let notInAgencyData: number = 0;
@@ -35,7 +34,7 @@
 </script>
 
 {#if loading}
-	<div><SpinnerIcon class="w-8 h-8 m-auto text-gray-200 animate-spin dark:text-gray-600 fill-pink-500 dark:fill-indigo-600" /></div>
+	<div><Loading class="h-8 w-8" /></div>
 {:else if error !== ''}
 	<div class="text-center text-red-500">{error}</div>
 {:else}

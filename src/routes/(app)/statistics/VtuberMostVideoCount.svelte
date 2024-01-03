@@ -1,40 +1,45 @@
 <script lang="ts">
 	import BarChart from '$lib/components/charts/BarChart.svelte';
+	import Loading from '$lib/components/commons/Loading.svelte';
 	import VtuberModal from '$lib/components/modals/VtuberModal.svelte';
-	import { onMount, type SvelteComponent } from 'svelte';
+	import { getAxiosError } from '$lib/utils/api';
 	import axios from 'axios';
-	import { getAxiosError } from '$lib/utils';
-	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
+	import { onMount, type SvelteComponent } from 'svelte';
 
-	let data: Array<{ id: number; name: string; count: number }> = [];
+	type ChartData = {
+		id: number;
+		name: string;
+		count: number;
+	};
+
+	let data: ChartData[] = [];
 	let loading: boolean = true;
 	let error: string = '';
-	let modals: Array<SvelteComponent> = [];
+	let modals: SvelteComponent[] = [];
 
 	onMount(() => {
 		axios
 			.get(`/api/statistics/vtubers/video-count?top=10`)
-			.then((resp) => {
-				data = resp.data.data;
-			})
+			.then((resp) => (data = resp.data.data))
 			.catch((err) => (error = getAxiosError(err)))
 			.finally(() => (loading = false));
 	});
 
-	const onClick = (d: any) => {
-		const i = d.detail;
-		modals[i].toggleOpen();
-	};
+	const onClick = (d: any) => modals[d.detail].toggleOpen();
 </script>
 
 {#if loading}
-	<div><SpinnerIcon class="w-8 h-8 m-auto text-gray-200 animate-spin dark:text-gray-600 fill-pink-500 dark:fill-indigo-600" /></div>
+	<div><Loading class="h-8 w-8" /></div>
 {:else if error !== ''}
 	<div class="text-center text-red-500">{error}</div>
 {:else}
-	<BarChart data={data.map((d) => ({ name: d.name, value: d.count }))} horizontal on:click={onClick} />
+	<BarChart
+		data={data.map((d) => ({ name: d.name, value: d.count }))}
+		horizontal
+		on:click={onClick}
+	/>
 
 	{#each data as d, i}
-		<VtuberModal id={d.id} title={d.name} bind:this={modals[i]} />
+		<VtuberModal id={d.id} name={d.name} bind:this={modals[i]} />
 	{/each}
 {/if}

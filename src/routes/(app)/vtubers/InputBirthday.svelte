@@ -1,12 +1,10 @@
 <script lang="ts">
-	import InputDropdown from '$lib/components/inputs/InputDropdown.svelte';
-	import { monthNames } from '$lib/utils';
+	import InputSelect from '$lib/components/inputs/InputSelect.svelte';
+	import { MonthNames } from '$lib/utils/const';
 
 	export let birthdayDay: number;
-	export let birthdayMonth: number;
-
-	$: dayStr = birthdayDay.toString();
-	$: monthStr = birthdayMonth.toString();
+	export let startBirthdayMonth: number;
+	export let endBirthdayMonth: number;
 
 	const dayOptions = [
 		...[
@@ -29,27 +27,28 @@
 		],
 		...Array(12)
 			.fill(0)
-			.map((_, i) => ({ label: monthNames[i], value: (i + 1).toString() }))
+			.map((_, i) => ({ label: MonthNames[i], value: (i + 1).toString() }))
 	];
 
-	const onDayChange = () => {
-		birthdayDay = parseInt(dayStr);
-	};
+	let day = birthdayDay.toString();
+	let month = startBirthdayMonth.toString();
 
-	const onMonthChange = () => {
-		birthdayMonth = parseInt(monthStr);
-	};
+	$: day, setBDay();
+	$: month, setBMonth();
+	$: birthdayDay, setDay();
+	$: startBirthdayMonth, endBirthdayMonth, setMonth();
+
+	const setDay = () => (day = birthdayDay.toString());
+	const setMonth = () => (month = startBirthdayMonth.toString());
+	const setBDay = () => (birthdayDay = parseInt(day));
+	const setBMonth = () =>
+		([startBirthdayMonth, endBirthdayMonth] = [parseInt(month), parseInt(month)]);
 </script>
 
-<div>
-	<div class="mb-2 font-medium pointer-events-none">Birthday</div>
-
-	<div class="flex gap-2 justify-center">
-		<div class="w-full">
-			<InputDropdown bind:value={dayStr} options={dayOptions} on:change={onDayChange} />
-		</div>
-		<div class="w-full">
-			<InputDropdown bind:value={monthStr} options={monthOptions} on:change={onMonthChange} />
-		</div>
+<div class="grid gap-1">
+	<label class="font-bold" for="birthday">Birthday</label>
+	<div id="birthday" class="grid grid-cols-2 gap-2">
+		<InputSelect bind:value={day} options={dayOptions} class="w-full pl-2" />
+		<InputSelect bind:value={month} options={monthOptions} class="w-full pl-2" />
 	</div>
 </div>

@@ -1,19 +1,8 @@
 import type { RequestHandler } from './$types';
 import { SHIMAKAZE_HOST } from '$env/static/private';
 
-type vtuberVideoCountByDateResponse = {
-	status: number;
-	message: string;
-	data: Array<{
-		day: number;
-		hour: number;
-		count: number;
-	}>;
-};
-
 export const GET = (async ({ url }) => {
 	const queries = ['hourly', 'daily'].map((q) => `${q}=${url.searchParams.get(q) ?? ''}`).join('&');
-
 	const resp = await fetch(`${SHIMAKAZE_HOST}/statistics/vtubers/video-count-by-date?${queries}`);
 	const data = await resp.json();
 	return new Response(JSON.stringify(data), {

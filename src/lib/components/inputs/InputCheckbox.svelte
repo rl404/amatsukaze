@@ -1,11 +1,13 @@
 <script lang="ts">
 	export let label: string;
 	export let value: string = '';
-	export let checked: boolean = false;
+	export let checked: boolean | undefined;
+	export let state: boolean | undefined = checked;
 	export let useIndeterminate: boolean = false;
-	export let state: boolean | string | undefined = undefined;
+	export { className as class };
 
 	let element: HTMLInputElement;
+	let className: string = '';
 
 	$: if (element && useIndeterminate) {
 		switch (state) {
@@ -23,28 +25,36 @@
 		}
 	}
 
-	const onClick = () => {
+	const onChange = (e: Event) => {
 		if (!element || !useIndeterminate) return;
+		e.preventDefault();
 
 		switch (state) {
-			case undefined:
+			case true:
+				checked = undefined;
+				element.indeterminate = true;
+				break;
+			case false:
 				checked = true;
 				element.indeterminate = false;
 				break;
-			case true:
+			default:
 				checked = false;
 				element.indeterminate = false;
-				break;
-			case false:
-				checked = false;
-				element.indeterminate = true;
 		}
 
 		state = element.indeterminate ? undefined : checked;
 	};
 </script>
 
-<div class="flex items-center gap-2" on:click={onClick}>
-	<input id={label} type="checkbox" bind:this={element} bind:value bind:checked />
+<div class="{className} flex items-center gap-2">
+	<input
+		id={label}
+		type="checkbox"
+		bind:value
+		bind:checked
+		bind:this={element}
+		on:change={onChange}
+	/>
 	<label for={label} class="font-medium">{label}</label>
 </div>

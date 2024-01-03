@@ -1,5 +1,7 @@
 <script lang="ts">
-	export let size: string = '';
+	import type { BadgeSize } from '$lib/types';
+
+	export let size: BadgeSize = '';
 
 	const sizeClass: { [size: string]: string } = {
 		'': 'px-2.5 py-0.5',
@@ -7,4 +9,6 @@
 	};
 </script>
 
-<span class="font-medium text-white bg-blue-500 {sizeClass[size]} rounded-full" title="Has 2D model">2D</span>
+<div class="{sizeClass[size]} rounded-full bg-blue-500 font-medium text-white" title="Has 2D model">
+	2D
+</div>

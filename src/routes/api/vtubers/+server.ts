@@ -1,12 +1,11 @@
 import { SHIMAKAZE_HOST } from '$env/static/private';
+import type { BaseAPIResponse, MetaAPIResponse } from '$lib/types';
 import type { RequestHandler } from './$types';
-import type { vtuberResponseData } from './[id]/+server';
+import type { VtuberResponseData } from './[id]/+server';
 
-export type vtubersResponse = {
-	status: number;
-	message: string;
-	data: Array<vtuberResponseData>;
-	meta: { page: number; limit: number; total: number };
+export type VtubersResponse = BaseAPIResponse & {
+	data: VtuberResponseData[];
+	meta: MetaAPIResponse;
 };
 
 export const GET = (async ({ url }) => {
@@ -50,8 +49,8 @@ export const GET = (async ({ url }) => {
 		.join('&');
 
 	const resp = await fetch(`${SHIMAKAZE_HOST}/vtubers?${queries}`);
-	const data = await resp.json();
-	return new Response(JSON.stringify(data), {
+	const body = await resp.json();
+	return new Response(JSON.stringify(body), {
 		headers: {
 			'content-type': 'application/json',
 			'cache-control': 'max-age=3600, s-maxage=86400, stale-while-revalidate=3600'

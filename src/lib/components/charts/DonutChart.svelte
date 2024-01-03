@@ -1,45 +1,34 @@
 <script lang="ts">
-	import { ThemeMode } from '$lib/utils';
-	import { theme } from '$lib/utils/store';
+	import { ChartBorderColors, ChartTextColors } from '$lib/utils/const';
+	import { ThemeMode, theme } from '$lib/utils/theme';
 	import { createEventDispatcher } from 'svelte';
 	import Chart from './Chart.svelte';
-	import { chartBorderColors, chartColors, chartTextColors, getChartColorsByCount } from './colors';
+	import { getChartColorsByCount } from './colors';
 
 	const dispatch = createEventDispatcher<{ click: number }>();
 
-	export let data: Array<{
+	type ChartData = {
 		name: string;
 		value: number;
-	}>;
+	};
 
-	let currTheme = ThemeMode.Dark;
-	let colors = chartColors[currTheme];
-	let textColor = chartTextColors[currTheme];
-	let borderColor = chartBorderColors[currTheme];
+	export let data: ChartData[];
 
-	theme.subscribe((v) => {
-		if (!v) return;
-		currTheme = v;
-		colors = getChartColorsByCount(data.length, currTheme);
-		textColor = chartTextColors[currTheme];
-		borderColor = chartBorderColors[currTheme];
-	});
+	let currTheme: ThemeMode = ThemeMode.Dark;
 
-	$: data, (colors = getChartColorsByCount(data.length, currTheme));
+	theme.subscribe((v) => (currTheme = v));
 </script>
 
 <Chart
 	options={{
 		chart: {
-			height: 350,
+			height: '100%',
 			type: 'donut',
 			events: {
-				dataPointSelection: (_, __, options) => {
-					dispatch('click', options.dataPointIndex);
-				}
+				dataPointSelection: (_, __, options) => dispatch('click', options.dataPointIndex)
 			}
 		},
-		colors: colors,
+		colors: getChartColorsByCount(data.length, currTheme),
 		series: data.map((d) => d.value),
 		labels: data.map((d) => d.name),
 		plotOptions: {
@@ -47,35 +36,25 @@
 				donut: {
 					labels: {
 						show: true,
-						name: {
-							color: textColor
-						},
+						name: { color: ChartTextColors[currTheme] },
 						value: {
-							color: textColor,
+							color: ChartTextColors[currTheme],
 							formatter: (v) => parseInt(v).toLocaleString()
 						},
 						total: {
 							show: true,
-							color: textColor,
-							formatter: (_) => {
-								return data.reduce((acc, curr) => (acc += curr.value), 0).toLocaleString();
-							}
+							color: ChartTextColors[currTheme],
+							formatter: (_) => data.reduce((acc, curr) => (acc += curr.value), 0).toLocaleString()
 						}
 					}
 				}
 			}
 		},
-		legend: {
-			labels: {
-				colors: textColor
-			}
-		},
-		tooltip: {
-			enabled: false
-		},
+		legend: { labels: { colors: ChartTextColors[currTheme] } },
+		tooltip: { enabled: false },
 		stroke: {
 			width: 1,
-			colors: [borderColor]
+			colors: [ChartBorderColors[currTheme]]
 		}
 	}}
 />

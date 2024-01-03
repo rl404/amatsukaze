@@ -1,10 +1,10 @@
 <script lang="ts">
 	import InputCheckbox from '$lib/components/inputs/InputCheckbox.svelte';
 
-	export let inAgency: boolean | string | undefined;
+	export let inAgency: boolean | undefined;
 </script>
 
-<div>
-	<div class="block mb-2 font-medium pointer-events-none">Agency</div>
-	<InputCheckbox label="In Agency" bind:state={inAgency} useIndeterminate />
+<div class="grid gap-1">
+	<label class="font-bold" for="agency">Agency</label>
+	<InputCheckbox label="In Agency" checked={inAgency} bind:state={inAgency} useIndeterminate />
 </div>

@@ -2,23 +2,52 @@
 @tailwind components;
 @tailwind utilities;
 
-a:hover {
-	opacity: 70%;
+@layer base {
+	body {
+		@apply bg-body text-body dark:bg-body-dark dark:text-body-dark;
+	}
+
+	hr {
+		@apply h-px w-full border-0 bg-border dark:bg-border-dark;
+	}
+
+	input,
+	select,
+	textarea {
+		@apply rounded-lg border border-border bg-card p-1 focus:outline focus:outline-1 focus:outline-primary disabled:opacity-70 dark:border-border-dark dark:bg-card-dark dark:focus:outline-primary-dark;
+	}
+
+	select {
+		@apply p-1.5;
+	}
 }
 
-::-webkit-scrollbar {
-	width: 5px;
+@layer components {
+	.bg-gradient {
+		@apply bg-gradient-to-r from-white to-primary dark:from-neutral-900 dark:to-primary-dark;
+	}
+
+	.subtitle {
+		@apply text-neutral-400 dark:text-neutral-500;
+	}
+
+	.line-clamp-1,
+	.line-clamp-2 {
+		@apply break-all;
+	}
+
+	.rtl {
+		direction: rtl;
+	}
+
+	.ltr {
+		direction: ltr;
+	}
 }
 
-::-webkit-scrollbar-track {
-	background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-	background: #888;
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-	background: #a5a5a5;
+@layer utilities {
+	.clickable:hover,
+	.clickable:disabled {
+		opacity: 70%;
+	}
 }

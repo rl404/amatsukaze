@@ -1,22 +1,27 @@
 <script lang="ts">
-	import Border from '$lib/components/Border.svelte';
 	import Button from '$lib/components/buttons/Button.svelte';
-	import Head from '$lib/components/Head.svelte';
+	import Border from '$lib/components/commons/Border.svelte';
+	import Head from '$lib/components/commons/Head.svelte';
+	import Loading from '$lib/components/commons/Loading.svelte';
+	import { getAxiosError } from '$lib/utils/api';
 	import axios from 'axios';
-	import type { vtuberResponseData } from '../../api/vtubers/[id]/+server';
-	import type { eventResponse } from './+page.server';
+	import { onMount } from 'svelte';
+	import type { VtuberResponseData } from '../../api/vtubers/[id]/+server';
+	import type { EventResponse } from './+page.server';
 	import EventTimeline from './EventTimeline.svelte';
 	import MonthDropdown from './MonthDropdown.svelte';
-	import { getAxiosError } from '$lib/utils';
-	import SpinnerIcon from '$lib/components/icons/SpinnerIcon.svelte';
 
-	export let data: eventResponse;
+	export let data: EventResponse;
+
+	const monthNow = (new Date().getMonth() + 1).toString();
 
 	let month: string = data.month;
-	let birthdayData: Array<vtuberResponseData> = data.birthday.data;
-	let anniversaryData: Array<vtuberResponseData> = data.anniversary.data;
+	let birthdayData: VtuberResponseData[] = data.birthday.data;
+	let anniversaryData: VtuberResponseData[] = data.anniversary.data;
 	let loading: boolean = false;
 	let error: string = '';
+
+	onMount(() => onClickJump());
 
 	const onChangeMonth = () => {
 		loading = true;
@@ -24,23 +29,22 @@
 
 		axios
 			.all([
-				axios.get(`/api/vtubers?start_birthday_month=${month}&end_birthday_month=${month}&exclude_retired=true&limit=-1`),
-				axios.get(`/api/vtubers?start_debut_month=${month}&end_debut_month=${month}&exclude_retired=true&limit=-1`)
+				axios.get(
+					`/api/vtubers?start_birthday_month=${month}&end_birthday_month=${month}&exclude_retired=true&limit=-1`
+				),
+				axios.get(
+					`/api/vtubers?start_debut_month=${month}&end_debut_month=${month}&exclude_retired=true&limit=-1`
+				)
 			])
 			.then((res) => {
 				birthdayData = res[0].data.data;
 				anniversaryData = res[1].data.data;
 			})
-			.catch((err) => {
-				error = getAxiosError(err);
-			})
-			.finally(() => {
-				loading = false;
-			});
+			.catch((err) => (error = getAxiosError(err)))
+			.finally(() => (loading = false));
 	};
 
 	const onClickJump = () => {
-		const monthNow = (new Date().getMonth() + 1).toString();
 		if (month === monthNow) {
 			const id = `${new Date().toISOString().slice(0, 10)}`;
 			const el = document.getElementById(id);
@@ -52,24 +56,31 @@
 	};
 </script>
 
-<Head title="Events" description="Current, previous and upcoming vtuber events." image="/events.png" />
+<Head
+	title="Events"
+	description="Mark your calendar and relive the magic of Vtuber history with our comprehensive coverage of current, previous, and upcoming anniversary and birthday events. Stay connected to the excitement, nostalgia, and anticipation within the virtual world."
+	image="/events.png"
+/>
 
 <div class="grid grid-cols-6 gap-4">
-	<div class="col-span-6">
-		<div class="flex flex-wrap items-center justify-between gap-4">
-			<div class="text-3xl font-bold flex gap-2">Events in <MonthDropdown bind:value={month} on:change={onChangeMonth} /></div>
-			<div>
-				<Button color on:click={onClickJump}>Jump to Today</Button>
-			</div>
-		</div>
+	<div class="col-span-6 flex flex-wrap items-center justify-between gap-4">
+		<h1 class="flex basis-full items-center gap-2 text-3xl font-bold sm:basis-auto">
+			<span>Events in</span>
+			<MonthDropdown bind:value={month} on:change={onChangeMonth} />
+		</h1>
+		<Button color on:click={onClickJump} class="w-full p-2 px-4 font-bold sm:w-auto">
+			Jump to Today
+		</Button>
 	</div>
+
 	<Border class="col-span-6" />
+
 	{#if loading}
 		<div class="col-span-6">
-			<SpinnerIcon class="w-8 h-8 m-auto text-gray-200 animate-spin dark:text-gray-600 fill-pink-500 dark:fill-indigo-600" />
+			<Loading class="h-8 w-8" />
 		</div>
 	{:else if error !== ''}
-		<div class="col-span-6 text-red-500 text-center">
+		<div class="col-span-6 text-center text-red-500">
 			{error}
 		</div>
 	{:else}
@@ -77,5 +88,4 @@
 			<EventTimeline {birthdayData} {anniversaryData} />
 		</div>
 	{/if}
-	<Border class="col-span-6" />
 </div>

@@ -1,4 +1,6 @@
 import { SHIMAKAZE_HOST } from '$env/static/private';
+import { handleAPIResponse } from '$lib/utils/api';
+import type { AgenciesResponse } from '../../api/agencies/+server';
 import type { PageServerLoad } from './$types';
 
 export const config = {
@@ -9,5 +11,5 @@ export const config = {
 
 export const load = (async () => {
 	const resp = await fetch(`${SHIMAKAZE_HOST}/agencies?limit=-1`);
-	return await resp.json();
-}) satisfies PageServerLoad;
+	return handleAPIResponse(resp);
+}) satisfies PageServerLoad<AgenciesResponse>;

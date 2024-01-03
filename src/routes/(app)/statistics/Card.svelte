@@ -1,12 +1,14 @@
 <script lang="ts">
-	import RenderIfVisible from '$lib/components/RenderIfVisible.svelte';
+	import RenderIfVisible from '$lib/components/commons/RenderIfVisible.svelte';
 
 	export let title: string;
 	export { className as class };
 	let className = '';
 </script>
 
-<RenderIfVisible class="{className} bg-white dark:bg-neutral-900 rounded-lg border dark:border-neutral-600 p-2 grid gap-2">
-	<div class="text-center font-bold">{title}</div>
+<RenderIfVisible
+	class="{className} grid gap-2 rounded-lg border border-border p-2 dark:border-border-dark"
+>
+	<h2 class="text-center font-bold">{title}</h2>
 	<slot />
 </RenderIfVisible>
