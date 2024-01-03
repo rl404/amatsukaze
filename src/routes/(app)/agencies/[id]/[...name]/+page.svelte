@@ -24,7 +24,7 @@
 	image={getWikiImg(agency.image)}
 />
 
-<div class="grid grid-cols-4 gap-4">
+<div class="grid grid-cols-4 gap-4" itemscope itemtype="https://schema.org/Organization">
 	<h1 class="col-span-4">
 		<a
 			class="clickable text-3xl font-bold"
@@ -32,6 +32,7 @@
 			target="_blank"
 			rel="noreferrer"
 			title={new Date(agency.updated_at).toString()}
+			itemprop="name"
 		>
 			{agency.name}
 		</a>
@@ -40,7 +41,7 @@
 	<Border class="col-span-4" />
 
 	<div class="col-span-4 flex flex-col gap-4 sm:col-span-1">
-		<div>
+		<div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
 			<Image
 				src={getWikiImg(agency.image)}
 				alt={agency.name}

@@ -83,6 +83,7 @@
 							id={vtuber.id}
 							name={vtuber.name}
 							image={vtuber.image}
+							itemprop="member"
 						/>
 					{/each}
 				</div>
@@ -102,6 +103,7 @@
 							id={vtuber.id}
 							name={vtuber.name}
 							image={vtuber.image}
+							itemprop="member"
 						/>
 					{/each}
 				</div>

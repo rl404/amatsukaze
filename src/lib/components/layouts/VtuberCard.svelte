@@ -28,6 +28,8 @@
 	itemscope
 	itemtype="https://schema.org/Person"
 >
+	<meta itemprop="name" content={name} />
+	<meta itemprop="image" content={getWikiImg(image)} />
 	<RenderIfVisible
 		class="flex aspect-card items-center rounded-lg bg-card shadow hover:outline hover:outline-primary dark:bg-card-dark dark:hover:outline-primary-dark"
 	>
@@ -38,7 +40,7 @@
 		/>
 		<div class="flex h-full w-2/3 flex-col gap-2 p-2 sm:gap-1">
 			<div>
-				<div class="line-clamp-1 text-base font-bold" itemprop="name">{name}</div>
+				<div class="line-clamp-1 text-base font-bold">{name}</div>
 			</div>
 			<Border class="h-3">
 				{#if has2d || has3d}
