@@ -140,6 +140,7 @@
 									itemscope
 									itemtype="https://schema.org/Organization"
 								>
+									<meta itemprop="identifier" content={agency.id.toString()} />
 									<span itemprop="name">{agency.name}</span>
 								</a>
 							</div>

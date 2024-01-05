@@ -24,54 +24,62 @@
 	image={getWikiImg(vtuber.image)}
 />
 
-<div class="grid grid-cols-4 gap-4" itemscope itemtype="https://schema.org/Person">
-	<h1 class="col-span-4">
-		<a
-			class="clickable text-3xl font-bold"
-			href="{PUBLIC_VTUBER_WIKI_HOST}/{vtuber.name}"
-			target="_blank"
-			rel="noreferrer"
-			title={new Date(vtuber.updated_at).toISOString()}
-		>
-			<span itemprop="name">{vtuber.name}</span>
-			<span title="Emoji" itemprop="identifier">{vtuber.emoji}</span>
-		</a>
-	</h1>
-
-	<Border class="col-span-4" />
-
-	<div class="col-span-4 flex flex-col gap-4 sm:col-span-1">
-		<Image
-			src={getWikiImg(vtuber.image)}
-			alt={vtuber.name}
-			class="w-full rounded-lg border border-border bg-card dark:border-border-dark dark:bg-card-dark"
-		/>
-		{#if vtuber.caption}
-			<div
-				class="subtitle pointer-events-none text-center font-bold italic"
-				title="quote"
-				itemprop="description"
+<div itemscope itemtype="https://schema.org/ProfilePage">
+	<div
+		class="grid grid-cols-4 gap-4"
+		itemprop="mainEntity"
+		itemscope
+		itemtype="https://schema.org/Person"
+	>
+		<meta itemprop="identifier" content={vtuber.id.toString()} />
+		<h1 class="col-span-4">
+			<a
+				class="clickable text-3xl font-bold"
+				href="{PUBLIC_VTUBER_WIKI_HOST}/{vtuber.name}"
+				target="_blank"
+				rel="noreferrer"
+				title={new Date(vtuber.updated_at).toISOString()}
 			>
-				{vtuber.caption}
-			</div>
-		{/if}
-		<div class="flex flex-wrap items-center justify-center gap-2">
-			{#if vtuber.has_2d}
-				<Model2DBadge />
-			{/if}
-			{#if vtuber.has_3d}
-				<Model3DBadge />
-			{/if}
-			{#if vtuber.retirement_date}
-				<RetiredBadge />
-			{/if}
-		</div>
-	</div>
+				<span itemprop="name">{vtuber.name}</span>
+				<span title="Emoji">{vtuber.emoji}</span>
+			</a>
+		</h1>
 
-	<div class="col-span-4 flex flex-col gap-4 sm:col-span-3">
-		<AccordionDetails data={vtuber} />
-		<AccordionAgencyMates id={vtuber.id} agencies={vtuber.agencies.map((a) => a.name)} />
-		<AccordionFamilies id={vtuber.id} designers={vtuber.character_designers || []} />
-		<AccordionVideos data={vtuber.channels} />
+		<Border class="col-span-4" />
+
+		<div class="col-span-4 flex flex-col gap-4 sm:col-span-1">
+			<Image
+				src={getWikiImg(vtuber.image)}
+				alt={vtuber.name}
+				class="w-full rounded-lg border border-border bg-card dark:border-border-dark dark:bg-card-dark"
+			/>
+			{#if vtuber.caption}
+				<div
+					class="subtitle pointer-events-none text-center font-bold italic"
+					title="quote"
+					itemprop="description"
+				>
+					{vtuber.caption}
+				</div>
+			{/if}
+			<div class="flex flex-wrap items-center justify-center gap-2">
+				{#if vtuber.has_2d}
+					<Model2DBadge />
+				{/if}
+				{#if vtuber.has_3d}
+					<Model3DBadge />
+				{/if}
+				{#if vtuber.retirement_date}
+					<RetiredBadge />
+				{/if}
+			</div>
+		</div>
+
+		<div class="col-span-4 flex flex-col gap-4 sm:col-span-3">
+			<AccordionDetails data={vtuber} />
+			<AccordionAgencyMates id={vtuber.id} agencies={vtuber.agencies.map((a) => a.name)} />
+			<AccordionFamilies id={vtuber.id} designers={vtuber.character_designers || []} />
+			<AccordionVideos data={vtuber.channels} />
+		</div>
 	</div>
 </div>

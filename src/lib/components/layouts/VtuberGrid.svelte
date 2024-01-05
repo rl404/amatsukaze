@@ -20,6 +20,7 @@
 	itemscope
 	itemtype="https://schema.org/Person"
 >
+	<meta itemprop="identifier" content={id.toString()} />
 	<meta itemprop="name" content={name} />
 	<meta itemprop="image" content={getWikiImg(image)} />
 	<RenderIfVisible
