@@ -24,42 +24,49 @@
 	image={getWikiImg(agency.image)}
 />
 
-<div class="grid grid-cols-4 gap-4" itemscope itemtype="https://schema.org/Organization">
-	<h1 class="col-span-4">
-		<a
-			class="clickable text-3xl font-bold"
-			href="{PUBLIC_VTUBER_WIKI_HOST}/{agency.name}"
-			target="_blank"
-			rel="noreferrer"
-			title={new Date(agency.updated_at).toString()}
-			itemprop="name"
-		>
-			{agency.name}
-		</a>
-	</h1>
+<div itemscope itemtype="https://schema.org/ProfilePage">
+	<div
+		class="grid grid-cols-4 gap-4"
+		itemprop="mainEntity"
+		itemscope
+		itemtype="https://schema.org/Organization"
+	>
+		<meta itemprop="identifier" content={agency.id.toString()} />
+		<h1 class="col-span-4" itemprop="name">
+			<a
+				class="clickable text-3xl font-bold"
+				href="{PUBLIC_VTUBER_WIKI_HOST}/{agency.name}"
+				target="_blank"
+				rel="noreferrer"
+				title={new Date(agency.updated_at).toString()}
+			>
+				{agency.name}
+			</a>
+		</h1>
 
-	<Border class="col-span-4" />
+		<Border class="col-span-4" />
 
-	<div class="col-span-4 flex flex-col gap-4 sm:col-span-1">
-		<div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-			<Image
-				src={getWikiImg(agency.image)}
-				alt={agency.name}
-				class="m-auto w-full rounded-lg border border-border bg-card p-2 dark:border-border-dark dark:bg-card-dark"
-			/>
+		<div class="col-span-4 flex flex-col gap-4 sm:col-span-1">
+			<div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+				<Image
+					src={getWikiImg(agency.image)}
+					alt={agency.name}
+					class="m-auto w-full rounded-lg border border-border bg-card p-2 dark:border-border-dark dark:bg-card-dark"
+				/>
+			</div>
+			<div class="flex justify-between gap-4 font-bold">
+				<span>Member Count</span>
+				<span>{agency.member.toLocaleString()}</span>
+			</div>
+			<div class="flex justify-between gap-4 font-bold">
+				<span>Total Subscriber</span>
+				<span title={agency.subscriber.toLocaleString()}>{compactInt(agency.subscriber)}</span>
+			</div>
 		</div>
-		<div class="flex justify-between gap-4 font-bold">
-			<span>Member Count</span>
-			<span>{agency.member.toLocaleString()}</span>
-		</div>
-		<div class="flex justify-between gap-4 font-bold">
-			<span>Total Subscriber</span>
-			<span title={agency.subscriber.toLocaleString()}>{compactInt(agency.subscriber)}</span>
-		</div>
-	</div>
 
-	<div class="col-span-4 flex flex-col gap-4 sm:col-span-3">
-		<AccordionStatistics data={vtubers} />
-		<AccordionMembers data={vtubers} />
+		<div class="col-span-4 flex flex-col gap-4 sm:col-span-3">
+			<AccordionStatistics data={vtubers} />
+			<AccordionMembers data={vtubers} />
+		</div>
 	</div>
 </div>
