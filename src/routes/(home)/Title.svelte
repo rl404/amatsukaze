@@ -31,9 +31,9 @@
 	<div class="bg-gradient absolute -bottom-2 left-0 block h-1 w-full transition" />
 
 	<h2 class="text-l drop-shadow-lg sm:text-xl">
-		<a href={PUBLIC_VTUBER_WIKI_HOST} target="_blank" rel="noreferrer" class="clickable"
-			>Vtuber Wikia</a
-		>
+		<a href={PUBLIC_VTUBER_WIKI_HOST} target="_blank" rel="noreferrer" class="clickable">
+			Vtuber Wikia
+		</a>
 		Visualizer
 	</h2>
 
