@@ -220,7 +220,19 @@ export const relativeTime = (d: Date): string => {
 };
 
 export const intToDurationStr = (dur: number): string => {
-	return new Date(dur).toISOString().slice(dur / 1000 >= 3600 ? 11 : 14, 19);
+	const hours = Math.floor(dur / 3600);
+	const minutes = Math.floor((dur - hours * 3600) / 60);
+	const seconds = dur - hours * 3600 - minutes * 60;
+
+	let hourStr = hours.toFixed();
+	let minuteStr = minutes.toFixed();
+	let secondStr = seconds.toFixed();
+
+	if (hours < 10) hourStr = '0' + hourStr;
+	if (minutes < 10) minuteStr = '0' + minuteStr;
+	if (seconds < 10) secondStr = '0' + secondStr;
+
+	return hourStr + ':' + minuteStr + ':' + secondStr;
 };
 
 export const getVtubersQueryFromURLParam = (param: URLSearchParams): VtubersQuery => {
