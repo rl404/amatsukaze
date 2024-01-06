@@ -60,7 +60,7 @@
 			</h3>
 		</Border>
 		<div class="text-sm" title="average video length">
-			<span class="pointer-events-none">{intToDurationStr(avgLength)}</span>
+			<span class="pointer-events-none">{intToDurationStr(avgLength / 1000)}</span>
 		</div>
 		<VideoLayoutButton bind:value={layout} class="h-4 w-4" />
 	</div>

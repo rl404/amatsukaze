@@ -25,9 +25,9 @@
 		{:else}
 			<div class="col-span-6 flex items-center gap-2">
 				<Border>
-					<span class="pointer-events-none whitespace-nowrap px-4 font-bold"
-						>{data.length.toLocaleString()} members</span
-					>
+					<span class="pointer-events-none whitespace-nowrap px-4 font-bold">
+						{data.length.toLocaleString()} members
+					</span>
 				</Border>
 				<VtuberSortButton
 					bind:value={sort}

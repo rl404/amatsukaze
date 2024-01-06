@@ -147,7 +147,7 @@
 					<div class="flex flex-col gap-1">
 						<div class="relative bg-card dark:bg-card-dark rounded">
 							<span class="absolute right-1 bottom-1 px-1 text-xs text-white bg-black rounded">${intToDurationStr(
-								d.endDate - d.startDate
+								(d.endDate - d.startDate) / 1000
 							)}</span>
 							<img src="${
 								v.image && `/api/image/${v.image}`

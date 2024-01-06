@@ -68,9 +68,9 @@
 		<div class="col-span-4 sm:col-span-3">
 			<InputText id="label" class="w-full" bind:value={label} placeholder="tier label" />
 		</div>
-		<label for="description" class="col-span-4 font-bold sm:col-span-1 sm:text-right"
-			>Description</label
-		>
+		<label for="description" class="col-span-4 font-bold sm:col-span-1 sm:text-right">
+			Description
+		</label>
 		<div class="col-span-4 sm:col-span-3">
 			<InputTextarea
 				id="description"

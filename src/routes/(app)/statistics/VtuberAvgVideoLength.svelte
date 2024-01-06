@@ -24,6 +24,6 @@
 	<div class="text-center text-red-500">{error}</div>
 {:else}
 	<div class="text-center text-5xl font-bold" title="in the last 2 months">
-		{intToDurationStr(data * 1000)}
+		{intToDurationStr(data)}
 	</div>
 {/if}
