@@ -5,7 +5,7 @@
 	import NiconicoIcon from '$lib/components/icons/NiconicoIcon.svelte';
 	import TwitchIcon from '$lib/components/icons/TwitchIcon.svelte';
 	import YoutubeIcon from '$lib/components/icons/YoutubeIcon.svelte';
-	import { relativeTime } from '$lib/utils/utils';
+	import { intToDurationStr, relativeTime } from '$lib/utils/utils';
 	import type { ComponentType } from 'svelte';
 	import type { VtuberResponseDataChannelVideo } from '../../../routes/api/vtubers/[id]/+server';
 
@@ -26,10 +26,7 @@
 			? 0
 			: new Date(data.end_date).getTime() - new Date(data.start_date).getTime();
 
-	const durationStr =
-		duration === 0
-			? 'upcoming'
-			: new Date(duration).toISOString().slice(duration / 1000 >= 3600 ? 11 : 14, 19);
+	const durationStr = duration === 0 ? 'upcoming' : intToDurationStr(duration / 1000);
 
 	const icons: { [key: string]: { icon: ComponentType; color: string } } = {
 		YOUTUBE: { icon: YoutubeIcon, color: 'text-red-500' },
@@ -47,17 +44,17 @@
 				alt={data.title}
 				class="aspect-video h-full w-full rounded-lg bg-card object-cover object-top dark:bg-card-dark"
 			/>
-			<span class="absolute bottom-1 right-1 rounded bg-black px-1 text-xs text-white"
-				>{durationStr}</span
-			>
+			<span class="absolute bottom-1 right-1 rounded bg-black px-1 text-xs text-white">
+				{durationStr}
+			</span>
 		</div>
 		<div class="col-span-3">
 			<div class="line-clamp-2" title={data.title}>{data.title}</div>
 			<div class="flex items-center gap-2">
 				<svelte:component this={icons[type].icon} class="h-4 w-4 {icons[type].color}" />
-				<span class="subtitle" title={startDate}
-					>{data.start_date && relativeTime(new Date(data.start_date))}</span
-				>
+				<span class="subtitle" title={startDate}>
+					{data.start_date && relativeTime(new Date(data.start_date))}
+				</span>
 			</div>
 		</div>
 	</RenderIfVisible>

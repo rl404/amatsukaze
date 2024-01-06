@@ -35,7 +35,7 @@
 	<div class="text-center text-red-500">{error}</div>
 {:else}
 	<BarChart
-		data={data.map((d) => ({ name: d.name, value: d.duration * 1000 }))}
+		data={data.map((d) => ({ name: d.name, value: d.duration }))}
 		seriesName="Duration"
 		horizontal
 		xaxisFormatter={(v) => intToDurationStr(parseInt(v))}
