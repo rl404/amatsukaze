@@ -19,10 +19,10 @@ export const load = (async () => {
 	const month = (new Date().getMonth() + 1).toString();
 	const [birthdayResp, anniversaryResp] = await Promise.all([
 		await fetch(
-			`${SHIMAKAZE_HOST}/vtubers?start_birthday_month=${month}&end_birthday_month=${month}&exclude_retired=true&limit=-1`
+			`${SHIMAKAZE_HOST}/vtubers?mode=simple&start_birthday_month=${month}&end_birthday_month=${month}&exclude_retired=true&limit=-1`
 		),
 		await fetch(
-			`${SHIMAKAZE_HOST}/vtubers?start_debut_month=${month}&end_debut_month=${month}&exclude_retired=true&limit=-1`
+			`${SHIMAKAZE_HOST}/vtubers?mode=simple&start_debut_month=${month}&end_debut_month=${month}&exclude_retired=true&limit=-1`
 		)
 	]);
 	return {

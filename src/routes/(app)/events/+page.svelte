@@ -30,10 +30,10 @@
 		axios
 			.all([
 				axios.get(
-					`/api/vtubers?start_birthday_month=${month}&end_birthday_month=${month}&exclude_retired=true&limit=-1`
+					`/api/vtubers?mode=simple&start_birthday_month=${month}&end_birthday_month=${month}&exclude_retired=true&limit=-1`
 				),
 				axios.get(
-					`/api/vtubers?start_debut_month=${month}&end_debut_month=${month}&exclude_retired=true&limit=-1`
+					`/api/vtubers?mode=simple&start_debut_month=${month}&end_debut_month=${month}&exclude_retired=true&limit=-1`
 				)
 			])
 			.then((res) => {

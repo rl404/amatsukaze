@@ -41,7 +41,7 @@
 		error = '';
 
 		axios
-			.get(`/api/vtubers?names=${valueVtuber}&agency=${valueAgency}&sort=name&limit=-1`)
+			.get(`/api/vtubers?mode=simple&names=${valueVtuber}&agency=${valueAgency}&sort=name&limit=-1`)
 			.then(
 				(resp) =>
 					(vtubers = resp.data.data.filter(

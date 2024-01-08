@@ -29,7 +29,7 @@
 		error = '';
 
 		axios
-			.get(`/api/vtubers?agency_id=${id}&sort=${sort}&limit=-1`)
+			.get(`/api/vtubers?mode=simple&agency_id=${id}&sort=${sort}&limit=-1`)
 			.then((resp) => (data = resp.data.data))
 			.catch((err) => (error = getAxiosError(err)))
 			.finally(() => (loading = false));
