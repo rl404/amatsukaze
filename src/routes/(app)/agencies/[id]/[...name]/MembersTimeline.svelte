@@ -79,7 +79,7 @@
 				<div class="ltr md:rtl grid grid-cols-3 gap-2">
 					{#each d[1].retired as vtuber}
 						<VtuberGrid
-							class="col-span-1 text-sm"
+							class="ltr col-span-1 text-sm"
 							id={vtuber.id}
 							name={vtuber.name}
 							image={vtuber.image}
