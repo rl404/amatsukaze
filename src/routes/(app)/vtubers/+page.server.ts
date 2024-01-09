@@ -35,13 +35,15 @@ export const load = (async () => {
 		startDebutResp,
 		startRetiredResp
 	] = await Promise.all([
-		await fetch(`${SHIMAKAZE_HOST}/vtubers?page=1&limit=36`),
+		await fetch(`${SHIMAKAZE_HOST}/vtubers?mode=simple&page=1&limit=36`),
 		await fetch(`${SHIMAKAZE_HOST}/agencies?limit=-1`),
 		await fetch(`${SHIMAKAZE_HOST}/vtubers/character-designers`),
 		await fetch(`${SHIMAKAZE_HOST}/vtubers/character-2d-modelers`),
 		await fetch(`${SHIMAKAZE_HOST}/vtubers/character-3d-modelers`),
-		await fetch(`${SHIMAKAZE_HOST}/vtubers?start_debut_year=1&sort=debut_date&limit=1`),
-		await fetch(`${SHIMAKAZE_HOST}/vtubers?start_retired_year=1&sort=retirement_date&limit=1`)
+		await fetch(`${SHIMAKAZE_HOST}/vtubers?mode=simple&start_debut_year=1&sort=debut_date&limit=1`),
+		await fetch(
+			`${SHIMAKAZE_HOST}/vtubers?mode=simple&start_retired_year=1&sort=retirement_date&limit=1`
+		)
 	]);
 	return {
 		vtubers: handleAPIResponse(vtubersResp),

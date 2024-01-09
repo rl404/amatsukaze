@@ -27,7 +27,7 @@
 
 	$: designer,
 		axios
-			.get(`/api/vtubers?character_designer=${designer}&limit=-1`)
+			.get(`/api/vtubers?mode=simple&character_designer=${designer}&limit=-1`)
 			.then((resp) => (vtubers = resp.data.data.filter((d: VtuberResponseData) => d.id !== id)))
 			.catch((err) => (error = getAxiosError(err)))
 			.finally(() => (loading = false));

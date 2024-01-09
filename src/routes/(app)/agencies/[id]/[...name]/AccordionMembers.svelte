@@ -9,7 +9,7 @@
 	import type { VtuberLayout, VtuberSort } from '$lib/types';
 	import { vtuberSorter } from '$lib/utils/utils';
 	import type { VtuberResponseData } from '../../../../api/vtubers/[id]/+server';
-	import MembersTImeline from './MembersTImeline.svelte';
+	import MembersTimeline from './MembersTimeline.svelte';
 	import VtuberLayoutButton from './VtuberLayoutButton.svelte';
 
 	export let data: VtuberResponseData[];
@@ -38,7 +38,7 @@
 			</div>
 			{#if layout === 'timeline'}
 				<div class="col-span-6">
-					<MembersTImeline {data} bind:sort />
+					<MembersTimeline {data} bind:sort />
 				</div>
 			{:else}
 				{#each data.sort(vtuberSorter(sort)) as vtuber}

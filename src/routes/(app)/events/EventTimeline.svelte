@@ -79,9 +79,14 @@
 					<span>—</span>
 					<span>{d[0]}</span>
 				</div>
-				<div class="ltr md:rtl grid grid-cols-3 gap-2">
+				<div class="ltr md:rtl grid grid-cols-4 gap-2">
 					{#each d[1].anniversary as vtuber}
-						<VtuberGrid class="col-span-1" id={vtuber.id} name={vtuber.name} image={vtuber.image} />
+						<VtuberGrid
+							class="ltr col-span-1 text-sm"
+							id={vtuber.id}
+							name={vtuber.name}
+							image={vtuber.image}
+						/>
 					{/each}
 				</div>
 			</div>
@@ -93,9 +98,14 @@
 					<span>—</span>
 					<span>{d[0]}</span>
 				</div>
-				<div class="grid grid-cols-3 gap-2">
+				<div class="grid grid-cols-4 gap-2">
 					{#each d[1].birthday as vtuber}
-						<VtuberGrid class="col-span-1" id={vtuber.id} name={vtuber.name} image={vtuber.image} />
+						<VtuberGrid
+							class="col-span-1 text-sm"
+							id={vtuber.id}
+							name={vtuber.name}
+							image={vtuber.image}
+						/>
 					{/each}
 				</div>
 			</div>

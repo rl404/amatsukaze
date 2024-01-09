@@ -5,6 +5,7 @@
 	import Image from '$lib/components/commons/Image.svelte';
 	import { compactInt, getWikiImg } from '$lib/utils/utils';
 	import type { AgencyPageResponse } from './+page.server';
+	import AccordionEvents from './AccordionEvents.svelte';
 	import AccordionMembers from './AccordionMembers.svelte';
 	import AccordionStatistics from './AccordionStatistics.svelte';
 
@@ -67,6 +68,7 @@
 		<div class="col-span-4 flex flex-col gap-4 sm:col-span-3">
 			<AccordionStatistics data={vtubers} />
 			<AccordionMembers data={vtubers} />
+			<AccordionEvents data={vtubers} />
 		</div>
 	</div>
 </div>

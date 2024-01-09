@@ -27,7 +27,7 @@
 
 	$: agency,
 		axios
-			.get(`/api/vtubers?agency=${agency}&limit=-1`)
+			.get(`/api/vtubers?mode=simple&agency=${agency}&limit=-1`)
 			.then((resp) => (vtubers = resp.data.data.filter((d: VtuberResponseData) => d.id !== id)))
 			.catch((err) => (error = getAxiosError(err)))
 			.finally(() => (loading = false));

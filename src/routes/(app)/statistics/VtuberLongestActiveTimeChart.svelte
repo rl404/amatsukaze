@@ -14,7 +14,9 @@
 
 	onMount(() => {
 		axios
-			.get(`/api/vtubers?sort=debut_date&exclude_retired=true&start_debut_year=1&limit=20`)
+			.get(
+				`/api/vtubers?mode=simple&sort=debut_date&exclude_retired=true&start_debut_year=1&limit=20`
+			)
 			.then((resp) => {
 				data = resp.data.data.map((d: VtuberResponseData) => ({
 					...d,

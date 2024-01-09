@@ -211,13 +211,15 @@
 						<span>-</span>
 					{:else}
 						{#each data.official_websites as url}
-							<a
-								href={url}
-								class="clickable underline"
-								target="_blank"
-								rel="noreferrer"
-								itemprop="url">{getHostname(url)}</a
-							>
+							<div>
+								<a
+									href={url}
+									class="clickable underline"
+									target="_blank"
+									rel="noreferrer"
+									itemprop="url">{getHostname(url)}</a
+								>
+							</div>
 						{/each}
 					{/if}
 				</div>
