@@ -237,6 +237,7 @@ export const intToDurationStr = (dur: number): string => {
 
 export const getVtubersQueryFromURLParam = (param: URLSearchParams): VtubersQuery => {
 	return {
+		mode: defaultVtubersQuery.mode,
 		names: param.get('names') || '',
 		name: param.get('name') || '',
 		original_name: param.get('original_name') || '',

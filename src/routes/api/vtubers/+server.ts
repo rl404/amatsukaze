@@ -10,6 +10,7 @@ export type VtubersResponse = BaseAPIResponse & {
 
 export const GET = (async ({ url }) => {
 	const queries = [
+		'mode',
 		'names',
 		'name',
 		'original_name',

@@ -38,6 +38,7 @@ export type TierListSort = 'title' | '-title' | 'updated_at' | '-updated_at';
 export type TierListLayout = 'grid' | 'list';
 
 export type VtubersQuery = {
+	mode: string;
 	names: string;
 	name: string;
 	original_name: string;
@@ -70,6 +71,7 @@ export type VtubersQuery = {
 };
 
 export const defaultVtubersQuery: VtubersQuery = {
+	mode: 'simple',
 	names: '',
 	name: '',
 	original_name: '',

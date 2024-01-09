@@ -18,7 +18,7 @@ export const config = {
 export const load = (async ({ params }) => {
 	const [agencyResp, vtubersResp] = await Promise.all([
 		await fetch(`${SHIMAKAZE_HOST}/agencies/${params.id}`),
-		await fetch(`${SHIMAKAZE_HOST}/vtubers?agency_id=${params.id}&limit=-1`)
+		await fetch(`${SHIMAKAZE_HOST}/vtubers?mode=simple&agency_id=${params.id}&limit=-1`)
 	]);
 	return {
 		agency: handleAPIResponse(agencyResp),
