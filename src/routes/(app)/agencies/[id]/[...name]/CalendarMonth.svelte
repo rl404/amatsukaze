@@ -27,51 +27,66 @@
 	let modal: SvelteComponent;
 	let monthData: MonthData[] = [];
 
-	for (let i = dayOne; i > 0; i--) {
-		monthData.push({
-			date: lastDateLastMonth - i + 1,
-			title: '',
-			class: 'subtitle',
-			birthday: [],
-			anniversary: []
-		});
-	}
+	$: vtubers, setData();
 
-	for (let i = 1; i <= lastDate; i++) {
-		monthData.push({
-			date: i,
-			title: formatBirthday(new Date(Date.UTC(year, month, i)).toISOString()),
-			class:
-				today.toLocaleString().slice(0, 10) ===
-				new Date(year, month, i).toLocaleString().slice(0, 10)
-					? 'outline outline-1 outline-red-500'
-					: '',
-			birthday: vtubers.filter((vtuber) => {
-				if (!vtuber.birthday || vtuber.retirement_date) return false;
-				const date = new Date(vtuber.birthday).toISOString();
-				const key = `${today.getFullYear()}-${date.slice(5, 10)}`;
-				const curr = new Date(Date.UTC(year, month, i)).toISOString().slice(0, 10);
-				return key === curr;
-			}),
-			anniversary: vtubers.filter((vtuber) => {
-				if (!vtuber.debut_date || vtuber.retirement_date) return false;
-				const date = new Date(vtuber.debut_date).toISOString();
-				const key = `${today.getFullYear()}-${date.slice(5, 10)}`;
-				const curr = new Date(Date.UTC(year, month, i)).toISOString().slice(0, 10);
-				return key === curr;
-			})
-		});
-	}
+	const setData = () => {
+		monthData = [];
 
-	for (let i = lastDay; i < 6; i++) {
-		monthData.push({
-			date: i - lastDay + 1,
-			title: '',
-			class: 'subtitle',
-			birthday: [],
-			anniversary: []
-		});
-	}
+		for (let i = dayOne; i > 0; i--) {
+			monthData = [
+				...monthData,
+				{
+					date: lastDateLastMonth - i + 1,
+					title: '',
+					class: 'subtitle',
+					birthday: [],
+					anniversary: []
+				}
+			];
+		}
+
+		for (let i = 1; i <= lastDate; i++) {
+			monthData = [
+				...monthData,
+				{
+					date: i,
+					title: formatBirthday(new Date(Date.UTC(year, month, i)).toISOString()),
+					class:
+						today.toLocaleString().slice(0, 10) ===
+						new Date(year, month, i).toLocaleString().slice(0, 10)
+							? 'outline outline-1 outline-red-500'
+							: '',
+					birthday: vtubers.filter((vtuber) => {
+						if (!vtuber.birthday || vtuber.retirement_date) return false;
+						const date = new Date(vtuber.birthday).toISOString();
+						const key = `${today.getFullYear()}-${date.slice(5, 10)}`;
+						const curr = new Date(Date.UTC(year, month, i)).toISOString().slice(0, 10);
+						return key === curr;
+					}),
+					anniversary: vtubers.filter((vtuber) => {
+						if (!vtuber.debut_date || vtuber.retirement_date) return false;
+						const date = new Date(vtuber.debut_date).toISOString();
+						const key = `${today.getFullYear()}-${date.slice(5, 10)}`;
+						const curr = new Date(Date.UTC(year, month, i)).toISOString().slice(0, 10);
+						return key === curr;
+					})
+				}
+			];
+		}
+
+		for (let i = lastDay; i < 6; i++) {
+			monthData = [
+				...monthData,
+				{
+					date: i - lastDay + 1,
+					title: '',
+					class: 'subtitle',
+					birthday: [],
+					anniversary: []
+				}
+			];
+		}
+	};
 
 	const onClick = (
 		title: string,
