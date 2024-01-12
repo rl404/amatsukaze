@@ -15,7 +15,7 @@
 
 	onMount(() => {
 		axios
-			.get(`/api/vtubers?sort=-subscriber&limit=10`)
+			.get(`/api/vtubers?mode=simple&sort=-subscriber&limit=10`)
 			.then((resp) => (data = resp.data.data))
 			.catch((err) => (error = getAxiosError(err)))
 			.finally(() => (loading = false));
