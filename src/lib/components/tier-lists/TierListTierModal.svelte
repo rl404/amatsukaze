@@ -4,7 +4,7 @@
 	import InputTextarea from '$lib/components/inputs/InputTextarea.svelte';
 	import Modal from '$lib/components/modals/Modal.svelte';
 	import type { Tier } from '$lib/types';
-	import { TierColors, TierSize } from '$lib/utils/const';
+	import { TierColors, TierSizes } from '$lib/utils/const';
 	import { quickRandomStr } from '$lib/utils/utils';
 	import type { SvelteComponent } from 'svelte';
 
@@ -23,7 +23,7 @@
 			label = '';
 			description = '';
 			color = TierColors[0];
-			size = TierSize[3];
+			size = TierSizes[3];
 		} else {
 			tierIndex = i;
 			label = data[i].label;
@@ -81,7 +81,7 @@
 		</div>
 		<div class="col-span-4 font-bold sm:col-span-1 sm:text-right">Size</div>
 		<div class="col-span-4 flex flex-wrap items-center gap-4 sm:col-span-3">
-			{#each TierSize as tierSize}
+			{#each TierSizes as tierSize}
 				<button
 					class="{tierSize} {color} {tierSize === size &&
 						'outline outline-4 outline-primary dark:outline-primary-dark'} min-h-24 w-24 break-all p-1 font-bold"

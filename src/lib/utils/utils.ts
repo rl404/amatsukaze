@@ -165,6 +165,10 @@ export const vtuberSorter =
 				const sb2 = b.channels.reduce((max, c) => (max > c.subscriber ? max : c.subscriber), 0);
 				return sb1 > sb2 ? -1 : 1;
 			}
+			case 'video_count':
+				return a.video_count < b.video_count ? -1 : 1;
+			case '-video_count':
+				return a.video_count > b.video_count ? -1 : 1;
 			default:
 				return a.name < b.name ? -1 : 1;
 		}
@@ -273,6 +277,8 @@ export const getVtubersQueryFromURLParam = (param: URLSearchParams): VtubersQuer
 		zodiacs: param.get('zodiacs') || '',
 		start_subscriber: parseInt(param.get('start_subscriber') || '0'),
 		end_subscriber: parseInt(param.get('end_subscriber') || '0'),
+		start_video_count: parseInt(param.get('start_video_count') || '0'),
+		end_video_count: parseInt(param.get('end_video_count') || '0'),
 		page: parseInt(param.get('page') || defaultVtubersQuery.page.toString()),
 		limit: parseInt(param.get('limit') || defaultVtubersQuery.limit.toString()),
 		sort: (param.get('sort') || defaultVtubersQuery.sort) as VtuberSort
