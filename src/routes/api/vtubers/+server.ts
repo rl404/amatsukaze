@@ -42,6 +42,8 @@ export const GET = (async ({ url }) => {
 		'zodiacs',
 		'start_subscriber',
 		'end_subscriber',
+		'start_video_count',
+		'end_video_count',
 		'sort',
 		'page',
 		'limit'

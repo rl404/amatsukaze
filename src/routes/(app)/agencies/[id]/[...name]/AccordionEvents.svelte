@@ -6,6 +6,12 @@
 	import CalendarMonth from './CalendarMonth.svelte';
 
 	export let data: VtuberResponseData[];
+
+	let showBirthday: boolean = true;
+	let showAnniversary: boolean = true;
+
+	const toggleBirthday = () => (showBirthday = !showBirthday);
+	const toggleAnniversary = () => (showAnniversary = !showAnniversary);
 </script>
 
 <Accordion title="Events" icon={CalendarIcon}>
@@ -17,11 +23,31 @@
 				<div class="pointer-events-none px-2 font-bold outline outline-1 outline-red-500">
 					Today
 				</div>
-				<div class="pointer-events-none bg-primary px-2 font-bold text-white">Birthday</div>
-				<div class="pointer-events-none bg-primary-dark px-2 font-bold text-white">Anniversary</div>
+				<button
+					class="clickable px-2 font-bold text-white {showBirthday
+						? 'bg-primary'
+						: 'bg-border dark:bg-border-dark'}"
+					on:click={toggleBirthday}
+				>
+					Birthday
+				</button>
+				<button
+					class="clickable px-2 font-bold text-white {showAnniversary
+						? 'bg-primary-dark'
+						: 'bg-border dark:bg-border-dark'}"
+					on:click={toggleAnniversary}
+				>
+					Anniversary
+				</button>
 			</div>
 			{#each MonthNames as _, i}
-				<CalendarMonth month={i} year={new Date().getFullYear()} vtubers={data} />
+				<CalendarMonth
+					month={i}
+					year={new Date().getFullYear()}
+					vtubers={data}
+					{showBirthday}
+					{showAnniversary}
+				/>
 			{/each}
 		{/if}
 	</div>

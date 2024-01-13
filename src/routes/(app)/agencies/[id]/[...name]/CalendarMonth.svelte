@@ -9,6 +9,8 @@
 	export let month: number;
 	export let year: number;
 	export let vtubers: VtuberResponseData[];
+	export let showBirthday: boolean;
+	export let showAnniversary: boolean;
 
 	type MonthData = {
 		date: number;
@@ -27,7 +29,7 @@
 	let modal: SvelteComponent;
 	let monthData: MonthData[] = [];
 
-	$: vtubers, setData();
+	$: vtubers, showBirthday, showAnniversary, setData();
 
 	const setData = () => {
 		monthData = [];
@@ -57,14 +59,14 @@
 							? 'outline outline-1 outline-red-500'
 							: '',
 					birthday: vtubers.filter((vtuber) => {
-						if (!vtuber.birthday || vtuber.retirement_date) return false;
+						if (!showBirthday || !vtuber.birthday || vtuber.retirement_date) return false;
 						const date = new Date(vtuber.birthday).toISOString();
 						const key = `${today.getFullYear()}-${date.slice(5, 10)}`;
 						const curr = new Date(Date.UTC(year, month, i)).toISOString().slice(0, 10);
 						return key === curr;
 					}),
 					anniversary: vtubers.filter((vtuber) => {
-						if (!vtuber.debut_date || vtuber.retirement_date) return false;
+						if (!showAnniversary || !vtuber.debut_date || vtuber.retirement_date) return false;
 						const date = new Date(vtuber.debut_date).toISOString();
 						const key = `${today.getFullYear()}-${date.slice(5, 10)}`;
 						const curr = new Date(Date.UTC(year, month, i)).toISOString().slice(0, 10);

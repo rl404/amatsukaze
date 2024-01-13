@@ -104,6 +104,7 @@
 									id={vtuber.id}
 									name={vtuber.name}
 									image={vtuber.image}
+									subscriber={vtuber.subscriber}
 								/>
 							{:else if layout === 'card'}
 								<VtuberCard

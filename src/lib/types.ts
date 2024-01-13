@@ -26,7 +26,9 @@ export type VtuberSort =
 	| 'retirement_date'
 	| '-retirement_date'
 	| 'subscriber'
-	| '-subscriber';
+	| '-subscriber'
+	| 'video_count'
+	| '-video_count';
 
 export type AgencyLayout = 'grid' | 'list';
 export type AgencySort = 'name' | '-name' | 'member' | '-member' | 'subscriber' | '-subscriber';
@@ -65,6 +67,8 @@ export type VtubersQuery = {
 	zodiacs: string;
 	start_subscriber: number;
 	end_subscriber: number;
+	start_video_count: number;
+	end_video_count: number;
 	page: number;
 	limit: number;
 	sort: VtuberSort;
@@ -98,6 +102,8 @@ export const defaultVtubersQuery: VtubersQuery = {
 	zodiacs: '',
 	start_subscriber: 0,
 	end_subscriber: 0,
+	start_video_count: 0,
+	end_video_count: 0,
 	page: 1,
 	limit: 36,
 	sort: 'name'

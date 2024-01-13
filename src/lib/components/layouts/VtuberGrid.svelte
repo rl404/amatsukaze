@@ -1,11 +1,12 @@
 <script lang="ts">
 	import Image from '$lib/components/commons/Image.svelte';
 	import RenderIfVisible from '$lib/components/commons/RenderIfVisible.svelte';
-	import { getWikiImg } from '$lib/utils/utils';
+	import { compactInt, getWikiImg } from '$lib/utils/utils';
 
 	export let id: number;
 	export let name: string;
 	export let image: string;
+	export let subscriber: number = 0;
 	export { className as class };
 	export let itemprop: string = '';
 
@@ -36,5 +37,13 @@
 		>
 			{name}
 		</div>
+		{#if subscriber > 0}
+			<div
+				class="absolute right-1 top-1 line-clamp-1 rounded-lg bg-primary px-1 text-xs font-bold text-white opacity-0 group-hover:opacity-100 dark:bg-primary-dark"
+				title="subscriber count"
+			>
+				{compactInt(subscriber)}
+			</div>
+		{/if}
 	</RenderIfVisible>
 </a>

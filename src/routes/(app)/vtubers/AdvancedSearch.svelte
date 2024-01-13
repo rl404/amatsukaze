@@ -16,6 +16,7 @@
 	import InputStatus from './InputStatus.svelte';
 	import InputSubscriber from './InputSubscriber.svelte';
 	import InputText from './InputText.svelte';
+	import InputVideoCount from './InputVideoCount.svelte';
 
 	const dispatch = createEventDispatcher<{ submit: null }>();
 
@@ -122,6 +123,12 @@
 				bind:endSubscriber={query.end_subscriber}
 				minValue={0}
 				maxValue={5e6}
+			/>
+		</div>
+		<div class="col-span-6 sm:col-span-2">
+			<InputVideoCount
+				bind:startVideoCount={query.start_video_count}
+				bind:endVideoCount={query.end_video_count}
 			/>
 		</div>
 		<div class="col-span-6 sm:col-span-2">

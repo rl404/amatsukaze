@@ -38,6 +38,7 @@
 					id={vtuber.id}
 					name={vtuber.name}
 					image={vtuber.image}
+					subscriber={vtuber.subscriber}
 				/>
 			{/each}
 		{/if}
@@ -53,6 +54,7 @@
 					id={vtuber.id}
 					name={vtuber.name}
 					image={vtuber.image}
+					subscriber={vtuber.subscriber}
 				/>
 			{/each}
 		{/if}

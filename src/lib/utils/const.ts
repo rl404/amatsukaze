@@ -118,4 +118,4 @@ export const TierColors = [
 	'bg-white'
 ];
 
-export const TierSize = ['text-xs', 'text-base', 'text-xl', 'text-3xl'];
+export const TierSizes = ['text-xs', 'text-base', 'text-xl', 'text-3xl'];
