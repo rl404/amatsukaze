@@ -1,4 +1,3 @@
-import type { VtuberStatus } from '$lib/types';
 import { ThemeMode } from './theme';
 
 export const DayNames = [
