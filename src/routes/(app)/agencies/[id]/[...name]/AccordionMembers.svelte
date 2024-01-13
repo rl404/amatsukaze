@@ -32,7 +32,9 @@
 				<VtuberSortButton
 					bind:value={sort}
 					class="h-4 w-4"
-					hideKeys={layout === 'timeline' ? ['name', '-name', 'subscriber', '-subscriber'] : []}
+					hideKeys={layout === 'timeline'
+						? ['name', '-name', 'subscriber', '-subscriber', 'video_count', '-video_count']
+						: []}
 				/>
 				<VtuberLayoutButton bind:value={layout} bind:sort />
 			</div>
@@ -48,6 +50,7 @@
 							id={vtuber.id}
 							name={vtuber.name}
 							image={vtuber.image}
+							subscriber={vtuber.subscriber}
 							itemprop="member"
 						/>
 					{:else if layout === 'card'}

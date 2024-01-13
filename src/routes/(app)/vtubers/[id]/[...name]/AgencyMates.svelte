@@ -73,6 +73,7 @@
 						id={vtuber.id}
 						name={vtuber.name}
 						image={vtuber.image}
+						subscriber={vtuber.subscriber}
 						class="col-span-2 text-sm sm:col-span-2 md:col-span-1"
 						itemprop="colleague"
 					/>

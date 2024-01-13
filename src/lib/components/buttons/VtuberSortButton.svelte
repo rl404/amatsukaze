@@ -72,6 +72,18 @@
 			value: '-retirement_date',
 			component: SortNumberDescIcon,
 			hidden: hideKeys.includes('-retirement_date')
+		},
+		video_count: {
+			label: 'Video count ASC',
+			value: 'video_count',
+			component: SortNumberAscIcon,
+			hidden: hideKeys.includes('video_count')
+		},
+		'-video_count': {
+			label: 'Video count DESC',
+			value: '-video_count',
+			component: SortNumberDescIcon,
+			hidden: hideKeys.includes('-video_count')
 		}
 	};
 

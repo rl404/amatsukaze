@@ -62,7 +62,13 @@
 			<div class="col-span-3 text-center">no vtubers found...</div>
 		{:else}
 			{#each data as vtuber}
-				<VtuberGrid id={vtuber.id} name={vtuber.name} image={vtuber.image} class="text-sm" />
+				<VtuberGrid
+					id={vtuber.id}
+					name={vtuber.name}
+					image={vtuber.image}
+					subscriber={vtuber.subscriber}
+					class="text-sm"
+				/>
 			{/each}
 		{/if}
 	</div>
