@@ -32,7 +32,7 @@
 	<BarChart
 		data={data.map((d) => ({
 			name: d.name,
-			value: d.channels.reduce((max, c) => (c.subscriber > max ? c.subscriber : max), 0)
+			value: d.subscriber
 		}))}
 		horizontal
 		xaxisFormatter={(v) => compactInt(parseInt(v))}
