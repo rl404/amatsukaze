@@ -9,7 +9,7 @@
 	type ChartData = {
 		id: number;
 		name: string;
-		count: number;
+		video_count: number;
 	};
 
 	let data: ChartData[] = [];
@@ -19,7 +19,7 @@
 
 	onMount(() => {
 		axios
-			.get(`/api/statistics/vtubers/video-count?top=10`)
+			.get(`/api/vtubers?mode=simple&sort=-video_count&limit=10`)
 			.then((resp) => (data = resp.data.data))
 			.catch((err) => (error = getAxiosError(err)))
 			.finally(() => (loading = false));
@@ -34,7 +34,7 @@
 	<div class="text-center text-red-500">{error}</div>
 {:else}
 	<BarChart
-		data={data.map((d) => ({ name: d.name, value: d.count }))}
+		data={data.map((d) => ({ name: d.name, value: d.video_count }))}
 		horizontal
 		on:click={onClick}
 	/>
