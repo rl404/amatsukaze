@@ -12,7 +12,7 @@ export type AgencyResponseData = {
 	image: string;
 	member: number;
 	subscriber: number;
-	updated_at: Date;
+	updated_at: string;
 };
 
 export const GET = (async ({ params }) => {
