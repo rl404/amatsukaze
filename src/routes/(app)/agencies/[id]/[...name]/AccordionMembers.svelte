@@ -7,7 +7,7 @@
 	import VtuberGrid from '$lib/components/layouts/VtuberGrid.svelte';
 	import VtuberList from '$lib/components/layouts/VtuberList.svelte';
 	import type { VtuberLayout, VtuberSort } from '$lib/types';
-	import { vtuberSorter } from '$lib/utils/utils';
+	import { compactInt, vtuberSorter } from '$lib/utils/utils';
 	import type { VtuberResponseData } from '../../../../api/vtubers/[id]/+server';
 	import MembersTimeline from './MembersTimeline.svelte';
 	import VtuberLayoutButton from './VtuberLayoutButton.svelte';
@@ -50,7 +50,12 @@
 							id={vtuber.id}
 							name={vtuber.name}
 							image={vtuber.image}
-							subscriber={vtuber.subscriber}
+							label={sort === 'video_count' || sort === '-video_count'
+								? vtuber.video_count.toLocaleString()
+								: compactInt(vtuber.subscriber)}
+							videoCount={vtuber.video_count}
+							retirementDate={vtuber.retirement_date}
+							showBorder={sort === 'video_count' || sort === '-video_count'}
 							itemprop="member"
 						/>
 					{:else if layout === 'card'}

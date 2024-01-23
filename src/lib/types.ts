@@ -187,3 +187,10 @@ export const defaultTierList: TierListResponseData = {
 	},
 	updated_at: ''
 };
+
+export type VideoCountColor = {
+	label: string;
+	min: number;
+	max: number;
+	borderClass: string;
+};
