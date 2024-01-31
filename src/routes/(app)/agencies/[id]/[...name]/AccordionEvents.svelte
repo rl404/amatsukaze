@@ -20,7 +20,7 @@
 			<div class="col-span-1 text-center md:col-span-2">no events found...</div>
 		{:else}
 			<div class="col-span-1 flex items-center justify-end gap-2 md:col-span-2">
-				<div class="pointer-events-none px-2 font-bold outline outline-1 outline-red-500">
+				<div class="pointer-events-none px-2 font-bold outline outline-1 outline-green-500">
 					Today
 				</div>
 				<button
