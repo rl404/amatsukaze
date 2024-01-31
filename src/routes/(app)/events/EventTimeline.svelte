@@ -3,6 +3,7 @@
 	import Timeline from '$lib/components/timelines/Timeline.svelte';
 	import TimelineItem from '$lib/components/timelines/TimelineItem.svelte';
 	import { MonthNames } from '$lib/utils/const';
+	import { compactInt } from '$lib/utils/utils';
 	import type { VtuberResponseData } from '../../api/vtubers/[id]/+server';
 
 	export let birthdayData: VtuberResponseData[];
@@ -86,7 +87,7 @@
 							id={vtuber.id}
 							name={vtuber.name}
 							image={vtuber.image}
-							subscriber={vtuber.subscriber}
+							label={compactInt(vtuber.subscriber)}
 						/>
 					{/each}
 				</div>
@@ -106,7 +107,7 @@
 							id={vtuber.id}
 							name={vtuber.name}
 							image={vtuber.image}
-							subscriber={vtuber.subscriber}
+							label={compactInt(vtuber.subscriber)}
 						/>
 					{/each}
 				</div>

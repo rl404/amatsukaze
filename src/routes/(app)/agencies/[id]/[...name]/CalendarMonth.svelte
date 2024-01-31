@@ -56,7 +56,7 @@
 					class:
 						today.toLocaleString().slice(0, 10) ===
 						new Date(year, month, i).toLocaleString().slice(0, 10)
-							? 'outline outline-1 outline-red-500'
+							? 'outline outline-2 outline-green-500'
 							: '',
 					birthday: vtubers.filter((vtuber) => {
 						if (!showBirthday || !vtuber.birthday || vtuber.retirement_date) return false;

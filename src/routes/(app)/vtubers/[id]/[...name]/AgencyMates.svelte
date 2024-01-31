@@ -11,7 +11,7 @@
 	import VtuberList from '$lib/components/layouts/VtuberList.svelte';
 	import type { VtuberLayout, VtuberSort } from '$lib/types';
 	import { getAxiosError } from '$lib/utils/api';
-	import { vtuberSorter } from '$lib/utils/utils';
+	import { compactInt, vtuberSorter } from '$lib/utils/utils';
 	import axios from 'axios';
 	import type { VtuberResponseData } from '../../../../api/vtubers/[id]/+server';
 
@@ -73,7 +73,12 @@
 						id={vtuber.id}
 						name={vtuber.name}
 						image={vtuber.image}
-						subscriber={vtuber.subscriber}
+						label={sort === 'video_count' || sort === '-video_count'
+							? vtuber.video_count.toLocaleString()
+							: compactInt(vtuber.subscriber)}
+						videoCount={vtuber.video_count}
+						retirementDate={vtuber.retirement_date}
+						showBorder={sort === 'video_count' || sort === '-video_count'}
 						class="col-span-2 text-sm sm:col-span-2 md:col-span-1"
 						itemprop="colleague"
 					/>

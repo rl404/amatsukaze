@@ -6,7 +6,7 @@
 	import Modal from '$lib/components/modals/Modal.svelte';
 	import type { VtuberSort } from '$lib/types';
 	import { getAxiosError } from '$lib/utils/api';
-	import { getWikiImg } from '$lib/utils/utils';
+	import { compactInt, getWikiImg } from '$lib/utils/utils';
 	import axios from 'axios';
 	import type { SvelteComponent } from 'svelte';
 	import type { VtuberResponseData } from '../../../routes/api/vtubers/[id]/+server';
@@ -66,7 +66,7 @@
 					id={vtuber.id}
 					name={vtuber.name}
 					image={vtuber.image}
-					subscriber={vtuber.subscriber}
+					label={compactInt(vtuber.subscriber)}
 					class="text-sm"
 				/>
 			{/each}

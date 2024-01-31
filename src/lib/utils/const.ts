@@ -1,3 +1,4 @@
+import type { VideoCountColor } from '$lib/types';
 import { ThemeMode } from './theme';
 
 export const DayNames = [
@@ -119,3 +120,27 @@ export const TierColors = [
 ];
 
 export const TierSizes = ['text-xs', 'text-base', 'text-xl', 'text-3xl'];
+
+export const VideoCountColors: VideoCountColor[] = [
+	{ label: 'Retired', min: 0, max: 0, borderClass: '' },
+	{ label: 'No upload/stream', min: 0, max: 0, borderClass: 'border-b-2 border-red-500' },
+	{ label: 'Rarely upload/stream', min: 1, max: 10, borderClass: 'border-b-2 border-amber-500' },
+	{
+		label: 'Regularly upload/stream',
+		min: 11,
+		max: 30,
+		borderClass: 'border-b-2 border-yellow-500'
+	},
+	{
+		label: 'Frequently upload/stream',
+		min: 31,
+		max: 60,
+		borderClass: 'border-b-2 border-green-500'
+	},
+	{
+		label: 'Very active upload/stream',
+		min: 61,
+		max: 1000,
+		borderClass: 'border-b-2 border-blue-500'
+	}
+];

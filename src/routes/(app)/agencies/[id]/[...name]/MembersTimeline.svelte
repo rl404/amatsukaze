@@ -4,6 +4,7 @@
 	import TimelineItem from '$lib/components/timelines/TimelineItem.svelte';
 	import type { VtuberSort } from '$lib/types';
 	import { MonthNames } from '$lib/utils/const';
+	import { compactInt } from '$lib/utils/utils';
 	import type { VtuberResponseData } from '../../../../api/vtubers/[id]/+server';
 
 	export let data: VtuberResponseData[];
@@ -83,7 +84,7 @@
 							id={vtuber.id}
 							name={vtuber.name}
 							image={vtuber.image}
-							subscriber={vtuber.subscriber}
+							label={compactInt(vtuber.subscriber)}
 							itemprop="member"
 						/>
 					{/each}
@@ -104,7 +105,7 @@
 							id={vtuber.id}
 							name={vtuber.name}
 							image={vtuber.image}
-							subscriber={vtuber.subscriber}
+							label={compactInt(vtuber.subscriber)}
 							itemprop="member"
 						/>
 					{/each}
