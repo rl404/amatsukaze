@@ -2,6 +2,7 @@
 	import Border from '$lib/components/commons/Border.svelte';
 	import VtuberGrid from '$lib/components/layouts/VtuberGrid.svelte';
 	import Modal from '$lib/components/modals/Modal.svelte';
+	import { compactInt } from '$lib/utils/utils';
 	import type { SvelteComponent } from 'svelte';
 	import type { VtuberResponseData } from '../../../../api/vtubers/[id]/+server';
 
@@ -38,7 +39,7 @@
 					id={vtuber.id}
 					name={vtuber.name}
 					image={vtuber.image}
-					subscriber={vtuber.subscriber}
+					label={compactInt(vtuber.subscriber)}
 				/>
 			{/each}
 		{/if}
@@ -54,7 +55,7 @@
 					id={vtuber.id}
 					name={vtuber.name}
 					image={vtuber.image}
-					subscriber={vtuber.subscriber}
+					label={compactInt(vtuber.subscriber)}
 				/>
 			{/each}
 		{/if}

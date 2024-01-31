@@ -6,14 +6,15 @@ import {
 	type VtubersQuery,
 	type TierListQuery,
 	defaultTierListQuery,
-	type TierListSort
+	type TierListSort,
+	type VideoCountColor
 } from '$lib/types';
 import type { AgencyResponseData } from '../../routes/api/agencies/[id]/+server';
 import type {
 	VtuberResponseData,
 	VtuberResponseDataChannel
 } from '../../routes/api/vtubers/[id]/+server';
-import { ChannelTypes, MonthNames } from './const';
+import { ChannelTypes, MonthNames, VideoCountColors } from './const';
 
 export const shuffleArray = (array: any[]) => {
 	for (let i = array.length - 1; i > 0; i--) {
@@ -43,7 +44,8 @@ export const quickRandomStr = (): string => {
 };
 
 export const generateVtuberDescription = (vtuber: VtuberResponseData): string => {
-	let desc = `Meet ${vtuber.name}`;
+	let desc = vtuber.caption ? vtuber.caption + '. ' : '';
+	desc += `Meet ${vtuber.name}`;
 	desc +=
 		vtuber.agencies.length === 0
 			? ', an independent vtuber, '
@@ -166,8 +168,12 @@ export const vtuberSorter =
 				return sb1 > sb2 ? -1 : 1;
 			}
 			case 'video_count':
+				if (a.retirement_date) return -1;
+				if (b.retirement_date) return 1;
 				return a.video_count < b.video_count ? -1 : 1;
 			case '-video_count':
+				if (a.retirement_date) return 1;
+				if (b.retirement_date) return -1;
 				return a.video_count > b.video_count ? -1 : 1;
 			default:
 				return a.name < b.name ? -1 : 1;
@@ -293,4 +299,14 @@ export const getTierListsQueryFromURLParam = (param: URLSearchParams): TierListQ
 		page: parseInt(param.get('page') || defaultTierListQuery.page.toString()),
 		limit: parseInt(param.get('limit') || defaultTierListQuery.limit.toString())
 	};
+};
+
+export const getVideoCountColor = (videoCount: number, retirementDate: string): VideoCountColor => {
+	if (retirementDate) return VideoCountColors[0];
+	for (let i = 1; i < VideoCountColors.length; i++) {
+		if (videoCount >= VideoCountColors[i].min && videoCount <= VideoCountColors[i].max) {
+			return VideoCountColors[i];
+		}
+	}
+	return VideoCountColors[VideoCountColors.length - 1];
 };
