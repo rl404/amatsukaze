@@ -157,16 +157,10 @@ export const vtuberSorter =
 				if (!a.retirement_date || !new Date(a.retirement_date)) return 1;
 				if (!b.retirement_date || !new Date(b.retirement_date)) return -1;
 				return new Date(a.retirement_date) > new Date(b.retirement_date) ? -1 : 1;
-			case 'subscriber': {
-				const sa1 = a.channels.reduce((max, c) => (max > c.subscriber ? max : c.subscriber), 0);
-				const sa2 = b.channels.reduce((max, c) => (max > c.subscriber ? max : c.subscriber), 0);
-				return sa1 < sa2 ? -1 : 1;
-			}
-			case '-subscriber': {
-				const sb1 = a.channels.reduce((max, c) => (max > c.subscriber ? max : c.subscriber), 0);
-				const sb2 = b.channels.reduce((max, c) => (max > c.subscriber ? max : c.subscriber), 0);
-				return sb1 > sb2 ? -1 : 1;
-			}
+			case 'subscriber':
+				return a.subscriber < b.subscriber ? -1 : 1;
+			case '-subscriber':
+				return a.subscriber > b.subscriber ? -1 : 1;
 			case 'video_count':
 				if (a.retirement_date) return -1;
 				if (b.retirement_date) return 1;
