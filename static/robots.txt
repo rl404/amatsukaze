@@ -1,5 +1,0 @@
-User-agent: *
-Disallow: /auth/*
-Allow: /
-
-Sitemap: https://amatsukaze.rl404.com/sitemap.xml
