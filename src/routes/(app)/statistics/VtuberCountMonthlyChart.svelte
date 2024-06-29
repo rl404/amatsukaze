@@ -1,11 +1,17 @@
 <script lang="ts">
-	import Chart from '$lib/components/charts/Chart.svelte';
-	import Loading from '$lib/components/commons/Loading.svelte';
+	import {
+		ChartBorderColors,
+		ChartColors,
+		ChartDebutColors,
+		ChartRetiredColors,
+		ChartTextColors
+	} from '$lib/const';
 	import { getAxiosError } from '$lib/utils/api';
-	import { ChartBorderColors, ChartColors, ChartTextColors } from '$lib/utils/const';
-	import { ThemeMode, theme } from '$lib/utils/theme';
+	import { DarkTheme } from '$lib/utils/theme';
+	import { autoCeil } from '$lib/utils/utils';
 	import axios from 'axios';
-	import { onMount, type SvelteComponent } from 'svelte';
+	import { Chart, Spinner } from 'flowbite-svelte';
+	import { onMount } from 'svelte';
 	import type { VtuberDebutRetireCountMonthlyResponseData } from '../../api/statistics/vtubers/debut-retire-count-monthly/+server';
 	import VtuberCountMonthlyModal from './VtuberCountMonthlyModal.svelte';
 
@@ -15,30 +21,17 @@
 		active_total: number;
 	};
 
-	let modal: SvelteComponent;
 	let data: ChartData[] = [];
+	let maxData: number = 0;
+	let maxTotal: number = 0;
 	let loading: boolean = true;
 	let error: string = '';
-	let currTheme: ThemeMode = ThemeMode.Dark;
-	let chartColors: string[] = [
-		ChartColors.debut[0],
-		ChartColors.retired[0],
-		ChartColors.debut[1],
-		ChartColors.retired[1],
-		ChartColors[currTheme][0]
-	];
+	let open: boolean = false;
+	let modalYear: number = 0;
+	let modalMonth: number = 0;
+	let darkTheme: boolean = false;
 
-	theme.subscribe((v) => {
-		if (!v) return;
-		currTheme = v;
-		chartColors[4] = ChartColors[currTheme][0];
-	});
-
-	const openModal = (i: number) => {
-		const d = data[i];
-		if (!d) return;
-		modal.toggleOpen(d.year, d.month);
-	};
+	DarkTheme.subscribe((v) => (darkTheme = v));
 
 	onMount(() => {
 		axios
@@ -60,7 +53,19 @@
 					tmpData[i].active_total += tmpData[i - 1].active_total;
 				});
 
-				data = tmpData;
+				maxData = autoCeil(
+					Math.max(...tmpData.map((d) => d.debut), ...tmpData.map((d) => d.retire))
+				);
+
+				maxTotal = autoCeil(
+					Math.max(
+						...tmpData.map((d) => d.debut_total),
+						...tmpData.map((d) => d.retire_total),
+						...tmpData.map((d) => d.active_total)
+					)
+				);
+
+				data = [...tmpData];
 			})
 			.catch((err) => (error = getAxiosError(err)))
 			.finally(() => (loading = false));
@@ -68,13 +73,11 @@
 </script>
 
 {#if loading}
-	<div class="flex h-full items-center justify-center">
-		<Loading class="h-8 w-8" />
+	<div class="flex h-full w-full items-center justify-center">
+		<Spinner />
 	</div>
 {:else if error !== ''}
-	<div class="flex h-full items-center justify-center">
-		<div class="text-center text-red-500">{error}</div>
-	</div>
+	<div class="flex h-full w-full items-center justify-center text-red-500">{error}</div>
 {:else}
 	<Chart
 		options={{
@@ -84,27 +87,14 @@
 				toolbar: { show: false },
 				zoom: { enabled: false },
 				events: {
-					click: (_, __, options) => openModal(options.dataPointIndex)
+					click: (_, __, options) => {
+						const d = data[options.dataPointIndex];
+						if (!d) return;
+						modalMonth = d.month;
+						modalYear = d.year;
+						open = true;
+					}
 				}
-			},
-			colors: chartColors,
-			dataLabels: { enabled: false },
-			fill: {
-				type: ['solid', 'solid', 'gradient', 'gradient', 'gradient'],
-				gradient: {
-					type: 'vertical',
-					shadeIntensity: 1,
-					inverseColors: false,
-					opacityFrom: 0.7,
-					opacityTo: 0,
-					stops: [20, 100]
-				}
-			},
-			grid: {
-				borderColor: ChartBorderColors[currTheme],
-				strokeDashArray: 5,
-				xaxis: { lines: { show: false } },
-				yaxis: { lines: { show: true } }
 			},
 			series: [
 				{
@@ -133,83 +123,101 @@
 					data: data.map((d) => d.active_total)
 				}
 			],
-			legend: { labels: { colors: ChartTextColors[currTheme] } },
-			stroke: {
-				curve: 'smooth',
-				width: 2
-			},
-			tooltip: {
-				theme: currTheme,
-				intersect: false,
-				shared: true,
-				x: { format: 'MMM yyyy' },
-				y: { formatter: (v) => (!v ? '0' : v.toLocaleString()) }
-			},
 			xaxis: {
 				type: 'datetime',
 				categories: data.map((d) => new Date(d.year, d.month, 1).toISOString().slice(0, 10)),
-				labels: { style: { colors: ChartTextColors[currTheme] } },
-				axisBorder: { color: ChartBorderColors[currTheme] },
-				axisTicks: { color: ChartBorderColors[currTheme] }
+				labels: { style: { colors: ChartTextColors[darkTheme.toString()] } },
+				axisBorder: { color: ChartBorderColors[darkTheme.toString()] },
+				axisTicks: { color: ChartBorderColors[darkTheme.toString()] }
 			},
 			yaxis: [
 				{
 					seriesName: 'Debut',
 					showAlways: true,
-					labels: { style: { colors: ChartTextColors[currTheme] } },
-					forceNiceScale: true,
-					max: Math.max(...data.map((d) => d.debut), ...data.map((d) => d.retire)),
-					axisBorder: { show: true, color: ChartBorderColors[currTheme] },
-					axisTicks: { show: true, color: ChartBorderColors[currTheme] }
+					labels: { style: { colors: ChartTextColors[darkTheme.toString()] } },
+					max: maxData,
+					min: 0,
+					axisBorder: { show: true, color: ChartBorderColors[darkTheme.toString()] },
+					axisTicks: { show: true, color: ChartBorderColors[darkTheme.toString()] }
 				},
 				{
 					seriesName: 'Retire',
 					show: false,
-					labels: { style: { colors: ChartTextColors[currTheme] } },
-					forceNiceScale: true,
-					max: Math.max(...data.map((d) => d.debut), ...data.map((d) => d.retire)),
-					axisBorder: { show: true, color: ChartBorderColors[currTheme] },
-					axisTicks: { show: true, color: ChartBorderColors[currTheme] }
+					labels: { style: { colors: ChartTextColors[darkTheme.toString()] } },
+					max: maxData,
+					min: 0,
+					axisBorder: { show: true, color: ChartBorderColors[darkTheme.toString()] },
+					axisTicks: { show: true, color: ChartBorderColors[darkTheme.toString()] }
 				},
 				{
 					seriesName: 'Debut Total',
 					show: false,
-					labels: { style: { colors: ChartTextColors[currTheme] } },
-					max: Math.max(
-						...data.map((d) => d.debut_total),
-						...data.map((d) => d.retire_total),
-						...data.map((d) => d.active_total)
-					),
-					forceNiceScale: true,
+					labels: { style: { colors: ChartTextColors[darkTheme.toString()] } },
+					max: maxTotal,
+					min: 0,
 					opposite: true,
-					axisBorder: { show: true, color: ChartBorderColors[currTheme] },
-					axisTicks: { show: true, color: ChartBorderColors[currTheme] }
+					axisBorder: { show: true, color: ChartBorderColors[darkTheme.toString()] },
+					axisTicks: { show: true, color: ChartBorderColors[darkTheme.toString()] }
 				},
 				{
 					seriesName: 'Retire Total',
 					show: false,
-					labels: { style: { colors: ChartTextColors[currTheme] } },
-					max: Math.max(
-						...data.map((d) => d.debut_total),
-						...data.map((d) => d.retire_total),
-						...data.map((d) => d.active_total)
-					),
-					forceNiceScale: true,
+					labels: { style: { colors: ChartTextColors[darkTheme.toString()] } },
+					max: maxTotal,
+					min: 0,
 					opposite: true,
-					axisBorder: { show: true, color: ChartBorderColors[currTheme] },
-					axisTicks: { show: true, color: ChartBorderColors[currTheme] }
+					axisBorder: { show: true, color: ChartBorderColors[darkTheme.toString()] },
+					axisTicks: { show: true, color: ChartBorderColors[darkTheme.toString()] }
 				},
 				{
 					seriesName: 'Total Active',
 					showAlways: true,
-					labels: { style: { colors: ChartTextColors[currTheme] } },
-					forceNiceScale: true,
+					labels: { style: { colors: ChartTextColors[darkTheme.toString()] } },
+					max: maxTotal,
+					min: 0,
 					opposite: true,
-					axisBorder: { show: true, color: ChartBorderColors[currTheme] },
-					axisTicks: { show: true, color: ChartBorderColors[currTheme] }
+					axisBorder: { show: true, color: ChartBorderColors[darkTheme.toString()] },
+					axisTicks: { show: true, color: ChartBorderColors[darkTheme.toString()] }
 				}
-			]
+			],
+			colors: [
+				ChartDebutColors[0],
+				ChartRetiredColors[0],
+				ChartDebutColors[1],
+				ChartRetiredColors[1],
+				ChartColors[darkTheme.toString()][0]
+			],
+			dataLabels: { enabled: false },
+			legend: { labels: { colors: ChartTextColors[darkTheme.toString()] } },
+			grid: {
+				borderColor: ChartBorderColors[darkTheme.toString()],
+				strokeDashArray: 5,
+				xaxis: { lines: { show: false } },
+				yaxis: { lines: { show: true } }
+			},
+			fill: {
+				type: ['solid', 'solid', 'gradient', 'gradient', 'gradient'],
+				gradient: {
+					type: 'vertical',
+					shadeIntensity: 1,
+					inverseColors: false,
+					opacityFrom: 0.7,
+					opacityTo: 0,
+					stops: [20, 100]
+				}
+			},
+			stroke: {
+				curve: 'smooth',
+				width: 2
+			},
+			tooltip: {
+				theme: darkTheme ? 'dark' : 'light',
+				intersect: false,
+				shared: true,
+				x: { format: 'MMM yyyy' },
+				y: { formatter: (v) => (!v ? '0' : v.toLocaleString()) }
+			}
 		}}
 	/>
-	<VtuberCountMonthlyModal bind:this={modal} />
+	<VtuberCountMonthlyModal bind:open bind:month={modalMonth} bind:year={modalYear} />
 {/if}

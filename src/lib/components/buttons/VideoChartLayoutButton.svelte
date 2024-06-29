@@ -1,31 +1,21 @@
 <script lang="ts">
-	import Grid1Icon from '$lib/components/icons/Grid1Icon.svelte';
-	import TimelineIcon from '$lib/components/icons/TimelineIcon.svelte';
 	import type { VideoChartLayout } from '$lib/types';
 	import type { ComponentType } from 'svelte';
-	import IconButton from './IconButton.svelte';
+	import CalendarIcon from '../icons/CalendarIcon.svelte';
+	import GridIcon from '../icons/GridIcon.svelte';
 
-	export let value: string;
-	export { className as class };
+	export let value: VideoChartLayout;
 
-	const layouts: { name: VideoChartLayout; component: ComponentType }[] = [
-		{ name: 'heatmap', component: Grid1Icon },
-		{ name: 'timeline', component: TimelineIcon }
+	const layouts: { value: VideoChartLayout; icon: ComponentType }[] = [
+		{ value: 'calendar', icon: CalendarIcon },
+		{ value: 'hourly', icon: GridIcon }
 	];
-
-	let className: string = '';
-	let layoutIndex: number = 0;
-
-	const nextLayout = () => {
-		layoutIndex = (layoutIndex + 1) % layouts.length;
-		value = layouts[layoutIndex].name;
-	};
 </script>
 
-{#each layouts as l, i}
-	{#if i === layoutIndex}
-		<IconButton title={l.name + ' layout'} on:click={nextLayout} class="p-1.5">
-			<svelte:component this={l.component} class={className} />
-		</IconButton>
-	{/if}
-{/each}
+<div class="flex items-center justify-center gap-2">
+	{#each layouts as layout}
+		<button on:click={() => (value = layout.value)}>
+			<svelte:component this={layout.icon} class="size-4 transition hover:text-primary" />
+		</button>
+	{/each}
+</div>

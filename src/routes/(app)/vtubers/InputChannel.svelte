@@ -1,6 +1,6 @@
 <script lang="ts">
-	import InputCheckbox from '$lib/components/inputs/InputCheckbox.svelte';
-	import { ChannelTypes } from '$lib/utils/const';
+	import Checkbox from '$lib/components/inputs/Checkbox.svelte';
+	import { ChannelTypes } from '$lib/const';
 	import { toTitleCase } from '$lib/utils/utils';
 
 	export let value: string;
@@ -31,18 +31,15 @@
 		}));
 </script>
 
-<div class="grid gap-1">
-	<label class="font-bold" for="channel">Channels</label>
-	<div class="flex justify-center gap-2">
-		{#each ChannelTypes as ct, i}
-			<InputCheckbox
-				label={toTitleCase(ct)}
-				value={ct}
-				class="w-full"
-				checked={channelChecked[i]}
-				useIndeterminate
-				bind:state={channelChecked[i]}
-			/>
-		{/each}
-	</div>
+<div class="flex justify-center gap-2">
+	{#each ChannelTypes as ct, i}
+		<Checkbox
+			value={ct}
+			useIndeterminate
+			checked={channelChecked[i]}
+			bind:state={channelChecked[i]}
+		>
+			{toTitleCase(ct)}
+		</Checkbox>
+	{/each}
 </div>

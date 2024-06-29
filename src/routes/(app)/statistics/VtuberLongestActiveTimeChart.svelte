@@ -1,16 +1,14 @@
 <script lang="ts">
 	import BarChart from '$lib/components/charts/BarChart.svelte';
-	import Loading from '$lib/components/commons/Loading.svelte';
-	import VtuberModal from '$lib/components/modals/VtuberModal.svelte';
 	import { getAxiosError } from '$lib/utils/api';
 	import axios from 'axios';
-	import { onMount, type SvelteComponent } from 'svelte';
+	import { Spinner } from 'flowbite-svelte';
+	import { onMount } from 'svelte';
 	import type { VtuberResponseData } from '../../api/vtubers/[id]/+server';
 
 	let data: VtuberResponseData[] = [];
 	let loading: boolean = true;
 	let error: string = '';
-	let modals: SvelteComponent[] = [];
 
 	onMount(() => {
 		axios
@@ -28,13 +26,16 @@
 			.finally(() => (loading = false));
 	});
 
-	const onClick = (d: any) => modals[d.detail].toggleOpen();
+	const onClick = (d: any) =>
+		window.open(`/vtubers/${data[d.detail].id}/${data[d.detail].name}`, '_blank')?.focus();
 </script>
 
 {#if loading}
-	<div><Loading class="h-8 w-8" /></div>
+	<div class="flex h-full w-full items-center justify-center">
+		<Spinner />
+	</div>
 {:else if error !== ''}
-	<div class="text-center text-red-500">{error}</div>
+	<div class="flex h-full w-full items-center justify-center text-red-500">{error}</div>
 {:else}
 	<BarChart
 		data={data.map((d) => ({
@@ -43,13 +44,9 @@
 				!d.debut_date || !d.retirement_date
 					? 0
 					: (new Date(d.retirement_date).getTime() - new Date(d.debut_date).getTime()) /
-					  (1000 * 3600 * 24 * 30 * 12)
+						(1000 * 3600 * 24 * 30 * 12)
 		}))}
 		seriesName="Years"
 		on:click={onClick}
 	/>
-
-	{#each data as d, i}
-		<VtuberModal id={d.id} name={d.name} bind:this={modals[i]} />
-	{/each}
 {/if}

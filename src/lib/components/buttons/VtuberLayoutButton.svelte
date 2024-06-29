@@ -1,33 +1,33 @@
 <script lang="ts">
-	import Grid1Icon from '$lib/components/icons/Grid1Icon.svelte';
-	import Grid2Icon from '$lib/components/icons/Grid2Icon.svelte';
-	import ListIcon from '$lib/components/icons/ListIcon.svelte';
 	import type { VtuberLayout } from '$lib/types';
-	import type { ComponentType } from 'svelte';
-	import IconButton from './IconButton.svelte';
+	import { createEventDispatcher, type ComponentType } from 'svelte';
+	import Grid2Icon from '../icons/Grid2Icon.svelte';
+	import GridIcon from '../icons/GridIcon.svelte';
+	import ListIcon from '../icons/ListIcon.svelte';
+	import TimelineIcon from '../icons/TimelineIcon.svelte';
+
+	const dispatch = createEventDispatcher<{ change: VtuberLayout }>();
 
 	export let value: VtuberLayout;
-	export { className as class };
+	export let timeline: boolean = false;
 
-	const layouts: { name: VtuberLayout; component: ComponentType }[] = [
-		{ name: 'grid', component: Grid1Icon },
-		{ name: 'card', component: Grid2Icon },
-		{ name: 'list', component: ListIcon }
+	const layouts: { value: VtuberLayout; icon: ComponentType; class?: string }[] = [
+		{ value: 'timeline', icon: TimelineIcon, class: timeline ? '' : 'hidden' },
+		{ value: 'grid', icon: GridIcon },
+		{ value: 'card', icon: Grid2Icon },
+		{ value: 'list', icon: ListIcon, class: 'hidden sm:block' }
 	];
 
-	let className: string = '';
-	let layoutIndex: number = 0;
-
-	const nextLayout = () => {
-		layoutIndex = (layoutIndex + 1) % layouts.length;
-		value = layouts[layoutIndex].name;
+	const onClick = (v: VtuberLayout) => {
+		value = v;
+		dispatch('change', v);
 	};
 </script>
 
-{#each layouts as l, i}
-	{#if i === layoutIndex}
-		<IconButton title={l.name + ' layout'} on:click={nextLayout} class="p-1.5">
-			<svelte:component this={l.component} class={className} />
-		</IconButton>
-	{/if}
-{/each}
+<div class="flex items-center justify-center gap-2">
+	{#each layouts as layout}
+		<button on:click={() => onClick(layout.value)} class={layout.class}>
+			<svelte:component this={layout.icon} class="size-4 transition hover:text-primary" />
+		</button>
+	{/each}
+</div>

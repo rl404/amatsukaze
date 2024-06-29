@@ -1,5 +1,15 @@
 import type { RequestHandler } from './$types';
 import { SHIMAKAZE_HOST } from '$env/static/private';
+import type { BaseAPIResponse } from '../../../types';
+
+export type VtuberZodiacCountResponse = BaseAPIResponse & {
+	data: VtuberZodiacCountResponseData[];
+};
+
+export type VtuberZodiacCountResponseData = {
+	zodiac: string;
+	duration: number;
+};
 
 export const GET = (async () => {
 	const resp = await fetch(`${SHIMAKAZE_HOST}/statistics/vtubers/zodiac-count`);

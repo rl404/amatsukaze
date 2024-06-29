@@ -1,21 +1,26 @@
 <script lang="ts">
 	import { PUBLIC_VTUBER_WIKI_HOST } from '$env/static/public';
-	import Model2DBadge from '$lib/components/badges/Model2DBadge.svelte';
-	import Model3DBadge from '$lib/components/badges/Model3DBadge.svelte';
-	import RetiredBadge from '$lib/components/badges/RetiredBadge.svelte';
-	import Border from '$lib/components/commons/Border.svelte';
 	import Head from '$lib/components/commons/Head.svelte';
 	import Image from '$lib/components/commons/Image.svelte';
+	import InfoIcon from '$lib/components/icons/InfoIcon.svelte';
+	import OfficeIcon from '$lib/components/icons/OfficeIcon.svelte';
+	import UsersIcon from '$lib/components/icons/UsersIcon.svelte';
+	import VideoIcon from '$lib/components/icons/VideoIcon.svelte';
 	import { generateVtuberDescription, getWikiImg } from '$lib/utils/utils';
-	import type { VtuberResponse } from '../../../../api/vtubers/[id]/+server';
-	import AccordionAgencyMates from './AccordionAgencyMates.svelte';
-	import AccordionDetails from './AccordionDetails.svelte';
-	import AccordionFamilies from './AccordionFamilies.svelte';
-	import AccordionVideos from './AccordionVideos.svelte';
+	import { Badge, Breadcrumb, BreadcrumbItem, Card, TabItem, Tabs, Tooltip } from 'flowbite-svelte';
+	import { twMerge } from 'tailwind-merge';
+	import type { VtuberDetailResponse } from './+page.server';
+	import AgencyMates from './AgencyMates.svelte';
+	import Details from './Details.svelte';
+	import Families from './Families.svelte';
+	import Schema from './Schema.svelte';
+	import Videos from './Videos.svelte';
 
-	export let data: VtuberResponse;
+	export let data: VtuberDetailResponse;
 
-	$: vtuber = data.data;
+	$: vtuber = data.vtuber.data;
+	$: agencies = data.agencies;
+	$: families = data.families;
 </script>
 
 <Head
@@ -24,62 +29,95 @@
 	image={getWikiImg(vtuber.image)}
 />
 
-<div itemscope itemtype="https://schema.org/ProfilePage">
-	<div
-		class="grid grid-cols-4 gap-4"
-		itemprop="mainEntity"
-		itemscope
-		itemtype="https://schema.org/Person"
-	>
-		<meta itemprop="identifier" content={vtuber.id.toString()} />
-		<h1 class="col-span-4">
+<Schema {vtuber} {agencies} {families} />
+
+<div class="grid grid-cols-4 gap-4">
+	<Breadcrumb class="col-span-4">
+		<BreadcrumbItem home href="/">Home</BreadcrumbItem>
+		<BreadcrumbItem href="/vtubers">Vtubers</BreadcrumbItem>
+		<BreadcrumbItem>{vtuber.name}</BreadcrumbItem>
+	</Breadcrumb>
+	<div class="col-span-4 flex flex-wrap items-center justify-between gap-2">
+		<h1>
 			<a
-				class="clickable text-3xl font-bold"
 				href="{PUBLIC_VTUBER_WIKI_HOST}/{vtuber.name}"
 				target="_blank"
 				rel="noreferrer"
-				title={new Date(vtuber.updated_at).toISOString()}
+				class="clickable"
 			>
-				<span itemprop="name">{vtuber.name}</span>
-				<span title="Emoji">{vtuber.emoji}</span>
+				{vtuber.name}
+				<span>{vtuber.emoji}</span>
 			</a>
 		</h1>
-
-		<Border class="col-span-4" />
-
-		<div class="col-span-4 flex flex-col gap-4 sm:col-span-1">
-			<Image
-				src={getWikiImg(vtuber.image)}
-				alt={vtuber.name}
-				class="w-full rounded-lg border border-border bg-card dark:border-border-dark dark:bg-card-dark"
-			/>
-			{#if vtuber.caption}
-				<div
-					class="subtitle pointer-events-none text-center font-bold italic"
-					title="quote"
-					itemprop="description"
-				>
-					{vtuber.caption}
-				</div>
+		<div class="flex basis-full items-center gap-2 sm:basis-auto">
+			{#if vtuber.retirement_date}
+				<Badge large color="red">Retired</Badge>
+			{:else}
+				<Badge large color="green">Active</Badge>
 			{/if}
-			<div class="flex flex-wrap items-center justify-center gap-2">
-				{#if vtuber.has_2d}
-					<Model2DBadge />
-				{/if}
-				{#if vtuber.has_3d}
-					<Model3DBadge />
-				{/if}
-				{#if vtuber.retirement_date}
-					<RetiredBadge />
-				{/if}
+			{#if vtuber.has_2d}
+				<Badge large color="pink">2D Model</Badge>
+				<Tooltip>has 2D model</Tooltip>
+			{/if}
+			{#if vtuber.has_3d}
+				<Badge large color="indigo">3D Model</Badge>
+				<Tooltip>has 3D model</Tooltip>
+			{/if}
+		</div>
+	</div>
+	<div class="col-span-4 sm:col-span-1">
+		<Card size="none" padding="none" class="sticky top-20">
+			<Image
+				src={getWikiImg(vtuber.image, 0)}
+				alt={vtuber.name}
+				class={twMerge(
+					'max-h-96 rounded-t-lg border-b border-border object-contain object-top sm:max-h-max',
+					!vtuber.caption && 'rounded-lg border-0'
+				)}
+				loadingClass="aspect-portrait"
+				errorClass="aspect-portrait"
+			/>
+			<div class={twMerge('break-all p-4 text-center italic', !vtuber.caption && 'hidden')}>
+				{vtuber.caption}
 			</div>
-		</div>
-
-		<div class="col-span-4 flex flex-col gap-4 sm:col-span-3">
-			<AccordionDetails data={vtuber} />
-			<AccordionAgencyMates id={vtuber.id} agencies={vtuber.agencies.map((a) => a.name)} />
-			<AccordionFamilies id={vtuber.id} designers={vtuber.character_designers || []} />
-			<AccordionVideos data={vtuber.channels} />
-		</div>
+		</Card>
+	</div>
+	<div class="col-span-4 sm:col-span-3">
+		<Tabs tabStyle="pill" contentClass="mt-2 sm:mt-4">
+			<TabItem open>
+				<div slot="title" class="flex items-center gap-2">
+					<InfoIcon class="size-4" />
+					Details
+				</div>
+				<Details {vtuber} />
+			</TabItem>
+			{#if agencies.length > 0}
+				<TabItem>
+					<div slot="title" class="flex items-center gap-2">
+						<OfficeIcon class="size-4" />
+						Agency-mates
+					</div>
+					<AgencyMates {vtuber} {agencies} />
+				</TabItem>
+			{/if}
+			{#if families.length > 0}
+				<TabItem>
+					<div slot="title" class="flex items-center gap-2">
+						<UsersIcon class="size-4" />
+						Families
+					</div>
+					<Families {vtuber} {families} />
+				</TabItem>
+			{/if}
+			{#if vtuber.video_count > 0}
+				<TabItem>
+					<div slot="title" class="flex items-center gap-2">
+						<VideoIcon class="size-4" />
+						Videos
+					</div>
+					<Videos {vtuber} />
+				</TabItem>
+			{/if}
+		</Tabs>
 	</div>
 </div>

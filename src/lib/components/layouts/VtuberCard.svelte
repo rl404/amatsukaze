@@ -1,78 +1,58 @@
 <script lang="ts">
-	import Model2DBadge from '$lib/components/badges/Model2DBadge.svelte';
-	import Model3DBadge from '$lib/components/badges/Model3DBadge.svelte';
-	import Border from '$lib/components/commons/Border.svelte';
-	import Image from '$lib/components/commons/Image.svelte';
-	import RenderIfVisible from '$lib/components/commons/RenderIfVisible.svelte';
 	import { getWikiImg } from '$lib/utils/utils';
+	import { Card } from 'flowbite-svelte';
+	import { twMerge } from 'tailwind-merge';
+	import Image from '../commons/Image.svelte';
+	import RenderIfVisible from '../commons/RenderIfVisible.svelte';
 
 	export let id: number;
 	export let name: string;
 	export let image: string;
-	export let has2d: boolean;
-	export let has3d: boolean;
 	export let agencies: string[];
 	export let debutDate: Date | undefined;
 	export let retirementDate: Date | undefined;
-	export let itemprop: string = '';
+	export let delay: number = 0;
 	export { className as class };
 
 	let className: string;
 </script>
 
-<a
-	href="/vtubers/{id}/{name}"
-	class={className}
-	title={name}
-	{itemprop}
-	itemscope
-	itemtype="https://schema.org/Person"
->
-	<meta itemprop="identifier" content={id.toString()} />
-	<meta itemprop="name" content={name} />
-	<meta itemprop="image" content={getWikiImg(image)} />
-	<RenderIfVisible
-		class="flex aspect-card items-center rounded-lg bg-card shadow hover:outline hover:outline-primary dark:bg-card-dark dark:hover:outline-primary-dark"
+<RenderIfVisible class={twMerge('h-36', className)}>
+	<Card
+		title={name}
+		size="none"
+		padding="none"
+		href="/vtubers/{id}/{name}"
+		class="flex h-full w-full flex-row overflow-hidden"
 	>
 		<Image
+			{delay}
 			src={getWikiImg(image)}
 			alt={name}
-			class="h-full w-1/3 rounded-l-lg border-y-2 border-l-2 border-card bg-body object-cover object-top dark:border-card-dark dark:bg-body-dark"
+			class="aspect-portrait h-full rounded-l-lg object-cover object-top"
 		/>
-		<div class="flex h-full w-2/3 flex-col gap-2 p-2 sm:gap-1">
-			<div>
-				<div class="line-clamp-1 text-base font-bold">{name}</div>
+		<div class="flex w-full flex-col gap-1 p-2">
+			<div class="border-b border-border pb-1">
+				<h5 class="line-clamp-1 text-primary">{name}</h5>
 			</div>
-			<Border class="h-3">
-				{#if has2d || has3d}
-					<div class="flex gap-1 px-1.5">
-						{#if has2d}
-							<Model2DBadge size="sm" />
-						{/if}
-						{#if has3d}
-							<Model3DBadge size="sm" />
-						{/if}
-					</div>
-				{/if}
-			</Border>
 			<div class="flex justify-between gap-1">
-				<div class="subtitle">Agency</div>
-				<div class="line-clamp-1 text-right" title={agencies && agencies.join(', ')}>
+				<span>Agency</span>
+				<span class="line-clamp-1 text-right text-primary" title={agencies && agencies.join(', ')}>
 					{agencies.length === 0 ? '-' : agencies.join(', ')}
-				</div>
+				</span>
 			</div>
 			<div class="flex justify-between gap-1">
-				<div class="subtitle">Debut</div>
-				<div class="text-right">
+				<span>Debut</span>
+				<span class="line-clamp-1 text-right text-primary">
 					{!debutDate ? '-' : debutDate.toISOString().slice(0, 10)}
-				</div>
+				</span>
 			</div>
 			<div class="flex justify-between gap-1">
-				<div class="subtitle">Retired</div>
-				<div class="text-right">
+				<span>Retired</span>
+				<span class="line-clamp-1 text-right text-primary">
 					{!retirementDate ? '-' : retirementDate.toISOString().slice(0, 10)}
-				</div>
+				</span>
 			</div>
 		</div>
-	</RenderIfVisible>
-</a>
+	</Card>
+</RenderIfVisible>

@@ -1,7 +1,7 @@
 import { SHIMAKAZE_HOST } from '$env/static/private';
-import type { BaseAPIResponse, MetaAPIResponse } from '$lib/types';
 import type { RequestHandler } from './$types';
 import type { AgencyResponseData } from './[id]/+server';
+import type { BaseAPIResponse, MetaAPIResponse } from '../types';
 
 export type AgenciesResponse = BaseAPIResponse & {
 	data: AgencyResponseData[];

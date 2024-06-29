@@ -6,7 +6,7 @@
 </script>
 
 <div
-	class="grid h-screen grid-cols-3 gap-1 overflow-y-hidden p-1 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 xl:grid-cols-10"
+	class="grid grid-cols-3 gap-1 p-1 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 xl:grid-cols-10"
 >
 	{#each data as vtuber}
 		<VtuberGrid
