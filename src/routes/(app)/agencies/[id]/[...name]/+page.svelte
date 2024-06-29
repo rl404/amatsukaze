@@ -4,11 +4,12 @@
 	import Image from '$lib/components/commons/Image.svelte';
 	import CalendarIcon from '$lib/components/icons/CalendarIcon.svelte';
 	import UsersIcon from '$lib/components/icons/UsersIcon.svelte';
-	import { compactInt, getWikiImg } from '$lib/utils/utils';
+	import { compactInt, generateAgencyDescription, getWikiImg } from '$lib/utils/utils';
 	import { Breadcrumb, BreadcrumbItem, Card, P, TabItem, Tabs, Tooltip } from 'flowbite-svelte';
 	import type { AgencyDetailResponse } from './+page.server';
 	import Events from './Events.svelte';
 	import Members from './Members.svelte';
+	import Schema from './Schema.svelte';
 
 	export let data: AgencyDetailResponse;
 
@@ -18,13 +19,11 @@
 
 <Head
 	title={agency.name}
-	description={`Explore ${
-		agency.name
-	} agency housing ${agency.member.toLocaleString()} incredible talents cherished by ${compactInt(
-		agency.subscriber
-	)} fans. Discover their monthly member count insights and debut-to-retirement timelines for each member, unraveling the agency's journey in the virtual universe.`}
+	description={generateAgencyDescription(agency)}
 	image={getWikiImg(agency.image)}
 />
+
+<Schema {agency} {vtubers} />
 
 <div class="grid grid-cols-4 gap-4">
 	<Breadcrumb class="col-span-4">

@@ -13,6 +13,7 @@
 	import AgencyMates from './AgencyMates.svelte';
 	import Details from './Details.svelte';
 	import Families from './Families.svelte';
+	import Schema from './Schema.svelte';
 	import Videos from './Videos.svelte';
 
 	export let data: VtuberDetailResponse;
@@ -27,6 +28,8 @@
 	description={generateVtuberDescription(vtuber)}
 	image={getWikiImg(vtuber.image)}
 />
+
+<Schema {vtuber} {agencies} {families} />
 
 <div class="grid grid-cols-4 gap-4">
 	<Breadcrumb class="col-span-4">

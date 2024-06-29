@@ -66,6 +66,14 @@ export const generateVtuberDescription = (vtuber: VtuberResponseData): string =>
 	return desc;
 };
 
+export const generateAgencyDescription = (agency: AgencyResponseData): string => {
+	return `Explore ${
+		agency.name
+	} agency housing ${agency.member.toLocaleString()} incredible talents cherished by ${compactInt(
+		agency.subscriber
+	)} fans. Discover their monthly member count insights and debut-to-retirement timelines for each member, unraveling the agency's journey in the virtual universe.`;
+};
+
 export const isEmptyArray = (arr: any[]): boolean => {
 	if (!arr) return true;
 	return arr.length === 0;

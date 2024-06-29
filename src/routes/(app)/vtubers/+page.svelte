@@ -17,6 +17,7 @@
 	import type { VtuberResponseData } from '../../api/vtubers/[id]/+server';
 	import type { VtuberSearchResponse } from './+page.server';
 	import QueryBadges from './QueryBadges.svelte';
+	import Schema from './Schema.svelte';
 	import SearchModal from './SearchModal.svelte';
 
 	export let data: VtuberSearchResponse;
@@ -134,6 +135,8 @@
 	description="Discover the comprehensive Vtuber list and advanced search tool. Filter by name, status, debut & retirement year, agency, designer, channel type, subscriber count, etc. Sort results by name, subscriber count, debut, or retirement for a tailored Vtuber exploration experience."
 	image="/vtubers.png"
 />
+
+<Schema />
 
 <div class="grid gap-4">
 	<Breadcrumb>

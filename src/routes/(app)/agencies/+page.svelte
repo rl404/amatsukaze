@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page as appPage } from '$app/stores';
 	import AgencyLayoutButton from '$lib/components/buttons/AgencyLayoutButton.svelte';
 	import AgencySortButton from '$lib/components/buttons/AgencySortButton.svelte';
 	import Head from '$lib/components/commons/Head.svelte';
@@ -7,6 +8,7 @@
 	import type { AgencyLayout, AgencySort } from '$lib/types';
 	import { agencySorter } from '$lib/utils/utils';
 	import { Badge, Breadcrumb, BreadcrumbItem, Card, Search } from 'flowbite-svelte';
+	import { onMount } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
 	import type { AgenciesResponse } from '../../api/agencies/+server';
 	import type { AgencyResponseData } from '../../api/agencies/[id]/+server';
@@ -19,6 +21,12 @@
 	let sort: AgencySort = 'name';
 	let layout: AgencyLayout = 'grid';
 	let delayTimer: number;
+
+	onMount(() => {
+		const params = $appPage.url.searchParams;
+		name = params.get('name') || '';
+		onSearch();
+	});
 
 	const onSearch = () =>
 		(agencies = data.data

@@ -4,6 +4,7 @@
 	import { onMount } from 'svelte';
 	import type { VtuberImagesResponse } from './+page.server';
 	import Grid from './Grid.svelte';
+	import Schema from './Schema.svelte';
 	import Title from './Title.svelte';
 
 	export let data: VtuberImagesResponse;
@@ -12,6 +13,8 @@
 </script>
 
 <Head />
+
+<Schema />
 
 <div class="relative h-screen w-screen overflow-hidden">
 	<Grid data={data.data} />
