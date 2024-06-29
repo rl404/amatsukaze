@@ -85,6 +85,7 @@
 		bind:this={element}
 		{src}
 		{alt}
+		loading="lazy"
 		class={twMerge(
 			'bg-gradient-to-b from-transparent to-primary-100 dark:to-primary-950',
 			className
