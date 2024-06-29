@@ -1,5 +1,15 @@
 import type { RequestHandler } from './$types';
 import { SHIMAKAZE_HOST } from '$env/static/private';
+import type { BaseAPIResponse } from '../../../types';
+
+export type VtuberGenderCountResponse = BaseAPIResponse & {
+	data: VtuberGenderCountResponseData[];
+};
+
+export type VtuberGenderCountResponseData = {
+	gender: string;
+	count: number;
+};
 
 export const GET = (async () => {
 	const resp = await fetch(`${SHIMAKAZE_HOST}/statistics/vtubers/gender-count`);

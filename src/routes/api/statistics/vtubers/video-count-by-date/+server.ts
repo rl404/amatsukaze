@@ -1,5 +1,16 @@
 import type { RequestHandler } from './$types';
 import { SHIMAKAZE_HOST } from '$env/static/private';
+import type { BaseAPIResponse } from '../../../types';
+
+export type VtuberVideoCountByDateResponse = BaseAPIResponse & {
+	data: VtuberVideoCountByDateResponseData[];
+};
+
+export type VtuberVideoCountByDateResponseData = {
+	day: number;
+	hour: number;
+	count: number;
+};
 
 export const GET = (async ({ url }) => {
 	const queries = ['hourly', 'daily'].map((q) => `${q}=${url.searchParams.get(q) ?? ''}`).join('&');

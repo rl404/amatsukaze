@@ -1,6 +1,6 @@
 import { SHIMAKAZE_HOST } from '$env/static/private';
-import type { BaseAPIResponse } from '$lib/types';
 import { handleAPIResponse } from '$lib/utils/api';
+import type { BaseAPIResponse } from '../api/types';
 import type { PageServerLoad } from './$types';
 
 export type VtuberImagesResponse = BaseAPIResponse & {
@@ -20,6 +20,6 @@ export const config = {
 };
 
 export const load = (async () => {
-	const resp = await fetch(`${SHIMAKAZE_HOST}/vtubers/images?shuffle=true&limit=60`);
+	const resp = await fetch(`${SHIMAKAZE_HOST}/vtubers/images?shuffle=true&limit=80`);
 	return handleAPIResponse(resp);
 }) satisfies PageServerLoad<VtuberImagesResponse>;

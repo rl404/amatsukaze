@@ -1,37 +1,45 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { page as appPage } from '$app/stores';
 	import AgencyLayoutButton from '$lib/components/buttons/AgencyLayoutButton.svelte';
 	import AgencySortButton from '$lib/components/buttons/AgencySortButton.svelte';
-	import Border from '$lib/components/commons/Border.svelte';
 	import Head from '$lib/components/commons/Head.svelte';
 	import AgencyGrid from '$lib/components/layouts/AgencyGrid.svelte';
 	import AgencyList from '$lib/components/layouts/AgencyList.svelte';
 	import type { AgencyLayout, AgencySort } from '$lib/types';
 	import { agencySorter } from '$lib/utils/utils';
+	import { Badge, Breadcrumb, BreadcrumbItem, Card, Search } from 'flowbite-svelte';
+	import { onMount } from 'svelte';
+	import { twMerge } from 'tailwind-merge';
 	import type { AgenciesResponse } from '../../api/agencies/+server';
 	import type { AgencyResponseData } from '../../api/agencies/[id]/+server';
-	import InputSearch from './InputSearch.svelte';
+	import QueryBadges from './QueryBadges.svelte';
 
 	export let data: AgenciesResponse;
 
+	let agencies: AgencyResponseData[] = data.data;
 	let name: string = '';
 	let sort: AgencySort = 'name';
 	let layout: AgencyLayout = 'grid';
-	let agencies: AgencyResponseData[] = data.data;
+	let delayTimer: number;
 
-	$: $appPage.url.searchParams, onURLChange();
+	onMount(() => {
+		const params = $appPage.url.searchParams;
+		name = params.get('name') || '';
+		onSearch();
+	});
 
-	const onURLChange = () => {
-		name = $appPage.url.searchParams.get('name') || '';
-		sort = ($appPage.url.searchParams.get('sort') as AgencySort) || 'name';
-		updateAgencies();
+	const onSearch = () =>
+		(agencies = data.data
+			.filter((a) => a.name.toLowerCase().includes(name.toLowerCase()))
+			.sort(agencySorter(sort)));
+
+	const onInput = () => {
+		clearTimeout(delayTimer);
+		delayTimer = setTimeout(() => {
+			if (name.length > 0 && name.length < 3) return;
+			onSearch();
+		}, 1000);
 	};
-
-	const updateAgencies = () =>
-		(agencies = data.data.filter((a) => a.name.toLowerCase().includes(name.toLowerCase())));
-
-	const onSubmit = () => goto(`?name=${name}&sort=${sort}`);
 </script>
 
 <Head
@@ -40,43 +48,52 @@
 	image="/agencies.png"
 />
 
-<div class="grid grid-cols-6 gap-4">
-	<div class="col-span-6 flex flex-wrap items-center justify-between gap-4">
-		<h1 class="basis-full text-3xl font-bold sm:basis-auto">
-			Agency List <span class="subtitle pointer-events-none text-xl font-normal"
-				>— {agencies.length.toLocaleString()}</span
-			>
-		</h1>
-		<div class="flex basis-full items-center justify-end gap-2 sm:basis-auto">
-			<InputSearch
-				class="w-full"
-				placeholder="search agency name..."
-				bind:value={name}
-				on:enter={onSubmit}
-				on:reset={onSubmit}
-			/>
-			<AgencySortButton bind:value={sort} class="h-5 w-5" />
-			<AgencyLayoutButton bind:value={layout} class="h-5 w-5" />
+<div class="grid gap-4">
+	<Breadcrumb>
+		<BreadcrumbItem home href="/">Home</BreadcrumbItem>
+		<BreadcrumbItem>Agencies</BreadcrumbItem>
+	</Breadcrumb>
+	<div class="flex flex-wrap items-center justify-between gap-4">
+		<div class="flex items-center gap-4">
+			<h1>Agency List</h1>
+			<Badge large>{agencies.length.toLocaleString()}</Badge>
+		</div>
+		<div class="flex basis-full items-center gap-2 md:basis-auto">
+			<Search size="md" placeholder="agency name..." bind:value={name} on:input={onInput} />
 		</div>
 	</div>
-	<Border class="col-span-6" />
-	{#each agencies.sort(agencySorter(sort)) as agency}
-		{#if layout === 'grid'}
-			<AgencyGrid
-				class="col-span-3 sm:col-span-2 md:col-span-1"
-				id={agency.id}
-				name={agency.name}
-				image={agency.image}
-			/>
-		{:else if layout === 'list'}
-			<AgencyList
-				class="col-span-6"
-				id={agency.id}
-				name={agency.name}
-				image={agency.image}
-				member={agency.member}
-				subscriber={agency.subscriber}
-			/>
-		{/if}
-	{/each}
+	<div class="flex items-center justify-between gap-2">
+		<QueryBadges bind:name on:change={onSearch} />
+		<div class="flex items-center gap-2">
+			<AgencySortButton bind:value={sort} on:change={onSearch} />
+			<span class="opacity-50">|</span>
+			<AgencyLayoutButton bind:value={layout} />
+		</div>
+	</div>
+	<Card
+		size="none"
+		padding="none"
+		class={twMerge('grid grid-cols-6 p-2 sm:p-4', layout === 'list' ? 'gap-1' : 'gap-2 sm:gap-4')}
+	>
+		{#each agencies as agency}
+			{#if layout === 'grid'}
+				<AgencyGrid
+					id={agency.id}
+					name={agency.name}
+					image={agency.image}
+					delay={500}
+					class="col-span-3 sm:col-span-2 xl:col-span-1"
+				/>
+			{:else if layout === 'list'}
+				<AgencyList
+					id={agency.id}
+					name={agency.name}
+					image={agency.image}
+					member={agency.member}
+					subscriber={agency.subscriber}
+					class="col-span-6"
+				/>
+			{/if}
+		{/each}
+	</Card>
 </div>

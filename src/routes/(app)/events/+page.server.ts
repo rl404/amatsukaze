@@ -4,7 +4,7 @@ import type { VtubersResponse } from '../../api/vtubers/+server';
 import type { PageServerLoad } from './$types';
 
 export type EventResponse = {
-	month: string;
+	month: number;
 	birthday: VtubersResponse;
 	anniversary: VtubersResponse;
 };
@@ -16,7 +16,7 @@ export const config = {
 };
 
 export const load = (async () => {
-	const month = (new Date().getMonth() + 1).toString();
+	const month = new Date().getMonth() + 1;
 	const [birthdayResp, anniversaryResp] = await Promise.all([
 		await fetch(
 			`${SHIMAKAZE_HOST}/vtubers?mode=simple&start_birthday_month=${month}&end_birthday_month=${month}&exclude_retired=true&limit=-1`
@@ -27,7 +27,7 @@ export const load = (async () => {
 	]);
 	return {
 		month: month,
-		birthday: handleAPIResponse(birthdayResp),
-		anniversary: handleAPIResponse(anniversaryResp)
+		birthday: await handleAPIResponse(birthdayResp),
+		anniversary: await handleAPIResponse(anniversaryResp)
 	};
 }) satisfies PageServerLoad;

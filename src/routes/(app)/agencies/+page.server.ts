@@ -11,5 +11,5 @@ export const config = {
 
 export const load = (async () => {
 	const resp = await fetch(`${SHIMAKAZE_HOST}/agencies?limit=-1`);
-	return handleAPIResponse(resp);
+	return await handleAPIResponse(resp);
 }) satisfies PageServerLoad<AgenciesResponse>;

@@ -1,5 +1,17 @@
 import type { RequestHandler } from './$types';
 import { SHIMAKAZE_HOST } from '$env/static/private';
+import type { BaseAPIResponse } from '../../../types';
+
+export type VtuberModelCountResponse = BaseAPIResponse & {
+	data: VtuberModelCountResponseData;
+};
+
+export type VtuberModelCountResponseData = {
+	none: number;
+	has_2d_only: number;
+	has_3d_only: number;
+	both: number;
+};
 
 export const GET = (async () => {
 	const resp = await fetch(`${SHIMAKAZE_HOST}/statistics/vtubers/model-count`);

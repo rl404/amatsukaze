@@ -8,6 +8,25 @@ import type { RequestHandler } from './$types';
 
 const site = 'https://amatsukaze.rl404.com';
 
+const escapeXML = (str: string): string => {
+	return str.replace(/[<>&'"]/g, (c) => {
+		switch (c) {
+			case '<':
+				return '&lt;';
+			case '>':
+				return '&gt;';
+			case '&':
+				return '&amp;';
+			case "'":
+				return '&apos;';
+			case '"':
+				return '&quot;';
+			default:
+				return c;
+		}
+	});
+};
+
 const sitemap = (
 	vtubers: VtuberResponseData[],
 	agencies: AgencyResponseData[]
@@ -42,7 +61,7 @@ const sitemap = (
 		.map(
 			(v) => `
   <url>
-    <loc>${site}/vtubers/${v.id}</loc>
+    <loc>${site}/vtubers/${v.id}/${escapeXML(v.name)}</loc>
     <lastmod>${v.updated_at.slice(0, 10)}</lastmod>
     <changefreq>${!v.retirement_date ? 'daily' : 'weekly'}</changefreq>
     <priority>${!v.retirement_date ? '0.8' : '0.6'}</priority>
@@ -54,7 +73,7 @@ const sitemap = (
 			.map(
 				(a) => `
   <url>
-    <loc>${site}/agencies/${a.id}</loc>
+    <loc>${site}/agencies/${a.id}/${escapeXML(a.name)}</loc>
     <lastmod>${a.updated_at.slice(0, 10)}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>

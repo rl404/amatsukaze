@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Loading from '$lib/components/commons/Loading.svelte';
 	import { getAxiosError } from '$lib/utils/api';
 	import { intToDurationStr } from '$lib/utils/utils';
 	import axios from 'axios';
+	import { Spinner, Tooltip } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
 
 	let data: number = 0;
@@ -19,11 +19,10 @@
 </script>
 
 {#if loading}
-	<div><Loading class="h-8 w-8" /></div>
+	<div><Spinner /></div>
 {:else if error !== ''}
-	<div class="text-center text-red-500">{error}</div>
+	<div class="text-red-500">{error}</div>
 {:else}
-	<div class="text-center text-5xl font-bold" title="in the last 2 months">
-		{intToDurationStr(data)}
-	</div>
+	<h1>{intToDurationStr(data)}</h1>
+	<Tooltip placement="bottom">in the last 2 months</Tooltip>
 {/if}

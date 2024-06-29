@@ -1,9 +1,9 @@
 <script lang="ts">
 	import DonutChart from '$lib/components/charts/DonutChart.svelte';
-	import Loading from '$lib/components/commons/Loading.svelte';
 	import { getAxiosError } from '$lib/utils/api';
 	import { toTitleCase } from '$lib/utils/utils';
 	import axios from 'axios';
+	import { Spinner } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
 
 	type ChartData = {
@@ -35,9 +35,11 @@
 </script>
 
 {#if loading}
-	<div><Loading class="h-8 w-8" /></div>
+	<div class="flex h-full w-full items-center justify-center">
+		<Spinner />
+	</div>
 {:else if error !== ''}
-	<div class="text-center text-red-500">{error}</div>
+	<div class="flex h-full w-full items-center justify-center text-red-500">{error}</div>
 {:else}
 	<DonutChart data={data.map((d) => ({ ...d, name: toTitleCase(d.name) }))} on:click={onClick} />
 {/if}

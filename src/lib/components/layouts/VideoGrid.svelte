@@ -1,16 +1,19 @@
 <script lang="ts">
-	import Image from '$lib/components/commons/Image.svelte';
-	import RenderIfVisible from '$lib/components/commons/RenderIfVisible.svelte';
-	import BilibiliIcon from '$lib/components/icons/BilibiliIcon.svelte';
-	import NiconicoIcon from '$lib/components/icons/NiconicoIcon.svelte';
-	import TwitchIcon from '$lib/components/icons/TwitchIcon.svelte';
-	import YoutubeIcon from '$lib/components/icons/YoutubeIcon.svelte';
+	import type { ChannelType } from '$lib/types';
 	import { intToDurationStr, relativeTime } from '$lib/utils/utils';
 	import type { ComponentType } from 'svelte';
+	import { twMerge } from 'tailwind-merge';
 	import type { VtuberResponseDataChannelVideo } from '../../../routes/api/vtubers/[id]/+server';
+	import Image from '../commons/Image.svelte';
+	import RenderIfVisible from '../commons/RenderIfVisible.svelte';
+	import BilibiliIcon from '../icons/BilibiliIcon.svelte';
+	import NiconicoIcon from '../icons/NiconicoIcon.svelte';
+	import TwitchIcon from '../icons/TwitchIcon.svelte';
+	import YoutubeIcon from '../icons/YoutubeIcon.svelte';
 
 	export let data: VtuberResponseDataChannelVideo;
-	export let type: string;
+	export let type: ChannelType;
+	export let delay: number = 0;
 	export { className as class };
 
 	let className: string = '';
@@ -19,7 +22,7 @@
 		? ''
 		: `${new Date(data.start_date).toISOString().slice(0, 10)} ${new Date(
 				data.start_date
-		  ).toLocaleTimeString()}`;
+			).toLocaleTimeString()}`;
 
 	const duration =
 		!data.start_date || !data.end_date
@@ -36,24 +39,23 @@
 	};
 </script>
 
-<a class="{className} clickable" href={data.url} target="_blank" rel="noreferrer">
-	<RenderIfVisible class="flex flex-col gap-1 text-sm">
+<RenderIfVisible class={className}>
+	<a href={data.url} target="_blank" rel="noreferrer" class="clickable grid gap-1 pb-2 text-sm">
 		<div class="relative">
 			<Image
-				src={data.image && `/api/image/${data.image}`}
+				{delay}
+				src={data.image && `/api/images/${data.image}`}
 				alt={data.title}
-				class="aspect-video h-full w-full rounded-lg bg-card object-cover object-top dark:bg-card-dark"
+				class="aspect-video h-full w-full rounded-lg object-cover object-center"
 			/>
 			<span class="absolute bottom-1 right-1 rounded bg-black px-1 text-xs text-white">
 				{durationStr}
 			</span>
 		</div>
-		<div class="line-clamp-2" title={data.title}>{data.title}</div>
-		<div class="flex items-center gap-2">
-			<svelte:component this={icons[type].icon} class="h-4 w-4 {icons[type].color}" />
-			<span class="subtitle" title={startDate}>
-				{data.start_date && relativeTime(new Date(data.start_date))}
-			</span>
+		<div class="line-clamp-2 text-primary">{data.title}</div>
+		<div class="flex items-center gap-2" title={startDate}>
+			<svelte:component this={icons[type].icon} class={twMerge('size-4', icons[type].color)} />
+			{data.start_date && relativeTime(new Date(data.start_date))}
 		</div>
-	</RenderIfVisible>
-</a>
+	</a>
+</RenderIfVisible>

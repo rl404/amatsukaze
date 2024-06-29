@@ -1,8 +1,8 @@
 <script lang="ts">
 	import BarChart from '$lib/components/charts/BarChart.svelte';
-	import Loading from '$lib/components/commons/Loading.svelte';
 	import { getAxiosError } from '$lib/utils/api';
 	import axios from 'axios';
+	import { Spinner } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
 
 	type ChartData = {
@@ -59,9 +59,11 @@
 </script>
 
 {#if loading}
-	<div><Loading class="h-8 w-8" /></div>
+	<div class="flex h-full w-full items-center justify-center">
+		<Spinner />
+	</div>
 {:else if error !== ''}
-	<div class="text-center text-red-500">{error}</div>
+	<div class="flex h-full w-full items-center justify-center text-red-500">{error}</div>
 {:else}
 	<BarChart
 		data={data.map((d, i) => ({
