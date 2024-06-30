@@ -4,7 +4,7 @@ import type { AgencyResponse } from '../../../../api/agencies/[id]/+server';
 import type { VtubersResponse } from '../../../../api/vtubers/+server';
 import type { PageServerLoad } from './$types';
 
-export type AgencyPageResponse = {
+export type AgencyDetailResponse = {
 	agency: AgencyResponse;
 	vtubers: VtubersResponse;
 };
@@ -21,7 +21,7 @@ export const load = (async ({ params }) => {
 		await fetch(`${SHIMAKAZE_HOST}/vtubers?mode=simple&agency_id=${params.id}&limit=-1`)
 	]);
 	return {
-		agency: handleAPIResponse(agencyResp),
-		vtubers: handleAPIResponse(vtubersResp)
+		agency: await handleAPIResponse(agencyResp),
+		vtubers: await handleAPIResponse(vtubersResp)
 	};
 }) satisfies PageServerLoad;

@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { PUBLIC_VTUBER_WIKI_HOST } from '$env/static/public';
 	import amatsukaze from '$lib/assets/amatsukaze.png';
-	import DarkThemeButton from '$lib/components/buttons/DarkThemeButton.svelte';
-	import GithubButton from '$lib/components/buttons/GithubButton.svelte';
-	import LightThemeButton from '$lib/components/buttons/LightThemeButton.svelte';
 	import ChevronLeftIcon from '$lib/components/icons/ChevronLeftIcon.svelte';
 	import ChevronRightIcon from '$lib/components/icons/ChevronRightIcon.svelte';
+	import GithubIcon from '$lib/components/icons/GithubIcon.svelte';
+	import { twMerge } from 'tailwind-merge';
+	import ThemeButton from './ThemeButton.svelte';
 
 	const links = [
 		{ label: 'Vtubers', link: '/vtubers' },
@@ -20,50 +20,59 @@
 </script>
 
 <div
-	class="bg-gradient absolute bottom-1/4 w-full translate-y-1/4 p-5 text-right text-white drop-shadow-lg transition {!open &&
-		'translate-x-full'} "
+	class={twMerge(
+		'bg-gradient absolute bottom-1/4 w-full translate-y-1/4 p-5 text-right text-white transition',
+		!open && 'translate-x-full'
+	)}
 >
 	<div
-		class="absolute left-0 top-0 block h-full w-full bg-no-repeat opacity-20"
+		class="absolute left-0 top-0 h-full w-full bg-no-repeat opacity-20"
 		style="background-image:url({amatsukaze})"
 	/>
-	<div class="bg-gradient absolute -top-2 left-0 block h-1 w-full transition" />
-	<div class="bg-gradient absolute -bottom-2 left-0 block h-1 w-full transition" />
+	<div class="bg-gradient absolute -top-2 left-0 h-1 w-full transition" />
+	<div class="bg-gradient absolute -bottom-2 left-0 h-1 w-full transition" />
 
-	<h2 class="text-l drop-shadow-lg sm:text-xl">
+	<h2 class="h4 font-normal text-white drop-shadow-lg">
 		<a href={PUBLIC_VTUBER_WIKI_HOST} target="_blank" rel="noreferrer" class="clickable">
 			Vtuber Wikia
 		</a>
 		Visualizer
 	</h2>
 
-	<h1 class="pointer-events-none text-5xl font-bold drop-shadow-lg sm:text-6xl">Amatsukaze</h1>
+	<h1 class="pointer-events-none text-5xl font-bold text-white drop-shadow-lg sm:text-6xl">
+		Amatsukaze
+	</h1>
 
-	<div class="grid text-right text-xl drop-shadow-lg sm:flex sm:flex-row sm:place-content-end">
+	<div class="grid items-center text-xl drop-shadow-lg sm:flex sm:justify-end sm:gap-2">
 		{#each links as link}
-			<h3 class="clickable whitespace-nowrap">
-				<a href={link.link}>{link.label}</a>
-			</h3>
-			<span class="hidden opacity-50 sm:ml-1 sm:mr-1 sm:inline-block">|</span>
+			<h3><a href={link.link} class="clickable">{link.label}</a></h3>
+			<span class="hidden sm:inline-block">•</span>
 		{/each}
-		<div class="flex items-center justify-end gap-2 whitespace-nowrap">
-			<LightThemeButton class="h-5 w-5" />
-			<DarkThemeButton class="h-5 w-5" />
-			<GithubButton class="h-5 w-5" />
+		<div class="mt-2 flex items-center justify-end gap-2 sm:mt-0">
+			<ThemeButton />
+			<a
+				title="github source code"
+				href="https://github.com/rl404/amatsukaze"
+				target="_blank"
+				rel="noreferrer"
+				class="clickable"
+			>
+				<GithubIcon class="size-5" />
+			</a>
 		</div>
 	</div>
 
 	<button
-		class="absolute top-1/2 -translate-y-1/2 bg-primary p-2 text-center dark:bg-primary-dark {open
-			? 'left-0 rounded-r-full opacity-20 hover:opacity-100'
-			: '-left-8 rounded-l-full opacity-100'}"
-		title={open ? 'close' : 'open'}
+		class={twMerge(
+			'absolute top-1/2 -translate-y-1/2 bg-primary-500 p-2',
+			open ? 'left-0 rounded-r-full opacity-20 hover:opacity-100' : '-left-8 rounded-l-full'
+		)}
 		on:click={toggleOpen}
 	>
 		{#if open}
-			<ChevronRightIcon class="h-4 w-4" />
+			<ChevronRightIcon class="size-4" />
 		{:else}
-			<ChevronLeftIcon class="h-4 w-4" />
+			<ChevronLeftIcon class="size-4" />
 		{/if}
 	</button>
 </div>

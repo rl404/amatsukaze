@@ -1,28 +1,37 @@
 <script lang="ts">
-	import Image from '$lib/components/commons/Image.svelte';
-	import RenderIfVisible from '$lib/components/commons/RenderIfVisible.svelte';
-	import { getWikiImg } from '$lib/utils/utils';
+	import { getWikiImg, toURL } from '$lib/utils/utils';
+	import { Card } from 'flowbite-svelte';
+	import { twMerge } from 'tailwind-merge';
+	import Image from '../commons/Image.svelte';
+	import RenderIfVisible from '../commons/RenderIfVisible.svelte';
 
 	export let id: number;
 	export let name: string;
 	export let image: string;
+	export let delay: number = 0;
+
 	export { className as class };
 	let className: string = '';
 </script>
 
-<a href="/agencies/{id}/{name}" class={className} title={name}>
-	<RenderIfVisible
-		class="group relative aspect-video rounded-lg bg-card shadow hover:outline hover:outline-primary dark:bg-card-dark dark:hover:outline-primary-dark"
+<RenderIfVisible class={twMerge('aspect-video', className)}>
+	<Card
+		title={name}
+		size="none"
+		padding="none"
+		href="/agencies/{id}/{toURL(name)}"
+		class="group relative h-full w-full transition hover:!border-primary-500"
 	>
 		<Image
+			{delay}
 			src={getWikiImg(image)}
 			alt={name}
-			class="h-full w-full rounded-lg object-contain object-center p-2"
+			class="h-full w-full rounded-lg object-cover object-center group-hover:object-contain"
 		/>
-		<div
-			class="pointer-events-none absolute bottom-0 line-clamp-1 w-full bg-primary p-0.5 text-center font-bold text-white opacity-0 group-hover:opacity-100 dark:bg-primary-dark"
+		<h4
+			class="h5 pointer-events-none absolute bottom-0 line-clamp-1 w-full rounded-b-lg bg-primary-500 p-0.5 text-center text-white opacity-0 transition-opacity group-hover:opacity-100"
 		>
 			{name}
-		</div>
-	</RenderIfVisible>
-</a>
+		</h4>
+	</Card>
+</RenderIfVisible>

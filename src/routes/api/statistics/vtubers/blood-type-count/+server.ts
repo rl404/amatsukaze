@@ -1,5 +1,15 @@
 import type { RequestHandler } from './$types';
 import { SHIMAKAZE_HOST } from '$env/static/private';
+import type { BaseAPIResponse } from '../../../types';
+
+export type VtuberBloodTypeCountResponse = BaseAPIResponse & {
+	data: VtuberBloodTypeCountResponseData[];
+};
+
+export type VtuberBloodTypeCountResponseData = {
+	blood_type: string;
+	count: number;
+};
 
 export const GET = (async ({ url }) => {
 	const queries = ['top'].map((q) => `${q}=${url.searchParams.get(q) ?? ''}`).join('&');

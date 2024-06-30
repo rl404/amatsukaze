@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Border from '$lib/components/commons/Border.svelte';
 	import Head from '$lib/components/commons/Head.svelte';
+	import { Breadcrumb, BreadcrumbItem } from 'flowbite-svelte';
 	import AgencyCount from './AgencyCount.svelte';
 	import AgencyMostSubsChart from './AgencyMostSubsChart.svelte';
 	import Card from './Card.svelte';
@@ -10,8 +10,8 @@
 	import VtuberAvgVideoLength from './VtuberAvgVideoLength.svelte';
 	import VtuberAvgWeight from './VtuberAvgWeight.svelte';
 	import VtuberCount from './VtuberCount.svelte';
-	import VtuberCount2D3DChart from './VtuberCount2D3DChart.svelte';
 	import VtuberCountBirthdayChart from './VtuberCountBirthdayChart.svelte';
+	import VtuberCountBy2D3DChart from './VtuberCountBy2D3DChart.svelte';
 	import VtuberCountBy2DModelerChart from './VtuberCountBy2DModelerChart.svelte';
 	import VtuberCountBy3DModelerChart from './VtuberCountBy3DModelerChart.svelte';
 	import VtuberCountByAgencyChart from './VtuberCountByAgencyChart.svelte';
@@ -24,12 +24,12 @@
 	import VtuberCountBySubsChart from './VtuberCountBySubsChart.svelte';
 	import VtuberCountByZodiacChart from './VtuberCountByZodiacChart.svelte';
 	import VtuberCountMonthlyChart from './VtuberCountMonthlyChart.svelte';
-	import VtuberCountVideoFrequencyChart from './VtuberCountVideoFrequencyChart.svelte';
+	import VtuberCountVideoFreqChart from './VtuberCountVideoFreqChart.svelte';
 	import VtuberCountYearlyChart from './VtuberCountYearlyChart.svelte';
 	import VtuberLongestActiveTimeChart from './VtuberLongestActiveTimeChart.svelte';
+	import VtuberLongestVideoDurationChart from './VtuberLongestVideoDurationChart.svelte';
 	import VtuberMostSubsChart from './VtuberMostSubsChart.svelte';
-	import VtuberMostVideoCount from './VtuberMostVideoCount.svelte';
-	import VtuberMostVideoLength from './VtuberMostVideoLength.svelte';
+	import VtuberMostVideoCountChart from './VtuberMostVideoCountChart.svelte';
 </script>
 
 <Head
@@ -39,90 +39,117 @@
 />
 
 <div class="grid grid-cols-6 gap-4">
-	<h1 class="col-span-6 text-3xl font-bold">Statistics</h1>
-	<Border class="col-span-6" />
-	<Card class="col-span-3 sm:col-span-2" title="Vtuber Count">
+	<Breadcrumb class="col-span-6">
+		<BreadcrumbItem home href="/">Home</BreadcrumbItem>
+		<BreadcrumbItem>Statistics</BreadcrumbItem>
+	</Breadcrumb>
+	<h1 class="h1 col-span-6">Statistics</h1>
+	<Card title="Vtuber Count" class="col-span-3 md:col-span-2">
 		<VtuberCount />
 	</Card>
-	<Card class="col-span-3 sm:col-span-2" title="Agency Count">
+	<Card title="Agency Count" class="col-span-3 md:col-span-2">
 		<AgencyCount />
 	</Card>
-	<Card class="col-span-6 sm:col-span-2" title="Vtuber Average Active Time">
+	<Card title="Vtuber Average Active Time" class="col-span-6 md:col-span-2">
 		<VtuberAvgActiveTime />
 	</Card>
-	<Card class="col-span-6 hidden aspect-card md:block" title="Vtuber Debut & Retire Count by Month">
-		<VtuberCountMonthlyChart />
-	</Card>
-	<Card class="col-span-6 aspect-card md:hidden" title="Vtuber Debut & Retire Count Count by Year">
+	<Card
+		title="Vtuber Debut & Retire Count by Year"
+		class="col-span-6 aspect-video sm:aspect-chart 2xl:hidden"
+	>
 		<VtuberCountYearlyChart />
 	</Card>
-	<Card class="col-span-6 aspect-video sm:col-span-3" title="Vtuber Count by Status">
+	<Card
+		title="Vtuber Debut & Retire Count by Month"
+		class="col-span-6 hidden aspect-chart 2xl:block"
+	>
+		<VtuberCountMonthlyChart />
+	</Card>
+	<Card title="Vtuber Count by Status" class="col-span-6 aspect-video sm:col-span-3 2xl:col-span-2">
 		<VtuberCountByStatusChart />
 	</Card>
-	<Card class="col-span-6 aspect-video sm:col-span-3" title="Vtuber Count by 2D & 3D Model">
-		<VtuberCount2D3DChart />
+	<Card
+		title="Vtuber Count by 2D & 3D Model"
+		class="col-span-6 aspect-video sm:col-span-3 2xl:col-span-2"
+	>
+		<VtuberCountBy2D3DChart />
 	</Card>
-	<Card class="col-span-6 aspect-video sm:col-span-3" title="Vtuber Count by in Agency">
+	<Card
+		title="Vtuber Count by in Agency"
+		class="col-span-6 aspect-video sm:col-span-3 2xl:col-span-2"
+	>
 		<VtuberCountByInAgencyChart />
 	</Card>
-	<Card class="col-span-6 aspect-video sm:col-span-3" title="Vtuber Count by Agency">
+	<Card title="Vtuber Count by Agency" class="col-span-6 aspect-video sm:col-span-3">
 		<VtuberCountByAgencyChart />
 	</Card>
-	<Card class="col-span-6 aspect-card2" title="Vtuber Count by Subscriber">
+	<Card
+		title="Vtuber Count by Subscriber"
+		class="col-span-6 aspect-video sm:aspect-chart 2xl:col-span-3 2xl:aspect-video"
+	>
 		<VtuberCountBySubsChart />
 	</Card>
-	<Card class="col-span-6 aspect-video sm:col-span-3" title="Vtuber Most Subscriber">
+	<Card title="Most Subscriber Vtuber" class="col-span-6 aspect-video sm:col-span-3">
 		<VtuberMostSubsChart />
 	</Card>
-	<Card class="col-span-6 aspect-video sm:col-span-3" title="Agency Most Subscriber">
+	<Card title="Most Subscriber Agency" class="col-span-6 aspect-video sm:col-span-3">
 		<AgencyMostSubsChart />
 	</Card>
-	<Card class="col-span-6 aspect-card2" title="Top Longest Active Time Vtuber (Years)">
+	<Card title="Longest Active Time Vtuber (Years)" class="col-span-6 aspect-video md:aspect-chart">
 		<VtuberLongestActiveTimeChart />
 	</Card>
-	<Card class="col-span-6 aspect-square sm:col-span-2" title="Vtuber Count by Designer">
+	<Card
+		title="Vtuber Count by Designer"
+		class="col-span-6 aspect-video md:col-span-2 md:aspect-square 2xl:aspect-video"
+	>
 		<VtuberCountByDesignerChart />
 	</Card>
-	<Card class="col-span-6 aspect-square sm:col-span-2" title="Vtuber Count by 2D Modeler">
+	<Card
+		title="Vtuber Count by 2D Modeler"
+		class="col-span-6 aspect-video md:col-span-2 md:aspect-square 2xl:aspect-video"
+	>
 		<VtuberCountBy2DModelerChart />
 	</Card>
-	<Card class="col-span-6 aspect-square sm:col-span-2" title="Vtuber Count by 3D Modeler">
+	<Card
+		title="Vtuber Count by 3D Modeler"
+		class="col-span-6 aspect-video md:col-span-2 md:aspect-square 2xl:aspect-video"
+	>
 		<VtuberCountBy3DModelerChart />
 	</Card>
-	<Card class="col-span-6 sm:col-span-3" title="Vtuber Average Video Count">
+	<Card title="Average Vtuber Video Count" class="col-span-3">
 		<VtuberAvgVideoCount />
 	</Card>
-	<Card class="col-span-6 sm:col-span-3" title="Vtuber Average Video Duration">
+	<Card title="Average Vtuber Video Duration" class="col-span-3">
 		<VtuberAvgVideoLength />
 	</Card>
-	<Card class="col-span-6 aspect-card2" title="Vtuber Most Video Count">
-		<VtuberCountVideoFrequencyChart />
+	<Card title="Vtuber Video Upload Count" class="col-span-6 aspect-chart">
+		<VtuberCountVideoFreqChart />
 	</Card>
-	<Card class="col-span-6 aspect-video sm:col-span-3" title="Vtuber Average Video Count">
-		<VtuberMostVideoCount />
+	<Card title="Most Vtuber Video Count" class="col-span-6 aspect-video md:col-span-3">
+		<VtuberMostVideoCountChart />
 	</Card>
-	<Card class="col-span-6 aspect-video sm:col-span-3" title="Vtuber Longest Average Video Duration">
-		<VtuberMostVideoLength />
+	<Card title="Longest Vtuber Video Duration" class="col-span-6 aspect-video md:col-span-3">
+		<VtuberLongestVideoDurationChart />
 	</Card>
-	<Card class="col-span-6 aspect-card" title="Vtuber Count by Birthday">
+	<Card title="Vtuber Count by Birthday" class="col-span-6 aspect-chart">
 		<VtuberCountBirthdayChart />
 	</Card>
-	<Card class="col-span-6 sm:col-span-3" title="Vtuber Average Height">
+	<Card title="Average Vtuber Height" class="col-span-6 md:col-span-3">
 		<VtuberAvgHeight />
 	</Card>
-	<Card class="col-span-6 sm:col-span-3" title="Vtuber Average Weight">
+	<Card title="Average Vtuber Weight" class="col-span-6 md:col-span-3">
 		<VtuberAvgWeight />
 	</Card>
-	<Card class="col-span-6 aspect-video sm:col-span-3" title="Vtuber Count by Blood Type">
+	<Card title="Vtuber Count by Blood Type" class="col-span-6 aspect-video md:col-span-3">
 		<VtuberCountByBloodChart />
 	</Card>
-	<Card class="col-span-6 aspect-video sm:col-span-3" title="Vtuber Count by Channel Type">
+	<Card title="Vtuber Count by Channel Type" class="col-span-6 aspect-video md:col-span-3">
 		<VtuberCountByChannelChart />
 	</Card>
-	<Card class="col-span-6 aspect-video sm:col-span-3" title="Vtuber Count by Gender">
+	<Card title="Vtuber Count by Gender" class="col-span-6 aspect-video md:col-span-3">
 		<VtuberCountByGenderChart />
 	</Card>
-	<Card class="col-span-6 aspect-video sm:col-span-3" title="Vtuber Count by Zodiac">
+	<Card title="Vtuber Count by Zodiac" class="col-span-6 aspect-video md:col-span-3">
 		<VtuberCountByZodiacChart />
 	</Card>
 </div>

@@ -1,9 +1,8 @@
 <script lang="ts">
-	import { ChartBorderColors, ChartTextColors } from '$lib/utils/const';
-	import { ThemeMode, theme } from '$lib/utils/theme';
+	import { ChartBorderColors, ChartColors, ChartTextColors } from '$lib/const';
+	import { DarkTheme } from '$lib/utils/theme';
+	import { Chart } from 'flowbite-svelte';
 	import { createEventDispatcher } from 'svelte';
-	import Chart from './Chart.svelte';
-	import { getChartColorsByCount } from './colors';
 
 	const dispatch = createEventDispatcher<{ click: number }>();
 
@@ -14,47 +13,57 @@
 
 	export let data: ChartData[];
 
-	let currTheme: ThemeMode = ThemeMode.Dark;
+	let darkTheme: boolean = false;
 
-	theme.subscribe((v) => (currTheme = v));
+	DarkTheme.subscribe((v) => (darkTheme = v));
+
+	const getChartColorsByCount = (n: number): string[] => {
+		if (n === 0) return ChartColors[darkTheme.toString()];
+		return Array(n)
+			.fill('')
+			.map((_, i) => {
+				const j = Math.floor((ChartColors[darkTheme.toString()].length / n) * i);
+				return ChartColors[darkTheme.toString()][j];
+			});
+	};
 </script>
 
 <Chart
 	options={{
 		chart: {
-			height: '100%',
 			type: 'donut',
+			height: '100%',
 			events: {
 				dataPointSelection: (_, __, options) => dispatch('click', options.dataPointIndex)
 			}
 		},
-		colors: getChartColorsByCount(data.length, currTheme),
 		series: data.map((d) => d.value),
 		labels: data.map((d) => d.name),
+		colors: getChartColorsByCount(data.length),
 		plotOptions: {
 			pie: {
 				donut: {
 					labels: {
 						show: true,
-						name: { color: ChartTextColors[currTheme] },
+						name: { color: ChartTextColors[darkTheme.toString()] },
 						value: {
-							color: ChartTextColors[currTheme],
+							color: ChartTextColors[darkTheme.toString()],
 							formatter: (v) => parseInt(v).toLocaleString()
 						},
 						total: {
 							show: true,
-							color: ChartTextColors[currTheme],
+							color: ChartTextColors[darkTheme.toString()],
 							formatter: (_) => data.reduce((acc, curr) => (acc += curr.value), 0).toLocaleString()
 						}
 					}
 				}
 			}
 		},
-		legend: { labels: { colors: ChartTextColors[currTheme] } },
+		legend: { labels: { colors: ChartTextColors[darkTheme.toString()] } },
 		tooltip: { enabled: false },
 		stroke: {
 			width: 1,
-			colors: [ChartBorderColors[currTheme]]
+			colors: [ChartBorderColors[darkTheme.toString()]]
 		}
 	}}
 />

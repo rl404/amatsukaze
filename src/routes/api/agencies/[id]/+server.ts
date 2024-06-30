@@ -1,5 +1,5 @@
 import { SHIMAKAZE_HOST } from '$env/static/private';
-import type { BaseAPIResponse } from '$lib/types';
+import type { BaseAPIResponse } from '../../types';
 import type { RequestHandler } from './$types';
 
 export type AgencyResponse = BaseAPIResponse & {

@@ -1,33 +1,35 @@
 <script lang="ts">
-	import Image from '$lib/components/commons/Image.svelte';
-	import RenderIfVisible from '$lib/components/commons/RenderIfVisible.svelte';
-	import { compactInt, getWikiImg } from '$lib/utils/utils';
+	import { compactInt, getWikiImg, toURL } from '$lib/utils/utils';
+	import { Avatar, Card } from 'flowbite-svelte';
+	import RenderIfVisible from '../commons/RenderIfVisible.svelte';
 
 	export let id: number;
 	export let name: string;
 	export let image: string;
 	export let member: number;
 	export let subscriber: number;
-	export { className as class };
 
+	export { className as class };
 	let className: string;
 </script>
 
-<a href="/agencies/{id}/{name}" class={className} title={name}>
-	<RenderIfVisible
-		class="grid grid-cols-10 items-center gap-2 rounded-lg bg-card p-2 text-center shadow hover:outline hover:outline-primary dark:bg-card-dark dark:hover:outline-primary-dark"
+<RenderIfVisible class={className}>
+	<Card
+		title={name}
+		size="none"
+		padding="xs"
+		href="/agencies/{id}/{toURL(name)}"
+		class="grid grid-cols-10 items-center gap-2 text-center"
 	>
-		<div class="col-span-2">
-			<Image src={getWikiImg(image)} alt={name} class="m-auto h-7 w-full object-cover" />
+		<div class="col-span-10 flex items-center gap-2 sm:col-span-6">
+			<Avatar src={getWikiImg(image)} alt={name} size="none" class="size-7 object-cover" />
+			<h4 class="h5 line-clamp-1 text-left">{name}</h4>
 		</div>
-		<div class="col-span-6 line-clamp-1 text-left font-bold sm:col-span-4">
-			{name}
-		</div>
-		<div class="col-span-2 hidden sm:block" title="member count">
+		<h5 class="hidden sm:col-span-2 sm:block" title="agency members">
 			{member.toLocaleString()} members
-		</div>
-		<div class="col-span-2" title="total subscriber">
+		</h5>
+		<h5 class="hidden sm:col-span-2 sm:block" title="total subscriber">
 			{compactInt(subscriber)}
-		</div>
-	</RenderIfVisible>
-</a>
+		</h5>
+	</Card>
+</RenderIfVisible>

@@ -1,33 +1,33 @@
 <script lang="ts">
-	import InputSelect from '$lib/components/inputs/InputSelect.svelte';
-	import { MonthNames } from '$lib/utils/const';
+	import { MonthNames } from '$lib/const';
+	import { Select } from 'flowbite-svelte';
 
-	export let birthdayDay: number;
-	export let startBirthdayMonth: number;
-	export let endBirthdayMonth: number;
+	export let birthdayDay: string;
+	export let startBirthdayMonth: string;
+	export let endBirthdayMonth: string;
 
 	const dayOptions = [
 		...[
 			{
-				label: 'any',
-				value: '0'
+				name: 'any',
+				value: ''
 			}
 		],
 		...Array(31)
 			.fill(0)
-			.map((_, i) => ({ label: (i + 1).toString(), value: (i + 1).toString() }))
+			.map((_, i) => ({ name: (i + 1).toString(), value: (i + 1).toString() }))
 	];
 
 	const monthOptions = [
 		...[
 			{
-				label: 'any',
-				value: '0'
+				name: 'any',
+				value: ''
 			}
 		],
 		...Array(12)
 			.fill(0)
-			.map((_, i) => ({ label: MonthNames[i], value: (i + 1).toString() }))
+			.map((_, i) => ({ name: MonthNames[i], value: (i + 1).toString() }))
 	];
 
 	let day = birthdayDay.toString();
@@ -40,15 +40,11 @@
 
 	const setDay = () => (day = birthdayDay.toString());
 	const setMonth = () => (month = startBirthdayMonth.toString());
-	const setBDay = () => (birthdayDay = parseInt(day));
-	const setBMonth = () =>
-		([startBirthdayMonth, endBirthdayMonth] = [parseInt(month), parseInt(month)]);
+	const setBDay = () => (birthdayDay = day);
+	const setBMonth = () => ([startBirthdayMonth, endBirthdayMonth] = [month, month]);
 </script>
 
-<div class="grid gap-1">
-	<label class="font-bold" for="birthday">Birthday</label>
-	<div id="birthday" class="grid grid-cols-2 gap-2">
-		<InputSelect bind:value={day} options={dayOptions} class="w-full pl-2" />
-		<InputSelect bind:value={month} options={monthOptions} class="w-full pl-2" />
-	</div>
+<div class="grid grid-cols-2 gap-2">
+	<Select size="sm" placeholder="" items={dayOptions} bind:value={day} />
+	<Select size="sm" placeholder="" items={monthOptions} bind:value={month} />
 </div>

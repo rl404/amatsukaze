@@ -1,5 +1,5 @@
 import { SHIMAKAZE_HOST } from '$env/static/private';
-import type { BaseAPIResponse, MetaAPIResponse } from '$lib/types';
+import type { BaseAPIResponse, MetaAPIResponse } from '../types';
 import type { RequestHandler } from './$types';
 import type { VtuberResponseData } from './[id]/+server';
 

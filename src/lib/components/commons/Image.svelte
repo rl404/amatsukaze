@@ -1,18 +1,35 @@
 <script lang="ts">
-	import ImageIcon from '$lib/components/icons/ImageIcon.svelte';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
+	import { twMerge } from 'tailwind-merge';
+	import ImageIcon from '../icons/ImageIcon.svelte';
 
 	export let src: string;
 	export let alt: string;
+	export let delay: number = 0;
+	export let loadingClass: string = '';
+	export let errorClass: string = '';
 	export { className as class };
 
 	let className: string = '';
 	let loading: boolean = true;
 	let error: boolean = false;
+	let timer: number;
+	let observer: IntersectionObserver;
+	let observed: boolean = false;
+	let element: HTMLElement;
 
 	onMount(() => {
 		if (src === '') return;
+		observer = new IntersectionObserver(handleIntersection, { threshold: 0.1 });
+		element && observer.observe(element);
+	});
 
+	onDestroy(() => {
+		observer && observer.disconnect();
+		clearTimeout(timer);
+	});
+
+	const loadImage = () => {
 		const img = new Image();
 		img.src = src;
 
@@ -24,19 +41,54 @@
 			loading = false;
 			error = true;
 		};
-	});
+	};
+
+	const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+		entries.forEach((entry) => {
+			if (entry.isIntersecting) {
+				observed = true;
+				timer = setTimeout(() => {
+					observed && loadImage();
+				}, delay);
+			} else {
+				observed = false;
+				clearTimeout(timer);
+			}
+		});
+	};
 </script>
 
 {#if src === '' || error}
 	<div
-		class="{className} subtitle pointer-events-none flex aspect-square items-center justify-center overflow-hidden p-1 text-center text-xs"
+		bind:this={element}
+		class={twMerge(
+			'flex items-center justify-center overflow-hidden bg-gradient-to-b from-transparent to-primary-100 p-1 text-center dark:to-primary-950',
+			errorClass,
+			className
+		)}
 	>
 		{alt}
 	</div>
 {:else if loading}
-	<div class="{className} flex aspect-square animate-pulse items-center justify-center">
-		<ImageIcon class="w-1/4" />
+	<div
+		bind:this={element}
+		class={twMerge(
+			'flex animate-pulse items-center justify-center bg-gradient-to-b from-transparent to-primary-100 dark:to-primary-950',
+			loadingClass,
+			className
+		)}
+	>
+		<ImageIcon class="size-1/6" />
 	</div>
 {:else}
-	<img itemprop="image" {src} {alt} class={className} />
+	<img
+		bind:this={element}
+		{src}
+		{alt}
+		loading="lazy"
+		class={twMerge(
+			'bg-gradient-to-b from-transparent to-primary-100 dark:to-primary-950',
+			className
+		)}
+	/>
 {/if}

@@ -1,12 +1,24 @@
 <script lang="ts">
-	import ScrollTop from '$lib/components/commons/ScrollTop.svelte';
-	import Nav from './Nav.svelte';
+	import Navbar from '$lib/components/commons/Navbar.svelte';
+	import ScrollToTop from '$lib/components/commons/ScrollToTop.svelte';
+	import Sidebar from '$lib/components/commons/Sidebar.svelte';
+
+	let drawer: boolean = false;
 </script>
 
-<Nav />
+<header class="sticky top-0 z-40 border-b border-border bg-white dark:bg-gray-800">
+	<Navbar bind:drawer />
+</header>
 
-<div class="container mx-auto max-w-5xl px-4 pb-16 pt-8">
+<Sidebar bind:drawer />
+
+<ScrollToTop />
+
+<main class="p-2 transition-all sm:p-4 lg:ml-64">
 	<slot />
-</div>
+</main>
 
-<ScrollTop />
+<footer class="p-2 text-center text-sm transition-all sm:p-4 lg:ml-64">
+	<p>All site material is property of their respective copyrights owners.</p>
+	<p>Amatsukaze 2023 - {new Date().getFullYear()}.</p>
+</footer>

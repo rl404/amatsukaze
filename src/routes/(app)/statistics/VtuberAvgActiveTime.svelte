@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Loading from '$lib/components/commons/Loading.svelte';
 	import { getAxiosError } from '$lib/utils/api';
 	import axios from 'axios';
+	import { Spinner, Tooltip } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
 
 	let data: number = 0;
@@ -18,14 +18,12 @@
 </script>
 
 {#if loading}
-	<div><Loading class="h-8 w-8" /></div>
+	<div><Spinner /></div>
 {:else if error !== ''}
-	<div class="text-center text-red-500">{error}</div>
+	<div class="text-red-500">{error}</div>
 {:else}
-	<div
-		class="text-center text-5xl font-bold"
-		title={`${parseInt(data.toFixed(0)).toLocaleString()} days`}
-	>
+	<div class="h1">
 		{parseFloat((data / (30 * 12)).toFixed(1)).toLocaleString()} years
 	</div>
+	<Tooltip placement="bottom">{parseInt(data.toFixed(0)).toLocaleString()} days</Tooltip>
 {/if}

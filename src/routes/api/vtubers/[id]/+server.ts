@@ -1,5 +1,6 @@
 import { SHIMAKAZE_HOST } from '$env/static/private';
-import type { BaseAPIResponse } from '$lib/types';
+import type { ChannelType } from '$lib/types';
+import type { BaseAPIResponse } from '../../types';
 import type { RequestHandler } from './$types';
 
 export type VtuberResponse = BaseAPIResponse & {
@@ -45,7 +46,7 @@ export type VtuberResponseData = {
 export type VtuberResponseDataChannel = {
 	id: string;
 	name: string;
-	type: string;
+	type: ChannelType;
 	url: string;
 	image: string;
 	subscriber: number;

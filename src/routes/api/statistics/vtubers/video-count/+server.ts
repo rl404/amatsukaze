@@ -1,5 +1,16 @@
 import type { RequestHandler } from './$types';
 import { SHIMAKAZE_HOST } from '$env/static/private';
+import type { BaseAPIResponse } from '../../../types';
+
+export type VtuberVideoCountResponse = BaseAPIResponse & {
+	data: VtuberVideoCountResponseData[];
+};
+
+export type VtuberVideoCountResponseData = {
+	id: number;
+	name: string;
+	count: number;
+};
 
 export const GET = (async ({ url }) => {
 	const queries = ['top'].map((q) => `${q}=${url.searchParams.get(q) ?? ''}`).join('&');

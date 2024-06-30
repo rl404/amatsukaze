@@ -1,5 +1,10 @@
 import type { RequestHandler } from './$types';
 import { SHIMAKAZE_HOST } from '$env/static/private';
+import type { BaseAPIResponse } from '../../../types';
+
+export type VtuberDebutRetireCountYearlyResponse = BaseAPIResponse & {
+	data: VtuberDebutRetireCountYearlyResponseData;
+};
 
 export type VtuberDebutRetireCountYearlyResponseData = {
 	year: number;

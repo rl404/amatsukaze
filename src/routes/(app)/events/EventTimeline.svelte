@@ -2,113 +2,60 @@
 	import VtuberGrid from '$lib/components/layouts/VtuberGrid.svelte';
 	import Timeline from '$lib/components/timelines/Timeline.svelte';
 	import TimelineItem from '$lib/components/timelines/TimelineItem.svelte';
-	import { MonthNames } from '$lib/utils/const';
-	import { compactInt } from '$lib/utils/utils';
 	import type { VtuberResponseData } from '../../api/vtubers/[id]/+server';
+	import { getTimelineData, type EventMonth } from './utils';
 
+	export let month: number;
 	export let birthdayData: VtuberResponseData[];
 	export let anniversaryData: VtuberResponseData[];
 
-	type TimelineCount = {
-		id: string;
-		birthday: VtuberResponseData[];
-		anniversary: VtuberResponseData[];
-	};
+	let timelineData: EventMonth[] = [];
 
-	type TimelineData = { [date: string]: TimelineCount };
-
-	const today = new Date();
-
-	const birthdayTimeline: TimelineData = birthdayData.reduce(
-		(res: TimelineData, vtuber: VtuberResponseData) => {
-			if (!vtuber.birthday) return res;
-			const date = new Date(vtuber.birthday).toISOString();
-			const key = `${today.getFullYear()}-${date.slice(5, 10)}`;
-			if (!res[key]) res[key] = { id: key, birthday: [], anniversary: [] };
-			res[key].birthday.push(vtuber);
-			return res;
-		},
-		{}
-	);
-
-	const anniversaryTimeline: TimelineData = anniversaryData.reduce(
-		(res: TimelineData, vtuber: VtuberResponseData) => {
-			if (!vtuber.debut_date) return res;
-			const date = new Date(vtuber.debut_date).toISOString();
-			const key = `${today.getFullYear()}-${date.slice(5, 10)}`;
-			if (!res[key]) res[key] = { id: key, birthday: [], anniversary: [] };
-			res[key].anniversary.push(vtuber);
-			return res;
-		},
-		{}
-	);
-
-	const timelineData: [string, TimelineCount][] = Object.entries(
-		Object.entries(anniversaryTimeline).reduce((res, t) => {
-			const date = t[0];
-			const data = t[1];
-			if (!res[date]) res[date] = { id: date, birthday: [], anniversary: [] };
-			res[date].anniversary = data.anniversary;
-			return res;
-		}, birthdayTimeline)
-	)
-		.sort((a, b) => {
-			const da = new Date(a[0]);
-			const db = new Date(b[0]);
-			if (isNaN(da.getTime())) return 1;
-			if (isNaN(db.getTime())) return -1;
-			return da < db ? -1 : 1;
-		})
-		.map((v) => {
-			const d = new Date(v[0]);
-			v[0] = `${('0' + d.getDate()).slice(-2)} ${MonthNames[d.getMonth()]}`;
-			return v;
-		});
+	$: birthdayData,
+		anniversaryData,
+		(timelineData = getTimelineData(month, birthdayData, anniversaryData));
 </script>
 
 <Timeline>
 	{#each timelineData as d}
-		<TimelineItem id={d[1].id}>
-			<div slot="dot" class="h-3 w-3 rounded-full bg-primary dark:bg-primary-dark" />
-
-			<div slot="left" class="flex flex-col gap-2 p-4" class:hidden={d[1].anniversary.length === 0}>
+		<TimelineItem id={d.id}>
+			<div slot="dot" class="flex items-center gap-3">
 				<div
-					class="subtitle pointer-events-none flex gap-1 text-lg font-bold md:flex-row-reverse md:text-right"
-				>
-					<span class="text-primary dark:text-primary-dark">Anniversary</span>
-					<span>({d[1].anniversary.length.toLocaleString()})</span>
-					<span>—</span>
-					<span>{d[0]}</span>
+					class="top-10 block size-3 rounded-full bg-primary-600 md:absolute md:left-1/2 md:-translate-x-1/2 md:transform"
+				/>
+				<h3 class="h3 bg-white dark:bg-gray-800">{d.date}</h3>
+			</div>
+
+			<div slot="left" class="flex flex-col gap-2 p-4 md:mt-10">
+				<div class="flex items-center gap-1 md:flex-row-reverse md:text-right">
+					<h4 class="h4 text-indigo-500">Anniversary</h4>
+					<span>({d.anniversary.length.toLocaleString()})</span>
 				</div>
-				<div class="ltr md:rtl grid grid-cols-4 gap-2">
-					{#each d[1].anniversary as vtuber}
+				<div
+					class="ltr md:rtl grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+				>
+					{#each d.anniversary as vtuber}
 						<VtuberGrid
-							class="ltr col-span-1 text-sm"
 							id={vtuber.id}
 							name={vtuber.name}
 							image={vtuber.image}
-							label={compactInt(vtuber.subscriber)}
+							delay={500}
+							class="ltr"
 						/>
 					{/each}
 				</div>
 			</div>
 
-			<div slot="right" class="flex flex-col gap-2 p-4" class:hidden={d[1].birthday.length === 0}>
-				<div class="subtitle pointer-events-none flex gap-1 text-lg font-bold">
-					<span class="text-primary dark:text-primary-dark">Birthday</span>
-					<span>({d[1].birthday.length.toLocaleString()})</span>
-					<span>—</span>
-					<span>{d[0]}</span>
+			<div slot="right" class="mt-10 flex flex-col gap-2 p-4">
+				<div class="flex items-center gap-1">
+					<h4 class="h4 text-pink-500">Birthday</h4>
+					<span>({d.birthday.length.toLocaleString()})</span>
 				</div>
-				<div class="grid grid-cols-4 gap-2">
-					{#each d[1].birthday as vtuber}
-						<VtuberGrid
-							class="col-span-1 text-sm"
-							id={vtuber.id}
-							name={vtuber.name}
-							image={vtuber.image}
-							label={compactInt(vtuber.subscriber)}
-						/>
+				<div
+					class="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+				>
+					{#each d.birthday as vtuber}
+						<VtuberGrid id={vtuber.id} name={vtuber.name} image={vtuber.image} delay={500} />
 					{/each}
 				</div>
 			</div>

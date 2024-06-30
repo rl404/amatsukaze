@@ -1,55 +1,94 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { page as appPage } from '$app/stores';
 	import VtuberLayoutButton from '$lib/components/buttons/VtuberLayoutButton.svelte';
 	import VtuberSortButton from '$lib/components/buttons/VtuberSortButton.svelte';
-	import Border from '$lib/components/commons/Border.svelte';
 	import Head from '$lib/components/commons/Head.svelte';
 	import InfiniteScroll from '$lib/components/commons/InfiniteScroll.svelte';
-	import Loading from '$lib/components/commons/Loading.svelte';
 	import VtuberCard from '$lib/components/layouts/VtuberCard.svelte';
 	import VtuberGrid from '$lib/components/layouts/VtuberGrid.svelte';
 	import VtuberList from '$lib/components/layouts/VtuberList.svelte';
-	import { defaultVtubersQuery, type VtuberLayout, type VtubersQuery } from '$lib/types';
+	import { DefaultVtubersQuery } from '$lib/const';
+	import { type VtuberLayout, type VtuberSort, type VtubersQuery } from '$lib/types';
 	import { getAxiosError } from '$lib/utils/api';
-	import { compactInt, getVtubersQueryFromURLParam } from '$lib/utils/utils';
 	import axios from 'axios';
+	import { Badge, Breadcrumb, BreadcrumbItem, Card, Search, Spinner } from 'flowbite-svelte';
+	import { onMount } from 'svelte';
+	import { twMerge } from 'tailwind-merge';
 	import type { VtuberResponseData } from '../../api/vtubers/[id]/+server';
 	import type { VtuberSearchResponse } from './+page.server';
-	import AdvancedSearch from './AdvancedSearch.svelte';
-	import InputSearch from './InputSearch.svelte';
+	import QueryBadges from './QueryBadges.svelte';
+	import Schema from './Schema.svelte';
+	import SearchModal from './SearchModal.svelte';
 
 	export let data: VtuberSearchResponse;
 
-	let query: VtubersQuery = { ...defaultVtubersQuery };
-	let total: number = data.vtubers.meta.total;
+	let query: VtubersQuery = { ...DefaultVtubersQuery };
+	let total: number = 0;
 	let layout: VtuberLayout = 'grid';
 	let loading: boolean = false;
 	let error: string = '';
-	let vtubers: VtuberResponseData[] = data.vtubers.data;
+	let vtubers: VtuberResponseData[] = [];
 	let newVtubers: VtuberResponseData[] = [];
 	let hasMore: boolean = true;
+	let delayTimer: number;
 
 	$: vtubers = [...vtubers, ...newVtubers];
-	$: $appPage.url.searchParams, onURLChange();
 
-	const onURLChange = () => {
-		const params = Array.from($appPage.url.searchParams.entries());
-		if (params.length === 0) {
-			query = { ...defaultVtubersQuery };
-			total = data.vtubers.meta.total;
-			vtubers = data.vtubers.data;
-			newVtubers = [];
-			hasMore = true;
-			return;
-		}
+	onMount(() => {
+		const params = $appPage.url.searchParams;
 
-		query = getVtubersQueryFromURLParam($appPage.url.searchParams);
+		query = {
+			...query,
+			names: params.get('names') || '',
+			name: params.get('name') || '',
+			original_name: params.get('original_name') || '',
+			nickname: params.get('nickname') || '',
+			exclude_active: params.get('exclude_active') === 'true',
+			exclude_retired: params.get('exclude_retired') === 'true',
+			start_debut_year: params.get('start_debut_year') || '',
+			end_debut_year: params.get('end_debut_year') || '',
+			start_retired_year: params.get('start_retired_year') || '',
+			end_retired_year: params.get('end_retired_year') || '',
+			has_2d:
+				params.get('has_2d') === null || params.get('has_2d') === ''
+					? undefined
+					: params.get('has_2d') === 'true',
+			has_3d:
+				params.get('has_3d') === null || params.get('has_3d') === ''
+					? undefined
+					: params.get('has_3d') === 'true',
+			character_designer: params.get('character_designer') || '',
+			character_2d_modeler: params.get('character_2d_modeler') || '',
+			character_3d_modeler: params.get('character_3d_modeler') || '',
+			in_agency:
+				params.get('in_agency') === null || params.get('in_agency') === ''
+					? undefined
+					: params.get('in_agency') === 'true',
+			agency: params.get('agency') || '',
+			channel_types: params.get('channel_types') || '',
+			birthday_day: params.get('birthday_day') || '',
+			start_birthday_month: params.get('start_birthday_month') || '',
+			end_birthday_month: params.get('end_birthday_month') || '',
+			blood_types: params.get('blood_types') || '',
+			genders: params.get('genders') || '',
+			zodiacs: params.get('zodiacs') || '',
+			start_subscriber: params.get('start_subscriber') || '',
+			end_subscriber: params.get('end_subscriber') || '',
+			start_video_count: params.get('start_video_count') || '',
+			end_video_count: params.get('end_video_count') || '',
+			sort: (params.get('sort') || DefaultVtubersQuery.sort) as VtuberSort
+		};
 
+		fetchData();
+	});
+
+	const onSearch = () => {
+		query = {
+			...query,
+			page: 1
+		};
 		vtubers = [];
 		newVtubers = [];
-		query.page = 1;
-
 		fetchData();
 	};
 
@@ -66,23 +105,28 @@
 			.then((resp) => {
 				newVtubers = resp.data.data;
 				total = resp.data.meta.total;
-				hasMore = resp.data.data.length > 0;
+				if (newVtubers.length > 0) {
+					hasMore = true;
+				} else {
+					hasMore = false;
+				}
 			})
 			.catch((err) => (error = getAxiosError(err)))
 			.finally(() => (loading = false));
 	};
 
 	const loadMore = () => {
-		query.page++;
+		query = { ...query, page: query.page + 1 };
 		fetchData();
 	};
 
-	const onSubmit = () => {
-		const queries = Object.entries(query)
-			.map((v) => `${v[0]}=${v[1] ?? ''}`)
-			.join('&');
-
-		goto(`?${queries}`);
+	const onInput = () => {
+		vtubers = [];
+		clearTimeout(delayTimer);
+		delayTimer = setTimeout(() => {
+			if (query.names.length > 0 && query.names.length < 3) return;
+			onSearch();
+		}, 500);
 	};
 </script>
 
@@ -92,93 +136,93 @@
 	image="/vtubers.png"
 />
 
-<div class="grid grid-cols-6 gap-4">
-	<div class="col-span-6 flex flex-wrap items-center justify-between gap-4">
-		<h1 class="basis-full text-3xl font-bold sm:basis-auto">
-			Vtuber List <span class="subtitle pointer-events-none text-xl font-normal"
-				>— {total.toLocaleString()}</span
-			>
-		</h1>
-		<div class="flex basis-full items-center justify-end gap-2 sm:basis-auto">
-			<InputSearch
-				class="w-full"
-				placeholder="search vtuber name..."
+<Schema />
+
+<div class="grid gap-4">
+	<Breadcrumb>
+		<BreadcrumbItem home href="/">Home</BreadcrumbItem>
+		<BreadcrumbItem>Vtubers</BreadcrumbItem>
+	</Breadcrumb>
+	<div class="flex flex-wrap items-center justify-between gap-4">
+		<div class="flex items-center gap-4">
+			<h1 class="h1">Vtuber List</h1>
+			<Badge large>{total.toLocaleString()}</Badge>
+		</div>
+		<div class="flex basis-full items-center gap-2 md:basis-auto">
+			<Search
+				size="md"
+				placeholder="vtuber name..."
 				disabled={loading}
 				bind:value={query.names}
-				on:enter={onSubmit}
-				on:reset={onSubmit}
+				on:input={onInput}
 			/>
-			<AdvancedSearch
+			<SearchModal
+				{loading}
 				bind:query
-				on:submit={onSubmit}
+				on:submit={onSearch}
 				agencies={data.agencies.data.map((a) => a.name)}
 				characterDesigners={data.characterDesigners.data}
 				character2dModelers={data.character2dModelers.data}
 				character3dModelers={data.character3dModelers.data}
-				startDebutYear={!data.startDebut.data[0].debut_date
-					? 2000
-					: new Date(data.startDebut.data[0].debut_date).getFullYear()}
-				endDebutYear={new Date().getFullYear()}
-				startRetiredYear={!data.startRetired.data[0].retirement_date
-					? 2000
-					: new Date(data.startRetired.data[0].retirement_date).getFullYear()}
-				endRetiredYear={new Date().getFullYear()}
 			/>
-			<VtuberSortButton class="h-5 w-5" bind:value={query.sort} on:change={onSubmit} />
-			<VtuberLayoutButton class="h-5 w-5" bind:value={layout} />
 		</div>
 	</div>
-	<Border class="col-span-6" />
-	{#each vtubers as vtuber}
-		{#if layout === 'grid'}
-			<VtuberGrid
-				class="col-span-3 sm:col-span-2 md:col-span-1"
-				id={vtuber.id}
-				name={vtuber.name}
-				image={vtuber.image}
-				label={query.sort === 'video_count' || query.sort === '-video_count'
-					? vtuber.video_count.toLocaleString()
-					: compactInt(vtuber.subscriber)}
-				videoCount={vtuber.video_count}
-				retirementDate={vtuber.retirement_date}
-				showBorder={query.sort === 'video_count' || query.sort === '-video_count'}
-			/>
-		{:else if layout === 'card'}
-			<VtuberCard
-				class="col-span-6 sm:col-span-3 lg:col-span-2"
-				id={vtuber.id}
-				name={vtuber.name}
-				image={vtuber.image}
-				has2d={vtuber.has_2d}
-				has3d={vtuber.has_3d}
-				agencies={vtuber.agencies.map((a) => a.name)}
-				debutDate={vtuber.debut_date ? new Date(vtuber.debut_date) : undefined}
-				retirementDate={vtuber.retirement_date ? new Date(vtuber.retirement_date) : undefined}
-			/>
-		{:else if layout === 'list'}
-			<VtuberList
-				class="col-span-6"
-				id={vtuber.id}
-				name={vtuber.name}
-				image={vtuber.image}
-				has2d={vtuber.has_2d}
-				has3d={vtuber.has_3d}
-				agencies={vtuber.agencies.map((a) => a.name)}
-				debutDate={vtuber.debut_date ? new Date(vtuber.debut_date) : undefined}
-				retirementDate={vtuber.retirement_date ? new Date(vtuber.retirement_date) : undefined}
-			/>
+	<div class="flex items-center justify-between gap-2">
+		<QueryBadges bind:query on:change={onSearch} />
+		<div class="flex items-center gap-2">
+			<VtuberSortButton bind:value={query.sort} on:change={onSearch} class="hidden sm:flex" />
+			<span class="hidden opacity-50 sm:block">|</span>
+			<VtuberLayoutButton bind:value={layout} />
+		</div>
+	</div>
+	<Card
+		size="none"
+		padding="none"
+		class={twMerge('grid grid-cols-24 p-2 sm:p-4', layout === 'list' ? 'gap-1' : 'gap-2 sm:gap-4')}
+	>
+		{#each vtubers as vtuber}
+			{#if layout === 'grid'}
+				<VtuberGrid
+					id={vtuber.id}
+					name={vtuber.name}
+					image={vtuber.image}
+					delay={500}
+					class="col-span-12 sm:col-span-8 md:col-span-6 lg:col-span-4 xl:col-span-3"
+				/>
+			{:else if layout === 'card'}
+				<VtuberCard
+					id={vtuber.id}
+					name={vtuber.name}
+					image={vtuber.image}
+					agencies={vtuber.agencies.map((a) => a.name)}
+					debutDate={vtuber.debut_date ? new Date(vtuber.debut_date) : undefined}
+					retirementDate={vtuber.retirement_date ? new Date(vtuber.retirement_date) : undefined}
+					delay={500}
+					class="col-span-24 sm:col-span-12 xl:col-span-8 2xl:col-span-6"
+				/>
+			{:else if layout === 'list'}
+				<VtuberList
+					id={vtuber.id}
+					name={vtuber.name}
+					image={vtuber.image}
+					has2d={vtuber.has_2d}
+					has3d={vtuber.has_3d}
+					agencies={vtuber.agencies.map((a) => a.name)}
+					debutDate={vtuber.debut_date ? new Date(vtuber.debut_date) : undefined}
+					retirementDate={vtuber.retirement_date ? new Date(vtuber.retirement_date) : undefined}
+					class="col-span-24"
+				/>
+			{/if}
+		{/each}
+
+		{#if loading}
+			<div class="col-span-24 text-center"><Spinner /></div>
+		{:else if error !== ''}
+			<div class="col-span-24 text-center text-red-500">{error}</div>
+		{:else if vtubers.length === 0}
+			<div class="col-span-24 text-center">No result...</div>
+		{:else}
+			<InfiniteScroll {hasMore} window on:loadMore={loadMore} />
 		{/if}
-	{/each}
-	{#if loading}
-		<div class="col-span-6">
-			<Loading class="h-8 w-8" />
-		</div>
-	{:else if error !== ''}
-		<div class="col-span-6 text-center text-red-500">
-			{error}
-		</div>
-	{:else if vtubers.length === 0}
-		<div class="col-span-6 text-center">no vtubers found...</div>
-	{/if}
-	<InfiniteScroll {hasMore} threshold={100} window on:loadMore={loadMore} />
+	</Card>
 </div>

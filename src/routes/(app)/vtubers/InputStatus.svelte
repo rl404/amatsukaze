@@ -1,5 +1,5 @@
 <script lang="ts">
-	import InputCheckbox from '$lib/components/inputs/InputCheckbox.svelte';
+	import Checkbox from '$lib/components/inputs/Checkbox.svelte';
 
 	export let excludeActive: boolean;
 	export let excludeRetired: boolean;
@@ -18,10 +18,7 @@
 	const setExcludeRetired = () => (excludeRetired = !retired);
 </script>
 
-<div class="grid gap-1">
-	<label class="font-bold" for="status">Status</label>
-	<div id="status" class="grid grid-cols-2 gap-2">
-		<InputCheckbox label="Active" bind:checked={active} />
-		<InputCheckbox label="Retired" bind:checked={retired} />
-	</div>
+<div class="grid grid-cols-2 gap-2">
+	<Checkbox bind:checked={active}>Active</Checkbox>
+	<Checkbox bind:checked={retired}>Retired</Checkbox>
 </div>
