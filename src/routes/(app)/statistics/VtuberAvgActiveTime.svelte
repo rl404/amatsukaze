@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getAxiosError } from '$lib/utils/api';
 	import axios from 'axios';
-	import { Spinner } from 'flowbite-svelte';
+	import { Spinner, Tooltip } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
 
 	let data: number = 0;
@@ -22,7 +22,8 @@
 {:else if error !== ''}
 	<div class="text-red-500">{error}</div>
 {:else}
-	<h1 title={`${parseInt(data.toFixed(0)).toLocaleString()} days`}>
+	<div class="h1">
 		{parseFloat((data / (30 * 12)).toFixed(1)).toLocaleString()} years
-	</h1>
+	</div>
+	<Tooltip placement="bottom">{parseInt(data.toFixed(0)).toLocaleString()} days</Tooltip>
 {/if}

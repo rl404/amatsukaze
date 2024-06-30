@@ -23,12 +23,12 @@
 				<div
 					class="top-10 block size-3 rounded-full bg-primary-600 md:absolute md:left-1/2 md:-translate-x-1/2 md:transform"
 				/>
-				<h3 class="bg-white dark:bg-gray-800">{d.date}</h3>
+				<h3 class="h3 bg-white dark:bg-gray-800">{d.date}</h3>
 			</div>
 
 			<div slot="left" class="flex flex-col gap-2 p-4 md:mt-10">
 				<div class="flex items-center gap-1 md:flex-row-reverse md:text-right">
-					<h4 class="text-indigo-500">Anniversary</h4>
+					<h4 class="h4 text-indigo-500">Anniversary</h4>
 					<span>({d.anniversary.length.toLocaleString()})</span>
 				</div>
 				<div
@@ -48,7 +48,7 @@
 
 			<div slot="right" class="mt-10 flex flex-col gap-2 p-4">
 				<div class="flex items-center gap-1">
-					<h4 class="text-pink-500">Birthday</h4>
+					<h4 class="h4 text-pink-500">Birthday</h4>
 					<span>({d.birthday.length.toLocaleString()})</span>
 				</div>
 				<div

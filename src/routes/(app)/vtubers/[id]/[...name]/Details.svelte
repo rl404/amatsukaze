@@ -9,10 +9,10 @@
 
 <div class="grid gap-2 sm:gap-4">
 	<Card size="none" class="gap-4">
-		<h3>Basic Details</h3>
+		<h3 class="h3">Basic Details</h3>
 		<div class="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
 			<div>
-				<div class="font-bold">Original Names</div>
+				<h4 class="font-bold">Original Names</h4>
 				{#if isEmptyArray(vtuber.original_names)}
 					<P>-</P>
 				{:else}
@@ -22,7 +22,7 @@
 				{/if}
 			</div>
 			<div>
-				<div class="font-bold">Nicknames</div>
+				<h4 class="font-bold">Nicknames</h4>
 				{#if isEmptyArray(vtuber.nicknames)}
 					<P>-</P>
 				{:else}
@@ -32,15 +32,15 @@
 				{/if}
 			</div>
 			<div>
-				<div class="font-bold">Debut Date</div>
+				<h4 class="font-bold">Debut Date</h4>
 				<P>{!vtuber.debut_date ? '-' : vtuber.debut_date.slice(0, 10)}</P>
 			</div>
 			<div>
-				<div class="font-bold">Retirement Date</div>
+				<h4 class="font-bold">Retirement Date</h4>
 				<P>{!vtuber.retirement_date ? '-' : vtuber.retirement_date.slice(0, 10)}</P>
 			</div>
 			<div>
-				<div class="font-bold">Character Designers</div>
+				<h4 class="font-bold">Character Designers</h4>
 				{#if isEmptyArray(vtuber.character_designers)}
 					<P>-</P>
 				{:else}
@@ -54,7 +54,7 @@
 				{/if}
 			</div>
 			<div>
-				<div class="font-bold">2D Modeler</div>
+				<h4 class="font-bold">2D Modeler</h4>
 				{#if isEmptyArray(vtuber.character_2d_modelers)}
 					<P>-</P>
 				{:else}
@@ -68,7 +68,7 @@
 				{/if}
 			</div>
 			<div>
-				<div class="font-bold">3D Modeler</div>
+				<h4 class="font-bold">3D Modeler</h4>
 				{#if isEmptyArray(vtuber.character_3d_modelers)}
 					<P>-</P>
 				{:else}
@@ -82,7 +82,7 @@
 				{/if}
 			</div>
 			<div>
-				<div class="font-bold">Agencies</div>
+				<h4 class="font-bold">Agencies</h4>
 				{#if isEmptyArray(vtuber.agencies)}
 					<P>-</P>
 				{:else}
@@ -96,7 +96,7 @@
 				{/if}
 			</div>
 			<div>
-				<div class="font-bold">Affiliations</div>
+				<h4 class="font-bold">Affiliations</h4>
 				{#if isEmptyArray(vtuber.affiliations)}
 					<P>-</P>
 				{:else}
@@ -109,10 +109,10 @@
 	</Card>
 
 	<Card size="none" class="gap-4">
-		<h3>Medias</h3>
+		<h3 class="h3">Medias</h3>
 		<div class="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
 			<div>
-				<div class="font-bold">Channels</div>
+				<h4 class="font-bold">Channels</h4>
 				{#if isEmptyArray(vtuber.channels)}
 					<P>-</P>
 				{:else}
@@ -126,7 +126,7 @@
 				{/if}
 			</div>
 			<div>
-				<div class="font-bold">Social Medias</div>
+				<h4 class="font-bold">Social Medias</h4>
 				{#if isEmptyArray(vtuber.social_medias)}
 					<P>-</P>
 				{:else}
@@ -140,7 +140,7 @@
 				{/if}
 			</div>
 			<div>
-				<div class="font-bold">Official Websites</div>
+				<h4 class="font-bold">Official Websites</h4>
 				{#if isEmptyArray(vtuber.official_websites)}
 					<P>-</P>
 				{:else}
@@ -157,34 +157,34 @@
 	</Card>
 
 	<Card size="none" class="gap-4">
-		<h3>Personal Details</h3>
+		<h3 class="h3">Personal Details</h3>
 		<div class="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
 			<div>
-				<div class="font-bold">Gender</div>
+				<h4 class="font-bold">Gender</h4>
 				<P>{vtuber.gender || '-'}</P>
 			</div>
 			<div>
-				<div class="font-bold">Age</div>
+				<h4 class="font-bold">Age</h4>
 				<P>{!vtuber.age ? '-' : vtuber.age.toLocaleString()}</P>
 			</div>
 			<div>
-				<div class="font-bold">Birthday</div>
+				<h4 class="font-bold">Birthday</h4>
 				<P>{formatBirthday(vtuber.birthday)}</P>
 			</div>
 			<div>
-				<div class="font-bold">Height</div>
+				<h4 class="font-bold">Height</h4>
 				<P>{!vtuber.height ? '-' : vtuber.height.toLocaleString() + ' cm'}</P>
 			</div>
 			<div>
-				<div class="font-bold">Weight</div>
+				<h4 class="font-bold">Weight</h4>
 				<P>{!vtuber.weight ? '-' : vtuber.weight.toLocaleString() + ' kg'}</P>
 			</div>
 			<div>
-				<div class="font-bold">Blood Type</div>
+				<h4 class="font-bold">Blood Type</h4>
 				<P>{vtuber.blood_type || '-'}</P>
 			</div>
 			<div>
-				<div class="font-bold">Zodiac Sign</div>
+				<h4 class="font-bold">Zodiac Sign</h4>
 				<P>{vtuber.zodiac_sign || '-'}</P>
 			</div>
 		</div>

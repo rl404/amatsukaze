@@ -39,7 +39,7 @@
 						)}
 						on:click={() => (monthI = i)}
 					>
-						<h3 class="line-clamp-1">{MonthNames[month.month]}</h3>
+						<div class="h3 line-clamp-1">{MonthNames[month.month]}</div>
 						<Badge class="hidden md:block">
 							{month.days.reduce((sum, d) => sum + d.videos.length, 0).toLocaleString()}
 						</Badge>
@@ -48,9 +48,10 @@
 			</div>
 		{:else if layout === 'hourly'}
 			<div>
-				<h3 class="flex items-center gap-2">
-					Upload Frequency <Badge>{vtuber.video_count.toLocaleString()}</Badge>
-				</h3>
+				<div class="flex items-center gap-2">
+					<div class="h3 flex items-center gap-2">Upload Frequency</div>
+					<Badge>{vtuber.video_count.toLocaleString()}</Badge>
+				</div>
 				<div>In the last 2 months</div>
 			</div>
 		{/if}

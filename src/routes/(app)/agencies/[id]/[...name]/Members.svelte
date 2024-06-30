@@ -26,19 +26,19 @@
 		<div class="flex items-center justify-between gap-4">
 			<div>
 				<div class="flex items-center gap-2">
-					<h3>Member Count</h3>
+					<h3 class="h3">Member Count</h3>
 					<Badge class="hidden sm:block">{vtubers.length.toLocaleString()}</Badge>
 				</div>
 				<div>By monthly</div>
 			</div>
 			<div class="flex items-center gap-4 text-center">
 				<div>
-					<h3>{vtubers.filter((v) => !v.retirement_date).length.toLocaleString()}</h3>
-					<div class="text-green-500">Active</div>
+					<div class="h3">{vtubers.filter((v) => !v.retirement_date).length.toLocaleString()}</div>
+					<h4 class="text-green-500">Active</h4>
 				</div>
 				<div>
-					<h3>{vtubers.filter((v) => v.retirement_date).length.toLocaleString()}</h3>
-					<div class="text-red-500">Retired</div>
+					<div class="h3">{vtubers.filter((v) => v.retirement_date).length.toLocaleString()}</div>
+					<h4 class="text-red-500">Retired</h4>
 				</div>
 			</div>
 		</div>
@@ -49,7 +49,7 @@
 	<Card size="none" class="gap-4">
 		<div class="flex items-center justify-between gap-4">
 			<div class="flex items-center gap-2">
-				<h3>Member {layout === 'timeline' ? 'Timeline' : 'List'}</h3>
+				<h3 class="h3">Member {layout === 'timeline' ? 'Timeline' : 'List'}</h3>
 				<Badge>{vtubers.length.toLocaleString()}</Badge>
 			</div>
 			<div class="flex items-center gap-2">

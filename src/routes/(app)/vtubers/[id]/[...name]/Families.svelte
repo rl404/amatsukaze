@@ -30,7 +30,7 @@
 					)}
 					on:click={() => (tabI = i)}
 				>
-					<h3 class="line-clamp-1">{designer}</h3>
+					<h3 class="h3 line-clamp-1">{designer}</h3>
 					<Badge>{families[i].data.length.toLocaleString()}</Badge>
 				</button>
 			{/each}

@@ -45,35 +45,6 @@
 		@apply bg-gray-50 text-gray-500 antialiased dark:bg-gray-900 dark:text-gray-400;
 	}
 
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		@apply font-bold text-primary;
-	}
-
-	h1 {
-		@apply text-3xl sm:text-4xl;
-	}
-
-	h2 {
-		@apply text-2xl sm:text-3xl;
-	}
-
-	h3 {
-		@apply text-xl sm:text-2xl;
-	}
-
-	h4 {
-		@apply text-lg sm:text-xl;
-	}
-
-	h5 {
-		@apply sm:text-lg;
-	}
-
 	::-webkit-scrollbar {
 		@apply w-2;
 	}
@@ -88,6 +59,35 @@
 }
 
 @layer components {
+	.h1,
+	.h2,
+	.h3,
+	.h4,
+	.h5,
+	.h6 {
+		@apply font-bold text-primary;
+	}
+
+	.h1 {
+		@apply text-3xl sm:text-4xl;
+	}
+
+	.h2 {
+		@apply text-2xl sm:text-3xl;
+	}
+
+	.h3 {
+		@apply text-xl sm:text-2xl;
+	}
+
+	.h4 {
+		@apply text-lg sm:text-xl;
+	}
+
+	.h5 {
+		@apply sm:text-lg;
+	}
+
 	.line-clamp-1,
 	.line-clamp-2,
 	.line-clamp-3,

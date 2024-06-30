@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { generateVtuberDescription } from '$lib/utils/utils';
 	import type { ProfilePage, WithContext } from 'schema-dts';
 	import type { VtubersResponse } from '../../../../api/vtubers/+server';
 	import type { VtuberResponseData } from '../../../../api/vtubers/[id]/+server';
@@ -19,8 +18,8 @@
 			url: `https://amatsukaze.rl404.com/vtubers/${vtuber.id}/${vtuber.name}`,
 			identifier: vtuber.id,
 			name: vtuber.name,
-			alternateName: [...vtuber.original_names, ...vtuber.nicknames],
-			description: generateVtuberDescription(vtuber),
+			alternateName: [...(vtuber.original_names || []), ...(vtuber.nicknames || [])],
+			description: vtuber.caption,
 			image: vtuber.image,
 			birthDate: vtuber.debut_date,
 			deathDate: vtuber.retirement_date,

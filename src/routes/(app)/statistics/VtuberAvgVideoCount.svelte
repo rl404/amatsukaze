@@ -22,6 +22,6 @@
 {:else if error !== ''}
 	<div class="text-red-500">{error}</div>
 {:else}
-	<h1>{parseFloat(data.toFixed(1)).toLocaleString()}</h1>
+	<div class="h1">{parseFloat(data.toFixed(1)).toLocaleString()}</div>
 	<Tooltip placement="bottom">in the last 2 months</Tooltip>
 {/if}

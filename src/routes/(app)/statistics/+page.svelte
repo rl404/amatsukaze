@@ -43,7 +43,7 @@
 		<BreadcrumbItem home href="/">Home</BreadcrumbItem>
 		<BreadcrumbItem>Statistics</BreadcrumbItem>
 	</Breadcrumb>
-	<h1 class="col-span-6">Statistics</h1>
+	<h1 class="h1 col-span-6">Statistics</h1>
 	<Card title="Vtuber Count" class="col-span-3 md:col-span-2">
 		<VtuberCount />
 	</Card>

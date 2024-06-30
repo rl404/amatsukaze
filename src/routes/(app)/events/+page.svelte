@@ -83,7 +83,7 @@
 		<BreadcrumbItem>Events</BreadcrumbItem>
 	</Breadcrumb>
 	<div class="flex items-center justify-between gap-4">
-		<h1>Birthday & Anniversary Events {new Date().getFullYear()}</h1>
+		<h1 class="h1">Birthday & Anniversary Events {new Date().getFullYear()}</h1>
 		<Button class="hidden md:block" on:click={jumpToToday}>Jump to Today</Button>
 	</div>
 	<div class="block sm:hidden" bind:clientWidth={buttonWidth}>

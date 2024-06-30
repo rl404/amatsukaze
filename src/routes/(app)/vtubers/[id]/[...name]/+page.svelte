@@ -38,7 +38,7 @@
 		<BreadcrumbItem>{vtuber.name}</BreadcrumbItem>
 	</Breadcrumb>
 	<div class="col-span-4 flex flex-wrap items-center justify-between gap-2">
-		<h1>
+		<h1 class="h1">
 			<a
 				href="{PUBLIC_VTUBER_WIKI_HOST}/{vtuber.name}"
 				target="_blank"
@@ -46,8 +46,8 @@
 				class="clickable"
 			>
 				{vtuber.name}
-				<span>{vtuber.emoji}</span>
 			</a>
+			<span>{vtuber.emoji}</span>
 		</h1>
 		<div class="flex basis-full items-center gap-2 sm:basis-auto">
 			{#if vtuber.retirement_date}
@@ -85,36 +85,36 @@
 	<div class="col-span-4 sm:col-span-3">
 		<Tabs tabStyle="pill" contentClass="mt-2 sm:mt-4">
 			<TabItem open>
-				<div slot="title" class="flex items-center gap-2">
+				<h2 slot="title" class="flex items-center gap-2">
 					<InfoIcon class="size-4" />
 					Details
-				</div>
+				</h2>
 				<Details {vtuber} />
 			</TabItem>
 			{#if agencies.length > 0}
 				<TabItem>
-					<div slot="title" class="flex items-center gap-2">
+					<h2 slot="title" class="flex items-center gap-2">
 						<OfficeIcon class="size-4" />
 						Agency-mates
-					</div>
+					</h2>
 					<AgencyMates {vtuber} {agencies} />
 				</TabItem>
 			{/if}
 			{#if families.length > 0}
 				<TabItem>
-					<div slot="title" class="flex items-center gap-2">
+					<h2 slot="title" class="flex items-center gap-2">
 						<UsersIcon class="size-4" />
 						Families
-					</div>
+					</h2>
 					<Families {vtuber} {families} />
 				</TabItem>
 			{/if}
 			{#if vtuber.video_count > 0}
 				<TabItem>
-					<div slot="title" class="flex items-center gap-2">
+					<h2 slot="title" class="flex items-center gap-2">
 						<VideoIcon class="size-4" />
 						Videos
-					</div>
+					</h2>
 					<Videos {vtuber} />
 				</TabItem>
 			{/if}

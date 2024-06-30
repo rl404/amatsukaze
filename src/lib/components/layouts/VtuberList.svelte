@@ -31,9 +31,7 @@
 				size="none"
 				class="size-7 object-cover object-top"
 			/>
-			<div class="line-clamp-1 text-left">
-				<h5>{name}</h5>
-			</div>
+			<h4 class="h5 line-clamp-1 text-left">{name}</h4>
 		</div>
 		<div
 			class="col-span-5 hidden text-right sm:line-clamp-1 md:col-span-3 md:text-center xl:col-span-2"

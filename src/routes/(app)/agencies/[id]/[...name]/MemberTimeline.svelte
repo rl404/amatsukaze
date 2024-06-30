@@ -29,7 +29,7 @@
 
 			<div slot="left" class="flex flex-col gap-2 p-4" class:hidden={d.retired.length === 0}>
 				<div class="flex items-center gap-1 md:flex-row-reverse md:text-right">
-					<h4 class="font-bold text-red-500">Retired</h4>
+					<h4 class="h4 text-red-500">Retired</h4>
 					<span>({d.retired.length.toLocaleString()})</span>
 					<span>—</span>
 					<span>{d.date}</span>
@@ -51,7 +51,7 @@
 
 			<div slot="right" class="flex flex-col gap-2 p-4" class:hidden={d.debut.length === 0}>
 				<div class="flex items-center gap-1">
-					<h4 class="font-bold text-green-500">Debut</h4>
+					<h4 class="h4 text-green-500">Debut</h4>
 					<span>({d.debut.length.toLocaleString()})</span>
 					<span>—</span>
 					<span>{d.date}</span>

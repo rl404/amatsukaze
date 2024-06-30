@@ -31,7 +31,7 @@
 		<BreadcrumbItem href="/agencies">Agencies</BreadcrumbItem>
 		<BreadcrumbItem>{agency.name}</BreadcrumbItem>
 	</Breadcrumb>
-	<h1 class="col-span-4">
+	<h1 class="h1 col-span-4">
 		<a
 			href="{PUBLIC_VTUBER_WIKI_HOST}/{agency.name}"
 			target="_blank"
@@ -53,11 +53,11 @@
 				/>
 			</Card>
 			<div class="flex items-center justify-between gap-2">
-				<span class="font-bold">Member Count</span>
+				<h3 class="font-bold">Member Count</h3>
 				<P>{agency.member.toLocaleString()}</P>
 			</div>
 			<div class="flex items-center justify-between gap-2">
-				<span class="font-bold">Total Subscriber</span>
+				<h3 class="font-bold">Total Subscriber</h3>
 				<P>{compactInt(agency.subscriber)}</P>
 				<Tooltip placement="bottom">{agency.subscriber.toLocaleString()}</Tooltip>
 			</div>
@@ -66,18 +66,18 @@
 	<div class="col-span-4 sm:col-span-3">
 		<Tabs tabStyle="pill" contentClass="mt-2 sm:mt-4">
 			<TabItem open>
-				<div slot="title" class="flex items-center gap-2">
+				<h2 slot="title" class="flex items-center gap-2">
 					<UsersIcon class="size-4" />
 					Members
-				</div>
+				</h2>
 				<Members {vtubers} />
 			</TabItem>
 			{#if vtubers.length > 0}
 				<TabItem>
-					<div slot="title" class="flex items-center gap-2">
+					<h2 slot="title" class="flex items-center gap-2">
 						<CalendarIcon class="size-4" />
 						Events
-					</div>
+					</h2>
 					<Events {vtubers} />
 				</TabItem>
 			{/if}

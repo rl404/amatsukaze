@@ -28,10 +28,10 @@
 			alt={name}
 			class="h-full w-full rounded-lg object-cover object-top"
 		/>
-		<h5
-			class="pointer-events-none absolute bottom-0 line-clamp-1 w-full rounded-b-lg bg-primary-500 p-0.5 text-center text-white opacity-0 transition-opacity group-hover:opacity-100"
+		<h4
+			class="h5 pointer-events-none absolute bottom-0 line-clamp-1 w-full rounded-b-lg bg-primary-500 p-0.5 text-center text-white opacity-0 transition-opacity group-hover:opacity-100"
 		>
 			{name}
-		</h5>
+		</h4>
 	</Card>
 </RenderIfVisible>

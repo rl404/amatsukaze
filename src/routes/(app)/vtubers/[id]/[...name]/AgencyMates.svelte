@@ -30,7 +30,7 @@
 					)}
 					on:click={() => (tabI = i)}
 				>
-					<h3 class="line-clamp-1">{agency.name}</h3>
+					<h3 class="h3 line-clamp-1">{agency.name}</h3>
 					<Badge>{agencies[i].data.length.toLocaleString()}</Badge>
 				</button>
 			{/each}

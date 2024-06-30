@@ -25,10 +25,10 @@
 	const onSubmit = () => dispatch('submit');
 </script>
 
-<Button id="adv-src-button" color="alternative" class="!p-2" on:click={() => (open = true)}>
+<Button color="alternative" class="!p-2" on:click={() => (open = true)}>
 	<SliderIcon class="size-6" />
 </Button>
-<Tooltip triggeredBy="#adv-src-button">advanced search</Tooltip>
+<Tooltip>advanced search</Tooltip>
 
 <Modal title="Vtuber Search" bind:open outsideclose autoclose>
 	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
