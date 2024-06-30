@@ -81,7 +81,7 @@
 							)}
 							on:click={() => (tabI = i)}
 						>
-							<h4>{tab.label}</h4>
+							<h4 class="h4">{tab.label}</h4>
 							<Badge>{tab.data.length.toLocaleString()}</Badge>
 						</button>
 					{/each}
