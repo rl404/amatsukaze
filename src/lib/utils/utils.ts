@@ -16,8 +16,8 @@ export const shuffleArray = (array: any[]) => {
 	}
 };
 
-export const getWikiImg = (src: string, height = 206): string => {
-	return src && `/api/images/wikia/${src.split('?')[0]}?height=${height}`;
+export const getWikiImg = (src: string, height = 206, width = 0): string => {
+	return src && `/api/images/wikia/${src.split('?')[0]}?height=${height}&width=${width}`;
 };
 
 export const toTitleCase = (str: string): string => {
@@ -213,4 +213,8 @@ export const autoCeil = (i: number): number => {
 	const str = i.toString();
 	const div = 10 ** (str.length - 1);
 	return Math.ceil(i / div) * div;
+};
+
+export const toURL = (str: string): string => {
+	return str.replaceAll(' ', '-');
 };

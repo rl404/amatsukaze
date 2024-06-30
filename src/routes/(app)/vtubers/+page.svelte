@@ -145,7 +145,7 @@
 	</Breadcrumb>
 	<div class="flex flex-wrap items-center justify-between gap-4">
 		<div class="flex items-center gap-4">
-			<h1>Vtuber List</h1>
+			<h1 class="h1">Vtuber List</h1>
 			<Badge large>{total.toLocaleString()}</Badge>
 		</div>
 		<div class="flex basis-full items-center gap-2 md:basis-auto">

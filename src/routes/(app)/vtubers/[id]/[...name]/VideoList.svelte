@@ -46,14 +46,15 @@
 <Card size="none" class="gap-4">
 	<div class="flex items-center justify-between gap-4">
 		<div>
-			<h3 class="flex items-center gap-2">
-				Recent Videos <Badge>{vtuber.video_count.toLocaleString()}</Badge>
-			</h3>
+			<div class="flex items-center gap-2">
+				<h3 class="h3 flex items-center gap-2">Recent Videos</h3>
+				<Badge>{vtuber.video_count.toLocaleString()}</Badge>
+			</div>
 			<div>In the last 2 months</div>
 		</div>
 		<div class="text-right">
-			<div>Average Length</div>
-			<h3 class="text-right">{intToDurationStr(avgLength / 1000)}</h3>
+			<h3>Average Length</h3>
+			<div class="h3 text-right">{intToDurationStr(avgLength / 1000)}</div>
 		</div>
 	</div>
 	<div class="grid grid-cols-24 gap-2">

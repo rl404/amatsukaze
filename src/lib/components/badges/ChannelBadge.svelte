@@ -42,11 +42,13 @@
 	target="_blank"
 	rel="noreferrer"
 >
-	<svelte:component this={icon} class="mr-2 size-3" />
-	{#if !data.name}
-		{toTitleCase(data.type)}
-	{:else}
-		<span class="mr-2 line-clamp-1">{data.name}</span>
-		{compactInt(data.subscriber)}
-	{/if}
+	<div class="inline-flex">
+		<svelte:component this={icon} class="mr-2 size-3" />
+		{#if !data.name}
+			{toTitleCase(data.type)}
+		{:else}
+			<span class="mr-2 line-clamp-1">{data.name}</span>
+			{compactInt(data.subscriber)}
+		{/if}
+	</div>
 </Badge>

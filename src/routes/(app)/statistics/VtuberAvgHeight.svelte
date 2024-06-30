@@ -22,5 +22,5 @@
 {:else if error !== ''}
 	<div class="text-red-500">{error}</div>
 {:else}
-	<h1>{data.toFixed(0)} cm</h1>
+	<div class="h1">{data.toFixed(0)} cm</div>
 {/if}

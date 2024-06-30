@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getWikiImg } from '$lib/utils/utils';
+	import { getWikiImg, toURL } from '$lib/utils/utils';
 	import { Card } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
 	import Image from '../commons/Image.svelte';
@@ -22,7 +22,7 @@
 		title={name}
 		size="none"
 		padding="none"
-		href="/vtubers/{id}/{name}"
+		href="/vtubers/{id}/{toURL(name)}"
 		class="flex h-full w-full flex-row overflow-hidden"
 	>
 		<Image
@@ -33,25 +33,25 @@
 		/>
 		<div class="flex w-full flex-col gap-1 p-2">
 			<div class="border-b border-border pb-1">
-				<h5 class="line-clamp-1 text-primary">{name}</h5>
+				<h4 class="h5 line-clamp-1">{name}</h4>
 			</div>
 			<div class="flex justify-between gap-1">
-				<span>Agency</span>
-				<span class="line-clamp-1 text-right text-primary" title={agencies && agencies.join(', ')}>
+				<h5>Agency</h5>
+				<div class="line-clamp-1 text-right text-primary" title={agencies && agencies.join(', ')}>
 					{agencies.length === 0 ? '-' : agencies.join(', ')}
-				</span>
+				</div>
 			</div>
 			<div class="flex justify-between gap-1">
-				<span>Debut</span>
-				<span class="line-clamp-1 text-right text-primary">
+				<h5>Debut</h5>
+				<div class="line-clamp-1 text-right text-primary">
 					{!debutDate ? '-' : debutDate.toISOString().slice(0, 10)}
-				</span>
+				</div>
 			</div>
 			<div class="flex justify-between gap-1">
-				<span>Retired</span>
-				<span class="line-clamp-1 text-right text-primary">
+				<h5>Retired</h5>
+				<div class="line-clamp-1 text-right text-primary">
 					{!retirementDate ? '-' : retirementDate.toISOString().slice(0, 10)}
-				</span>
+				</div>
 			</div>
 		</div>
 	</Card>

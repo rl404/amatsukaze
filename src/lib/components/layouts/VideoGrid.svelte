@@ -52,7 +52,7 @@
 				{durationStr}
 			</span>
 		</div>
-		<div class="line-clamp-2 text-primary">{data.title}</div>
+		<h4 class="line-clamp-2 text-primary">{data.title}</h4>
 		<div class="flex items-center gap-2" title={startDate}>
 			<svelte:component this={icons[type].icon} class={twMerge('size-4', icons[type].color)} />
 			{data.start_date && relativeTime(new Date(data.start_date))}

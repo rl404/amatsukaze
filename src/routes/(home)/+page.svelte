@@ -16,7 +16,7 @@
 
 <Schema />
 
-<div class="relative h-screen w-screen overflow-hidden">
+<main class="relative h-screen w-screen overflow-hidden">
 	<Grid data={data.data} />
 	<Title />
-</div>
+</main>

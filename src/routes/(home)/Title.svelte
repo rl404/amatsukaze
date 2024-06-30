@@ -32,18 +32,20 @@
 	<div class="bg-gradient absolute -top-2 left-0 h-1 w-full transition" />
 	<div class="bg-gradient absolute -bottom-2 left-0 h-1 w-full transition" />
 
-	<h2 class="text-lg font-normal text-white drop-shadow-lg sm:text-xl">
+	<h2 class="h4 font-normal text-white drop-shadow-lg">
 		<a href={PUBLIC_VTUBER_WIKI_HOST} target="_blank" rel="noreferrer" class="clickable">
 			Vtuber Wikia
 		</a>
 		Visualizer
 	</h2>
 
-	<h1 class="pointer-events-none text-5xl text-white drop-shadow-lg sm:text-6xl">Amatsukaze</h1>
+	<h1 class="pointer-events-none text-5xl font-bold text-white drop-shadow-lg sm:text-6xl">
+		Amatsukaze
+	</h1>
 
 	<div class="grid items-center text-xl drop-shadow-lg sm:flex sm:justify-end sm:gap-2">
 		{#each links as link}
-			<a href={link.link} class="clickable">{link.label}</a>
+			<h3><a href={link.link} class="clickable">{link.label}</a></h3>
 			<span class="hidden sm:inline-block">•</span>
 		{/each}
 		<div class="mt-2 flex items-center justify-end gap-2 sm:mt-0">
