@@ -45,7 +45,7 @@
 		<div class="sticky top-20 flex flex-col gap-4">
 			<Card size="none" padding="none">
 				<Image
-					src={getWikiImg(agency.image, 0)}
+					src={getWikiImg(agency.image, 0, 400)}
 					alt={agency.name}
 					class="max-h-96 rounded-lg object-contain object-center p-4 sm:max-h-max"
 					loadingClass="aspect-card"

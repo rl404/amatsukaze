@@ -1,11 +1,11 @@
 import type { RequestHandler } from './$types';
 
 export const GET = (async ({ url, params }) => {
-	const width = url.searchParams.get('width');
-	const height = url.searchParams.get('height');
+	const width = parseInt(url.searchParams.get('width') || '');
+	const height = parseInt(url.searchParams.get('height') || '');
 
-	if (width) params.path += `/scale-to-width-down/${width}`;
-	if (height) params.path += `/scale-to-height-down/${height}`;
+	if (width > 0) params.path += `/scale-to-width-down/${width}`;
+	if (height > 0) params.path += `/scale-to-height-down/${height}`;
 
 	const resp = await fetch(params.path);
 	const blob = await resp.blob();

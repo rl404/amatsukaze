@@ -68,7 +68,7 @@
 	<div class="col-span-4 sm:col-span-1">
 		<Card size="none" padding="none" class="sticky top-20">
 			<Image
-				src={getWikiImg(vtuber.image, 0)}
+				src={getWikiImg(vtuber.image, 0, 400)}
 				alt={vtuber.name}
 				class={twMerge(
 					'max-h-96 rounded-t-lg border-b border-border object-contain object-top sm:max-h-max',
