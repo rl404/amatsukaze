@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getWikiImg } from '$lib/utils/utils';
+	import { getWikiImg, toURL } from '$lib/utils/utils';
 	import { Avatar, Badge, Card, Tooltip } from 'flowbite-svelte';
 	import RenderIfVisible from '../commons/RenderIfVisible.svelte';
 
@@ -21,7 +21,7 @@
 		title={name}
 		size="none"
 		padding="xs"
-		href="/vtubers/{id}/{name}"
+		href="/vtubers/{id}/{toURL(name)}"
 		class="grid grid-cols-10 items-center gap-2 text-center"
 	>
 		<div class="col-span-10 flex items-center gap-2 sm:col-span-5 md:col-span-3">

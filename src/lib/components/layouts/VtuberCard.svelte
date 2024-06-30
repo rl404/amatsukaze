@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getWikiImg } from '$lib/utils/utils';
+	import { getWikiImg, toURL } from '$lib/utils/utils';
 	import { Card } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
 	import Image from '../commons/Image.svelte';
@@ -22,7 +22,7 @@
 		title={name}
 		size="none"
 		padding="none"
-		href="/vtubers/{id}/{name}"
+		href="/vtubers/{id}/{toURL(name)}"
 		class="flex h-full w-full flex-row overflow-hidden"
 	>
 		<Image

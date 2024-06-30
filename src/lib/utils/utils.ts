@@ -214,3 +214,7 @@ export const autoCeil = (i: number): number => {
 	const div = 10 ** (str.length - 1);
 	return Math.ceil(i / div) * div;
 };
+
+export const toURL = (str: string): string => {
+	return str.replaceAll(' ', '-');
+};

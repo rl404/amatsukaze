@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { compactInt, getWikiImg } from '$lib/utils/utils';
+	import { compactInt, getWikiImg, toURL } from '$lib/utils/utils';
 	import { Avatar, Card } from 'flowbite-svelte';
 	import RenderIfVisible from '../commons/RenderIfVisible.svelte';
 
@@ -18,7 +18,7 @@
 		title={name}
 		size="none"
 		padding="xs"
-		href="/agencies/{id}/{name}"
+		href="/agencies/{id}/{toURL(name)}"
 		class="grid grid-cols-10 items-center gap-2 text-center"
 	>
 		<div class="col-span-10 flex items-center gap-2 sm:col-span-6">
