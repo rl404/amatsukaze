@@ -130,6 +130,10 @@ export const vtuberSorter =
 				return a.subscriber < b.subscriber ? -1 : 1;
 			case '-subscriber':
 				return a.subscriber > b.subscriber ? -1 : 1;
+			case 'monthly_subscriber':
+				return a.monthly_subscriber < b.monthly_subscriber ? -1 : 1;
+			case '-monthly_subscriber':
+				return a.monthly_subscriber > b.monthly_subscriber ? -1 : 1;
 			case 'video_count':
 				if (a.retirement_date) return -1;
 				if (b.retirement_date) return 1;

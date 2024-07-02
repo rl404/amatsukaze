@@ -17,6 +17,7 @@ export const GET = (async ({ url }) => {
 		'nickname',
 		'exclude_active',
 		'exclude_retired',
+		'debut_day',
 		'start_debut_month',
 		'end_debut_month',
 		'start_debut_year',
@@ -56,7 +57,7 @@ export const GET = (async ({ url }) => {
 	return new Response(JSON.stringify(body), {
 		headers: {
 			'content-type': 'application/json',
-			'cache-control': 'max-age=3600, s-maxage=86400, stale-while-revalidate=3600'
+			'cache-control': 'max-age=21600, s-maxage=86400, stale-while-revalidate=21600'
 		},
 		status: resp.status
 	});

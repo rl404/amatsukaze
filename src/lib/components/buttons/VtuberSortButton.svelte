@@ -33,16 +33,7 @@
 			value: '-name',
 			hidden: hideKeys.includes('-name')
 		},
-		subscriber: {
-			name: 'Subscriber ASC',
-			value: 'subscriber',
-			hidden: hideKeys.includes('subscriber')
-		},
-		'-subscriber': {
-			name: 'Subscriber DESC',
-			value: '-subscriber',
-			hidden: hideKeys.includes('-subscriber')
-		},
+
 		debut_date: {
 			name: 'Debut date ASC',
 			value: 'debut_date',
@@ -62,6 +53,26 @@
 			name: 'Retirement date DESC',
 			value: '-retirement_date',
 			hidden: hideKeys.includes('-retirement_date')
+		},
+		subscriber: {
+			name: 'Subscriber ASC',
+			value: 'subscriber',
+			hidden: hideKeys.includes('subscriber')
+		},
+		'-subscriber': {
+			name: 'Subscriber DESC',
+			value: '-subscriber',
+			hidden: hideKeys.includes('-subscriber')
+		},
+		monthly_subscriber: {
+			name: 'Monthly Subs ASC',
+			value: 'monthly_subscriber',
+			hidden: hideKeys.includes('monthly_subscriber')
+		},
+		'-monthly_subscriber': {
+			name: 'Monthly Subs DESC',
+			value: '-monthly_subscriber',
+			hidden: hideKeys.includes('-monthly_subscriber')
 		},
 		video_count: {
 			name: 'Video count ASC',

@@ -57,7 +57,16 @@
 					bind:value={sort}
 					class="hidden sm:flex"
 					hideKeys={layout === 'timeline'
-						? ['name', '-name', 'subscriber', '-subscriber', 'video_count', '-video_count']
+						? [
+								'name',
+								'-name',
+								'subscriber',
+								'-subscriber',
+								'monthly_subscriber',
+								'-monthly_subscriber',
+								'video_count',
+								'-video_count'
+							]
 						: []}
 				/>
 				<span class="hidden opacity-50 sm:block">|</span>
