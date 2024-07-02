@@ -53,22 +53,22 @@
 		{
 			label: "Today's Birthday",
 			icon: CakeIcon,
-			api: `/api/vtubers?sort=name&birthday_day=${today.getDay()}&start_birthday_month=${today.getMonth() + 1}&end_birthday_month=${today.getMonth() + 1}&limit=5&mode=simple`,
+			api: `/api/vtubers?sort=name&exclude_retired=true&birthday_day=${today.getDay()}&start_birthday_month=${today.getMonth() + 1}&end_birthday_month=${today.getMonth() + 1}&limit=5&mode=simple`,
 			more: '/events',
 			data: []
 		},
 		{
 			label: "Today's Anniversary",
 			icon: GiftIcon,
-			api: `/api/vtubers?sort=name&debut_day=${today.getDay()}&start_debut_month=${today.getMonth() + 1}&end_debut_month=${today.getMonth() + 1}&limit=5&mode=simple`,
+			api: `/api/vtubers?sort=name&exclude_retired=true&debut_day=${today.getDay()}&start_debut_month=${today.getMonth() + 1}&end_debut_month=${today.getMonth() + 1}&limit=5&mode=simple`,
 			more: '/events',
 			data: []
 		},
 		{
 			label: 'Rising Stars',
 			icon: LineChartIcon,
-			api: `/api/vtubers?sort=-monthly_subscriber&start_debut_year=${lastYear.getFullYear()}&limit=5&mode=simple`,
-			more: `/vtubers?sort=-monthly_subscriber&start_debut_year=${lastYear.getFullYear()}`,
+			api: `/api/vtubers?sort=-monthly_subscriber&exclude_retired=true&start_debut_year=${lastYear.getFullYear()}&limit=5&mode=simple`,
+			more: `/vtubers?sort=-monthly_subscriber&exclude_retired=true&start_debut_year=${lastYear.getFullYear()}`,
 			data: []
 		},
 		{
