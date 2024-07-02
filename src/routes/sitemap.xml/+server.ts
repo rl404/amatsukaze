@@ -9,7 +9,7 @@ import type { RequestHandler } from './$types';
 const site = 'https://amatsukaze.rl404.com';
 
 const escapeXML = (str: string): string => {
-	return str.replace(/[<>&'"]/g, (c) => {
+	return str.replace(/[\s<>&'"]/g, (c) => {
 		switch (c) {
 			case '<':
 				return '&lt;';
@@ -21,6 +21,8 @@ const escapeXML = (str: string): string => {
 				return '&apos;';
 			case '"':
 				return '&quot;';
+			case ' ':
+				return '-';
 			default:
 				return c;
 		}
