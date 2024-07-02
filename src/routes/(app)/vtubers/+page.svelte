@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { page as appPage } from '$app/stores';
 	import VtuberLayoutButton from '$lib/components/buttons/VtuberLayoutButton.svelte';
 	import VtuberSortButton from '$lib/components/buttons/VtuberSortButton.svelte';
@@ -12,7 +13,6 @@
 	import { getAxiosError } from '$lib/utils/api';
 	import axios from 'axios';
 	import { Badge, Breadcrumb, BreadcrumbItem, Card, Search, Spinner } from 'flowbite-svelte';
-	import { onMount } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
 	import type { VtuberResponseData } from '../../api/vtubers/[id]/+server';
 	import type { VtuberSearchResponse } from './+page.server';
@@ -33,8 +33,12 @@
 	let delayTimer: number;
 
 	$: vtubers = [...vtubers, ...newVtubers];
+	$: $appPage && onURLChange();
 
-	onMount(() => {
+	const onURLChange = () => {
+		vtubers = [];
+		newVtubers = [];
+
 		const params = $appPage.url.searchParams;
 
 		query = {
@@ -80,16 +84,16 @@
 		};
 
 		fetchData();
-	});
+	};
 
 	const onSearch = () => {
-		query = {
-			...query,
-			page: 1
-		};
-		vtubers = [];
-		newVtubers = [];
-		fetchData();
+		query = { ...query, page: 1 };
+
+		const queries = Object.entries(query)
+			.map((v) => `${v[0]}=${v[1] ?? ''}`)
+			.join('&');
+
+		goto(`?${queries}`);
 	};
 
 	const fetchData = () => {
