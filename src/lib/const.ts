@@ -86,6 +86,8 @@ export const VtuberSorts: { name: string; value: VtuberSort }[] = [
 	{ name: 'Retirement Date DESC', value: '-retirement_date' },
 	{ name: 'Subscriber ASC', value: 'subscriber' },
 	{ name: 'Subscriber DESC', value: '-subscriber' },
+	{ name: 'Monthly Subs ASC', value: 'monthly_subscriber' },
+	{ name: 'Monthly Subs DESC', value: '-monthly_subscriber' },
 	{ name: 'Video Count ASC', value: 'video_count' },
 	{ name: 'Video Count DESC', value: '-video_count' }
 ];

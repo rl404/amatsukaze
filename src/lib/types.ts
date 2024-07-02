@@ -8,6 +8,8 @@ export type VtuberSort =
 	| '-retirement_date'
 	| 'subscriber'
 	| '-subscriber'
+	| 'monthly_subscriber'
+	| '-monthly_subscriber'
 	| 'video_count'
 	| '-video_count';
 
