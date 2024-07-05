@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { toURL } from '$lib/utils/utils';
 	import type { ProfilePage, WithContext } from 'schema-dts';
 	import type { VtubersResponse } from '../../../../api/vtubers/+server';
 	import type { VtuberResponseData } from '../../../../api/vtubers/[id]/+server';
@@ -13,10 +14,10 @@
 		'@context': 'https://schema.org',
 		'@type': 'ProfilePage',
 		mainEntity: {
-			'@id': `https://amatsukaze.rl404.com/vtubers/${vtuber.id}/${vtuber.name}`,
+			'@id': `https://amatsukaze.rl404.com/vtubers/${vtuber.id}/${toURL(vtuber.name)}`,
 			'@type': 'Person',
-			url: `https://amatsukaze.rl404.com/vtubers/${vtuber.id}/${vtuber.name}`,
-			identifier: vtuber.id,
+			url: `https://amatsukaze.rl404.com/vtubers/${vtuber.id}/${toURL(vtuber.name)}`,
+			identifier: vtuber.id.toString(),
 			name: vtuber.name,
 			alternateName: [...(vtuber.original_names || []), ...(vtuber.nicknames || [])],
 			description: vtuber.caption,
@@ -30,18 +31,18 @@
 			publishingPrinciples: vtuber.channels.map((c) => c.url),
 			affiliation: vtuber.agencies.map((a) => ({
 				'@type': 'Organization',
-				identifier: a.id,
+				identifier: a.id.toString(),
 				name: a.name,
-				url: `https://amatsukaze.rl404.com/agencies/${a.id}/${a.name}`
+				url: `https://amatsukaze.rl404.com/agencies/${a.id}/${toURL(a.name)}`
 			})),
 			colleague: agencies.reduce(
 				(res, curr) => [
 					...res,
 					...curr.data.map((d) => ({
 						'@type': 'Person',
-						identifier: d.id,
+						identifier: d.id.toString(),
 						name: d.name,
-						url: `https://amatsukaze.rl404.com/vtubers/${d.id}/${d.name}`
+						url: `https://amatsukaze.rl404.com/vtubers/${d.id}/${toURL(d.name)}`
 					}))
 				],
 				[] as any
@@ -53,9 +54,9 @@
 						.filter((f) => f.id !== vtuber.id)
 						.map((f) => ({
 							'@type': 'Person',
-							identifier: f.id,
+							identifier: f.id.toString(),
 							name: f.name,
-							url: `https://amatsukaze.rl404.com/vtubers/${f.id}/${f.name}`
+							url: `https://amatsukaze.rl404.com/vtubers/${f.id}/${toURL(f.name)}`
 						}))
 				],
 				[] as any
