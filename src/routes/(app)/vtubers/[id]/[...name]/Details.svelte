@@ -1,6 +1,12 @@
 <script lang="ts">
 	import ChannelBadge from '$lib/components/badges/ChannelBadge.svelte';
-	import { channelSorter, formatBirthday, getHostname, isEmptyArray } from '$lib/utils/utils';
+	import {
+		channelSorter,
+		formatBirthday,
+		getHostname,
+		isEmptyArray,
+		toURL
+	} from '$lib/utils/utils';
 	import { Card, P } from 'flowbite-svelte';
 	import type { VtuberResponseData } from '../../../../api/vtubers/[id]/+server';
 
@@ -88,7 +94,7 @@
 				{:else}
 					{#each vtuber.agencies as agency}
 						<P>
-							<a href={`/agencies/${agency.id}/${agency.name}`} class="clickable underline">
+							<a href={`/agencies/${agency.id}/${toURL(agency.name)}`} class="clickable underline">
 								{agency.name}
 							</a>
 						</P>
