@@ -1,7 +1,7 @@
 <script lang="ts">
 	import BarChart from '$lib/components/charts/BarChart.svelte';
 	import { getAxiosError } from '$lib/utils/api';
-	import { compactInt } from '$lib/utils/utils';
+	import { compactInt, toURL } from '$lib/utils/utils';
 	import axios from 'axios';
 	import { Spinner } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
@@ -20,7 +20,7 @@
 	});
 
 	const onClick = (d: any) =>
-		window.open(`/agencies/${data[d.detail].id}/${data[d.detail].name}`, '_blank')?.focus();
+		window.open(`/agencies/${data[d.detail].id}/${toURL(data[d.detail].name)}`, '_blank')?.focus();
 </script>
 
 {#if loading}

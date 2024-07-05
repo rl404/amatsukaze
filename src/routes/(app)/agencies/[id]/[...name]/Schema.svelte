@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { generateAgencyDescription } from '$lib/utils/utils';
+	import { generateAgencyDescription, toURL } from '$lib/utils/utils';
 	import type { Organization, WithContext } from 'schema-dts';
 	import type { AgencyResponseData } from '../../../../api/agencies/[id]/+server';
 	import type { VtuberResponseData } from '../../../../api/vtubers/[id]/+server';
@@ -12,7 +12,7 @@
 	$: schema = {
 		'@context': 'https://schema.org',
 		'@type': 'Organization',
-		url: `https://amatsukaze.rl404.com/agencies/${agency.id}/${agency.name}`,
+		url: `https://amatsukaze.rl404.com/agencies/${agency.id}/${toURL(agency.name)}`,
 		identifier: agency.id.toString(),
 		name: agency.name,
 		description: generateAgencyDescription(agency),
@@ -22,7 +22,7 @@
 			'@type': 'Person',
 			identifier: v.id.toString(),
 			name: v.name,
-			url: `https://amatsukaze.rl404.com/vtubers/${v.id}/${v.name}`
+			url: `https://amatsukaze.rl404.com/vtubers/${v.id}/${toURL(v.name)}`
 		}))
 	};
 </script>
