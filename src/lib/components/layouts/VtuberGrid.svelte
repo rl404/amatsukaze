@@ -33,5 +33,8 @@
 		>
 			{name}
 		</h4>
+		<div class="absolute right-1 top-1 opacity-0 transition-opacity group-hover:opacity-100">
+			<slot name="badge" />
+		</div>
 	</Card>
 </RenderIfVisible>
