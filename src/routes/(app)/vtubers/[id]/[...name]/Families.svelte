@@ -1,4 +1,5 @@
 <script lang="ts">
+	import VtuberStatBadge from '$lib/components/badges/VtuberStatBadge.svelte';
 	import VtuberLayoutButton from '$lib/components/buttons/VtuberLayoutButton.svelte';
 	import VtuberSortButton from '$lib/components/buttons/VtuberSortButton.svelte';
 	import VtuberCard from '$lib/components/layouts/VtuberCard.svelte';
@@ -50,7 +51,17 @@
 					image={v.image}
 					delay={500}
 					class="col-span-8 sm:col-span-6 lg:col-span-4 2xl:col-span-3"
-				/>
+				>
+					<VtuberStatBadge
+						slot="badge"
+						subscriber={v.subscriber}
+						debutDate={v.debut_date ? new Date(v.debut_date) : undefined}
+						retirementDate={v.retirement_date ? new Date(v.retirement_date) : undefined}
+						monthlySubs={v.monthly_subscriber}
+						videoCount={v.video_count}
+						{sort}
+					/>
+				</VtuberGrid>
 			{:else if layout === 'card'}
 				<VtuberCard
 					id={v.id}
