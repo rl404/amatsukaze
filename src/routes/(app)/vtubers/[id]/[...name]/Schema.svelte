@@ -67,5 +67,9 @@
 </script>
 
 <svelte:head>
+	<link
+		rel="canonical"
+		href={`https://amatsukaze.rl404.com/vtubers/${vtuber.id}/${toURL(vtuber.name)}`}
+	/>
 	{@html `<script type="application/ld+json">${JSON.stringify(schema)}</script>`}
 </svelte:head>
