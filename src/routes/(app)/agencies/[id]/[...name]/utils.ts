@@ -16,12 +16,14 @@ export const getChartData = (vtubers: VtuberResponseData[]): AgencyMemberMonth[]
 	vtubers.forEach((vtuber) => {
 		if (vtuber.debut_date && new Date(vtuber.debut_date)) {
 			const debutDate = new Date(vtuber.debut_date);
+			if (debutDate.getFullYear() === 0) return;
 			if (debutDate < minDate) minDate = debutDate;
 			if (debutDate > maxDate) maxDate = debutDate;
 		}
 
 		if (vtuber.retirement_date && new Date(vtuber.retirement_date)) {
 			const retiredDate = new Date(vtuber.retirement_date);
+			if (retiredDate.getFullYear() === 0) return;
 			if (retiredDate < minDate) minDate = retiredDate;
 			if (retiredDate > maxDate) maxDate = retiredDate;
 		}
@@ -38,15 +40,17 @@ export const getChartData = (vtubers: VtuberResponseData[]): AgencyMemberMonth[]
 
 	vtubers.forEach((vtuber) => {
 		if (vtuber.debut_date && new Date(vtuber.debut_date)) {
-			const debutDate = new Date(vtuber.debut_date).toISOString();
-			const key = `${debutDate.slice(0, 7)}-01`;
+			const debutDate = new Date(vtuber.debut_date);
+			if (debutDate.getFullYear() === 0) return;
+			const key = `${debutDate.toISOString().slice(0, 7)}-01`;
 			chartData[key].debut++;
 			chartData[key].total++;
 		}
 
 		if (vtuber.retirement_date && new Date(vtuber.retirement_date)) {
-			const retiredDate = new Date(vtuber.retirement_date).toISOString();
-			const key = `${retiredDate.slice(0, 7)}-01`;
+			const retiredDate = new Date(vtuber.retirement_date);
+			if (retiredDate.getFullYear() === 0) return;
+			const key = `${retiredDate.toISOString().slice(0, 7)}-01`;
 			chartData[key].retired++;
 			chartData[key].total--;
 		}
