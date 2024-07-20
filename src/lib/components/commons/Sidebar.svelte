@@ -30,7 +30,7 @@
 	$: activeUrl = $page.url.pathname;
 
 	const today = new Date();
-	const lastYear = new Date(today.getFullYear() - 1, today.getMonth(), today.getDay());
+	const lastYear = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
 	const iconClass = 'size-5 text-gray-500 transition group-hover:text-primary dark:text-gray-400';
 	const itemClass = 'group transition hover:bg-gray-200 dark:hover:bg-gray-700';
 
@@ -53,14 +53,14 @@
 		{
 			label: "Today's Birthday",
 			icon: CakeIcon,
-			api: `/api/vtubers?sort=name&exclude_retired=true&birthday_day=${today.getDay()}&start_birthday_month=${today.getMonth() + 1}&end_birthday_month=${today.getMonth() + 1}&limit=5&mode=simple`,
+			api: `/api/vtubers?sort=name&exclude_retired=true&birthday_day=${today.getDate()}&start_birthday_month=${today.getMonth() + 1}&end_birthday_month=${today.getMonth() + 1}&limit=5&mode=simple`,
 			more: '/events',
 			data: []
 		},
 		{
 			label: "Today's Anniversary",
 			icon: GiftIcon,
-			api: `/api/vtubers?sort=name&exclude_retired=true&debut_day=${today.getDay()}&start_debut_month=${today.getMonth() + 1}&end_debut_month=${today.getMonth() + 1}&limit=5&mode=simple`,
+			api: `/api/vtubers?sort=name&exclude_retired=true&debut_day=${today.getDate()}&start_debut_month=${today.getMonth() + 1}&end_debut_month=${today.getMonth() + 1}&limit=5&mode=simple`,
 			more: '/events',
 			data: []
 		},
