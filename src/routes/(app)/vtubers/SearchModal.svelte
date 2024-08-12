@@ -5,6 +5,7 @@
 	import type { VtubersQuery } from '$lib/types';
 	import { Button, Input, Label, Modal, Select, Tooltip } from 'flowbite-svelte';
 	import { createEventDispatcher } from 'svelte';
+	import type { AgencyResponseData } from '../../api/agencies/[id]/+server';
 	import type { LanguageResponseData } from '../../api/languages/+server';
 	import InputBirthday from './InputBirthday.svelte';
 	import InputChannel from './InputChannel.svelte';
@@ -14,7 +15,7 @@
 
 	export let query: VtubersQuery;
 	export let loading: boolean;
-	export let agencies: string[];
+	export let agencies: AgencyResponseData[];
 	export let languages: LanguageResponseData[];
 	export let characterDesigners: string[];
 	export let character2dModelers: string[];
@@ -86,8 +87,11 @@
 				id="agency"
 				size="sm"
 				placeholder=""
-				items={[{ name: 'any', value: '' }, ...agencies.map((a) => ({ name: a, value: a }))]}
-				bind:value={query.agency}
+				items={[
+					{ name: 'any', value: '' },
+					...agencies.map((a) => ({ name: a.name, value: a.id.toString() }))
+				]}
+				bind:value={query.agency_id}
 			/>
 		</div>
 		<div class="grid grid-cols-2 gap-2">

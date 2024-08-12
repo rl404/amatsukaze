@@ -32,7 +32,6 @@ export const GET = (async ({ url }) => {
 		'character_2d_modeler',
 		'character_3d_modeler',
 		'in_agency',
-		'agency',
 		'agency_id',
 		'language_id',
 		'channel_types',
