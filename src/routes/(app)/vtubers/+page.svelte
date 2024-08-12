@@ -70,6 +70,7 @@
 					? undefined
 					: params.get('in_agency') === 'true',
 			agency: params.get('agency') || '',
+			language_id: params.get('language_id') || '',
 			channel_types: params.get('channel_types') || '',
 			birthday_day: params.get('birthday_day') || '',
 			start_birthday_month: params.get('start_birthday_month') || '',
@@ -166,6 +167,7 @@
 				bind:query
 				on:submit={onSearch}
 				agencies={data.agencies.data.map((a) => a.name)}
+				languages={data.languages.data}
 				characterDesigners={data.characterDesigners.data}
 				character2dModelers={data.character2dModelers.data}
 				character3dModelers={data.character3dModelers.data}
@@ -173,7 +175,7 @@
 		</div>
 	</div>
 	<div class="flex items-center justify-between gap-2">
-		<QueryBadges bind:query on:change={onSearch} />
+		<QueryBadges bind:query on:change={onSearch} languages={data.languages.data} />
 		<div class="flex items-center gap-2">
 			<VtuberSortButton bind:value={query.sort} on:change={onSearch} class="hidden sm:flex" />
 			<span class="hidden opacity-50 sm:block">|</span>

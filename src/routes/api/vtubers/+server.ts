@@ -34,6 +34,7 @@ export const GET = (async ({ url }) => {
 		'in_agency',
 		'agency',
 		'agency_id',
+		'language_id',
 		'channel_types',
 		'birthday_day',
 		'start_birthday_month',

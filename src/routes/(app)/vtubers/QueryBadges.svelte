@@ -6,10 +6,12 @@
 	import { compactInt, toTitleCase } from '$lib/utils/utils';
 	import { Badge } from 'flowbite-svelte';
 	import { createEventDispatcher } from 'svelte';
+	import type { LanguageResponseData } from '../../api/languages/+server';
 
 	const dispatch = createEventDispatcher<{ change: null }>();
 
 	export let query: VtubersQuery;
+	export let languages: LanguageResponseData[];
 
 	const onClose = (name: keyof VtubersQuery, value: any, callDispatch = true) => {
 		query = { ...query, [name]: value };
@@ -152,6 +154,11 @@
 		>
 			Birthday: {query.birthday_day}
 			{MonthNames[parseInt(query.start_birthday_month) - 1]}
+		</Badge>
+	{/if}
+	{#if query.language_id !== ''}
+		<Badge dismissable on:close={() => onClose('language_id', '')}>
+			Language: {languages.find((l) => l.id.toString() === query.language_id)?.name}
 		</Badge>
 	{/if}
 	{#if query.blood_types !== ''}

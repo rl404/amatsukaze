@@ -61,6 +61,7 @@ export const DefaultVtubersQuery: VtubersQuery = {
 	character_3d_modeler: '',
 	in_agency: undefined,
 	agency: '',
+	language_id: '',
 	channel_types: '',
 	birthday_day: '',
 	start_birthday_month: '',

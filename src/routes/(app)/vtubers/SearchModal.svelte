@@ -5,6 +5,7 @@
 	import type { VtubersQuery } from '$lib/types';
 	import { Button, Input, Label, Modal, Select, Tooltip } from 'flowbite-svelte';
 	import { createEventDispatcher } from 'svelte';
+	import type { LanguageResponseData } from '../../api/languages/+server';
 	import InputBirthday from './InputBirthday.svelte';
 	import InputChannel from './InputChannel.svelte';
 	import InputStatus from './InputStatus.svelte';
@@ -14,6 +15,7 @@
 	export let query: VtubersQuery;
 	export let loading: boolean;
 	export let agencies: string[];
+	export let languages: LanguageResponseData[];
 	export let characterDesigners: string[];
 	export let character2dModelers: string[];
 	export let character3dModelers: string[];
@@ -162,6 +164,19 @@
 				bind:birthdayDay={query.birthday_day}
 				bind:startBirthdayMonth={query.start_birthday_month}
 				bind:endBirthdayMonth={query.end_birthday_month}
+			/>
+		</div>
+		<div class="grid gap-2">
+			<Label for="language">Language</Label>
+			<Select
+				id="language"
+				size="sm"
+				placeholder=""
+				items={[
+					{ name: 'any', value: '' },
+					...languages.map((a) => ({ name: a.name, value: a.id.toString() }))
+				]}
+				bind:value={query.language_id}
 			/>
 		</div>
 		<div class="grid gap-2">
