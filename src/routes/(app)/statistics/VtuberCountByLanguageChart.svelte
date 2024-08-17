@@ -4,32 +4,24 @@
 	import axios from 'axios';
 	import { Spinner } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
+	import type { VtuberLanguageCountResponseData } from '../../api/statistics/vtubers/language-count/+server';
 
-	type ChartData = {
-		name: string;
-		value: number;
-	};
+	export let limit: number = -1;
 
-	let data: ChartData[] = [];
+	let data: VtuberLanguageCountResponseData[];
 	let loading: boolean = true;
 	let error: string = '';
 
 	onMount(() => {
 		axios
-			.get(`/api/statistics/vtubers/designer-count?top=10`)
-			.then(
-				(resp) =>
-					(data = resp.data.data.map((d: { name: string; count: number }) => ({
-						name: d.name,
-						value: d.count
-					})))
-			)
+			.get(`/api/statistics/vtubers/language-count`)
+			.then((resp) => (data = resp.data.data.slice(0, limit)))
 			.catch((err) => (error = getAxiosError(err)))
 			.finally(() => (loading = false));
 	});
 
 	const onClick = (d: any) =>
-		window.open(`/vtubers?character_designer=${data[d.detail].name}`, '_blank')?.focus();
+		window.open(`/vtubers?language_id=${data[d.detail].id}`, '_blank')?.focus();
 </script>
 
 {#if loading}
@@ -39,5 +31,12 @@
 {:else if error !== ''}
 	<div class="flex h-full w-full items-center justify-center text-red-500">{error}</div>
 {:else}
-	<BarChart {data} horizontal on:clickArea={onClick} />
+	<BarChart
+		data={data.map((d) => ({
+			name: d.name,
+			value: d.count
+		}))}
+		seriesName="Count"
+		on:clickArea={onClick}
+	/>
 {/if}

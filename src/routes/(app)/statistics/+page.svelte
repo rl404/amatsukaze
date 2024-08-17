@@ -20,6 +20,7 @@
 	import VtuberCountByDesignerChart from './VtuberCountByDesignerChart.svelte';
 	import VtuberCountByGenderChart from './VtuberCountByGenderChart.svelte';
 	import VtuberCountByInAgencyChart from './VtuberCountByInAgencyChart.svelte';
+	import VtuberCountByLanguageChart from './VtuberCountByLanguageChart.svelte';
 	import VtuberCountByStatusChart from './VtuberCountByStatusChart.svelte';
 	import VtuberCountBySubsChart from './VtuberCountBySubsChart.svelte';
 	import VtuberCountByZodiacChart from './VtuberCountByZodiacChart.svelte';
@@ -139,6 +140,15 @@
 	</Card>
 	<Card title="Average Vtuber Weight" class="col-span-6 md:col-span-3">
 		<VtuberAvgWeight />
+	</Card>
+	<Card title="Vtuber Count by Language" class="col-span-6 hidden aspect-chart 2xl:block">
+		<VtuberCountByLanguageChart />
+	</Card>
+	<Card title="Vtuber Count by Language" class="col-span-6 hidden aspect-chart md:block 2xl:hidden">
+		<VtuberCountByLanguageChart limit={10} />
+	</Card>
+	<Card title="Vtuber Count by Language" class="col-span-6 aspect-chart md:hidden">
+		<VtuberCountByLanguageChart limit={5} />
 	</Card>
 	<Card title="Vtuber Count by Blood Type" class="col-span-6 aspect-video md:col-span-3">
 		<VtuberCountByBloodChart />

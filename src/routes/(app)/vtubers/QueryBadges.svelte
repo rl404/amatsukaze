@@ -6,10 +6,14 @@
 	import { compactInt, toTitleCase } from '$lib/utils/utils';
 	import { Badge } from 'flowbite-svelte';
 	import { createEventDispatcher } from 'svelte';
+	import type { AgencyResponseData } from '../../api/agencies/[id]/+server';
+	import type { LanguageResponseData } from '../../api/languages/+server';
 
 	const dispatch = createEventDispatcher<{ change: null }>();
 
 	export let query: VtubersQuery;
+	export let agencies: AgencyResponseData[];
+	export let languages: LanguageResponseData[];
 
 	const onClose = (name: keyof VtubersQuery, value: any, callDispatch = true) => {
 		query = { ...query, [name]: value };
@@ -127,6 +131,11 @@
 	{#if query.in_agency === false}
 		<Badge dismissable on:close={() => onClose('in_agency', undefined)}>Independent</Badge>
 	{/if}
+	{#if query.agency_id !== ''}
+		<Badge dismissable on:close={() => onClose('agency_id', '')}>
+			Agency: {agencies.find((a) => a.id.toString() === query.agency_id)?.name}
+		</Badge>
+	{/if}
 	{#if query.channel_types !== ''}
 		{#each query.channel_types.split(',') as channel, i}
 			<Badge dismissable>
@@ -152,6 +161,11 @@
 		>
 			Birthday: {query.birthday_day}
 			{MonthNames[parseInt(query.start_birthday_month) - 1]}
+		</Badge>
+	{/if}
+	{#if query.language_id !== ''}
+		<Badge dismissable on:close={() => onClose('language_id', '')}>
+			Language: {languages.find((l) => l.id.toString() === query.language_id)?.name}
 		</Badge>
 	{/if}
 	{#if query.blood_types !== ''}

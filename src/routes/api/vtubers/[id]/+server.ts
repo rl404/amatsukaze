@@ -27,6 +27,10 @@ export type VtuberResponseData = {
 		image: string;
 	}[];
 	affiliations: string[];
+	languages: {
+		id: number;
+		name: string;
+	}[];
 	channels: VtuberResponseDataChannel[];
 	subscriber: number;
 	monthly_subscriber: number;

@@ -39,5 +39,5 @@
 {:else if error !== ''}
 	<div class="flex h-full w-full items-center justify-center text-red-500">{error}</div>
 {:else}
-	<BarChart {data} horizontal on:click={onClick} />
+	<BarChart {data} horizontal on:clickArea={onClick} />
 {/if}

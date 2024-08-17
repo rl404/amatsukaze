@@ -41,7 +41,8 @@ export type VtubersQuery = {
 	character_2d_modeler: string;
 	character_3d_modeler: string;
 	in_agency?: boolean;
-	agency: string;
+	agency_id: string;
+	language_id: string;
 	channel_types: string;
 	birthday_day: string;
 	start_birthday_month: string;
