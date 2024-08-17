@@ -111,6 +111,16 @@
 					{/each}
 				{/if}
 			</div>
+			<div>
+				<h4 class="font-bold">Languages</h4>
+				{#if isEmptyArray(vtuber.languages)}
+					<P>-</P>
+				{:else}
+					{#each vtuber.languages as language}
+						<P>{language.name}</P>
+					{/each}
+				{/if}
+			</div>
 		</div>
 	</Card>
 

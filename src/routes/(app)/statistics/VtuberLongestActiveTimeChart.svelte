@@ -47,6 +47,6 @@
 						(1000 * 3600 * 24 * 30 * 12)
 		}))}
 		seriesName="Years"
-		on:click={onClick}
+		on:clickArea={onClick}
 	/>
 {/if}
