@@ -37,6 +37,6 @@
 	<BarChart
 		data={data.map((d) => ({ name: d.name, value: d.video_count }))}
 		horizontal
-		on:click={onClick}
+		on:clickArea={onClick}
 	/>
 {/if}

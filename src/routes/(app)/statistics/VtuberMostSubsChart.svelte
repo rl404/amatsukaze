@@ -38,6 +38,6 @@
 		horizontal
 		xaxisFormatter={(v) => compactInt(parseInt(v))}
 		tooltipYFormatter={(v) => (!v ? '0' : compactInt(v))}
-		on:click={onClick}
+		on:clickArea={onClick}
 	/>
 {/if}

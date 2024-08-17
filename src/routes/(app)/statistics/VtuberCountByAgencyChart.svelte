@@ -36,6 +36,6 @@
 		data={data.map((d) => ({ name: d.name, value: d.member }))}
 		horizontal
 		seriesName="Members"
-		on:click={onClick}
+		on:clickArea={onClick}
 	/>
 {/if}

@@ -41,6 +41,6 @@
 		horizontal
 		xaxisFormatter={(v) => intToDurationStr(parseInt(v))}
 		tooltipYFormatter={(v) => (!v ? '0' : intToDurationStr(v))}
-		on:click={onClick}
+		on:clickArea={onClick}
 	/>
 {/if}
