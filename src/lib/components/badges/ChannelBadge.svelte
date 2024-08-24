@@ -44,11 +44,17 @@
 >
 	<div class="inline-flex">
 		<svelte:component this={icon} class="mr-2 size-3" />
-		{#if !data.name}
-			{toTitleCase(data.type)}
-		{:else}
-			<span class="mr-2 line-clamp-1">{data.name}</span>
-			{compactInt(data.subscriber)}
+		<span class="line-clamp-1">
+			{#if !data.name}
+				{toTitleCase(data.type)}
+			{:else}
+				{data.name}
+			{/if}
+		</span>
+		{#if data.subscriber > 0}
+			<span class="ml-2">
+				{compactInt(data.subscriber)}
+			</span>
 		{/if}
 	</div>
 </Badge>
