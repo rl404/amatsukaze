@@ -38,11 +38,8 @@
 	color="none"
 	class={twMerge('text-white transition dark:text-white', badgeClass)}
 	title={data.name || ''}
-	href={data.url}
-	target="_blank"
-	rel="noreferrer"
 >
-	<div class="inline-flex">
+	<a class="inline-flex items-center" href={data.url} target="_blank" rel="noreferrer">
 		<svelte:component this={icon} class="mr-2 size-3" />
 		<span class="line-clamp-1">
 			{#if !data.name}
@@ -56,5 +53,5 @@
 				{compactInt(data.subscriber)}
 			</span>
 		{/if}
-	</div>
+	</a>
 </Badge>
