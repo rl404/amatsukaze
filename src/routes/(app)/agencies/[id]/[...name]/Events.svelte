@@ -29,7 +29,7 @@
 <Card size="none" class="gap-4">
 	<div class="flex items-center justify-between gap-4">
 		<div>
-			<h3>Event Calendar</h3>
+			<h3 class="h3">Event Calendar</h3>
 			<div>Birthday & Anniversary</div>
 		</div>
 		<div class="flex flex-wrap items-center justify-end gap-2 font-bold text-white">
@@ -63,7 +63,7 @@
 		{#each eventData as data}
 			<div>
 				<div class="grid grid-cols-7 gap-1 rounded-lg bg-border/30 p-2">
-					<h4 class="col-span-7 mb-2 bg-primary-600/10 dark:bg-primary-600/20">
+					<h4 class="h4 col-span-7 mb-2 bg-primary-600/10 dark:bg-primary-600/20">
 						{MonthNames[data.month]}
 						{data.year}
 					</h4>

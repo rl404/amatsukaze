@@ -6,6 +6,7 @@
 	import VtuberSortButton from '$lib/components/buttons/VtuberSortButton.svelte';
 	import Head from '$lib/components/commons/Head.svelte';
 	import InfiniteScroll from '$lib/components/commons/InfiniteScroll.svelte';
+	import TextOutline from '$lib/components/commons/TextOutline.svelte';
 	import VtuberCard from '$lib/components/layouts/VtuberCard.svelte';
 	import VtuberGrid from '$lib/components/layouts/VtuberGrid.svelte';
 	import VtuberList from '$lib/components/layouts/VtuberList.svelte';
@@ -144,13 +145,14 @@
 
 <Schema />
 
-<div class="grid gap-4">
+<div class="grid gap-4 overflow-hidden">
 	<Breadcrumb>
 		<BreadcrumbItem home href="/">Home</BreadcrumbItem>
 		<BreadcrumbItem>Vtubers</BreadcrumbItem>
 	</Breadcrumb>
 	<div class="flex flex-wrap items-center justify-between gap-4">
-		<div class="flex items-center gap-4">
+		<div class="relative flex items-center gap-4">
+			<TextOutline class="absolute -z-10 opacity-20">Vtuber List</TextOutline>
 			<h1 class="h1">Vtuber List</h1>
 			<Badge large>{total.toLocaleString()}</Badge>
 		</div>

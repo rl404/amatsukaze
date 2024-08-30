@@ -2,6 +2,7 @@
 	import { PUBLIC_VTUBER_WIKI_HOST } from '$env/static/public';
 	import Head from '$lib/components/commons/Head.svelte';
 	import Image from '$lib/components/commons/Image.svelte';
+	import TextOutline from '$lib/components/commons/TextOutline.svelte';
 	import InfoIcon from '$lib/components/icons/InfoIcon.svelte';
 	import OfficeIcon from '$lib/components/icons/OfficeIcon.svelte';
 	import UsersIcon from '$lib/components/icons/UsersIcon.svelte';
@@ -31,13 +32,14 @@
 
 <Schema {vtuber} {agencies} {families} />
 
-<div class="grid grid-cols-4 gap-4">
+<div class="grid grid-cols-4 gap-4 overflow-hidden">
 	<Breadcrumb class="col-span-4">
 		<BreadcrumbItem home href="/">Home</BreadcrumbItem>
 		<BreadcrumbItem href="/vtubers">Vtubers</BreadcrumbItem>
 		<BreadcrumbItem>{vtuber.name}</BreadcrumbItem>
 	</Breadcrumb>
-	<div class="col-span-4 flex flex-wrap items-center justify-between gap-2">
+	<div class="relative col-span-4 flex flex-wrap items-center justify-between gap-2">
+		<TextOutline class="absolute -z-10 opacity-20">{vtuber.name}</TextOutline>
 		<h1 class="h1">
 			<a
 				href="{PUBLIC_VTUBER_WIKI_HOST}/{vtuber.name}"
