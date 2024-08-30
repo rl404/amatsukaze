@@ -104,7 +104,7 @@
 <Sidebar
 	{activeUrl}
 	class={!drawer ? 'hidden' : ''}
-	asideClass="fixed z-30 h-full w-64 overflow-y-auto border-e border-border bg-white pb-12 dark:bg-gray-800 lg:block"
+	asideClass="fixed z-30 h-full w-64 overflow-y-auto border-e border-border bg-white pb-32 dark:bg-gray-800 lg:block"
 >
 	<SidebarWrapper>
 		<SidebarGroup>
