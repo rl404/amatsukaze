@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Head from '$lib/components/commons/Head.svelte';
+	import TextOutline from '$lib/components/commons/TextOutline.svelte';
 	import { Breadcrumb, BreadcrumbItem } from 'flowbite-svelte';
 	import AgencyCount from './AgencyCount.svelte';
 	import AgencyMostSubsChart from './AgencyMostSubsChart.svelte';
@@ -39,12 +40,15 @@
 	image="/statistics.png"
 />
 
-<div class="grid grid-cols-6 gap-4">
+<div class="grid grid-cols-6 gap-4 overflow-hidden">
 	<Breadcrumb class="col-span-6">
 		<BreadcrumbItem home href="/">Home</BreadcrumbItem>
 		<BreadcrumbItem>Statistics</BreadcrumbItem>
 	</Breadcrumb>
-	<h1 class="h1 col-span-6">Statistics</h1>
+	<div class="relative col-span-6 flex items-center">
+		<TextOutline class="absolute -z-10 opacity-20">Statistics</TextOutline>
+		<h1 class="h1">Statistics</h1>
+	</div>
 	<Card title="Vtuber Count" class="col-span-3 md:col-span-2">
 		<VtuberCount />
 	</Card>

@@ -2,6 +2,7 @@
 	import { PUBLIC_VTUBER_WIKI_HOST } from '$env/static/public';
 	import Head from '$lib/components/commons/Head.svelte';
 	import Image from '$lib/components/commons/Image.svelte';
+	import TextOutline from '$lib/components/commons/TextOutline.svelte';
 	import CalendarIcon from '$lib/components/icons/CalendarIcon.svelte';
 	import UsersIcon from '$lib/components/icons/UsersIcon.svelte';
 	import { compactInt, generateAgencyDescription, getWikiImg } from '$lib/utils/utils';
@@ -25,22 +26,25 @@
 
 <Schema {agency} {vtubers} />
 
-<div class="grid grid-cols-4 gap-4">
+<div class="grid grid-cols-4 gap-4 overflow-hidden">
 	<Breadcrumb class="col-span-4">
 		<BreadcrumbItem home href="/">Home</BreadcrumbItem>
 		<BreadcrumbItem href="/agencies">Agencies</BreadcrumbItem>
 		<BreadcrumbItem>{agency.name}</BreadcrumbItem>
 	</Breadcrumb>
-	<h1 class="h1 col-span-4">
-		<a
-			href="{PUBLIC_VTUBER_WIKI_HOST}/{agency.name}"
-			target="_blank"
-			rel="noreferrer"
-			class="clickable"
-		>
-			{agency.name}
-		</a>
-	</h1>
+	<div class="relative col-span-4 flex flex-wrap items-center">
+		<TextOutline class="absolute -z-10 opacity-20">{agency.name}</TextOutline>
+		<h1 class="h1">
+			<a
+				href="{PUBLIC_VTUBER_WIKI_HOST}/{agency.name}"
+				target="_blank"
+				rel="noreferrer"
+				class="clickable"
+			>
+				{agency.name}
+			</a>
+		</h1>
+	</div>
 	<div class="col-span-4 sm:col-span-1">
 		<div class="sticky top-20 flex flex-col gap-4">
 			<Card size="none" padding="none">

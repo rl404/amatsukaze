@@ -9,7 +9,11 @@
 	const toggleDrawer = () => (drawer = !drawer);
 </script>
 
-<Navbar fluid color="default">
+<Navbar
+	fluid
+	color="default"
+	class="bg-gradient-to-r from-white to-primary-100 dark:from-gray-800 dark:to-primary-950"
+>
 	<NavHamburger onClick={toggleDrawer} class="m-0 md:block lg:hidden" />
 	<NavBrand href="/">
 		<Avatar src={logo} alt="amatsukaze" size="none" class="me-2 h-6 sm:h-9" />
@@ -18,7 +22,7 @@
 	<div>
 		<DarkMode />
 		<Button
-			class="border-none !p-2.5 focus-within:ring-0"
+			class="border-none bg-transparent !p-2.5 text-gray-500 focus-within:ring-0 hover:text-black"
 			color="alternative"
 			href="https://github.com/rl404/amatsukaze"
 			target="_blank"

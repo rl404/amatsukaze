@@ -4,7 +4,7 @@
 	import { twMerge } from 'tailwind-merge';
 
 	export let btnClass: string =
-		'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none rounded-lg text-sm p-2.5';
+		'rounded-lg p-2.5 text-sm text-gray-500 hover:text-black hover:bg-gray-100 focus:outline-none dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white';
 	export let size: 'sm' | 'md' | 'lg' = 'md';
 	export let ariaLabel: string = 'Dark mode';
 

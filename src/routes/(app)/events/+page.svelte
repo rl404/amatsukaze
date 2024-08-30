@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Head from '$lib/components/commons/Head.svelte';
+	import TextOutline from '$lib/components/commons/TextOutline.svelte';
 	import ChevronDownIcon from '$lib/components/icons/ChevronDownIcon.svelte';
 	import { MonthNames } from '$lib/const';
 	import { getAxiosError } from '$lib/utils/api';
@@ -77,12 +78,17 @@
 	image="/events.png"
 />
 
-<div class="grid gap-4">
+<div class="grid gap-4 overflow-hidden">
 	<Breadcrumb>
 		<BreadcrumbItem home href="/">Home</BreadcrumbItem>
 		<BreadcrumbItem>Events</BreadcrumbItem>
 	</Breadcrumb>
-	<div class="flex items-center justify-between gap-4">
+	<div class="relative flex items-center justify-between gap-4">
+		<TextOutline class="absolute -z-10 opacity-20">
+			{MonthNames[data.month - 1]}
+			{new Date().getFullYear()}
+		</TextOutline>
+
 		<h1 class="h1">Birthday & Anniversary Events {new Date().getFullYear()}</h1>
 		<Button class="hidden md:block" on:click={jumpToToday}>Jump to Today</Button>
 	</div>
