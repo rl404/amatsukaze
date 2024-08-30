@@ -4,6 +4,7 @@
 	import AgencyLayoutButton from '$lib/components/buttons/AgencyLayoutButton.svelte';
 	import AgencySortButton from '$lib/components/buttons/AgencySortButton.svelte';
 	import Head from '$lib/components/commons/Head.svelte';
+	import TextOutline from '$lib/components/commons/TextOutline.svelte';
 	import AgencyGrid from '$lib/components/layouts/AgencyGrid.svelte';
 	import AgencyList from '$lib/components/layouts/AgencyList.svelte';
 	import type { AgencyLayout, AgencySort } from '$lib/types';
@@ -59,7 +60,8 @@
 		<BreadcrumbItem>Agencies</BreadcrumbItem>
 	</Breadcrumb>
 	<div class="flex flex-wrap items-center justify-between gap-4">
-		<div class="flex items-center gap-4">
+		<div class="relative flex items-center gap-4">
+			<TextOutline class="absolute -z-10 opacity-20">Agency List</TextOutline>
 			<h1 class="h1">Agency List</h1>
 			<Badge large>{agencies.length.toLocaleString()}</Badge>
 		</div>

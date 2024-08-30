@@ -2,6 +2,7 @@
 	import { PUBLIC_VTUBER_WIKI_HOST } from '$env/static/public';
 	import Head from '$lib/components/commons/Head.svelte';
 	import Image from '$lib/components/commons/Image.svelte';
+	import TextOutline from '$lib/components/commons/TextOutline.svelte';
 	import InfoIcon from '$lib/components/icons/InfoIcon.svelte';
 	import OfficeIcon from '$lib/components/icons/OfficeIcon.svelte';
 	import UsersIcon from '$lib/components/icons/UsersIcon.svelte';
@@ -37,7 +38,8 @@
 		<BreadcrumbItem href="/vtubers">Vtubers</BreadcrumbItem>
 		<BreadcrumbItem>{vtuber.name}</BreadcrumbItem>
 	</Breadcrumb>
-	<div class="col-span-4 flex flex-wrap items-center justify-between gap-2">
+	<div class="relative col-span-4 flex flex-wrap items-center justify-between gap-2">
+		<TextOutline class="absolute -z-10 opacity-20">{vtuber.name}</TextOutline>
 		<h1 class="h1">
 			<a
 				href="{PUBLIC_VTUBER_WIKI_HOST}/{vtuber.name}"
