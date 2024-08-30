@@ -145,7 +145,7 @@
 
 <Schema />
 
-<div class="grid gap-4">
+<div class="grid gap-4 overflow-hidden">
 	<Breadcrumb>
 		<BreadcrumbItem home href="/">Home</BreadcrumbItem>
 		<BreadcrumbItem>Vtubers</BreadcrumbItem>

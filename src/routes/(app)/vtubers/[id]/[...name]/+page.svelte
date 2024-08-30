@@ -32,7 +32,7 @@
 
 <Schema {vtuber} {agencies} {families} />
 
-<div class="grid grid-cols-4 gap-4">
+<div class="grid grid-cols-4 gap-4 overflow-hidden">
 	<Breadcrumb class="col-span-4">
 		<BreadcrumbItem home href="/">Home</BreadcrumbItem>
 		<BreadcrumbItem href="/vtubers">Vtubers</BreadcrumbItem>

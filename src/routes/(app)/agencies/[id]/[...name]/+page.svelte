@@ -26,7 +26,7 @@
 
 <Schema {agency} {vtubers} />
 
-<div class="grid grid-cols-4 gap-4">
+<div class="grid grid-cols-4 gap-4 overflow-hidden">
 	<Breadcrumb class="col-span-4">
 		<BreadcrumbItem home href="/">Home</BreadcrumbItem>
 		<BreadcrumbItem href="/agencies">Agencies</BreadcrumbItem>

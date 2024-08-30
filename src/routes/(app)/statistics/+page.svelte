@@ -40,7 +40,7 @@
 	image="/statistics.png"
 />
 
-<div class="grid grid-cols-6 gap-4">
+<div class="grid grid-cols-6 gap-4 overflow-hidden">
 	<Breadcrumb class="col-span-6">
 		<BreadcrumbItem home href="/">Home</BreadcrumbItem>
 		<BreadcrumbItem>Statistics</BreadcrumbItem>
