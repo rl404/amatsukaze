@@ -6,7 +6,17 @@
 	import CalendarIcon from '$lib/components/icons/CalendarIcon.svelte';
 	import UsersIcon from '$lib/components/icons/UsersIcon.svelte';
 	import { compactInt, generateAgencyDescription, getWikiImg } from '$lib/utils/utils';
-	import { Breadcrumb, BreadcrumbItem, Card, P, TabItem, Tabs, Tooltip } from 'flowbite-svelte';
+	import {
+		Breadcrumb,
+		BreadcrumbItem,
+		Card,
+		Modal,
+		P,
+		TabItem,
+		Tabs,
+		Tooltip
+	} from 'flowbite-svelte';
+	import { twMerge } from 'tailwind-merge';
 	import type { AgencyDetailResponse } from './+page.server';
 	import Events from './Events.svelte';
 	import Members from './Members.svelte';
@@ -16,6 +26,9 @@
 
 	$: agency = data.agency.data;
 	$: vtubers = data.vtubers.data;
+
+	let modal: boolean = false;
+	const toggleModal = () => agency.image && (modal = !modal);
 </script>
 
 <Head
@@ -47,11 +60,14 @@
 	</div>
 	<div class="col-span-4 sm:col-span-1">
 		<div class="sticky top-20 flex flex-col gap-4">
-			<Card size="none" padding="none">
+			<Card size="none" padding="none" on:click={toggleModal}>
 				<Image
 					src={getWikiImg(agency.image, 0, 400)}
 					alt={agency.name}
-					class="max-h-96 rounded-lg object-contain object-center p-4 sm:max-h-max"
+					class={twMerge(
+						'max-h-96 rounded-lg object-contain object-center p-4 sm:max-h-max',
+						agency.image && 'clickable cursor-pointer'
+					)}
 					loadingClass="aspect-card"
 					errorClass="aspect-card"
 				/>
@@ -88,3 +104,13 @@
 		</Tabs>
 	</div>
 </div>
+
+<Modal title={agency.name} bind:open={modal} outsideclose autoclose>
+	<Image
+		src={getWikiImg(agency.image, 0, 0)}
+		alt={agency.name}
+		class="m-auto rounded-lg border border-border p-4"
+		loadingClass="aspect-card"
+		errorClass="aspect-card"
+	/>
+</Modal>

@@ -8,7 +8,16 @@
 	import UsersIcon from '$lib/components/icons/UsersIcon.svelte';
 	import VideoIcon from '$lib/components/icons/VideoIcon.svelte';
 	import { generateVtuberDescription, getWikiImg } from '$lib/utils/utils';
-	import { Badge, Breadcrumb, BreadcrumbItem, Card, TabItem, Tabs, Tooltip } from 'flowbite-svelte';
+	import {
+		Badge,
+		Breadcrumb,
+		BreadcrumbItem,
+		Card,
+		Modal,
+		TabItem,
+		Tabs,
+		Tooltip
+	} from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
 	import type { VtuberDetailResponse } from './+page.server';
 	import AgencyMates from './AgencyMates.svelte';
@@ -22,6 +31,9 @@
 	$: vtuber = data.vtuber.data;
 	$: agencies = data.agencies;
 	$: families = data.families;
+
+	let modal: boolean = false;
+	const toggleModal = () => vtuber.image && (modal = !modal);
 </script>
 
 <Head
@@ -68,13 +80,14 @@
 		</div>
 	</div>
 	<div class="col-span-4 sm:col-span-1">
-		<Card size="none" padding="none" class="sticky top-20">
+		<Card size="none" padding="none" class="sticky top-20" on:click={toggleModal}>
 			<Image
 				src={getWikiImg(vtuber.image, 0, 400)}
 				alt={vtuber.name}
 				class={twMerge(
 					'max-h-96 rounded-t-lg border-b border-border object-contain object-top sm:max-h-max',
-					!vtuber.caption && 'rounded-lg border-0'
+					!vtuber.caption && 'rounded-lg border-0',
+					vtuber.image && 'clickable cursor-pointer'
 				)}
 				loadingClass="aspect-portrait"
 				errorClass="aspect-portrait"
@@ -123,3 +136,13 @@
 		</Tabs>
 	</div>
 </div>
+
+<Modal title={vtuber.name} bind:open={modal} outsideclose autoclose>
+	<Image
+		src={getWikiImg(vtuber.image, 0, 0)}
+		alt={vtuber.name}
+		class="m-auto rounded-lg border border-border"
+		loadingClass="aspect-portrait"
+		errorClass="aspect-portrait"
+	/>
+</Modal>
