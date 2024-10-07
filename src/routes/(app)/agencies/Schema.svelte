@@ -12,11 +12,12 @@
 				urlTemplate: 'https://amatsukaze.rl404.com/agencies?name={query}'
 			},
 			query: 'required',
-			'query-input': 'requred name=query'
+			'query-input': 'required name=query'
 		}
 	};
 </script>
 
 <svelte:head>
+	<link rel="canonical" href="https://amatsukaze.rl404.com/agencies" />
 	{@html `<script type="application/ld+json">${JSON.stringify(schema)}</script>`}
 </svelte:head>
