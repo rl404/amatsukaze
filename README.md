@@ -14,6 +14,7 @@ _Amatsukaze_ is a website to visualize [Vtuber Wikia](https://virtualyoutuber.fa
 - Agency's vtuber list
 - Vtuber anniversary & birthday events
 - Vtuber statistics
+- Vtuber comparison
 
 _More will be coming soon..._
 
