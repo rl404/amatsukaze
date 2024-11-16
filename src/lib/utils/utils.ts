@@ -60,7 +60,7 @@ export const generateVtuberDescription = (vtuber: VtuberResponseData): string =>
 	desc += `who entertained fans since ${
 		!vtuber.debut_date ? 'unknown' : vtuber.debut_date.slice(0, 10)
 	}`;
-	vtuber.retirement_date && (desc += ` to ${vtuber.retirement_date.slice(0, 10)}`);
+	desc += vtuber.retirement_date && ` to ${vtuber.retirement_date.slice(0, 10)}`;
 	desc +=
 		'. Discover their unique details, designer, modeler, agency mates, families, and channel videos.';
 	return desc;
@@ -221,4 +221,13 @@ export const autoCeil = (i: number): number => {
 
 export const toURL = (str: string): string => {
 	return str.replaceAll(' ', '-');
+};
+
+export const toNumber = (str: string): number => {
+	const n = Number(str);
+	return isNaN(n) ? 0 : n;
+};
+
+export const mustArrayLen = (arr: any, length: number, fill: any): any[] => {
+	return arr.concat(new Array(length).fill(fill)).slice(0, length);
 };
