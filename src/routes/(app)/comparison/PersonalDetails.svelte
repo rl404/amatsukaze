@@ -8,7 +8,9 @@
 </script>
 
 <Card size="none" class="grid grid-cols-3 gap-4">
-	<h3 class="h3 col-span-3 text-center">Personal Details</h3>
+	<h3 class="h3 col-span-3 text-center">
+		<span class="border-l-4 border-primary-500 pl-2">Personal Details</span>
+	</h3>
 	{#each data as vtuber, i}
 		<div class={twMerge('flex flex-col', i == 1 && 'border-x')}>
 			<h4 class="text-center font-bold">Gender</h4>
@@ -16,7 +18,7 @@
 		</div>
 	{/each}
 	{#each data as vtuber, i}
-		<div class={twMerge('grid grid-cols-2', i == 1 && 'border-x')}>
+		<div class={twMerge('grid grid-cols-1 gap-4 md:grid-cols-2', i == 1 && 'border-x')}>
 			<div class="flex flex-col">
 				<h4 class="text-center font-bold">Age</h4>
 				<P class="text-center">{!vtuber.age ? '-' : vtuber.age.toLocaleString()}</P>
@@ -28,7 +30,7 @@
 		</div>
 	{/each}
 	{#each data as vtuber, i}
-		<div class={twMerge('grid grid-cols-2', i == 1 && 'border-x')}>
+		<div class={twMerge('grid grid-cols-1 gap-4 md:grid-cols-2', i == 1 && 'border-x')}>
 			<div class="flex flex-col">
 				<h4 class="text-center font-bold">Height</h4>
 				<P class="text-center">{!vtuber.height ? '-' : vtuber.height.toLocaleString() + ' cm'}</P>
@@ -40,7 +42,7 @@
 		</div>
 	{/each}
 	{#each data as vtuber, i}
-		<div class={twMerge('grid grid-cols-2', i == 1 && 'border-x')}>
+		<div class={twMerge('grid grid-cols-1 gap-4 md:grid-cols-2', i == 1 && 'border-x')}>
 			<div class="flex flex-col">
 				<h4 class="text-center font-bold">Blood Type</h4>
 				<P class="text-center">{vtuber.blood_type || '-'}</P>

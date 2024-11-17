@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ChannelBadge from '$lib/components/badges/ChannelBadge.svelte';
 	import { channelSorter, getHostname, intToDurationStr, isEmptyArray } from '$lib/utils/utils';
-	import { Card, P } from 'flowbite-svelte';
+	import { Card, P, Tooltip } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
 	import type {
 		VtuberResponseData,
@@ -36,7 +36,9 @@
 </script>
 
 <Card size="none" class="grid grid-cols-3 gap-4">
-	<h3 class="h3 col-span-3 text-center">Medias</h3>
+	<h3 class="h3 col-span-3 text-center">
+		<span class="border-l-4 border-primary-500 pl-2">Medias</span>
+	</h3>
 	{#each data as vtuber, i}
 		<div class={twMerge('flex flex-col', i == 1 && 'border-x')}>
 			<h4 class="text-center font-bold">Channels</h4>
@@ -52,7 +54,7 @@
 		</div>
 	{/each}
 	{#each data as vtuber, i}
-		<div class={twMerge('grid grid-cols-2', i == 1 && 'border-x')}>
+		<div class={twMerge('grid grid-cols-1 gap-4 md:grid-cols-2', i == 1 && 'border-x')}>
 			<div class="flex flex-col">
 				<h4 class="text-center font-bold">Video Count</h4>
 				{#if isEmptyArray(vtuber.channels)}
@@ -61,6 +63,7 @@
 					<P class="text-center">
 						{getVideoCount(vtuber.channels).toLocaleString()}
 					</P>
+					<Tooltip placement="bottom">In the last 2 months</Tooltip>
 				{/if}
 			</div>
 			<div class="flex flex-col">
@@ -71,6 +74,7 @@
 					<P class="text-center">
 						{intToDurationStr(getVideoAvgLength(vtuber.channels) / 1000)}
 					</P>
+					<Tooltip placement="bottom">Average length in the last 2 months</Tooltip>
 				{/if}
 			</div>
 		</div>

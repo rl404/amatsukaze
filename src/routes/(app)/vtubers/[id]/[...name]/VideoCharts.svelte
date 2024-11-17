@@ -47,7 +47,7 @@
 				{/each}
 			</div>
 		{:else if layout === 'hourly'}
-			<div>
+			<div class="border-l-4 border-primary-500 pl-2">
 				<div class="flex items-center gap-2">
 					<div class="h3 flex items-center gap-2">Upload Frequency</div>
 					<Badge>{vtuber.video_count.toLocaleString()}</Badge>
