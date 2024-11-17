@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { compactInt, toTitleCase } from '$lib/utils/utils';
 	import { Badge } from 'flowbite-svelte';
-	import type { ComponentType } from 'svelte';
+	import type { Component } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
 	import type { VtuberResponseDataChannel } from '../../../routes/api/vtubers/[id]/+server';
 	import BilibiliIcon from '../icons/BilibiliIcon.svelte';
@@ -12,7 +12,7 @@
 
 	export let data: VtuberResponseDataChannel;
 
-	let icon: ComponentType = GlobeIcon;
+	let icon: Component = GlobeIcon;
 	let badgeClass: string = 'bg-gray-500 dark:bg-gray-500 hover:bg-gray-600 hover:dark:bg-gray-600';
 
 	switch (data.type) {

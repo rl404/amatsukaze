@@ -10,7 +10,7 @@
 		SidebarItem,
 		SidebarWrapper
 	} from 'flowbite-svelte';
-	import type { ComponentType } from 'svelte';
+	import type { Component } from 'svelte';
 	import { onMount } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
 	import type { VtuberResponseData } from '../../../routes/api/vtubers/[id]/+server';
@@ -47,7 +47,7 @@
 
 	const moreData: {
 		label: string;
-		icon: ComponentType;
+		icon: Component;
 		api: string;
 		more: string;
 		data: VtuberResponseData[];
