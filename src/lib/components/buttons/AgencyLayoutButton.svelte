@@ -1,12 +1,12 @@
 <script lang="ts">
 	import type { AgencyLayout } from '$lib/types';
-	import type { ComponentType } from 'svelte';
+	import type { Component } from 'svelte';
 	import GridIcon from '../icons/GridIcon.svelte';
 	import ListIcon from '../icons/ListIcon.svelte';
 
 	export let value: AgencyLayout;
 
-	const layouts: { value: AgencyLayout; icon: ComponentType }[] = [
+	const layouts: { value: AgencyLayout; icon: Component }[] = [
 		{ value: 'grid', icon: GridIcon },
 		{ value: 'list', icon: ListIcon }
 	];

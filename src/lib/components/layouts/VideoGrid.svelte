@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { ChannelType } from '$lib/types';
 	import { intToDurationStr, relativeTime } from '$lib/utils/utils';
-	import type { ComponentType } from 'svelte';
+	import type { Component } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
 	import type { VtuberResponseDataChannelVideo } from '../../../routes/api/vtubers/[id]/+server';
 	import Image from '../commons/Image.svelte';
@@ -31,7 +31,7 @@
 
 	const durationStr = duration === 0 ? 'upcoming' : intToDurationStr(duration / 1000);
 
-	const icons: { [key: string]: { icon: ComponentType; color: string } } = {
+	const icons: { [key: string]: { icon: Component; color: string } } = {
 		YOUTUBE: { icon: YoutubeIcon, color: 'text-red-500' },
 		TWITCH: { icon: TwitchIcon, color: 'text-purple-500' },
 		BILIBILI: { icon: BilibiliIcon, color: 'text-blue-500' },

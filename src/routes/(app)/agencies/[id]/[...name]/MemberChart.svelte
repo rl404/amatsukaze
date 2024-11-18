@@ -72,6 +72,7 @@
 				showAlways: true,
 				labels: { style: { colors: ChartTextColors[darkTheme.toString()] } },
 				forceNiceScale: true,
+				min: 0,
 				max: Math.max(...chartData.map((d) => d.debut), ...chartData.map((d) => d.retired)),
 				axisBorder: { show: true, color: ChartBorderColors[darkTheme.toString()] },
 				axisTicks: { show: true, color: ChartBorderColors[darkTheme.toString()] }
@@ -81,6 +82,7 @@
 				show: false,
 				labels: { style: { colors: ChartTextColors[darkTheme.toString()] } },
 				forceNiceScale: true,
+				min: 0,
 				max: Math.max(...chartData.map((d) => d.debut), ...chartData.map((d) => d.retired)),
 				axisBorder: { show: true, color: ChartBorderColors[darkTheme.toString()] },
 				axisTicks: { show: true, color: ChartBorderColors[darkTheme.toString()] }

@@ -10,7 +10,7 @@
 		SidebarItem,
 		SidebarWrapper
 	} from 'flowbite-svelte';
-	import type { ComponentType } from 'svelte';
+	import type { Component } from 'svelte';
 	import { onMount } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
 	import type { VtuberResponseData } from '../../../routes/api/vtubers/[id]/+server';
@@ -21,6 +21,7 @@
 	import LineChartIcon from '../icons/LineChartIcon.svelte';
 	import OfficeIcon from '../icons/OfficeIcon.svelte';
 	import StarIcon from '../icons/StarIcon.svelte';
+	import UserGroupIcon from '../icons/UserGroupIcon.svelte';
 	import UserIcon from '../icons/UserIcon.svelte';
 	import UserMinusIcon from '../icons/UserMinusIcon.svelte';
 	import UserPlusIcon from '../icons/UserPlusIcon.svelte';
@@ -38,14 +39,15 @@
 		{ label: 'Vtubers', icon: UserIcon, href: '/vtubers' },
 		{ label: 'Agencies', icon: OfficeIcon, href: '/agencies' },
 		{ label: 'Events', icon: CalendarIcon, href: '/events' },
-		{ label: 'Statistics', icon: ChartIcon, href: '/statistics' }
+		{ label: 'Statistics', icon: ChartIcon, href: '/statistics' },
+		{ label: 'Comparison', icon: UserGroupIcon, href: '/comparison' }
 	];
 
 	const toggleDrawer = () => (drawer = !drawer);
 
 	const moreData: {
 		label: string;
-		icon: ComponentType;
+		icon: Component;
 		api: string;
 		more: string;
 		data: VtuberResponseData[];
@@ -140,4 +142,5 @@
 		!drawer && 'hidden'
 	)}
 	on:click={toggleDrawer}
+	aria-label="drawer button"
 />

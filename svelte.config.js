@@ -6,6 +6,11 @@ const config = {
 	preprocess: vitePreprocess(),
 	kit: {
 		adapter: adapter()
+	},
+	compilerOptions: {
+		warningFilter: (warning) =>
+			!warning.code.startsWith('element_invalid_self_closing_tag') &&
+			!warning.code.startsWith('reactive_declaration_non_reactive_property')
 	}
 };
 
