@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { VtuberLayout } from '$lib/types';
-	import { createEventDispatcher, type ComponentType } from 'svelte';
+	import { createEventDispatcher, type Component } from 'svelte';
 	import Grid2Icon from '../icons/Grid2Icon.svelte';
 	import GridIcon from '../icons/GridIcon.svelte';
 	import ListIcon from '../icons/ListIcon.svelte';
@@ -11,7 +11,7 @@
 	export let value: VtuberLayout;
 	export let timeline: boolean = false;
 
-	const layouts: { value: VtuberLayout; icon: ComponentType; class?: string }[] = [
+	const layouts: { value: VtuberLayout; icon: Component; class?: string }[] = [
 		{ value: 'timeline', icon: TimelineIcon, class: timeline ? '' : 'hidden' },
 		{ value: 'grid', icon: GridIcon },
 		{ value: 'card', icon: Grid2Icon },

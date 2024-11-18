@@ -25,7 +25,7 @@
 <div class="grid gap-4">
 	<Card size="none" class="gap-4">
 		<div class="flex items-center justify-between gap-4">
-			<div>
+			<div class="border-l-4 border-primary-500 pl-2">
 				<div class="flex items-center gap-2">
 					<h3 class="h3">Member Count</h3>
 					<Badge class="hidden sm:block">{vtubers.length.toLocaleString()}</Badge>
@@ -49,9 +49,11 @@
 	</Card>
 	<Card size="none" class="gap-4">
 		<div class="flex items-center justify-between gap-4">
-			<div class="flex items-center gap-2">
-				<h3 class="h3">Member {layout === 'timeline' ? 'Timeline' : 'List'}</h3>
-				<Badge>{vtubers.length.toLocaleString()}</Badge>
+			<div class="flex items-center gap-2 border-l-4 border-primary-500 pl-2">
+				<h3 class="h3">
+					Member {layout === 'timeline' ? 'Timeline' : 'List'}
+				</h3>
+				<Badge class="hidden sm:block">{vtubers.length.toLocaleString()}</Badge>
 			</div>
 			<div class="flex items-center gap-2">
 				<VtuberSortButton

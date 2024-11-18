@@ -28,7 +28,7 @@
 
 <Card size="none" class="gap-4">
 	<div class="flex items-center justify-between gap-4">
-		<div>
+		<div class="border-l-4 border-primary-500 pl-2">
 			<h3 class="h3">Event Calendar</h3>
 			<div>Birthday & Anniversary</div>
 		</div>
