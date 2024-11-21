@@ -36,28 +36,33 @@ const sitemap = (
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>${site}</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>${site}/vtubers</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>${site}/agencies</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>${site}/events</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>${site}/statistics</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>${site}/comparison</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   ${vtubers
 		.map(
@@ -65,7 +70,7 @@ const sitemap = (
   <url>
     <loc>${site}/vtubers/${v.id}/${escapeXML(v.name)}</loc>
     <lastmod>${v.updated_at.slice(0, 10)}</lastmod>
-    <changefreq>${!v.retirement_date ? 'daily' : 'weekly'}</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>${!v.retirement_date ? '0.8' : '0.6'}</priority>
   </url>
   `
