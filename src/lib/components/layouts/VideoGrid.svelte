@@ -24,12 +24,14 @@
 				data.start_date
 			).toLocaleTimeString()}`;
 
-	const duration =
-		!data.start_date || !data.end_date
+	const duration = !data.start_date
+		? -1
+		: !data.end_date
 			? 0
 			: new Date(data.end_date).getTime() - new Date(data.start_date).getTime();
 
-	const durationStr = duration === 0 ? 'upcoming' : intToDurationStr(duration / 1000);
+	const durationStr =
+		duration === -1 ? 'upcoming' : duration === 0 ? 'live' : intToDurationStr(duration / 1000);
 
 	const icons: { [key: string]: { icon: Component; color: string } } = {
 		YOUTUBE: { icon: YoutubeIcon, color: 'text-red-500' },
