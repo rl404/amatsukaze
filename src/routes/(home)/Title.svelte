@@ -10,6 +10,7 @@
 	const links = [
 		{ label: 'Vtubers', link: '/vtubers' },
 		{ label: 'Agencies', link: '/agencies' },
+		{ label: 'Streams', link: '/videos' },
 		{ label: 'Events', link: '/events' },
 		{ label: 'Statistics', link: '/statistics' }
 	];

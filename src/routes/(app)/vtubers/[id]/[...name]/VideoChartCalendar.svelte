@@ -4,7 +4,7 @@
 	import NiconicoIcon from '$lib/components/icons/NiconicoIcon.svelte';
 	import TwitchIcon from '$lib/components/icons/TwitchIcon.svelte';
 	import YoutubeIcon from '$lib/components/icons/YoutubeIcon.svelte';
-	import VideoGrid from '$lib/components/layouts/VideoGrid.svelte';
+	import VtuberVideoGrid from '$lib/components/layouts/VtuberVideoGrid.svelte';
 	import { DayNames } from '$lib/const';
 	import { Span, Tooltip } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
@@ -57,7 +57,7 @@
 						triggeredBy={`#${video.type}-${video.id}`}
 						placement="bottom"
 					>
-						<VideoGrid data={video} type={video.type} class="w-48 text-left" />
+						<VtuberVideoGrid data={video} type={video.type} class="w-48 text-left" />
 					</Tooltip>
 				{/each}
 			</div>
