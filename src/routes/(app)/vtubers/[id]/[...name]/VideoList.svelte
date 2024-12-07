@@ -1,5 +1,5 @@
 <script lang="ts">
-	import VideoGrid from '$lib/components/layouts/VideoGrid.svelte';
+	import VtuberVideoGrid from '$lib/components/layouts/VtuberVideoGrid.svelte';
 	import { intToDurationStr } from '$lib/utils/utils';
 	import { Badge, Button, Card } from 'flowbite-svelte';
 	import type { VtuberResponseData } from '../../../../api/vtubers/[id]/+server';
@@ -59,7 +59,7 @@
 	</div>
 	<div class="grid grid-cols-24 gap-2">
 		{#each videos as video}
-			<VideoGrid
+			<VtuberVideoGrid
 				data={video}
 				type={video.type}
 				delay={500}

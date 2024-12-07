@@ -50,6 +50,26 @@ const sitemap = (
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>${site}/videos</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>${site}/videos/live</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>${site}/videos/upcoming</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>${site}/videos/recent</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>${site}/events</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>

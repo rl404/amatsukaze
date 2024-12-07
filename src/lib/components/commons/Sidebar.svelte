@@ -25,6 +25,7 @@
 	import UserIcon from '../icons/UserIcon.svelte';
 	import UserMinusIcon from '../icons/UserMinusIcon.svelte';
 	import UserPlusIcon from '../icons/UserPlusIcon.svelte';
+	import VideoIcon from '../icons/VideoIcon.svelte';
 
 	export let drawer: boolean;
 
@@ -38,6 +39,7 @@
 	const links = [
 		{ label: 'Vtubers', icon: UserIcon, href: '/vtubers' },
 		{ label: 'Agencies', icon: OfficeIcon, href: '/agencies' },
+		{ label: 'Streams & Videos', icon: VideoIcon, href: '/videos' },
 		{ label: 'Events', icon: CalendarIcon, href: '/events' },
 		{ label: 'Statistics', icon: ChartIcon, href: '/statistics' },
 		{ label: 'Comparison', icon: UserGroupIcon, href: '/comparison' }
