@@ -65,7 +65,7 @@ export const load = (({ params }) => {
 		recent: {
 			title: 'Recent Streams & Videos',
 			description:
-				'Find recently finished streams and uploaded videos and watch your missed favorite vtuber streams and videos.',
+				'Find recently finished streams and uploaded videos and catch up your missed favorite vtuber streams and videos.',
 			image: '/recent.png',
 			startDate: '',
 			endDate: recentEnd.toISOString(),
