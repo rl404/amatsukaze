@@ -11,7 +11,7 @@ export type StreamsResponse = {
 
 export const config = {
 	isr: {
-		expiration: 60 * 30
+		expiration: 60 * 5
 	}
 };
 
