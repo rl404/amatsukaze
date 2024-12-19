@@ -11,12 +11,6 @@ export type VideoPageResponse = {
 	sort: string;
 };
 
-export const config = {
-	isr: {
-		expiration: 60 * 30
-	}
-};
-
 export const load = (({ params }) => {
 	const liveStart = new Date();
 	liveStart.setHours(liveStart.getHours() - 3);
