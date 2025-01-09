@@ -52,13 +52,13 @@ export const getMonthsData = (vtuber: VtuberResponseData): VtuberVideoMonth[] =>
 
 	for (
 		let [m, y] = [startMonth, startYear];
-		m <= endMonth + 12 * (endYear - startYear);
-		[m, y] = [m + 1, startYear + Math.floor(m / 12)]
+		m <= endMonth + 12 * (endYear - startYear) && y <= endYear;
+		[m, y] = [m + 1, startYear + Math.floor(m / 11)]
 	) {
-		const day1 = new Date(y, m, 1).getDay();
-		const lastDate = new Date(y, m + 1, 0).getDate();
-		const lastDay = new Date(y, m, lastDate).getDay();
-		const lastDateLastMonth = new Date(y, m, 0).getDate();
+		const day1 = new Date(y, m % 12, 1).getDay();
+		const lastDate = new Date(y, (m + 1) % 12, 0).getDate();
+		const lastDay = new Date(y, m % 12, lastDate).getDay();
+		const lastDateLastMonth = new Date(y, m % 12, 0).getDate();
 
 		let days: VtuberVideoDay[] = [];
 
@@ -82,7 +82,7 @@ export const getMonthsData = (vtuber: VtuberResponseData): VtuberVideoMonth[] =>
 					videos: videos.filter((v) => {
 						if (!v.start_date) return false;
 						const date = new Date(v.start_date);
-						return date.getFullYear() === y && date.getMonth() === m && date.getDate() === i;
+						return date.getFullYear() === y && date.getMonth() === m % 12 && date.getDate() === i;
 					})
 				}
 			];
