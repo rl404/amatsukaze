@@ -5,7 +5,7 @@
 	import { twMerge } from 'tailwind-merge';
 	import SortIcon from '../icons/SortIcon.svelte';
 
-	const dispatch = createEventDispatcher<{ change: null }>();
+	const dispatch = createEventDispatcher<{ change: VtuberSort }>();
 
 	export let value: VtuberSort;
 	export let hideKeys: VtuberSort[] = [];
@@ -88,7 +88,7 @@
 
 	const onChange = (v: VtuberSort) => {
 		value = v;
-		dispatch('change');
+		dispatch('change', v);
 		open = false;
 	};
 </script>
