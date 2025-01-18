@@ -20,6 +20,12 @@
 	const onChangeLayout = (v: CustomEvent<VtuberLayout>) => {
 		v.detail === 'timeline' && (sort = 'debut_date');
 	};
+
+	const onChangeSort = (v: CustomEvent<VtuberSort>) => {
+		if (!['debut_date', '-debut_date', 'retirement_date', '-retirement_date'].includes(v.detail)) {
+			if (layout === 'timeline') layout = 'grid';
+		}
+	};
 </script>
 
 <div class="grid gap-4">
@@ -56,22 +62,7 @@
 				<Badge class="hidden sm:block">{vtubers.length.toLocaleString()}</Badge>
 			</div>
 			<div class="flex items-center gap-2">
-				<VtuberSortButton
-					bind:value={sort}
-					class="hidden sm:flex"
-					hideKeys={layout === 'timeline'
-						? [
-								'name',
-								'-name',
-								'subscriber',
-								'-subscriber',
-								'monthly_subscriber',
-								'-monthly_subscriber',
-								'video_count',
-								'-video_count'
-							]
-						: []}
-				/>
+				<VtuberSortButton class="hidden sm:flex" bind:value={sort} on:change={onChangeSort} />
 				<span class="hidden opacity-50 sm:block">|</span>
 				<VtuberLayoutButton bind:value={layout} timeline on:change={onChangeLayout} />
 			</div>
