@@ -1,4 +1,4 @@
-export type VtuberLayout = 'grid' | 'card' | 'list' | 'timeline';
+export type VtuberLayout = 'grid' | 'card' | 'list' | 'timeline' | 'bar_chart';
 export type VtuberSort =
 	| 'name'
 	| '-name'

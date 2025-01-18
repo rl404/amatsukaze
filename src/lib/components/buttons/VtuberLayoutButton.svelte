@@ -2,6 +2,7 @@
 	import type { VtuberLayout } from '$lib/types';
 	import { createEventDispatcher, type Component } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
+	import ChartBarIcon from '../icons/ChartBarIcon.svelte';
 	import Grid2Icon from '../icons/Grid2Icon.svelte';
 	import GridIcon from '../icons/GridIcon.svelte';
 	import ListIcon from '../icons/ListIcon.svelte';
@@ -11,9 +12,11 @@
 
 	export let value: VtuberLayout;
 	export let timeline: boolean = false;
+	export let barChart: boolean = false;
 
 	const layouts: { value: VtuberLayout; icon: Component; class?: string }[] = [
 		{ value: 'timeline', icon: TimelineIcon, class: timeline ? '' : 'hidden' },
+		{ value: 'bar_chart', icon: ChartBarIcon, class: barChart ? '' : 'hidden' },
 		{ value: 'grid', icon: GridIcon },
 		{ value: 'card', icon: Grid2Icon },
 		{ value: 'list', icon: ListIcon, class: 'hidden sm:block' }

@@ -9,6 +9,7 @@
 	import { vtuberSorter } from '$lib/utils/utils';
 	import { Badge, Card } from 'flowbite-svelte';
 	import type { VtuberResponseData } from '../../../../api/vtubers/[id]/+server';
+	import MemberBarChart from './MemberBarChart.svelte';
 	import MemberChart from './MemberChart.svelte';
 	import MemberTimeline from './MemberTimeline.svelte';
 
@@ -19,11 +20,47 @@
 
 	const onChangeLayout = (v: CustomEvent<VtuberLayout>) => {
 		v.detail === 'timeline' && (sort = 'debut_date');
+		v.detail === 'bar_chart' && (sort = '-subscriber');
 	};
 
 	const onChangeSort = (v: CustomEvent<VtuberSort>) => {
-		if (!['debut_date', '-debut_date', 'retirement_date', '-retirement_date'].includes(v.detail)) {
-			if (layout === 'timeline') layout = 'grid';
+		switch (layout) {
+			case 'timeline':
+				if (
+					!['debut_date', '-debut_date', 'retirement_date', '-retirement_date'].includes(v.detail)
+				) {
+					layout = 'grid';
+				}
+				if (
+					[
+						'subscriber',
+						'-subscriber',
+						'monthly_subscriber',
+						'-monthly_subscriber',
+						'video_count',
+						'-video_count'
+					].includes(v.detail)
+				) {
+					layout = 'bar_chart';
+				}
+			case 'bar_chart':
+				if (
+					![
+						'subscriber',
+						'-subscriber',
+						'monthly_subscriber',
+						'-monthly_subscriber',
+						'video_count',
+						'-video_count'
+					].includes(v.detail)
+				) {
+					layout = 'grid';
+				}
+				if (
+					['debut_date', '-debut_date', 'retirement_date', '-retirement_date'].includes(v.detail)
+				) {
+					layout = 'timeline';
+				}
 		}
 	};
 </script>
@@ -64,11 +101,13 @@
 			<div class="flex items-center gap-2">
 				<VtuberSortButton class="hidden sm:flex" bind:value={sort} on:change={onChangeSort} />
 				<span class="hidden opacity-50 sm:block">|</span>
-				<VtuberLayoutButton bind:value={layout} timeline on:change={onChangeLayout} />
+				<VtuberLayoutButton bind:value={layout} timeline barChart on:change={onChangeLayout} />
 			</div>
 		</div>
 		{#if layout === 'timeline'}
 			<MemberTimeline {vtubers} {sort} />
+		{:else if layout === 'bar_chart'}
+			<MemberBarChart {vtubers} {sort} />
 		{:else}
 			<div class="grid grid-cols-6 gap-2">
 				{#each vtubers.sort(vtuberSorter(sort)) as vtuber}
