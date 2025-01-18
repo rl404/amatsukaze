@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { VtuberLayout } from '$lib/types';
 	import { createEventDispatcher, type Component } from 'svelte';
+	import { twMerge } from 'tailwind-merge';
 	import Grid2Icon from '../icons/Grid2Icon.svelte';
 	import GridIcon from '../icons/GridIcon.svelte';
 	import ListIcon from '../icons/ListIcon.svelte';
@@ -27,7 +28,13 @@
 <div class="flex items-center justify-center gap-2">
 	{#each layouts as layout}
 		<button on:click={() => onClick(layout.value)} class={layout.class}>
-			<svelte:component this={layout.icon} class="size-4 transition hover:text-primary" />
+			<svelte:component
+				this={layout.icon}
+				class={twMerge(
+					'size-4 transition hover:text-primary',
+					layout.value === value && 'text-primary'
+				)}
+			/>
 		</button>
 	{/each}
 </div>
