@@ -3,10 +3,10 @@
 	import TextOutline from '$lib/components/commons/TextOutline.svelte';
 	import InfoIcon from '$lib/components/icons/InfoIcon.svelte';
 	import { Breadcrumb, BreadcrumbItem, Tooltip } from 'flowbite-svelte';
-	import type { StreamsResponse } from './+page.server';
+	import type { VideosPageResponse } from './+page.server';
 	import Card from './Card.svelte';
 
-	export let data: StreamsResponse;
+	export let data: VideosPageResponse;
 </script>
 
 <Head
