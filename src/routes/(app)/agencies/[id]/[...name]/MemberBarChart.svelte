@@ -1,4 +1,5 @@
 <script lang="ts">
+	import RenderIfVisible from '$lib/components/commons/RenderIfVisible.svelte';
 	import type { VtuberSort } from '$lib/types';
 	import { compactInt, getWikiImg, toURL, vtuberSorter } from '$lib/utils/utils';
 	import { Avatar } from 'flowbite-svelte';
@@ -62,21 +63,23 @@
 
 <div class="grid gap-2">
 	{#each vtubers.sort(vtuberSorter(sort)) as vtuber}
-		<div class="flex gap-2" title={vtuber.name}>
+		<RenderIfVisible class="flex h-7 gap-2">
 			<Avatar
 				src={getWikiImg(vtuber.image)}
 				alt={vtuber.name}
 				size="none"
 				class="size-7 object-cover object-top"
+				title={vtuber.name}
 			/>
 			<a
 				href="/vtubers/{vtuber.id}/{toURL(vtuber.name)}"
 				class="clickable h5 line-clamp-1 rounded-lg bg-primary-500 px-2 text-white"
 				style="width:{getWidth(vtuber, sort)}"
+				title={vtuber.name}
 			>
 				{vtuber.name}
 			</a>
 			<div class="flex w-20 items-center">{getValue(vtuber, sort)}</div>
-		</div>
+		</RenderIfVisible>
 	{/each}
 </div>
