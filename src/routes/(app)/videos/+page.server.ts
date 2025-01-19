@@ -1,12 +1,16 @@
-import { SHIMAKAZE_HOST } from '$env/static/private';
-import { handleAPIResponse } from '$lib/utils/api';
-import type { VideosResponse } from '../../api/videos/+server';
 import type { PageServerLoad } from './$types';
 
-export type StreamsResponse = {
-	live: VideosResponse;
-	upcoming: VideosResponse;
-	recent: VideosResponse;
+export type VideosPageResponse = {
+	live: VideosPageResponseData;
+	upcoming: VideosPageResponseData;
+	recent: VideosPageResponseData;
+};
+
+export type VideosPageResponseData = {
+	start: string;
+	end: string;
+	is_finished: boolean;
+	sort: string;
 };
 
 export const config = {
@@ -40,20 +44,24 @@ export const load = (async () => {
 	recentEnd.setSeconds(0);
 	recentEnd.setMilliseconds(0);
 
-	const [liveResp, upcomingResp, recentResp] = await Promise.all([
-		await fetch(
-			`${SHIMAKAZE_HOST}/videos?start_date=${liveStart.toISOString()}&end_date=${liveEnd.toISOString()}&is_finished=false&sort=-video_start_date&limit=12`
-		),
-		await fetch(
-			`${SHIMAKAZE_HOST}/videos?start_date=${upcomingStart.toISOString()}&is_finished=false&sort=video_start_date&limit=12`
-		),
-		await fetch(
-			`${SHIMAKAZE_HOST}/videos?end_date=${recentEnd.toISOString()}&is_finished=true&sort=-video_start_date&limit=12`
-		)
-	]);
 	return {
-		live: await handleAPIResponse(liveResp),
-		upcoming: await handleAPIResponse(upcomingResp),
-		recent: await handleAPIResponse(recentResp)
+		live: {
+			start: liveStart.toISOString(),
+			end: liveEnd.toISOString(),
+			is_finished: false,
+			sort: '-video_start_date'
+		},
+		upcoming: {
+			start: upcomingStart.toISOString(),
+			end: '',
+			is_finished: false,
+			sort: 'video_start_date'
+		},
+		recent: {
+			start: '',
+			end: recentEnd.toISOString(),
+			is_finished: true,
+			sort: '-video_start_date'
+		}
 	};
 }) satisfies PageServerLoad;
