@@ -169,7 +169,7 @@
 				bind:query
 				on:submit={onSearch}
 				agencies={data.agencies.data}
-				languages={data.languages.data}
+				languages={data.languages.data.sort((a, b) => (a.name > b.name ? 1 : -1))}
 				characterDesigners={data.characterDesigners.data}
 				character2dModelers={data.character2dModelers.data}
 				character3dModelers={data.character3dModelers.data}
