@@ -38,7 +38,11 @@
 						'monthly_subscriber',
 						'-monthly_subscriber',
 						'video_count',
-						'-video_count'
+						'-video_count',
+						'average_video_length',
+						'-average_video_length',
+						'total_video_length',
+						'-total_video_length'
 					].includes(v.detail)
 				) {
 					layout = 'bar_chart';
@@ -51,7 +55,11 @@
 						'monthly_subscriber',
 						'-monthly_subscriber',
 						'video_count',
-						'-video_count'
+						'-video_count',
+						'average_video_length',
+						'-average_video_length',
+						'total_video_length',
+						'-total_video_length'
 					].includes(v.detail)
 				) {
 					layout = 'grid';
@@ -128,6 +136,8 @@
 									: undefined}
 								monthlySubs={vtuber.monthly_subscriber}
 								videoCount={vtuber.video_count}
+								averageVideoLength={vtuber.average_video_length}
+								totalVideoLength={vtuber.total_video_length}
 								{sort}
 							/>
 						</VtuberGrid>

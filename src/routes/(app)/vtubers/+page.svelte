@@ -210,6 +210,8 @@
 						retirementDate={vtuber.retirement_date ? new Date(vtuber.retirement_date) : undefined}
 						monthlySubs={vtuber.monthly_subscriber}
 						videoCount={vtuber.video_count}
+						averageVideoLength={vtuber.average_video_length}
+						totalVideoLength={vtuber.total_video_length}
 						sort={query.sort}
 					/>
 				</VtuberGrid>
