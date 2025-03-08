@@ -142,6 +142,22 @@ export const vtuberSorter =
 				if (a.retirement_date) return 1;
 				if (b.retirement_date) return -1;
 				return a.video_count > b.video_count ? -1 : 1;
+			case 'average_video_length':
+				if (a.retirement_date) return -1;
+				if (b.retirement_date) return 1;
+				return a.average_video_length < b.average_video_length ? -1 : 1;
+			case '-average_video_length':
+				if (a.retirement_date) return 1;
+				if (b.retirement_date) return -1;
+				return a.average_video_length > b.average_video_length ? -1 : 1;
+			case 'total_video_length':
+				if (a.retirement_date) return -1;
+				if (b.retirement_date) return 1;
+				return a.total_video_length < b.total_video_length ? -1 : 1;
+			case '-total_video_length':
+				if (a.retirement_date) return 1;
+				if (b.retirement_date) return -1;
+				return a.total_video_length > b.total_video_length ? -1 : 1;
 			default:
 				return a.name < b.name ? -1 : 1;
 		}

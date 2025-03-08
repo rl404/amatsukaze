@@ -1,7 +1,7 @@
 <script lang="ts">
 	import RenderIfVisible from '$lib/components/commons/RenderIfVisible.svelte';
 	import type { VtuberSort } from '$lib/types';
-	import { compactInt, getWikiImg, toURL, vtuberSorter } from '$lib/utils/utils';
+	import { compactInt, getWikiImg, intToDurationStr, toURL, vtuberSorter } from '$lib/utils/utils';
 	import { Avatar } from 'flowbite-svelte';
 	import type { VtuberResponseData } from '../../../../api/vtubers/[id]/+server';
 
@@ -23,6 +23,12 @@
 			case 'video_count':
 			case '-video_count':
 				return Math.max(...vtubers.map((v) => v.video_count));
+			case 'average_video_length':
+			case '-average_video_length':
+				return Math.max(...vtubers.map((v) => v.average_video_length));
+			case 'total_video_length':
+			case '-total_video_length':
+				return Math.max(...vtubers.map((v) => v.total_video_length));
 			default:
 				return 0;
 		}
@@ -39,6 +45,12 @@
 			case 'video_count':
 			case '-video_count':
 				return compactInt(vtuber.video_count);
+			case 'average_video_length':
+			case '-average_video_length':
+				return intToDurationStr(vtuber.average_video_length);
+			case 'total_video_length':
+			case '-total_video_length':
+				return intToDurationStr(vtuber.total_video_length);
 			default:
 				return '';
 		}
@@ -55,6 +67,12 @@
 			case 'video_count':
 			case '-video_count':
 				return (vtuber.video_count * 100) / maxValue + '%';
+			case 'average_video_length':
+			case '-average_video_length':
+				return (vtuber.average_video_length * 100) / maxValue + '%';
+			case 'total_video_length':
+			case '-total_video_length':
+				return (vtuber.total_video_length * 100) / maxValue + '%';
 			default:
 				return '';
 		}

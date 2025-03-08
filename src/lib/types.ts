@@ -11,7 +11,11 @@ export type VtuberSort =
 	| 'monthly_subscriber'
 	| '-monthly_subscriber'
 	| 'video_count'
-	| '-video_count';
+	| '-video_count'
+	| 'average_video_length'
+	| '-average_video_length'
+	| 'total_video_length'
+	| '-total_video_length';
 
 export type AgencyLayout = 'grid' | 'list';
 export type AgencySort = 'name' | '-name' | 'member' | '-member' | 'subscriber' | '-subscriber';

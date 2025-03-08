@@ -169,7 +169,7 @@
 				bind:query
 				on:submit={onSearch}
 				agencies={data.agencies.data}
-				languages={data.languages.data}
+				languages={data.languages.data.sort((a, b) => (a.name > b.name ? 1 : -1))}
 				characterDesigners={data.characterDesigners.data}
 				character2dModelers={data.character2dModelers.data}
 				character3dModelers={data.character3dModelers.data}
@@ -210,6 +210,8 @@
 						retirementDate={vtuber.retirement_date ? new Date(vtuber.retirement_date) : undefined}
 						monthlySubs={vtuber.monthly_subscriber}
 						videoCount={vtuber.video_count}
+						averageVideoLength={vtuber.average_video_length}
+						totalVideoLength={vtuber.total_video_length}
 						sort={query.sort}
 					/>
 				</VtuberGrid>

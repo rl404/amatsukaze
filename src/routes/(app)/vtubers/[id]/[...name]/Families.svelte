@@ -59,6 +59,8 @@
 						retirementDate={v.retirement_date ? new Date(v.retirement_date) : undefined}
 						monthlySubs={v.monthly_subscriber}
 						videoCount={v.video_count}
+						averageVideoLength={v.average_video_length}
+						totalVideoLength={v.total_video_length}
 						{sort}
 					/>
 				</VtuberGrid>

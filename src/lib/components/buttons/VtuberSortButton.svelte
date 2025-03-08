@@ -83,6 +83,26 @@
 			name: 'Video count DESC',
 			value: '-video_count',
 			hidden: hideKeys.includes('-video_count')
+		},
+		average_video_length: {
+			name: 'Average video length ASC',
+			value: 'average_video_length',
+			hidden: hideKeys.includes('average_video_length')
+		},
+		'-average_video_length': {
+			name: 'Average video length DESC',
+			value: '-average_video_length',
+			hidden: hideKeys.includes('-average_video_length')
+		},
+		total_video_length: {
+			name: 'Total video length ASC',
+			value: 'total_video_length',
+			hidden: hideKeys.includes('total_video_length')
+		},
+		'-total_video_length': {
+			name: 'Total video length DESC',
+			value: '-total_video_length',
+			hidden: hideKeys.includes('-total_video_length')
 		}
 	};
 

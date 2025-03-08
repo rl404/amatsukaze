@@ -3,9 +3,7 @@ import type { ChannelType } from '$lib/types';
 import type { BaseAPIResponse } from '../../types';
 import type { RequestHandler } from './$types';
 
-export type VtuberResponse = BaseAPIResponse & {
-	data: VtuberResponseData;
-};
+export type VtuberResponse = BaseAPIResponse & { data: VtuberResponseData };
 
 export type VtuberResponseData = {
 	id: number;
@@ -21,20 +19,15 @@ export type VtuberResponseData = {
 	character_designers: string[];
 	character_2d_modelers: string[];
 	character_3d_modelers: string[];
-	agencies: {
-		id: number;
-		name: string;
-		image: string;
-	}[];
+	agencies: { id: number; name: string; image: string }[];
 	affiliations: string[];
-	languages: {
-		id: number;
-		name: string;
-	}[];
+	languages: { id: number; name: string }[];
 	channels: VtuberResponseDataChannel[];
 	subscriber: number;
 	monthly_subscriber: number;
 	video_count: number;
+	average_video_length: number;
+	total_video_length: number;
 	social_medias: string[];
 	official_websites: string[];
 	gender: string;
