@@ -20,7 +20,7 @@
 	});
 
 	const onClick = (d: any) =>
-		window.open(`/agencies/${data[d.detail].id}/${toURL(data[d.detail].name)}`, '_blank')?.focus();
+		window.open(`/agencies/${data[d].id}/${toURL(data[d].name)}`, '_blank')?.focus();
 </script>
 
 {#if loading}
@@ -35,6 +35,6 @@
 		horizontal
 		xaxisFormatter={(v) => compactInt(parseInt(v))}
 		tooltipYFormatter={(v) => (!v ? '0' : compactInt(v))}
-		on:clickArea={onClick}
+		onClickArea={onClick}
 	/>
 {/if}

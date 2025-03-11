@@ -11,13 +11,15 @@
 
 <Navbar
 	fluid
-	color="default"
-	class="bg-gradient-to-r from-white to-primary-100 dark:from-gray-800 dark:to-primary-950"
+	class="to-primary-100 dark:to-primary-950 bg-gradient-to-r from-white dark:from-gray-800"
 >
-	<NavHamburger onClick={toggleDrawer} class="m-0 md:block lg:hidden" />
+	<NavHamburger
+		onClick={toggleDrawer}
+		class="m-0 hover:text-black md:block lg:hidden dark:hover:text-white"
+	/>
 	<NavBrand href="/">
 		<Avatar src={logo} alt="amatsukaze" size="none" class="me-2 h-6 sm:h-9" />
-		<Span class="whitespace-nowrap text-xl sm:text-2xl">Amatsukaze</Span>
+		<Span class="text-xl whitespace-nowrap sm:text-2xl">Amatsukaze</Span>
 	</NavBrand>
 	<div>
 		<DarkMode />

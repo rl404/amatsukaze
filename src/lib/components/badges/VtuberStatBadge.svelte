@@ -1,12 +1,14 @@
 <script lang="ts">
 	import type { VtuberSort } from '$lib/types';
-	import { compactInt } from '$lib/utils/utils';
+	import { compactInt, intToDurationStr } from '$lib/utils/utils';
 
 	export let subscriber: number;
 	export let debutDate: Date | undefined;
 	export let retirementDate: Date | undefined;
 	export let monthlySubs: number;
 	export let videoCount: number;
+	export let averageVideoLength: number;
+	export let totalVideoLength: number;
 	export let sort: VtuberSort = 'name';
 
 	let value: string = '';
@@ -35,6 +37,14 @@
 			case '-video_count':
 				if (videoCount > 0) return videoCount.toLocaleString();
 				return '';
+			case 'average_video_length':
+			case '-average_video_length':
+				if (averageVideoLength > 0) return intToDurationStr(averageVideoLength);
+				return '';
+			case 'total_video_length':
+			case '-total_video_length':
+				if (totalVideoLength > 0) return intToDurationStr(totalVideoLength);
+				return '';
 			default:
 				return '';
 		}
@@ -42,7 +52,7 @@
 </script>
 
 {#if value !== ''}
-	<div class="rounded bg-primary-500 px-2 text-xs font-bold text-white">
+	<div class="bg-primary-500 rounded px-2 text-xs font-bold text-white">
 		{value}
 	</div>
 {/if}

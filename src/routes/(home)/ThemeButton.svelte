@@ -23,7 +23,7 @@
 	</script>
 </svelte:head>
 
-<button class="clickable" on:click={toggleTheme}>
+<button class="clickable" onclick={toggleTheme}>
 	<SunIcon class="block size-5 dark:hidden" />
 	<MoonIcon class="hidden size-5 dark:block" />
 </button>

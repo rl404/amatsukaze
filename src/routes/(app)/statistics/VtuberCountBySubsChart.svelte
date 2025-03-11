@@ -48,7 +48,7 @@
 	});
 
 	const onClick = (d: any) => {
-		const limit = data[d.detail];
+		const limit = data[d];
 		window
 			.open(
 				`/vtubers?start_subscriber=${limit.min}&end_subscriber=${limit.max}&sort=-subscriber`,
@@ -70,6 +70,6 @@
 			name: limits[i].label,
 			value: d.count
 		}))}
-		on:clickArea={onClick}
+		onClickArea={onClick}
 	/>
 {/if}

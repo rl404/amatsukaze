@@ -4,14 +4,11 @@
 	import { DefaultVtubersQuery, Zodiacs } from '$lib/const';
 	import type { VtubersQuery } from '$lib/types';
 	import { Button, Input, Label, Modal, Select, Tooltip } from 'flowbite-svelte';
-	import { createEventDispatcher } from 'svelte';
 	import type { AgencyResponseData } from '../../api/agencies/[id]/+server';
 	import type { LanguageResponseData } from '../../api/languages/+server';
 	import InputBirthday from './InputBirthday.svelte';
 	import InputChannel from './InputChannel.svelte';
 	import InputStatus from './InputStatus.svelte';
-
-	const dispatch = createEventDispatcher<{ submit: null }>();
 
 	export let query: VtubersQuery;
 	export let loading: boolean;
@@ -20,15 +17,14 @@
 	export let characterDesigners: string[];
 	export let character2dModelers: string[];
 	export let character3dModelers: string[];
+	export let onSubmit: () => void;
 
 	let open: boolean;
 
 	const onReset = () => (query = { ...DefaultVtubersQuery }) && onSubmit();
-
-	const onSubmit = () => dispatch('submit');
 </script>
 
-<Button color="alternative" class="!p-2" on:click={() => (open = true)}>
+<Button color="alternative" class="!p-2" onclick={() => (open = true)}>
 	<SliderIcon class="size-6" />
 </Button>
 <Tooltip>advanced search</Tooltip>
@@ -230,7 +226,7 @@
 		</div>
 	</div>
 	<div slot="footer" class="flex w-full items-center justify-end gap-2">
-		<Button color="light" on:click={onReset} disabled={loading}>Reset</Button>
-		<Button on:click={onSubmit} disabled={loading}>Search</Button>
+		<Button color="light" onclick={onReset} disabled={loading}>Reset</Button>
+		<Button onclick={onSubmit} disabled={loading}>Search</Button>
 	</div>
 </Modal>

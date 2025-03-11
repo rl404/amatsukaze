@@ -90,7 +90,7 @@
 		</TextOutline>
 
 		<h1 class="h1">Birthday & Anniversary Events {new Date().getFullYear()}</h1>
-		<Button class="hidden md:block" on:click={jumpToToday}>Jump to Today</Button>
+		<Button class="hidden md:block" onclick={jumpToToday}>Jump to Today</Button>
 	</div>
 	<div class="block sm:hidden" bind:clientWidth={buttonWidth}>
 		<Button class="flex w-full items-center gap-2">
@@ -99,7 +99,7 @@
 		</Button>
 		<Dropdown bind:open style="width:{buttonWidth}px">
 			{#each MonthNames as month, i}
-				<DropdownItem on:click={() => onChangeMonth(i)}>{month}</DropdownItem>
+				<DropdownItem onclick={() => onChangeMonth(i)}>{month}</DropdownItem>
 			{/each}
 		</Dropdown>
 	</div>
@@ -107,7 +107,7 @@
 		{#each MonthNames as month, i}
 			<Button
 				color={i === data.month - 1 ? 'primary' : 'alternative'}
-				on:click={() => onChangeMonth(i)}
+				onclick={() => onChangeMonth(i)}
 			>
 				<span class="block xl:hidden">{month.slice(0, 3)}</span>
 				<span class="hidden xl:block">{month}</span>

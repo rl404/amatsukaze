@@ -9,18 +9,15 @@
 	export let name: string;
 	export let image: string;
 	export let delay: number = 0;
-
-	export { className as class };
-	let className: string = '';
 </script>
 
-<RenderIfVisible class={twMerge('aspect-video', className)}>
+<RenderIfVisible class={twMerge('aspect-video', $$props.class)}>
 	<Card
 		title={name}
 		size="none"
 		padding="none"
 		href="/agencies/{id}/{toURL(name)}"
-		class="group relative h-full w-full transition hover:!border-primary-500"
+		class="group hover:!border-primary-500 relative h-full w-full transition"
 	>
 		<Image
 			{delay}
@@ -29,9 +26,12 @@
 			class="h-full w-full rounded-lg object-cover object-center group-hover:object-contain group-hover:p-2"
 		/>
 		<h4
-			class="h5 pointer-events-none absolute bottom-0 line-clamp-1 w-full rounded-b-lg bg-primary-500 p-0.5 text-center text-white opacity-0 transition-opacity group-hover:opacity-100"
+			class="h5 bg-primary-500 pointer-events-none absolute bottom-0 line-clamp-1 w-full rounded-b-lg p-0.5 text-center text-white opacity-0 transition-opacity group-hover:opacity-100"
 		>
 			{name}
 		</h4>
+		<div class="absolute top-1 right-1 opacity-0 transition-opacity group-hover:opacity-100">
+			<slot name="badge" />
+		</div>
 	</Card>
 </RenderIfVisible>

@@ -30,7 +30,7 @@
 	});
 
 	const onClick = (d: any) => {
-		window.open(`/vtubers?channel_types=${data[d.detail].name.toUpperCase()}`, '_blank')?.focus();
+		window.open(`/vtubers?channel_types=${data[d].name.toUpperCase()}`, '_blank')?.focus();
 	};
 </script>
 
@@ -41,5 +41,5 @@
 {:else if error !== ''}
 	<div class="flex h-full w-full items-center justify-center text-red-500">{error}</div>
 {:else}
-	<DonutChart data={data.map((d) => ({ ...d, name: toTitleCase(d.name) }))} on:click={onClick} />
+	<DonutChart data={data.map((d) => ({ ...d, name: toTitleCase(d.name) }))} {onClick} />
 {/if}

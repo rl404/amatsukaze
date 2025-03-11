@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { afterNavigate } from '$app/navigation';
+	import { page } from '$app/state';
 	import Head from '$lib/components/commons/Head.svelte';
 	import Image from '$lib/components/commons/Image.svelte';
 	import TextOutline from '$lib/components/commons/TextOutline.svelte';
@@ -23,10 +24,8 @@
 	let open: boolean = false;
 	let modalData: { id: number; name: string; image: string }[] | any[] = [{}, {}, {}];
 
-	$: $page && onURLChange();
-
-	const onURLChange = () => {
-		const params = $page.url.searchParams;
+	afterNavigate(() => {
+		const params = page.url.searchParams;
 
 		ids = [
 			...mustArrayLen(
@@ -56,7 +55,7 @@
 				.catch((err) => (error[i] = getAxiosError(err)))
 				.finally(() => (loading[i] = false));
 		});
-	};
+	});
 
 	const toggleModal = () => {
 		modalData = data.map((d) => ({
@@ -87,7 +86,7 @@
 		{#each ids as id, i}
 			<div class="flex items-center justify-center">
 				{#if id === 0}
-					<Button color="alternative" class="aspect-square w-1/2" on:click={toggleModal}>
+					<Button color="alternative" class="aspect-square w-1/2" onclick={toggleModal}>
 						<PlusIcon class="size-5" />
 					</Button>
 					<Tooltip placement="bottom">Add vtuber to compare</Tooltip>
@@ -104,7 +103,7 @@
 						size="none"
 						padding="none"
 						class="group relative aspect-square w-1/2 hover:cursor-pointer"
-						on:click={toggleModal}
+						onclick={toggleModal}
 					>
 						<Image
 							src={getWikiImg(data[i].image)}
@@ -112,7 +111,7 @@
 							class="h-full w-full rounded-lg object-cover object-top"
 						/>
 						<div
-							class="absolute right-1 top-1 opacity-0 transition-opacity group-hover:opacity-100"
+							class="absolute top-1 right-1 opacity-0 transition-opacity group-hover:opacity-100"
 						>
 							<Button class="!p-2" pill color="red">
 								<EditIcon class="size-3" />
@@ -128,6 +127,8 @@
 					{vtuber.name}
 					{vtuber.emoji}
 				</a>
+			{:else}
+				<div />
 			{/if}
 		{/each}
 	</div>

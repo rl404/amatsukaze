@@ -2,9 +2,6 @@
 	import { ChartBorderColors, ChartColors, ChartTextColors } from '$lib/const';
 	import { DarkTheme } from '$lib/utils/theme';
 	import { Chart } from 'flowbite-svelte';
-	import { createEventDispatcher } from 'svelte';
-
-	const dispatch = createEventDispatcher<{ click: number; clickArea: number }>();
 
 	type ChartData = {
 		name: string;
@@ -19,6 +16,7 @@
 		| undefined = undefined;
 	export let tooltipYFormatter: (val: number, opts?: any) => string = (v) =>
 		!v ? '0' : v.toLocaleString();
+	export let onClickArea: (n: number) => void = () => {};
 
 	let darkTheme: boolean = false;
 
@@ -32,8 +30,7 @@
 			height: '100%',
 			toolbar: { show: false },
 			events: {
-				click: (_, __, options) => dispatch('clickArea', options.dataPointIndex),
-				dataPointSelection: (_, __, options) => dispatch('click', options.dataPointIndex)
+				click: (_, __, options) => onClickArea(options.dataPointIndex)
 			}
 		},
 		series: [{ name: seriesName, data: data.map((d) => d.value) }],

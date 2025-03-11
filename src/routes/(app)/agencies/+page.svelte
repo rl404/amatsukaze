@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { page as appPage } from '$app/stores';
+	import { afterNavigate, goto } from '$app/navigation';
+	import { page as appPage } from '$app/state';
+	import AgencyStatBadge from '$lib/components/badges/AgencyStatBadge.svelte';
 	import AgencyLayoutButton from '$lib/components/buttons/AgencyLayoutButton.svelte';
 	import AgencySortButton from '$lib/components/buttons/AgencySortButton.svelte';
 	import Head from '$lib/components/commons/Head.svelte';
@@ -23,21 +24,17 @@
 	let layout: AgencyLayout = 'grid';
 	let delayTimer: number;
 
-	$: $appPage && onURLChange();
-
-	const onURLChange = () => {
-		const params = $appPage.url.searchParams;
+	afterNavigate(() => {
+		const params = appPage.url.searchParams;
 		name = params.get('name') || '';
 		sort = (params.get('sort') || 'name') as AgencySort;
 		fetchData();
-	};
+	});
 
 	const onSearch = () => goto(`?name=${name}&sort=${sort}`);
 
 	const fetchData = () =>
-		(agencies = data.data
-			.filter((a) => a.name.toLowerCase().includes(name.toLowerCase()))
-			.sort(agencySorter(sort)));
+		(agencies = data.data.filter((a) => a.name.toLowerCase().includes(name.toLowerCase())));
 
 	const onInput = () => {
 		clearTimeout(delayTimer);
@@ -66,13 +63,13 @@
 			<Badge large>{agencies.length.toLocaleString()}</Badge>
 		</div>
 		<div class="flex basis-full items-center gap-2 md:basis-auto">
-			<Search size="md" placeholder="agency name..." bind:value={name} on:input={onInput} />
+			<Search size="md" placeholder="agency name..." bind:value={name} oninput={onInput} />
 		</div>
 	</div>
 	<div class="flex items-center justify-between gap-2">
-		<QueryBadges bind:name on:change={onSearch} />
+		<QueryBadges bind:name onChange={onSearch} />
 		<div class="flex items-center gap-2">
-			<AgencySortButton bind:value={sort} on:change={onSearch} />
+			<AgencySortButton bind:value={sort} onChange={onSearch} />
 			<span class="opacity-50">|</span>
 			<AgencyLayoutButton bind:value={layout} />
 		</div>
@@ -82,7 +79,7 @@
 		padding="none"
 		class={twMerge('grid grid-cols-6 p-2 sm:p-4', layout === 'list' ? 'gap-1' : 'gap-2 sm:gap-4')}
 	>
-		{#each agencies as agency}
+		{#each agencies.sort(agencySorter(sort)) as agency}
 			{#if layout === 'grid'}
 				<AgencyGrid
 					id={agency.id}
@@ -90,7 +87,14 @@
 					image={agency.image}
 					delay={500}
 					class="col-span-3 sm:col-span-2 xl:col-span-1"
-				/>
+				>
+					<AgencyStatBadge
+						slot="badge"
+						member={agency.member}
+						subscriber={agency.subscriber}
+						{sort}
+					/>
+				</AgencyGrid>
 			{:else if layout === 'list'}
 				<AgencyList
 					id={agency.id}

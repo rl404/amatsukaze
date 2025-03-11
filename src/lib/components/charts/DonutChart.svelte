@@ -2,9 +2,6 @@
 	import { ChartBorderColors, ChartColors, ChartTextColors } from '$lib/const';
 	import { DarkTheme } from '$lib/utils/theme';
 	import { Chart } from 'flowbite-svelte';
-	import { createEventDispatcher } from 'svelte';
-
-	const dispatch = createEventDispatcher<{ click: number }>();
 
 	type ChartData = {
 		name: string;
@@ -12,6 +9,7 @@
 	};
 
 	export let data: ChartData[];
+	export let onClick: (n: number) => void = () => {};
 
 	let darkTheme: boolean = false;
 
@@ -34,7 +32,7 @@
 			type: 'donut',
 			height: '100%',
 			events: {
-				dataPointSelection: (_, __, options) => dispatch('click', options.dataPointIndex)
+				dataPointSelection: (_, __, options) => onClick(options.dataPointIndex)
 			}
 		},
 		series: data.map((d) => d.value),

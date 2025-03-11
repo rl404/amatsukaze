@@ -80,19 +80,19 @@
 		</div>
 	</div>
 	<div class="col-span-4 sm:col-span-1">
-		<Card size="none" padding="none" class="sticky top-20" on:click={toggleModal}>
+		<Card size="none" padding="none" class="sticky top-20" onclick={toggleModal}>
 			<Image
 				src={getWikiImg(vtuber.image, 0, 400)}
 				alt={vtuber.name}
 				class={twMerge(
-					'max-h-96 rounded-t-lg border-b border-border object-contain object-top sm:max-h-max',
+					'border-border max-h-96 rounded-t-lg border-b object-contain object-top sm:max-h-max',
 					!vtuber.caption && 'rounded-lg border-0',
 					vtuber.image && 'clickable cursor-pointer'
 				)}
 				loadingClass="aspect-portrait"
 				errorClass="aspect-portrait"
 			/>
-			<div class={twMerge('break-all p-4 text-center italic', !vtuber.caption && 'hidden')}>
+			<div class={twMerge('p-4 text-center break-all italic', !vtuber.caption && 'hidden')}>
 				{vtuber.caption}
 			</div>
 		</Card>
@@ -141,7 +141,7 @@
 	<Image
 		src={getWikiImg(vtuber.image, 0, 0)}
 		alt={vtuber.name}
-		class="m-auto rounded-lg border border-border"
+		class="border-border m-auto rounded-lg border"
 		loadingClass="aspect-portrait"
 		errorClass="aspect-portrait"
 	/>

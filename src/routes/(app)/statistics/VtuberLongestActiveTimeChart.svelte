@@ -27,7 +27,7 @@
 	});
 
 	const onClick = (d: any) =>
-		window.open(`/vtubers/${data[d.detail].id}/${data[d.detail].name}`, '_blank')?.focus();
+		window.open(`/vtubers/${data[d].id}/${data[d].name}`, '_blank')?.focus();
 </script>
 
 {#if loading}
@@ -47,6 +47,6 @@
 						(1000 * 3600 * 24 * 30 * 12)
 		}))}
 		seriesName="Years"
-		on:clickArea={onClick}
+		onClickArea={onClick}
 	/>
 {/if}
