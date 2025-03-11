@@ -24,7 +24,7 @@
 	});
 
 	const onClick = (d: any) =>
-		window.open(`/vtubers/${data[d.detail].id}/${data[d.detail].name}`, '_blank')?.focus();
+		window.open(`/vtubers/${data[d].id}/${data[d].name}`, '_blank')?.focus();
 </script>
 
 {#if loading}
@@ -37,6 +37,6 @@
 	<BarChart
 		data={data.map((d) => ({ name: d.name, value: d.video_count }))}
 		horizontal
-		on:clickArea={onClick}
+		onClickArea={onClick}
 	/>
 {/if}

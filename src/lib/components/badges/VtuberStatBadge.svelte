@@ -52,7 +52,7 @@
 </script>
 
 {#if value !== ''}
-	<div class="rounded bg-primary-500 px-2 text-xs font-bold text-white">
+	<div class="bg-primary-500 rounded px-2 text-xs font-bold text-white">
 		{value}
 	</div>
 {/if}

@@ -33,7 +33,7 @@
 <Card size="none" class="gap-4">
 	<div class="flex items-center justify-between gap-4">
 		<div class="flex items-center gap-4">
-			<h2 class="h2 border-l-4 border-primary-500 pl-2">{title}</h2>
+			<h2 class="h2 border-primary-500 border-l-4 pl-2">{title}</h2>
 			<Badge large>{total.toLocaleString()}</Badge>
 		</div>
 		<Button href={link} size="xs">MORE</Button>

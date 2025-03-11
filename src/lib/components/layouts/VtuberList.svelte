@@ -11,12 +11,9 @@
 	export let agencies: string[];
 	export let debutDate: Date | undefined;
 	export let retirementDate: Date | undefined;
-	export { className as class };
-
-	let className: string;
 </script>
 
-<RenderIfVisible class={className}>
+<RenderIfVisible class={$$props.class}>
 	<Card
 		title={name}
 		size="none"

@@ -29,7 +29,7 @@
 	});
 
 	const onClick = (d: any) => {
-		const gender = data[d.detail].name;
+		const gender = data[d].name;
 		if (gender !== 'other') {
 			window.open(`/vtubers?genders=${gender}`, '_blank')?.focus();
 			return;
@@ -51,5 +51,5 @@
 {:else if error !== ''}
 	<div class="flex h-full w-full items-center justify-center text-red-500">{error}</div>
 {:else}
-	<DonutChart {data} on:click={onClick} />
+	<DonutChart {data} {onClick} />
 {/if}

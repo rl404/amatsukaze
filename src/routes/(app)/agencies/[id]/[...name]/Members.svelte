@@ -18,17 +18,15 @@
 	let layout: VtuberLayout = 'timeline';
 	let sort: VtuberSort = 'debut_date';
 
-	const onChangeLayout = (v: CustomEvent<VtuberLayout>) => {
-		v.detail === 'timeline' && (sort = 'debut_date');
-		v.detail === 'bar_chart' && (sort = '-subscriber');
+	const onChangeLayout = (v: VtuberLayout) => {
+		v === 'timeline' && (sort = 'debut_date');
+		v === 'bar_chart' && (sort = '-subscriber');
 	};
 
-	const onChangeSort = (v: CustomEvent<VtuberSort>) => {
+	const onChangeSort = (v: VtuberSort) => {
 		switch (layout) {
 			case 'timeline':
-				if (
-					!['debut_date', '-debut_date', 'retirement_date', '-retirement_date'].includes(v.detail)
-				) {
+				if (!['debut_date', '-debut_date', 'retirement_date', '-retirement_date'].includes(v)) {
 					layout = 'grid';
 				}
 				if (
@@ -43,7 +41,7 @@
 						'-average_video_length',
 						'total_video_length',
 						'-total_video_length'
-					].includes(v.detail)
+					].includes(v)
 				) {
 					layout = 'bar_chart';
 				}
@@ -60,13 +58,11 @@
 						'-average_video_length',
 						'total_video_length',
 						'-total_video_length'
-					].includes(v.detail)
+					].includes(v)
 				) {
 					layout = 'grid';
 				}
-				if (
-					['debut_date', '-debut_date', 'retirement_date', '-retirement_date'].includes(v.detail)
-				) {
+				if (['debut_date', '-debut_date', 'retirement_date', '-retirement_date'].includes(v)) {
 					layout = 'timeline';
 				}
 		}
@@ -76,7 +72,7 @@
 <div class="grid gap-4">
 	<Card size="none" class="gap-4">
 		<div class="flex items-center justify-between gap-4">
-			<div class="border-l-4 border-primary-500 pl-2">
+			<div class="border-primary-500 border-l-4 pl-2">
 				<div class="flex items-center gap-2">
 					<h3 class="h3">Member Count</h3>
 					<Badge class="hidden sm:block">{vtubers.length.toLocaleString()}</Badge>
@@ -94,22 +90,22 @@
 				</div>
 			</div>
 		</div>
-		<div class="hidden aspect-chart xl:block">
+		<div class="aspect-chart hidden xl:block">
 			<MemberChart {vtubers} bind:layout />
 		</div>
 	</Card>
 	<Card size="none" class="gap-4">
 		<div class="flex items-center justify-between gap-4">
-			<div class="flex items-center gap-2 border-l-4 border-primary-500 pl-2">
+			<div class="border-primary-500 flex items-center gap-2 border-l-4 pl-2">
 				<h3 class="h3">
 					Member {layout === 'timeline' ? 'Timeline' : 'List'}
 				</h3>
 				<Badge class="hidden sm:block">{vtubers.length.toLocaleString()}</Badge>
 			</div>
 			<div class="flex items-center gap-2">
-				<VtuberSortButton class="hidden sm:flex" bind:value={sort} on:change={onChangeSort} />
+				<VtuberSortButton class="hidden sm:flex" bind:value={sort} onChange={onChangeSort} />
 				<span class="hidden opacity-50 sm:block">|</span>
-				<VtuberLayoutButton bind:value={layout} timeline barChart on:change={onChangeLayout} />
+				<VtuberLayoutButton bind:value={layout} timeline barChart onChange={onChangeLayout} />
 			</div>
 		</div>
 		{#if layout === 'timeline'}

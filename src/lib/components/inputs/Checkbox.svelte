@@ -47,6 +47,6 @@
 	};
 </script>
 
-<Checkbox {id} {indeterminate} bind:value bind:checked on:change={onChange}>
+<Checkbox {id} {indeterminate} bind:value bind:checked onchange={onChange}>
 	<slot />
 </Checkbox>

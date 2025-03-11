@@ -1,17 +1,13 @@
 <script lang="ts">
 	import type { VtuberSort } from '$lib/types';
 	import { Dropdown, DropdownItem } from 'flowbite-svelte';
-	import { createEventDispatcher } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
 	import SortIcon from '../icons/SortIcon.svelte';
 
-	const dispatch = createEventDispatcher<{ change: VtuberSort }>();
-
 	export let value: VtuberSort;
 	export let hideKeys: VtuberSort[] = [];
-	export { className as class };
+	export let onChange: (data: VtuberSort) => void = () => {};
 
-	let className: string = '';
 	let open: boolean = false;
 
 	let sorts: {
@@ -106,17 +102,17 @@
 		}
 	};
 
-	const onChange = (v: VtuberSort) => {
+	const onClick = (v: VtuberSort) => {
 		value = v;
-		dispatch('change', v);
+		onChange(v);
 		open = false;
 	};
 </script>
 
 <button
 	class={twMerge(
-		'flex items-center gap-1 whitespace-nowrap text-sm transition hover:text-primary',
-		className
+		'hover:text-primary flex items-center gap-1 text-sm whitespace-nowrap transition',
+		$$props.class
 	)}
 >
 	<SortIcon class="size-3" />
@@ -125,7 +121,7 @@
 <Dropdown bind:open>
 	{#each Object.values(sorts) as sort}
 		{#if !sort.hidden}
-			<DropdownItem on:click={() => onChange(sort.value)}>
+			<DropdownItem onclick={() => onClick(sort.value)}>
 				{sort.name}
 			</DropdownItem>
 		{/if}

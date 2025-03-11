@@ -37,7 +37,7 @@
 							'flex items-center gap-2 border-b-2 px-2 pb-2 transition-all hover:opacity-100',
 							monthI === i ? 'border-primary-600' : 'border-border opacity-30'
 						)}
-						on:click={() => (monthI = i)}
+						onclick={() => (monthI = i)}
 					>
 						<div class="h3 line-clamp-1">{MonthNames[month.month]}</div>
 						<Badge class="hidden md:block">
@@ -47,7 +47,7 @@
 				{/each}
 			</div>
 		{:else if layout === 'hourly'}
-			<div class="border-l-4 border-primary-500 pl-2">
+			<div class="border-primary-500 border-l-4 pl-2">
 				<div class="flex items-center gap-2">
 					<div class="h3 flex items-center gap-2">Upload Frequency</div>
 					<Badge>{vtuber.video_count.toLocaleString()}</Badge>

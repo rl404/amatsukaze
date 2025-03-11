@@ -29,8 +29,7 @@
 	});
 
 	const onClick = (d: any) => {
-		const i = d.detail;
-		const bloodType = data[i].name;
+		const bloodType = data[d].name;
 		if (bloodType !== 'other') {
 			window.open(`/vtubers?blood_types=${bloodType}`, '_blank')?.focus();
 			return;
@@ -52,5 +51,5 @@
 {:else if error !== ''}
 	<div class="flex h-full w-full items-center justify-center text-red-500">{error}</div>
 {:else}
-	<DonutChart {data} on:click={onClick} />
+	<DonutChart {data} {onClick} />
 {/if}

@@ -29,20 +29,20 @@
 			{day[0]}
 		</Span>
 	{/each}
-	<div class="col-span-7 h-px bg-border" />
+	<div class="bg-border col-span-7 h-px" />
 	{#each data.days as day}
 		<div
 			class={twMerge(
-				'relative flex aspect-square items-center justify-center rounded-lg bg-border/70 p-1 text-xs dark:bg-border/30 md:text-sm',
+				'bg-border/70 dark:bg-border/30 relative flex aspect-square items-center justify-center rounded-lg p-1 text-xs md:text-sm',
 				!day.focus && 'opacity-30',
 				today.getFullYear() === data.year &&
 					today.getMonth() === data.month &&
 					today.getDate() === day.day &&
 					day.focus &&
-					'animate-pulse outline outline-1 outline-primary-500 md:outline-2'
+					'outline-primary-500 animate-pulse outline md:outline-2'
 			)}
 		>
-			<Span class="absolute left-1 top-0">{day.day}</Span>
+			<Span class="absolute top-0 left-1">{day.day}</Span>
 			<div class="flex flex-wrap items-center justify-center gap-1 xl:gap-2">
 				{#each day.videos as video}
 					<a id={`${video.type}-${video.id}`} href={video.url} target="_blank" rel="noreferrer">

@@ -8,12 +8,9 @@
 	export let image: string;
 	export let member: number;
 	export let subscriber: number;
-
-	export { className as class };
-	let className: string;
 </script>
 
-<RenderIfVisible class={className}>
+<RenderIfVisible class={$$props.class}>
 	<Card
 		title={name}
 		size="none"

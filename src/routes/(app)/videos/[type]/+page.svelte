@@ -79,7 +79,7 @@
 		{:else if videos.length === 0}
 			<div class="col-span-24 text-center">No result...</div>
 		{:else}
-			<InfiniteScroll {hasMore} window on:loadMore={loadMore} />
+			<InfiniteScroll {hasMore} window onLoadMore={loadMore} />
 		{/if}
 	</Card>
 </div>

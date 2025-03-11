@@ -29,7 +29,7 @@
 						'flex items-center gap-2 border-b-2 px-2 pb-2 transition-all hover:opacity-100',
 						tabI === i ? 'border-primary-600' : 'border-border opacity-30'
 					)}
-					on:click={() => (tabI = i)}
+					onclick={() => (tabI = i)}
 				>
 					<h3 class="h3 line-clamp-1">{agency.name}</h3>
 					<Badge>{agencies[i].data.length.toLocaleString()}</Badge>

@@ -22,7 +22,7 @@
 	});
 
 	const onClick = (d: any) => {
-		switch (d.detail) {
+		switch (d) {
 			case 0:
 				window.open(`/vtubers?exclude_retired=true`, '_blank')?.focus();
 				break;
@@ -45,6 +45,6 @@
 			{ name: 'Active', value: activeData },
 			{ name: 'Retired', value: retiredData }
 		]}
-		on:click={onClick}
+		{onClick}
 	/>
 {/if}

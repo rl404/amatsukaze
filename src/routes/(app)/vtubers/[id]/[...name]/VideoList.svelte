@@ -45,7 +45,7 @@
 
 <Card size="none" class="gap-4">
 	<div class="flex items-center justify-between gap-4">
-		<div class="border-l-4 border-primary-500 pl-2">
+		<div class="border-primary-500 border-l-4 pl-2">
 			<div class="flex items-center gap-2">
 				<h3 class="h3 flex items-center gap-2">Recent Videos</h3>
 				<Badge>{vtuber.video_count.toLocaleString()}</Badge>
@@ -70,9 +70,9 @@
 	{#if allVideos.length > 12}
 		<div class="col-span-24 text-center">
 			{#if !show}
-				<Button size="sm" on:click={showMore}>Show more</Button>
+				<Button size="sm" onclick={showMore}>Show more</Button>
 			{:else}
-				<Button size="sm" on:click={showLess}>Show less</Button>
+				<Button size="sm" onclick={showLess}>Show less</Button>
 			{/if}
 		</div>
 	{/if}

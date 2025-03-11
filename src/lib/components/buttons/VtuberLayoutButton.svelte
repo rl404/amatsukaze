@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { VtuberLayout } from '$lib/types';
-	import { createEventDispatcher, type Component } from 'svelte';
+	import { type Component } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
 	import ChartBarIcon from '../icons/ChartBarIcon.svelte';
 	import Grid2Icon from '../icons/Grid2Icon.svelte';
@@ -8,11 +8,10 @@
 	import ListIcon from '../icons/ListIcon.svelte';
 	import TimelineIcon from '../icons/TimelineIcon.svelte';
 
-	const dispatch = createEventDispatcher<{ change: VtuberLayout }>();
-
 	export let value: VtuberLayout;
 	export let timeline: boolean = false;
 	export let barChart: boolean = false;
+	export let onChange: (data: VtuberLayout) => void = () => {};
 
 	const layouts: { value: VtuberLayout; icon: Component; class?: string }[] = [
 		{ value: 'timeline', icon: TimelineIcon, class: timeline ? '' : 'hidden' },
@@ -24,17 +23,17 @@
 
 	const onClick = (v: VtuberLayout) => {
 		value = v;
-		dispatch('change', v);
+		onChange(v);
 	};
 </script>
 
 <div class="flex items-center justify-center gap-2">
 	{#each layouts as layout}
-		<button on:click={() => onClick(layout.value)} class={layout.class}>
+		<button onclick={() => onClick(layout.value)} class={layout.class}>
 			<svelte:component
 				this={layout.icon}
 				class={twMerge(
-					'size-4 transition hover:text-primary',
+					'hover:text-primary size-4 transition',
 					layout.value === value && 'text-primary'
 				)}
 			/>

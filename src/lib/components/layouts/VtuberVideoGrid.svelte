@@ -14,9 +14,6 @@
 	export let data: VtuberResponseDataChannelVideo;
 	export let type: ChannelType;
 	export let delay: number = 0;
-	export { className as class };
-
-	let className: string = '';
 
 	const startDate = !data.start_date
 		? ''
@@ -42,7 +39,7 @@
 	};
 </script>
 
-<RenderIfVisible class={className}>
+<RenderIfVisible class={$$props.class}>
 	<a href={data.url} target="_blank" rel="noreferrer" class="clickable grid gap-1 pb-2 text-sm">
 		<div class="relative">
 			<Image
@@ -51,11 +48,11 @@
 				alt={data.title}
 				class="aspect-video h-full w-full rounded-lg object-cover object-center"
 			/>
-			<span class="absolute bottom-1 right-1 rounded bg-black px-1 text-xs uppercase text-white">
+			<span class="absolute right-1 bottom-1 rounded bg-black px-1 text-xs text-white uppercase">
 				{durationStr}
 			</span>
 		</div>
-		<h4 class="line-clamp-2 text-primary">{data.title}</h4>
+		<h4 class="text-primary line-clamp-2">{data.title}</h4>
 		<div class="flex items-center gap-2" title={startDate}>
 			<svelte:component this={icons[type].icon} class={twMerge('size-4', icons[type].color)} />
 			{data.start_date && relativeTime(new Date(data.start_date))}

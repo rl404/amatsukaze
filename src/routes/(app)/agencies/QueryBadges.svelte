@@ -1,15 +1,13 @@
 <script lang="ts">
 	import TagsIcon from '$lib/components/icons/TagsIcon.svelte';
 	import { Badge } from 'flowbite-svelte';
-	import { createEventDispatcher } from 'svelte';
-
-	const dispatch = createEventDispatcher<{ change: null }>();
 
 	export let name: string;
+	export let onChange: () => void;
 
 	const onClose = () => {
 		name = '';
-		dispatch('change');
+		onChange();
 	};
 </script>
 

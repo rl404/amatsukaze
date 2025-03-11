@@ -29,7 +29,7 @@
 	});
 
 	const onClick = (d: any) =>
-		window.open(`/vtubers?character_3d_modeler=${data[d.detail].name}`, '_blank')?.focus();
+		window.open(`/vtubers?character_3d_modeler=${data[d].name}`, '_blank')?.focus();
 </script>
 
 {#if loading}
@@ -39,5 +39,5 @@
 {:else if error !== ''}
 	<div class="flex h-full w-full items-center justify-center text-red-500">{error}</div>
 {:else}
-	<BarChart {data} horizontal on:clickArea={onClick} />
+	<BarChart {data} horizontal onClickArea={onClick} />
 {/if}

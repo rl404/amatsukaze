@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import Head from '$lib/components/commons/Head.svelte';
 
-	const status: number = $page.status;
-	const message: string = $page.error?.message || '';
+	const status: number = page.status;
+	const message: string = page.error?.message || '';
 </script>
 
 <Head title={status.toString()} description={message} image="" />

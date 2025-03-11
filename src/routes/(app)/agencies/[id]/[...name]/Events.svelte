@@ -28,14 +28,14 @@
 
 <Card size="none" class="gap-4">
 	<div class="flex items-center justify-between gap-4">
-		<div class="border-l-4 border-primary-500 pl-2">
+		<div class="border-primary-500 border-l-4 pl-2">
 			<h3 class="h3">Event Calendar</h3>
 			<div>Birthday & Anniversary</div>
 		</div>
 		<div class="flex flex-wrap items-center justify-end gap-2 font-bold text-white">
 			<button
-				class="clickable hidden rounded-lg p-2 px-3 text-primary outline outline-1 outline-green-500 xl:block"
-				on:click={scrollToToday}
+				class="clickable text-primary hidden rounded-lg p-2 px-3 outline-1 outline-green-500 xl:block"
+				onclick={scrollToToday}
 			>
 				Today
 			</button>
@@ -44,7 +44,7 @@
 					'clickable rounded-lg bg-pink-500 p-1 px-2 xl:p-2 xl:px-3',
 					!showBirthday && 'bg-neutral-500'
 				)}
-				on:click={toggleBirthday}
+				onclick={toggleBirthday}
 			>
 				Birthday
 			</button>
@@ -53,7 +53,7 @@
 					'clickable rounded-lg bg-indigo-500 p-1 px-2 xl:p-2 xl:px-3',
 					!showAnniversary && 'bg-neutral-500'
 				)}
-				on:click={toggleAnniversary}
+				onclick={toggleAnniversary}
 			>
 				Anniversary
 			</button>
@@ -62,8 +62,8 @@
 	<div class="grid grid-cols-1 gap-4 text-center md:grid-cols-2 xl:grid-cols-3">
 		{#each eventData as data}
 			<div>
-				<div class="grid grid-cols-7 gap-1 rounded-lg bg-border/30 p-2">
-					<h4 class="h4 col-span-7 mb-2 bg-primary-600/10 dark:bg-primary-600/20">
+				<div class="bg-border/30 grid grid-cols-7 gap-1 rounded-lg p-2">
+					<h4 class="h4 bg-primary-600/10 dark:bg-primary-600/20 col-span-7 mb-2">
 						{MonthNames[data.month]}
 						{data.year}
 					</h4>
@@ -72,16 +72,16 @@
 							{day[0]}
 						</Span>
 					{/each}
-					<div class="col-span-7 h-px bg-border" />
+					<div class="bg-border col-span-7 h-px" />
 					{#each data.days as day}
 						<div
 							id={isToday(data.year, data.month, day.day) && day.focus ? 'today' : ''}
 							class={twMerge(
-								'bg-gradient-to-r text-sm text-primary',
+								'text-primary bg-gradient-to-r text-sm',
 								!day.focus && 'opacity-30',
 								isToday(data.year, data.month, day.day) &&
 									day.focus &&
-									'animate-pulse outline outline-1 outline-green-500 md:outline-2',
+									'animate-pulse outline-1 outline-green-500 md:outline-2',
 								day.birthday.length > 0 && day.anniversary.length > 0
 									? 'clickable from-pink-500 to-indigo-500 text-white'
 									: day.birthday.length > 0
@@ -101,7 +101,7 @@
 											id={vtuber.id}
 											name={vtuber.name}
 											image={vtuber.image}
-											class="size-32 rounded-lg outline outline-2 outline-pink-500 hover:outline-0"
+											class="size-32 rounded-lg outline-2 outline-pink-500 hover:outline-0"
 										/>
 									{/each}
 									{#each day.anniversary as vtuber}
@@ -109,7 +109,7 @@
 											id={vtuber.id}
 											name={vtuber.name}
 											image={vtuber.image}
-											class="size-32 rounded-lg outline outline-2 outline-indigo-500 hover:outline-0"
+											class="size-32 rounded-lg outline-2 outline-indigo-500 hover:outline-0"
 										/>
 									{/each}
 								</div>

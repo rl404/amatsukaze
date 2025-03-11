@@ -1,16 +1,12 @@
 <script lang="ts">
 	import type { AgencySort } from '$lib/types';
 	import { Dropdown, DropdownItem } from 'flowbite-svelte';
-	import { createEventDispatcher } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
 	import SortIcon from '../icons/SortIcon.svelte';
 
-	const dispatch = createEventDispatcher<{ change: null }>();
-
 	export let value: AgencySort;
-	export { className as class };
+	export let onChange: () => void = () => {};
 
-	let className: string = '';
 	let open: boolean = false;
 
 	const sorts: {
@@ -27,17 +23,17 @@
 		'-subscriber': { name: 'Subscriber DESC', value: '-subscriber' }
 	};
 
-	const onChange = (v: AgencySort) => {
+	const onClick = (v: AgencySort) => {
 		value = v;
-		dispatch('change');
+		onChange();
 		open = false;
 	};
 </script>
 
 <button
 	class={twMerge(
-		'flex items-center gap-1 whitespace-nowrap text-sm transition hover:text-primary',
-		className
+		'hover:text-primary flex items-center gap-1 text-sm whitespace-nowrap transition',
+		$$props.class
 	)}
 >
 	<SortIcon class="size-3" />
@@ -45,6 +41,6 @@
 </button>
 <Dropdown bind:open>
 	{#each Object.values(sorts) as sort}
-		<DropdownItem on:click={() => onChange(sort.value)}>{sort.name}</DropdownItem>
+		<DropdownItem onclick={() => onClick(sort.value)}>{sort.name}</DropdownItem>
 	{/each}
 </Dropdown>

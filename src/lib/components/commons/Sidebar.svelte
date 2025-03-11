@@ -140,9 +140,9 @@
 
 <button
 	class={twMerge(
-		'fixed inset-0 z-20 bg-gray-900/50 dark:bg-gray-900/60 lg:hidden',
+		'fixed inset-0 z-20 bg-gray-900/50 lg:hidden dark:bg-gray-900/60',
 		!drawer && 'hidden'
 	)}
-	on:click={toggleDrawer}
+	onclick={toggleDrawer}
 	aria-label="drawer button"
 />

@@ -60,7 +60,7 @@
 	</div>
 	<div class="col-span-4 sm:col-span-1">
 		<div class="sticky top-20 flex flex-col gap-4">
-			<Card size="none" padding="none" on:click={toggleModal}>
+			<Card size="none" padding="none" onclick={toggleModal}>
 				<Image
 					src={getWikiImg(agency.image, 0, 400)}
 					alt={agency.name}
@@ -109,7 +109,7 @@
 	<Image
 		src={getWikiImg(agency.image, 0, 0)}
 		alt={agency.name}
-		class="m-auto rounded-lg border border-border p-4"
+		class="border-border m-auto rounded-lg border p-4"
 		loadingClass="aspect-card"
 		errorClass="aspect-card"
 	/>
