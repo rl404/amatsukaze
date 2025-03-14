@@ -22,7 +22,7 @@
 	});
 
 	const onClick = (d: any) => {
-		switch (d.detail) {
+		switch (d) {
 			case 0:
 				window.open(`/vtubers?in_agency=false`, '_blank')?.focus();
 				break;
@@ -45,6 +45,6 @@
 			{ name: 'Independent', value: notInAgencyData },
 			{ name: 'In Agency', value: inAgencyData }
 		]}
-		on:click={onClick}
+		{onClick}
 	/>
 {/if}

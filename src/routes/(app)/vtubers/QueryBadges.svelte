@@ -5,19 +5,17 @@
 	import type { VtubersQuery } from '$lib/types';
 	import { compactInt, toTitleCase } from '$lib/utils/utils';
 	import { Badge } from 'flowbite-svelte';
-	import { createEventDispatcher } from 'svelte';
 	import type { AgencyResponseData } from '../../api/agencies/[id]/+server';
 	import type { LanguageResponseData } from '../../api/languages/+server';
-
-	const dispatch = createEventDispatcher<{ change: null }>();
 
 	export let query: VtubersQuery;
 	export let agencies: AgencyResponseData[];
 	export let languages: LanguageResponseData[];
+	export let onChange: () => void;
 
 	const onClose = (name: keyof VtubersQuery, value: any, callDispatch = true) => {
 		query = { ...query, [name]: value };
-		callDispatch && dispatch('change');
+		callDispatch && onChange();
 	};
 
 	const onCloseChannel = (i: number) => {
@@ -28,7 +26,7 @@
 				.filter((_, j) => j !== i)
 				.join(',')
 		};
-		dispatch('change');
+		onChange();
 	};
 
 	const channelToStr = (channel: string): string => {
@@ -142,7 +140,7 @@
 				{channelToStr(channel)}
 				<button
 					slot="close-button"
-					class="text-primary-500 dark:hover:text-primary-300 m-0.5 -me-1.5 ms-1.5 whitespace-normal rounded-sm p-0.5 hover:bg-primary-200 focus:outline-none focus:ring-1 focus:ring-primary-400 dark:hover:bg-primary-800"
+					class="text-primary-500 dark:hover:text-primary-300 hover:bg-primary-200 focus:ring-primary-400 dark:hover:bg-primary-800 m-0.5 ms-1.5 -me-1.5 rounded-sm p-0.5 whitespace-normal focus:ring-1 focus:outline-none"
 					on:click={() => onCloseChannel(i)}
 				>
 					<XMarkIcon class="size-3" />

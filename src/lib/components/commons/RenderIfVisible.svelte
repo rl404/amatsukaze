@@ -1,9 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	export { className as class };
-
-	let className: string = '';
 	let done: boolean = false;
 	let isVisible: boolean = false;
 	let element: HTMLElement;
@@ -22,7 +19,7 @@
 	});
 </script>
 
-<div class={className} bind:this={element}>
+<div class={$$props.class} bind:this={element}>
 	{#if isVisible || done}
 		<slot />
 	{/if}

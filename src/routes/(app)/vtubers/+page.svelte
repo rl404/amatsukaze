@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { page as appPage } from '$app/stores';
+	import { afterNavigate, goto } from '$app/navigation';
+	import { page as appPage } from '$app/state';
 	import VtuberStatBadge from '$lib/components/badges/VtuberStatBadge.svelte';
 	import VtuberLayoutButton from '$lib/components/buttons/VtuberLayoutButton.svelte';
 	import VtuberSortButton from '$lib/components/buttons/VtuberSortButton.svelte';
@@ -35,13 +35,12 @@
 	let delayTimer: number;
 
 	$: vtubers = [...vtubers, ...newVtubers];
-	$: $appPage && onURLChange();
 
-	const onURLChange = () => {
+	afterNavigate(() => {
 		vtubers = [];
 		newVtubers = [];
 
-		const params = $appPage.url.searchParams;
+		const params = appPage.url.searchParams;
 
 		query = {
 			...query,
@@ -87,7 +86,7 @@
 		};
 
 		fetchData();
-	};
+	});
 
 	const onSearch = () => {
 		query = { ...query, page: 1 };
@@ -162,14 +161,14 @@
 				placeholder="vtuber name..."
 				disabled={loading}
 				bind:value={query.names}
-				on:input={onInput}
+				oninput={onInput}
 			/>
 			<SearchModal
 				{loading}
 				bind:query
-				on:submit={onSearch}
+				onSubmit={onSearch}
 				agencies={data.agencies.data}
-				languages={data.languages.data}
+				languages={data.languages.data.sort((a, b) => (a.name > b.name ? 1 : -1))}
 				characterDesigners={data.characterDesigners.data}
 				character2dModelers={data.character2dModelers.data}
 				character3dModelers={data.character3dModelers.data}
@@ -179,12 +178,12 @@
 	<div class="flex items-center justify-between gap-2">
 		<QueryBadges
 			bind:query
-			on:change={onSearch}
+			onChange={onSearch}
 			agencies={data.agencies.data}
 			languages={data.languages.data}
 		/>
 		<div class="flex items-center gap-2">
-			<VtuberSortButton bind:value={query.sort} on:change={onSearch} class="hidden sm:flex" />
+			<VtuberSortButton bind:value={query.sort} onChange={onSearch} class="hidden sm:flex" />
 			<span class="hidden opacity-50 sm:block">|</span>
 			<VtuberLayoutButton bind:value={layout} />
 		</div>
@@ -210,6 +209,8 @@
 						retirementDate={vtuber.retirement_date ? new Date(vtuber.retirement_date) : undefined}
 						monthlySubs={vtuber.monthly_subscriber}
 						videoCount={vtuber.video_count}
+						averageVideoLength={vtuber.average_video_length}
+						totalVideoLength={vtuber.total_video_length}
 						sort={query.sort}
 					/>
 				</VtuberGrid>
@@ -246,7 +247,7 @@
 		{:else if vtubers.length === 0}
 			<div class="col-span-24 text-center">No result...</div>
 		{:else}
-			<InfiniteScroll {hasMore} window on:loadMore={loadMore} />
+			<InfiniteScroll {hasMore} window onLoadMore={loadMore} />
 		{/if}
 	</Card>
 </div>

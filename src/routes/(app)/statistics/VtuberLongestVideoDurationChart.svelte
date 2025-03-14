@@ -25,7 +25,7 @@
 	});
 
 	const onClick = (d: any) =>
-		window.open(`/vtubers/${data[d.detail].id}/${data[d.detail].name}`, '_blank')?.focus();
+		window.open(`/vtubers/${data[d].id}/${data[d].name}`, '_blank')?.focus();
 </script>
 
 {#if loading}
@@ -41,6 +41,6 @@
 		horizontal
 		xaxisFormatter={(v) => intToDurationStr(parseInt(v))}
 		tooltipYFormatter={(v) => (!v ? '0' : intToDurationStr(v))}
-		on:clickArea={onClick}
+		onClickArea={onClick}
 	/>
 {/if}

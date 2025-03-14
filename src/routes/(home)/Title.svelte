@@ -27,7 +27,7 @@
 	)}
 >
 	<div
-		class="absolute left-0 top-0 h-full w-full bg-no-repeat opacity-20"
+		class="absolute top-0 left-0 h-full w-full bg-no-repeat opacity-20"
 		style="background-image:url({amatsukaze})"
 	/>
 	<div class="bg-gradient absolute -top-2 left-0 h-1 w-full transition" />
@@ -65,10 +65,10 @@
 
 	<button
 		class={twMerge(
-			'absolute top-1/2 -translate-y-1/2 bg-primary-500 p-2',
+			'bg-primary-500 absolute top-1/2 -translate-y-1/2 p-2',
 			open ? 'left-0 rounded-r-full opacity-20 hover:opacity-100' : '-left-8 rounded-l-full'
 		)}
-		on:click={toggleOpen}
+		onclick={toggleOpen}
 	>
 		{#if open}
 			<ChevronRightIcon class="size-4" />

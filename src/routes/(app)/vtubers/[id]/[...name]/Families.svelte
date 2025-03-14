@@ -29,7 +29,7 @@
 						'flex items-center gap-2 border-b-2 px-2 pb-2 transition-all hover:opacity-100 ',
 						tabI === i ? 'border-primary-600' : 'border-border opacity-30'
 					)}
-					on:click={() => (tabI = i)}
+					onclick={() => (tabI = i)}
 				>
 					<h3 class="h3 line-clamp-1">{designer}</h3>
 					<Badge>{families[i].data.length.toLocaleString()}</Badge>
@@ -59,6 +59,8 @@
 						retirementDate={v.retirement_date ? new Date(v.retirement_date) : undefined}
 						monthlySubs={v.monthly_subscriber}
 						videoCount={v.video_count}
+						averageVideoLength={v.average_video_length}
+						totalVideoLength={v.total_video_length}
 						{sort}
 					/>
 				</VtuberGrid>

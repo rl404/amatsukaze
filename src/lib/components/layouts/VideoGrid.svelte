@@ -12,9 +12,6 @@
 	import YoutubeIcon from '../icons/YoutubeIcon.svelte';
 
 	export let data: VideoResponseData;
-	export { className as class };
-
-	let className: string = '';
 
 	const startDate = !data.video_start_date
 		? ''
@@ -40,7 +37,7 @@
 	};
 </script>
 
-<RenderIfVisible class={twMerge(className, 'relative grid gap-1 pb-2 text-sm')}>
+<RenderIfVisible class={twMerge($$props.class, 'relative grid gap-1 pb-2 text-sm')}>
 	<a class="clickable relative" href={data.video_url} target="_blank" rel="noreferrer">
 		<Image
 			src={data.video_image && `/api/images/${data.video_image}`}
@@ -48,12 +45,12 @@
 			class="aspect-video h-full w-full rounded-lg object-cover object-center"
 			delay={500}
 		/>
-		<span class="absolute bottom-1 right-1 rounded bg-black px-1 text-xs uppercase text-white">
+		<span class="absolute right-1 bottom-1 rounded bg-black px-1 text-xs text-white uppercase">
 			{durationStr}
 		</span>
 	</a>
 	<a
-		class="clickable line-clamp-2 text-primary"
+		class="clickable text-primary line-clamp-2"
 		href={data.video_url}
 		target="_blank"
 		rel="noreferrer">{data.video_title}</a

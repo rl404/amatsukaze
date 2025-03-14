@@ -22,7 +22,7 @@
 	});
 
 	const onClick = (d: any) =>
-		window.open(`/agencies/${data[d.detail].id}/${toURL(data[d.detail].name)}`, '_blank')?.focus();
+		window.open(`/agencies/${data[d].id}/${toURL(data[d].name)}`, '_blank')?.focus();
 </script>
 
 {#if loading}
@@ -36,6 +36,6 @@
 		data={data.map((d) => ({ name: d.name, value: d.member }))}
 		horizontal
 		seriesName="Members"
-		on:clickArea={onClick}
+		onClickArea={onClick}
 	/>
 {/if}

@@ -70,8 +70,8 @@
 						title={data.name}
 						size="none"
 						padding="none"
-						class="group relative aspect-square max-w-36 border-primary-500 hover:cursor-pointer"
-						on:click={() => removeVtuber(i)}
+						class="group border-primary-500 relative aspect-square max-w-36 hover:cursor-pointer"
+						onclick={() => removeVtuber(i)}
 					>
 						<Image
 							src={getWikiImg(data.image)}
@@ -79,12 +79,12 @@
 							class="h-full w-full rounded-lg object-cover object-top"
 						/>
 						<div
-							class="h6 pointer-events-none absolute bottom-0 line-clamp-1 w-full rounded-b-lg bg-primary-500 p-0.5 text-center text-white"
+							class="h6 bg-primary-500 pointer-events-none absolute bottom-0 line-clamp-1 w-full rounded-b-lg p-0.5 text-center text-white"
 						>
 							{data.name}
 						</div>
 						<div
-							class="absolute right-1 top-1 opacity-0 transition-opacity group-hover:opacity-100"
+							class="absolute top-1 right-1 opacity-0 transition-opacity group-hover:opacity-100"
 						>
 							<Button class="!p-2" pill color="red">
 								<MinusIcon class="size-3" />
@@ -100,7 +100,7 @@
 				placeholder="vtuber name..."
 				disabled={loading}
 				bind:value={query}
-				on:input={onInput}
+				oninput={onInput}
 			/>
 		</div>
 		<div class="grid grid-cols-6 gap-2">
@@ -116,8 +116,8 @@
 						title={vtuber.name}
 						size="none"
 						padding="none"
-						class="group relative col-span-2 aspect-square h-full w-full transition hover:cursor-pointer hover:!border-primary-500 sm:col-span-1"
-						on:click={() => addVtuber(vtuber)}
+						class="group hover:!border-primary-500 relative col-span-2 aspect-square h-full w-full transition hover:cursor-pointer sm:col-span-1"
+						onclick={() => addVtuber(vtuber)}
 					>
 						<Image
 							src={getWikiImg(vtuber.image)}
@@ -125,12 +125,12 @@
 							class="h-full w-full rounded-lg object-cover object-top"
 						/>
 						<div
-							class="h6 pointer-events-none absolute bottom-0 line-clamp-1 w-full rounded-b-lg bg-primary-500 p-0.5 text-center text-white opacity-0 transition-opacity group-hover:opacity-100"
+							class="h6 bg-primary-500 pointer-events-none absolute bottom-0 line-clamp-1 w-full rounded-b-lg p-0.5 text-center text-white opacity-0 transition-opacity group-hover:opacity-100"
 						>
 							{vtuber.name}
 						</div>
 						<div
-							class="absolute right-1 top-1 opacity-0 transition-opacity group-hover:opacity-100"
+							class="absolute top-1 right-1 opacity-0 transition-opacity group-hover:opacity-100"
 						>
 							<Button class="!p-2" pill>
 								<PlusIcon class="size-3" />
@@ -142,6 +142,6 @@
 		</div>
 	</div>
 	<div slot="footer" class="flex w-full items-start justify-end">
-		<Button on:click={onCompare}>Compare</Button>
+		<Button onclick={onCompare}>Compare</Button>
 	</div>
 </Modal>

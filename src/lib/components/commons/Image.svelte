@@ -8,9 +8,7 @@
 	export let delay: number = 0;
 	export let loadingClass: string = '';
 	export let errorClass: string = '';
-	export { className as class };
 
-	let className: string = '';
 	let loading: boolean = true;
 	let error: boolean = false;
 	let timer: number;
@@ -62,9 +60,9 @@
 	<div
 		bind:this={element}
 		class={twMerge(
-			'flex items-center justify-center overflow-hidden bg-gradient-to-b from-transparent to-primary-100 p-1 text-center dark:to-primary-950',
+			'to-primary-100 dark:to-primary-950 flex items-center justify-center overflow-hidden bg-gradient-to-b from-transparent p-1 text-center',
 			errorClass,
-			className
+			$$props.class
 		)}
 	>
 		{alt}
@@ -73,9 +71,9 @@
 	<div
 		bind:this={element}
 		class={twMerge(
-			'flex animate-pulse items-center justify-center bg-gradient-to-b from-transparent to-primary-100 dark:to-primary-950',
+			'to-primary-100 dark:to-primary-950 flex animate-pulse items-center justify-center bg-gradient-to-b from-transparent',
 			loadingClass,
-			className
+			$$props.class
 		)}
 	>
 		<ImageIcon class="size-1/6" />
@@ -87,8 +85,8 @@
 		{alt}
 		loading="lazy"
 		class={twMerge(
-			'bg-gradient-to-b from-transparent to-primary-100 dark:to-primary-950',
-			className
+			'to-primary-100 dark:to-primary-950 bg-gradient-to-b from-transparent',
+			$$props.class
 		)}
 	/>
 {/if}

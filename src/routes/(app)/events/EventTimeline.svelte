@@ -21,7 +21,7 @@
 		<TimelineItem id={d.id}>
 			<div slot="dot" class="flex items-center gap-3">
 				<div
-					class="top-10 block size-3 rounded-full bg-primary-600 md:absolute md:left-1/2 md:-translate-x-1/2 md:transform"
+					class="bg-primary-600 top-10 block size-3 rounded-full md:absolute md:left-1/2 md:-translate-x-1/2 md:transform"
 				/>
 				<h3 class="h3 bg-white dark:bg-gray-800">{d.date}</h3>
 			</div>

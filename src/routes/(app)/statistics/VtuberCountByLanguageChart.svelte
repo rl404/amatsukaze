@@ -20,8 +20,7 @@
 			.finally(() => (loading = false));
 	});
 
-	const onClick = (d: any) =>
-		window.open(`/vtubers?language_id=${data[d.detail].id}`, '_blank')?.focus();
+	const onClick = (d: any) => window.open(`/vtubers?language_id=${data[d].id}`, '_blank')?.focus();
 </script>
 
 {#if loading}
@@ -37,6 +36,6 @@
 			value: d.count
 		}))}
 		seriesName="Count"
-		on:clickArea={onClick}
+		onClickArea={onClick}
 	/>
 {/if}

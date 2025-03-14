@@ -3,10 +3,12 @@
 	import ScrollToTop from '$lib/components/commons/ScrollToTop.svelte';
 	import Sidebar from '$lib/components/commons/Sidebar.svelte';
 
-	let drawer: boolean = false;
+	let { children } = $props();
+
+	let drawer: boolean = $state(false);
 </script>
 
-<header class="sticky top-0 z-40 border-b border-border bg-white dark:bg-gray-800">
+<header class="border-border sticky top-0 z-40 border-b bg-white dark:bg-gray-800">
 	<Navbar bind:drawer />
 </header>
 
@@ -15,7 +17,7 @@
 <ScrollToTop />
 
 <main class="p-2 transition-all sm:p-4 lg:ml-64">
-	<slot />
+	{@render children()}
 </main>
 
 <footer class="p-2 text-center text-sm transition-all sm:p-4 lg:ml-64">

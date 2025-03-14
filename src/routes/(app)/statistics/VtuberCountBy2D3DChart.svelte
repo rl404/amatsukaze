@@ -26,7 +26,7 @@
 	});
 
 	const onClick = (d: any) => {
-		switch (d.detail) {
+		switch (d) {
 			case 0:
 				window.open(`/vtubers?has_2d=true&has_3d=true`, '_blank')?.focus();
 				break;
@@ -57,6 +57,6 @@
 			{ name: '3D Only', value: has3DOnlyData },
 			{ name: 'None', value: noneData }
 		]}
-		on:click={onClick}
+		{onClick}
 	/>
 {/if}

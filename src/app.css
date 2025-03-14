@@ -1,11 +1,50 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@plugin 'flowbite/plugin';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+	--color-gray-50: var(--color-neutral-50);
+	--color-gray-100: var(--color-neutral-100);
+	--color-gray-200: var(--color-neutral-200);
+	--color-gray-300: var(--color-neutral-300);
+	--color-gray-400: var(--color-neutral-400);
+	--color-gray-500: var(--color-neutral-500);
+	--color-gray-600: var(--color-neutral-600);
+	--color-gray-700: var(--color-neutral-700);
+	--color-gray-800: var(--color-neutral-800);
+	--color-gray-900: var(--color-neutral-900);
+	--color-gray-950: var(--color-neutral-950);
+
+	--color-primary: rgb(var(--primary) / var(--tw-text-opacity));
+
+	--color-primary-50: rgb(var(--primary-50) / var(--tw-bg-opacity));
+	--color-primary-100: rgb(var(--primary-100) / var(--tw-bg-opacity));
+	--color-primary-200: rgb(var(--primary-200) / var(--tw-bg-opacity));
+	--color-primary-300: rgb(var(--primary-300) / var(--tw-bg-opacity));
+	--color-primary-400: rgb(var(--primary-400) / var(--tw-bg-opacity));
+	--color-primary-500: rgb(var(--primary-500) / var(--tw-bg-opacity));
+	--color-primary-600: rgb(var(--primary-600) / var(--tw-bg-opacity));
+	--color-primary-700: rgb(var(--primary-700) / var(--tw-bg-opacity));
+	--color-primary-800: rgb(var(--primary-800) / var(--tw-bg-opacity));
+	--color-primary-900: rgb(var(--primary-900) / var(--tw-bg-opacity));
+	--color-primary-950: rgb(var(--primary-950) / var(--tw-bg-opacity));
+
+	--color-border: rgb(var(--border) / var(--tw-border-opacity));
+
+	--aspect-card: 2/1;
+	--aspect-portrait: 4/5;
+	--aspect-chart: 3/1;
+}
+
+@source "../node_modules/flowbite-svelte/dist";
 
 @layer base {
 	:root {
 		--tw-bg-opacity: 1;
 		--tw-border-opacity: 1;
+		--tw-text-opacity: 1;
 		--primary: 0 0 0;
 		--primary-50: 253 242 248;
 		--primary-100: 252 231 243;
@@ -58,65 +97,70 @@
 	}
 }
 
-@layer components {
-	.h1,
-	.h2,
-	.h3,
-	.h4,
-	.h5,
-	.h6 {
-		@apply font-bold text-primary;
-	}
-
-	.h1 {
-		@apply text-3xl sm:text-4xl;
-	}
-
-	.h2 {
-		@apply text-2xl sm:text-3xl;
-	}
-
-	.h3 {
-		@apply text-xl sm:text-2xl;
-	}
-
-	.h4 {
-		@apply text-lg sm:text-xl;
-	}
-
-	.h5 {
-		@apply sm:text-lg;
-	}
-
-	.line-clamp-1,
-	.line-clamp-2,
-	.line-clamp-3,
-	.line-clamp-4,
-	.line-clamp-5,
-	.line-clamp-6 {
-		@apply break-all;
-	}
-
-	.rtl {
-		direction: rtl;
-	}
-
-	.ltr {
-		direction: ltr;
-	}
-
-	.bg-gradient {
-		@apply bg-gradient-to-r from-white to-primary-500 dark:from-gray-900 dark:to-primary-500;
-	}
+@utility h1 {
+	@apply text-primary text-3xl font-bold sm:text-4xl;
 }
 
-@layer utilities {
-	.clickable {
-		@apply transition-opacity;
-	}
+@utility h2 {
+	@apply text-primary text-2xl font-bold sm:text-3xl;
+}
 
-	.clickable:hover,
-	.clickable:disabled {
+@utility h3 {
+	@apply text-primary text-xl font-bold sm:text-2xl;
+}
+
+@utility h4 {
+	@apply text-primary text-lg font-bold sm:text-xl;
+}
+
+@utility h5 {
+	@apply text-primary font-bold sm:text-lg;
+}
+
+@utility h6 {
+	@apply text-primary font-bold;
+}
+
+@utility line-clamp-1 {
+	@apply break-all;
+}
+
+@utility line-clamp-2 {
+	@apply break-all;
+}
+
+@utility line-clamp-3 {
+	@apply break-all;
+}
+
+@utility line-clamp-4 {
+	@apply break-all;
+}
+
+@utility line-clamp-5 {
+	@apply break-all;
+}
+
+@utility line-clamp-6 {
+	@apply break-all;
+}
+
+@utility rtl {
+	direction: rtl;
+}
+
+@utility ltr {
+	direction: ltr;
+}
+
+@utility bg-gradient {
+	@apply to-primary-500 dark:to-primary-500 bg-gradient-to-r from-white dark:from-gray-900;
+}
+
+@utility clickable {
+	@apply transition-opacity;
+	&:hover,
+	&:disabled {
 		@apply opacity-70;
 	}
 }

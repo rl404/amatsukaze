@@ -1,12 +1,14 @@
-<script>
+<script lang="ts">
 	import PageTransition from '$lib/components/commons/PageTransition.svelte';
-	import modeobserver from '$lib/utils/modeobserver';
+	import modeObserver from '$lib/utils/modeObserver';
 	import { onMount } from 'svelte';
 	import '../app.css';
 
-	onMount(modeobserver);
+	let { children } = $props();
+
+	onMount(modeObserver);
 </script>
 
 <PageTransition />
 
-<slot />
+{@render children()}

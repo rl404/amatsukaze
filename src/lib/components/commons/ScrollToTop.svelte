@@ -20,15 +20,15 @@
 	};
 </script>
 
-<svelte:window on:scroll={onScroll} />
+<svelte:window onscroll={onScroll} />
 
 <div
 	class={twMerge(
-		'fixed bottom-0 right-0 z-10 p-8 transition',
+		'fixed right-0 bottom-0 z-10 p-8 transition',
 		hidden ? 'opacity-0' : 'opacity-100'
 	)}
 >
-	<Button pill class="!p-4" on:click={onClick}>
+	<Button pill class="!p-4" onclick={onClick}>
 		<ChevronUpIcon class="size-5" />
 	</Button>
 </div>
