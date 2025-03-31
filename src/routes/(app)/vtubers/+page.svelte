@@ -155,7 +155,7 @@
 			<h1 class="h1">Vtuber List</h1>
 			<Badge large>{total.toLocaleString()}</Badge>
 		</div>
-		<div class="flex basis-full items-center gap-2 md:basis-auto">
+		<div class="flex basis-full items-center gap-2 md:basis-auto [&>div]:w-full">
 			<Search
 				size="md"
 				placeholder="vtuber name..."

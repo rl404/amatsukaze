@@ -62,7 +62,7 @@
 			<h1 class="h1">Agency List</h1>
 			<Badge large>{agencies.length.toLocaleString()}</Badge>
 		</div>
-		<div class="flex basis-full items-center gap-2 md:basis-auto">
+		<div class="flex basis-full items-center gap-2 md:basis-auto [&>div]:w-full">
 			<Search size="md" placeholder="agency name..." bind:value={name} oninput={onInput} />
 		</div>
 	</div>
