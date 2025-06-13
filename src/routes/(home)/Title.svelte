@@ -27,7 +27,7 @@
 	)}
 >
 	<div
-		class="absolute top-0 left-0 h-full w-full bg-no-repeat opacity-20"
+		class="absolute top-0 left-0 size-full bg-no-repeat opacity-20"
 		style="background-image:url({amatsukaze})"
 	/>
 	<div class="bg-gradient absolute -top-2 left-0 h-1 w-full transition" />

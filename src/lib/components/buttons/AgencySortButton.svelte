@@ -1,8 +1,8 @@
 <script lang="ts">
+	import SortIcon from '$lib/components/icons/SortIcon.svelte';
 	import type { AgencySort } from '$lib/types';
 	import { Dropdown, DropdownItem } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
-	import SortIcon from '../icons/SortIcon.svelte';
 
 	export let value: AgencySort;
 	export let onChange: () => void = () => {};
@@ -39,8 +39,10 @@
 	<SortIcon class="size-3" />
 	{sorts[value].name}
 </button>
-<Dropdown bind:open>
+<Dropdown bind:isOpen={open} simple transitionParams={{ duration: 0 }}>
 	{#each Object.values(sorts) as sort}
-		<DropdownItem onclick={() => onClick(sort.value)}>{sort.name}</DropdownItem>
+		<DropdownItem class="w-full text-left" onclick={() => onClick(sort.value)}>
+			{sort.name}
+		</DropdownItem>
 	{/each}
 </Dropdown>

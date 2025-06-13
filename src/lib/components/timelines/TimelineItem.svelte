@@ -1,8 +1,4 @@
-<script lang="ts">
-	export let id: string = '';
-</script>
-
-<div {id} class="relative grid grid-cols-2">
+<div id={$$props.id} class="relative grid grid-cols-2">
 	<div class="absolute top-6 -left-1.5 md:left-1/2 md:-translate-x-1/2 md:transform">
 		<slot name="dot" />
 	</div>

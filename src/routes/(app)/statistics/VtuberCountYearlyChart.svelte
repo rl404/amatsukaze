@@ -69,141 +69,143 @@
 </script>
 
 {#if loading}
-	<div class="flex h-full w-full items-center justify-center">
-		<Spinner />
+	<div class="flex size-full items-center justify-center">
+		<Spinner class="dark:text-gray-400" />
 	</div>
 {:else if error !== ''}
-	<div class="flex h-full w-full items-center justify-center text-red-500">{error}</div>
+	<div class="flex size-full items-center justify-center text-red-500">{error}</div>
 {:else}
-	<Chart
-		options={{
-			chart: {
-				type: 'line',
-				height: '100%',
-				toolbar: { show: false },
-				zoom: { enabled: false }
-			},
-			series: [
-				{
-					name: 'Debut',
-					type: 'column',
-					data: data.map((d) => d.debut)
+	{#key darkTheme}
+		<Chart
+			options={{
+				chart: {
+					type: 'line',
+					height: '100%',
+					toolbar: { show: false },
+					zoom: { enabled: false }
 				},
-				{
-					name: 'Retire',
-					type: 'column',
-					data: data.map((d) => d.retire)
+				series: [
+					{
+						name: 'Debut',
+						type: 'column',
+						data: data.map((d) => d.debut)
+					},
+					{
+						name: 'Retire',
+						type: 'column',
+						data: data.map((d) => d.retire)
+					},
+					{
+						name: 'Total Debut',
+						type: 'area',
+						data: data.map((d) => d.debut_total)
+					},
+					{
+						name: 'Total Retire',
+						type: 'area',
+						data: data.map((d) => d.retire_total)
+					},
+					{
+						name: 'Total Active',
+						type: 'area',
+						data: data.map((d) => d.active_total)
+					}
+				],
+				xaxis: {
+					type: 'datetime',
+					categories: data.map((d) => new Date(d.year, 1, 1).toISOString().slice(0, 10)),
+					labels: { style: { colors: ChartTextColors[darkTheme.toString()] } },
+					axisBorder: { color: ChartBorderColors[darkTheme.toString()] },
+					axisTicks: { color: ChartBorderColors[darkTheme.toString()] }
 				},
-				{
-					name: 'Total Debut',
-					type: 'area',
-					data: data.map((d) => d.debut_total)
+				yaxis: [
+					{
+						seriesName: 'Debut',
+						showAlways: true,
+						labels: { style: { colors: ChartTextColors[darkTheme.toString()] } },
+						max: maxData,
+						min: 0,
+						axisBorder: { show: true, color: ChartBorderColors[darkTheme.toString()] },
+						axisTicks: { show: true, color: ChartBorderColors[darkTheme.toString()] }
+					},
+					{
+						seriesName: 'Retire',
+						show: false,
+						labels: { style: { colors: ChartTextColors[darkTheme.toString()] } },
+						max: maxData,
+						min: 0,
+						axisBorder: { show: true, color: ChartBorderColors[darkTheme.toString()] },
+						axisTicks: { show: true, color: ChartBorderColors[darkTheme.toString()] }
+					},
+					{
+						seriesName: 'Debut Total',
+						show: false,
+						labels: { style: { colors: ChartTextColors[darkTheme.toString()] } },
+						max: maxTotal,
+						min: 0,
+						opposite: true,
+						axisBorder: { show: true, color: ChartBorderColors[darkTheme.toString()] },
+						axisTicks: { show: true, color: ChartBorderColors[darkTheme.toString()] }
+					},
+					{
+						seriesName: 'Debut Total',
+						show: false,
+						labels: { style: { colors: ChartTextColors[darkTheme.toString()] } },
+						max: maxTotal,
+						min: 0,
+						opposite: true,
+						axisBorder: { show: true, color: ChartBorderColors[darkTheme.toString()] },
+						axisTicks: { show: true, color: ChartBorderColors[darkTheme.toString()] }
+					},
+					{
+						seriesName: 'Total Active',
+						showAlways: true,
+						labels: { style: { colors: ChartTextColors[darkTheme.toString()] } },
+						max: maxTotal,
+						min: 0,
+						opposite: true,
+						axisBorder: { show: true, color: ChartBorderColors[darkTheme.toString()] },
+						axisTicks: { show: true, color: ChartBorderColors[darkTheme.toString()] }
+					}
+				],
+				colors: [
+					ChartDebutColors[0],
+					ChartRetiredColors[0],
+					ChartDebutColors[1],
+					ChartRetiredColors[1],
+					ChartColors[darkTheme.toString()][0]
+				],
+				dataLabels: { enabled: false },
+				legend: { labels: { colors: ChartTextColors[darkTheme.toString()] } },
+				grid: {
+					borderColor: ChartBorderColors[darkTheme.toString()],
+					strokeDashArray: 5,
+					xaxis: { lines: { show: false } },
+					yaxis: { lines: { show: true } }
 				},
-				{
-					name: 'Total Retire',
-					type: 'area',
-					data: data.map((d) => d.retire_total)
+				fill: {
+					type: ['solid', 'solid', 'gradient', 'gradient', 'gradient'],
+					gradient: {
+						type: 'vertical',
+						shadeIntensity: 1,
+						inverseColors: false,
+						opacityFrom: 0.7,
+						opacityTo: 0,
+						stops: [20, 100]
+					}
 				},
-				{
-					name: 'Total Active',
-					type: 'area',
-					data: data.map((d) => d.active_total)
+				stroke: {
+					curve: 'smooth',
+					width: 2
+				},
+				tooltip: {
+					theme: darkTheme ? 'dark' : 'light',
+					intersect: false,
+					shared: true,
+					x: { format: 'yyyy' },
+					y: { formatter: (v) => (!v ? '0' : v.toLocaleString()) }
 				}
-			],
-			xaxis: {
-				type: 'datetime',
-				categories: data.map((d) => new Date(d.year, 1, 1).toISOString().slice(0, 10)),
-				labels: { style: { colors: ChartTextColors[darkTheme.toString()] } },
-				axisBorder: { color: ChartBorderColors[darkTheme.toString()] },
-				axisTicks: { color: ChartBorderColors[darkTheme.toString()] }
-			},
-			yaxis: [
-				{
-					seriesName: 'Debut',
-					showAlways: true,
-					labels: { style: { colors: ChartTextColors[darkTheme.toString()] } },
-					max: maxData,
-					min: 0,
-					axisBorder: { show: true, color: ChartBorderColors[darkTheme.toString()] },
-					axisTicks: { show: true, color: ChartBorderColors[darkTheme.toString()] }
-				},
-				{
-					seriesName: 'Retire',
-					show: false,
-					labels: { style: { colors: ChartTextColors[darkTheme.toString()] } },
-					max: maxData,
-					min: 0,
-					axisBorder: { show: true, color: ChartBorderColors[darkTheme.toString()] },
-					axisTicks: { show: true, color: ChartBorderColors[darkTheme.toString()] }
-				},
-				{
-					seriesName: 'Debut Total',
-					show: false,
-					labels: { style: { colors: ChartTextColors[darkTheme.toString()] } },
-					max: maxTotal,
-					min: 0,
-					opposite: true,
-					axisBorder: { show: true, color: ChartBorderColors[darkTheme.toString()] },
-					axisTicks: { show: true, color: ChartBorderColors[darkTheme.toString()] }
-				},
-				{
-					seriesName: 'Debut Total',
-					show: false,
-					labels: { style: { colors: ChartTextColors[darkTheme.toString()] } },
-					max: maxTotal,
-					min: 0,
-					opposite: true,
-					axisBorder: { show: true, color: ChartBorderColors[darkTheme.toString()] },
-					axisTicks: { show: true, color: ChartBorderColors[darkTheme.toString()] }
-				},
-				{
-					seriesName: 'Total Active',
-					showAlways: true,
-					labels: { style: { colors: ChartTextColors[darkTheme.toString()] } },
-					max: maxTotal,
-					min: 0,
-					opposite: true,
-					axisBorder: { show: true, color: ChartBorderColors[darkTheme.toString()] },
-					axisTicks: { show: true, color: ChartBorderColors[darkTheme.toString()] }
-				}
-			],
-			colors: [
-				ChartDebutColors[0],
-				ChartRetiredColors[0],
-				ChartDebutColors[1],
-				ChartRetiredColors[1],
-				ChartColors[darkTheme.toString()][0]
-			],
-			dataLabels: { enabled: false },
-			legend: { labels: { colors: ChartTextColors[darkTheme.toString()] } },
-			grid: {
-				borderColor: ChartBorderColors[darkTheme.toString()],
-				strokeDashArray: 5,
-				xaxis: { lines: { show: false } },
-				yaxis: { lines: { show: true } }
-			},
-			fill: {
-				type: ['solid', 'solid', 'gradient', 'gradient', 'gradient'],
-				gradient: {
-					type: 'vertical',
-					shadeIntensity: 1,
-					inverseColors: false,
-					opacityFrom: 0.7,
-					opacityTo: 0,
-					stops: [20, 100]
-				}
-			},
-			stroke: {
-				curve: 'smooth',
-				width: 2
-			},
-			tooltip: {
-				theme: darkTheme ? 'dark' : 'light',
-				intersect: false,
-				shared: true,
-				x: { format: 'yyyy' },
-				y: { formatter: (v) => (!v ? '0' : v.toLocaleString()) }
-			}
-		}}
-	/>
+			}}
+		/>
+	{/key}
 {/if}

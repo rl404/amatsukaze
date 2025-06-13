@@ -1,7 +1,7 @@
 <script lang="ts">
+	import ImageIcon from '$lib/components/icons/ImageIcon.svelte';
 	import { onDestroy, onMount } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
-	import ImageIcon from '../icons/ImageIcon.svelte';
 
 	export let src: string;
 	export let alt: string;

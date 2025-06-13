@@ -7,12 +7,12 @@
 	export let data: VtuberResponseData[] | any[] = [{}, {}, {}];
 </script>
 
-<Card size="none" class="grid grid-cols-3 gap-4">
+<Card class="grid max-w-full grid-cols-3 gap-4 p-4 sm:p-6">
 	<h3 class="h3 col-span-3 text-center">
-		<span class="border-l-4 border-primary-500 pl-2">Basic Details</span>
+		<span class="border-primary-500 border-l-4 pl-2">Basic Details</span>
 	</h3>
 	{#each data as vtuber, i}
-		<div class={twMerge('flex flex-col', i == 1 && 'border-x')}>
+		<div class={twMerge('flex flex-col', i == 1 && 'border-border border-x')}>
 			<h4 class="text-center font-bold">Original Names</h4>
 			{#if isEmptyArray(vtuber.original_names)}
 				<P class="text-center">-</P>
@@ -24,7 +24,7 @@
 		</div>
 	{/each}
 	{#each data as vtuber, i}
-		<div class={twMerge('flex flex-col', i == 1 && 'border-x')}>
+		<div class={twMerge('flex flex-col', i == 1 && 'border-border border-x')}>
 			<h4 class="text-center font-bold">Nicknames</h4>
 			{#if isEmptyArray(vtuber.nicknames)}
 				<P class="text-center">-</P>
@@ -36,7 +36,7 @@
 		</div>
 	{/each}
 	{#each data as vtuber, i}
-		<div class={twMerge('flex flex-col', i == 1 && 'border-x')}>
+		<div class={twMerge('flex flex-col', i == 1 && 'border-border border-x')}>
 			<h4 class="text-center font-bold">Status</h4>
 			<div class="text-center">
 				{#if !vtuber.id}
@@ -50,7 +50,9 @@
 		</div>
 	{/each}
 	{#each data as vtuber, i}
-		<div class={twMerge('grid grid-cols-1 gap-4 md:grid-cols-2', i == 1 && 'border-x')}>
+		<div
+			class={twMerge('grid grid-cols-1 gap-4 md:grid-cols-2', i == 1 && 'border-border border-x')}
+		>
 			<div class="flex flex-col">
 				<h4 class="text-center font-bold">Debut Date</h4>
 				<P class="text-center">{!vtuber.debut_date ? '-' : vtuber.debut_date.slice(0, 10)}</P>
@@ -64,7 +66,7 @@
 		</div>
 	{/each}
 	{#each data as vtuber, i}
-		<div class={twMerge('flex flex-col', i == 1 && 'border-x')}>
+		<div class={twMerge('flex flex-col', i == 1 && 'border-border border-x')}>
 			<h4 class="text-center font-bold">Model</h4>
 			<div class="flex flex-wrap items-center justify-center gap-2">
 				{#if vtuber.has_2d}
@@ -79,7 +81,7 @@
 		</div>
 	{/each}
 	{#each data as vtuber, i}
-		<div class={twMerge('flex flex-col', i == 1 && 'border-x')}>
+		<div class={twMerge('flex flex-col', i == 1 && 'border-border border-x')}>
 			<h4 class="text-center font-bold">Character Designers</h4>
 			{#if isEmptyArray(vtuber.character_designers)}
 				<P class="text-center">-</P>
@@ -95,7 +97,9 @@
 		</div>
 	{/each}
 	{#each data as vtuber, i}
-		<div class={twMerge('grid grid-cols-1 gap-4 md:grid-cols-2', i == 1 && 'border-x')}>
+		<div
+			class={twMerge('grid grid-cols-1 gap-4 md:grid-cols-2', i == 1 && 'border-border border-x')}
+		>
 			<div class="flex flex-col">
 				<h4 class="text-center font-bold">2D Modeler</h4>
 				{#if isEmptyArray(vtuber.character_2d_modelers)}
@@ -127,7 +131,9 @@
 		</div>
 	{/each}
 	{#each data as vtuber, i}
-		<div class={twMerge('grid grid-cols-1 gap-4 md:grid-cols-2', i == 1 && 'border-x')}>
+		<div
+			class={twMerge('grid grid-cols-1 gap-4 md:grid-cols-2', i == 1 && 'border-border border-x')}
+		>
 			<div class="flex flex-col">
 				<h4 class="text-center font-bold">Agencies</h4>
 				{#if isEmptyArray(vtuber.agencies)}
@@ -155,7 +161,7 @@
 		</div>
 	{/each}
 	{#each data as vtuber, i}
-		<div class={twMerge('flex flex-col', i == 1 && 'border-x')}>
+		<div class={twMerge('flex flex-col', i == 1 && 'border-border border-x')}>
 			<h4 class="text-center font-bold">Languages</h4>
 			{#if isEmptyArray(vtuber.languages)}
 				<P class="text-center">-</P>

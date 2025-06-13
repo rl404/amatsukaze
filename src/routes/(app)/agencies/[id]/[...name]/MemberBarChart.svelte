@@ -80,18 +80,17 @@
 </script>
 
 <div class="grid gap-2">
-	{#each vtubers.sort(vtuberSorter(sort)) as vtuber}
+	{#each vtubers.sort(vtuberSorter(sort)) as vtuber (vtuber.id)}
 		<RenderIfVisible class="flex h-7 gap-2">
 			<Avatar
 				src={getWikiImg(vtuber.image)}
 				alt={vtuber.name}
-				size="none"
 				class="size-7 object-cover object-top"
 				title={vtuber.name}
 			/>
 			<a
 				href="/vtubers/{vtuber.id}/{toURL(vtuber.name)}"
-				class="clickable h5 line-clamp-1 rounded-lg bg-primary-500 px-2 text-white"
+				class="clickable h5 bg-primary-500 line-clamp-1 rounded-lg px-2 text-white"
 				style="width:{getWidth(vtuber, sort)}"
 				title={vtuber.name}
 			>

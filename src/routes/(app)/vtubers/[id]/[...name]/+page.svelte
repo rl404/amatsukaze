@@ -80,7 +80,7 @@
 		</div>
 	</div>
 	<div class="col-span-4 sm:col-span-1">
-		<Card size="none" padding="none" class="sticky top-20" onclick={toggleModal}>
+		<Card class="sticky top-20 max-w-full" onclick={toggleModal}>
 			<Image
 				src={getWikiImg(vtuber.image, 0, 400)}
 				alt={vtuber.name}
@@ -98,38 +98,55 @@
 		</Card>
 	</div>
 	<div class="col-span-4 sm:col-span-3">
-		<Tabs tabStyle="pill" contentClass="mt-2 sm:mt-4">
-			<TabItem open>
-				<h2 slot="title" class="flex items-center gap-2">
-					<InfoIcon class="size-4" />
-					Details
-				</h2>
+		<Tabs tabStyle="pill" ulClass="flex-wrap" contentClass="p-0 bg-transparent dark:bg-transparent">
+			<TabItem
+				open
+				activeClass="dark:bg-primary-500 dark:text-primary bg-primary-600 rounded-lg px-4 py-3 text-white"
+			>
+				{#snippet titleSlot()}
+					<h2 class="flex items-center gap-2">
+						<InfoIcon class="size-4" />
+						Details
+					</h2>
+				{/snippet}
 				<Details {vtuber} />
 			</TabItem>
 			{#if agencies.length > 0}
-				<TabItem>
-					<h2 slot="title" class="flex items-center gap-2">
-						<OfficeIcon class="size-4" />
-						Agency-mates
-					</h2>
+				<TabItem
+					activeClass="dark:bg-primary-500 dark:text-primary bg-primary-600 rounded-lg px-4 py-3 text-white"
+				>
+					{#snippet titleSlot()}
+						<h2 class="flex items-center gap-2">
+							<OfficeIcon class="size-4" />
+							Agency-mates
+						</h2>
+					{/snippet}
 					<AgencyMates {vtuber} {agencies} />
 				</TabItem>
 			{/if}
 			{#if families.length > 0}
-				<TabItem>
-					<h2 slot="title" class="flex items-center gap-2">
-						<UsersIcon class="size-4" />
-						Families
-					</h2>
+				<TabItem
+					activeClass="dark:bg-primary-500 dark:text-primary bg-primary-600 rounded-lg px-4 py-3 text-white"
+				>
+					{#snippet titleSlot()}
+						<h2 class="flex items-center gap-2">
+							<UsersIcon class="size-4" />
+							Families
+						</h2>
+					{/snippet}
 					<Families {vtuber} {families} />
 				</TabItem>
 			{/if}
 			{#if vtuber.video_count > 0}
-				<TabItem>
-					<h2 slot="title" class="flex items-center gap-2">
-						<VideoIcon class="size-4" />
-						Videos
-					</h2>
+				<TabItem
+					activeClass="dark:bg-primary-500 dark:text-primary bg-primary-600 rounded-lg px-4 py-3 text-white"
+				>
+					{#snippet titleSlot()}
+						<h2 class="flex items-center gap-2">
+							<VideoIcon class="size-4" />
+							Videos
+						</h2>
+					{/snippet}
 					<Videos {vtuber} />
 				</TabItem>
 			{/if}
