@@ -64,19 +64,17 @@
 		<div class="flex items-center justify-center gap-4">
 			{#each modalData as data, i}
 				{#if data.id === 0}
-					<Card class="aspect-square max-w-36"></Card>
+					<Card class="aspect-square max-w-36"><div /></Card>
 				{:else}
 					<Card
 						title={data.name}
-						size="none"
-						padding="none"
 						class="group border-primary-500 relative aspect-square max-w-36 hover:cursor-pointer"
 						onclick={() => removeVtuber(i)}
 					>
 						<Image
 							src={getWikiImg(data.image)}
 							alt={data.name}
-							class="h-full w-full rounded-lg object-cover object-top"
+							class="size-full rounded-lg object-cover object-top"
 						/>
 						<div
 							class="h6 bg-primary-500 pointer-events-none absolute bottom-0 line-clamp-1 w-full rounded-b-lg p-0.5 text-center text-white"
@@ -86,7 +84,7 @@
 						<div
 							class="absolute top-1 right-1 opacity-0 transition-opacity group-hover:opacity-100"
 						>
-							<Button class="!p-2" pill color="red">
+							<Button class="p-2" pill color="red">
 								<MinusIcon class="size-3" />
 							</Button>
 						</div>
@@ -105,24 +103,22 @@
 		</div>
 		<div class="grid grid-cols-6 gap-2">
 			{#if loading}
-				<div class="col-span-6 text-center"><Spinner /></div>
+				<div class="col-span-6 text-center"><Spinner class="dark:text-gray-400" /></div>
 			{:else if error !== ''}
 				<div class="col-span-6 text-center text-red-500">{error}</div>
 			{:else if query !== '' && vtubers.length === 0}
 				<div class="col-span-6 text-center">No result...</div>
 			{:else}
-				{#each vtubers as vtuber}
+				{#each vtubers as vtuber (vtuber.id)}
 					<Card
 						title={vtuber.name}
-						size="none"
-						padding="none"
-						class="group hover:!border-primary-500 relative col-span-2 aspect-square h-full w-full transition hover:cursor-pointer sm:col-span-1"
+						class="group hover:!border-primary-500 relative col-span-2 aspect-square size-full transition hover:cursor-pointer sm:col-span-1"
 						onclick={() => addVtuber(vtuber)}
 					>
 						<Image
 							src={getWikiImg(vtuber.image)}
 							alt={vtuber.name}
-							class="h-full w-full rounded-lg object-cover object-top"
+							class="size-full rounded-lg object-cover object-top"
 						/>
 						<div
 							class="h6 bg-primary-500 pointer-events-none absolute bottom-0 line-clamp-1 w-full rounded-b-lg p-0.5 text-center text-white opacity-0 transition-opacity group-hover:opacity-100"
@@ -132,7 +128,7 @@
 						<div
 							class="absolute top-1 right-1 opacity-0 transition-opacity group-hover:opacity-100"
 						>
-							<Button class="!p-2" pill>
+							<Button class="p-2" pill>
 								<PlusIcon class="size-3" />
 							</Button>
 						</div>
@@ -141,7 +137,9 @@
 			{/if}
 		</div>
 	</div>
-	<div slot="footer" class="flex w-full items-start justify-end">
-		<Button onclick={onCompare}>Compare</Button>
-	</div>
+	{#snippet footer()}
+		<div class="flex w-full items-start justify-end">
+			<Button onclick={onCompare}>Compare</Button>
+		</div>
+	{/snippet}
 </Modal>

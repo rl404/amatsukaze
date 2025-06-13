@@ -43,7 +43,7 @@
 	};
 </script>
 
-<Card size="none" class="gap-4">
+<Card class="max-w-full gap-4 p-4 sm:p-6">
 	<div class="flex items-center justify-between gap-4">
 		<div class="border-primary-500 border-l-4 pl-2">
 			<div class="flex items-center gap-2">

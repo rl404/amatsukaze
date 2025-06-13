@@ -67,13 +67,13 @@
 			</Tooltip>
 		</div>
 	</div>
-	<Card size="none" padding="none" class="grid grid-cols-24 gap-4 p-2 sm:p-4">
+	<Card class="grid max-w-full grid-cols-24 gap-4 p-2 sm:p-4">
 		{#each videos as video}
 			<VideoGrid class="col-span-12 sm:col-span-8 xl:col-span-6 2xl:col-span-4" data={video} />
 		{/each}
 
 		{#if loading}
-			<div class="col-span-24 text-center"><Spinner /></div>
+			<div class="col-span-24 text-center"><Spinner class="dark:text-gray-400" /></div>
 		{:else if error !== ''}
 			<div class="col-span-24 text-center text-red-500">{error}</div>
 		{:else if videos.length === 0}

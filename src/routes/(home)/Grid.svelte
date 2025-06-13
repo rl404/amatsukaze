@@ -8,7 +8,7 @@
 <div
 	class="grid grid-cols-3 gap-1 p-1 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 xl:grid-cols-10"
 >
-	{#each data as vtuber}
+	{#each data as vtuber (vtuber.id)}
 		<VtuberGrid
 			id={vtuber.id}
 			name={vtuber.name}

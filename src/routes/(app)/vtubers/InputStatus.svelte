@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Checkbox from '$lib/components/inputs/Checkbox.svelte';
+	import { Label } from 'flowbite-svelte';
 
 	export let excludeActive: boolean;
 	export let excludeRetired: boolean;
@@ -19,6 +20,10 @@
 </script>
 
 <div class="grid grid-cols-2 gap-2">
-	<Checkbox bind:checked={active}>Active</Checkbox>
-	<Checkbox bind:checked={retired}>Retired</Checkbox>
+	<Checkbox id="status_active" bind:checked={active}>
+		<Label for="status_active">Active</Label>
+	</Checkbox>
+	<Checkbox id="status_retired" bind:checked={retired}>
+		<Label for="status_retired">Retired</Label>
+	</Checkbox>
 </div>

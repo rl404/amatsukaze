@@ -1,12 +1,12 @@
 <script lang="ts">
+	import ChartBarIcon from '$lib/components/icons/ChartBarIcon.svelte';
+	import Grid2Icon from '$lib/components/icons/Grid2Icon.svelte';
+	import GridIcon from '$lib/components/icons/GridIcon.svelte';
+	import ListIcon from '$lib/components/icons/ListIcon.svelte';
+	import TimelineIcon from '$lib/components/icons/TimelineIcon.svelte';
 	import type { VtuberLayout } from '$lib/types';
 	import { type Component } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
-	import ChartBarIcon from '../icons/ChartBarIcon.svelte';
-	import Grid2Icon from '../icons/Grid2Icon.svelte';
-	import GridIcon from '../icons/GridIcon.svelte';
-	import ListIcon from '../icons/ListIcon.svelte';
-	import TimelineIcon from '../icons/TimelineIcon.svelte';
 
 	export let value: VtuberLayout;
 	export let timeline: boolean = false;

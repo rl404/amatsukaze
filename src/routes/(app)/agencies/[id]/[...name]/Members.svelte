@@ -70,7 +70,7 @@
 </script>
 
 <div class="grid gap-4">
-	<Card size="none" class="gap-4">
+	<Card class="max-w-full gap-4 p-4 sm:p-6">
 		<div class="flex items-center justify-between gap-4">
 			<div class="border-primary-500 border-l-4 pl-2">
 				<div class="flex items-center gap-2">
@@ -94,7 +94,7 @@
 			<MemberChart {vtubers} bind:layout />
 		</div>
 	</Card>
-	<Card size="none" class="gap-4">
+	<Card class="max-w-full gap-4 p-4 sm:p-6">
 		<div class="flex items-center justify-between gap-4">
 			<div class="border-primary-500 flex items-center gap-2 border-l-4 pl-2">
 				<h3 class="h3">
@@ -114,7 +114,7 @@
 			<MemberBarChart {vtubers} {sort} />
 		{:else}
 			<div class="grid grid-cols-6 gap-2">
-				{#each vtubers.sort(vtuberSorter(sort)) as vtuber}
+				{#each vtubers.sort(vtuberSorter(sort)) as vtuber (vtuber.id)}
 					{#if layout === 'grid'}
 						<VtuberGrid
 							id={vtuber.id}

@@ -14,7 +14,7 @@
 <div class="flex flex-wrap items-center gap-2">
 	<TagsIcon class="size-4" />
 	{#if name !== ''}
-		<Badge dismissable on:close={onClose}>
+		<Badge dismissable onclose={onClose}>
 			Name: {name}
 		</Badge>
 	{/if}

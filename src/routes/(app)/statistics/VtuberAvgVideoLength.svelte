@@ -19,7 +19,7 @@
 </script>
 
 {#if loading}
-	<div><Spinner /></div>
+	<div><Spinner class="dark:text-gray-400" /></div>
 {:else if error !== ''}
 	<div class="text-red-500">{error}</div>
 {:else}

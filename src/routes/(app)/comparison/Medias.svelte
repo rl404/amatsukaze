@@ -35,12 +35,12 @@
 	};
 </script>
 
-<Card size="none" class="grid grid-cols-3 gap-4">
+<Card class="grid max-w-full grid-cols-3 gap-4 p-4 sm:p-6">
 	<h3 class="h3 col-span-3 text-center">
-		<span class="border-l-4 border-primary-500 pl-2">Medias</span>
+		<span class="border-primary-500 border-l-4 pl-2">Medias</span>
 	</h3>
 	{#each data as vtuber, i}
-		<div class={twMerge('flex flex-col', i == 1 && 'border-x')}>
+		<div class={twMerge('flex flex-col', i == 1 && 'border-border border-x')}>
 			<h4 class="text-center font-bold">Channels</h4>
 			{#if isEmptyArray(vtuber.channels)}
 				<P class="text-center">-</P>
@@ -54,7 +54,9 @@
 		</div>
 	{/each}
 	{#each data as vtuber, i}
-		<div class={twMerge('grid grid-cols-1 gap-4 md:grid-cols-2', i == 1 && 'border-x')}>
+		<div
+			class={twMerge('grid grid-cols-1 gap-4 md:grid-cols-2', i == 1 && 'border-border border-x')}
+		>
 			<div class="flex flex-col">
 				<h4 class="text-center font-bold">Video Count</h4>
 				{#if isEmptyArray(vtuber.channels)}
@@ -80,7 +82,7 @@
 		</div>
 	{/each}
 	{#each data as vtuber, i}
-		<div class={twMerge('flex flex-col', i == 1 && 'border-x')}>
+		<div class={twMerge('flex flex-col', i == 1 && 'border-border border-x')}>
 			<h4 class="text-center font-bold">Social Medias</h4>
 			{#if isEmptyArray(vtuber.social_medias)}
 				<P class="text-center">-</P>
@@ -96,7 +98,7 @@
 		</div>
 	{/each}
 	{#each data as vtuber, i}
-		<div class={twMerge('flex flex-col', i == 1 && 'border-x')}>
+		<div class={twMerge('flex flex-col', i == 1 && 'border-border border-x')}>
 			<h4 class="text-center font-bold">Official Websites</h4>
 			{#if isEmptyArray(vtuber.official_websites)}
 				<P class="text-center">-</P>
