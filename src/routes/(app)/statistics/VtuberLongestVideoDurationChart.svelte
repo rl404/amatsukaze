@@ -29,11 +29,11 @@
 </script>
 
 {#if loading}
-	<div class="flex h-full w-full items-center justify-center">
-		<Spinner />
+	<div class="flex size-full items-center justify-center">
+		<Spinner class="dark:text-gray-400" />
 	</div>
 {:else if error !== ''}
-	<div class="flex h-full w-full items-center justify-center text-red-500">{error}</div>
+	<div class="flex size-full items-center justify-center text-red-500">{error}</div>
 {:else}
 	<BarChart
 		data={data.map((d) => ({ name: d.name, value: d.duration }))}

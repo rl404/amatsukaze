@@ -45,6 +45,6 @@
 </script>
 
 <div class="grid grid-cols-2 gap-2">
-	<Select size="sm" placeholder="" items={dayOptions} bind:value={day} />
-	<Select size="sm" placeholder="" items={monthOptions} bind:value={month} />
+	<Select placeholder="" items={dayOptions} bind:value={day} />
+	<Select placeholder="" items={monthOptions} bind:value={month} />
 </div>

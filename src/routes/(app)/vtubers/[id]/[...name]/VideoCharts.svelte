@@ -27,7 +27,7 @@
 	$: vtuber, (heatmapData = getHeatmapData(vtuber));
 </script>
 
-<Card size="none" class="gap-4">
+<Card class="max-w-full gap-4 p-4 sm:p-6">
 	<div class="flex items-center justify-between gap-4">
 		{#if layout === 'calendar'}
 			<div class="flex items-center gap-4">

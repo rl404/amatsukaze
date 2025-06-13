@@ -1,7 +1,7 @@
 <script lang="ts">
+	import ChevronUpIcon from '$lib/components/icons/ChevronUpIcon.svelte';
 	import { Button } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
-	import ChevronUpIcon from '../icons/ChevronUpIcon.svelte';
 
 	let hidden: boolean = true;
 
@@ -28,7 +28,7 @@
 		hidden ? 'opacity-0' : 'opacity-100'
 	)}
 >
-	<Button pill class="!p-4" onclick={onClick}>
+	<Button pill class="p-4" onclick={onClick}>
 		<ChevronUpIcon class="size-5" />
 	</Button>
 </div>

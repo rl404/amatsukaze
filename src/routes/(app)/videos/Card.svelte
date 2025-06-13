@@ -30,7 +30,7 @@
 	});
 </script>
 
-<Card size="none" class="gap-4">
+<Card class="max-w-full gap-4 p-4 sm:p-6">
 	<div class="flex items-center justify-between gap-4">
 		<div class="flex items-center gap-4">
 			<h2 class="h2 border-primary-500 border-l-4 pl-2">{title}</h2>
@@ -39,7 +39,7 @@
 		<Button href={link} size="xs">MORE</Button>
 	</div>
 	{#if loading}
-		<div class="text-center"><Spinner /></div>
+		<div class="text-center"><Spinner class="dark:text-gray-400" /></div>
 	{:else if error !== ''}
 		<div class="text-center text-red-500">{error}</div>
 	{:else if videos.length === 0}

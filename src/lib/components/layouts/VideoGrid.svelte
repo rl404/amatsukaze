@@ -1,15 +1,15 @@
 <script lang="ts">
+	import Image from '$lib/components/commons/Image.svelte';
+	import RenderIfVisible from '$lib/components/commons/RenderIfVisible.svelte';
+	import BilibiliIcon from '$lib/components/icons/BilibiliIcon.svelte';
+	import NiconicoIcon from '$lib/components/icons/NiconicoIcon.svelte';
+	import TwitchIcon from '$lib/components/icons/TwitchIcon.svelte';
+	import YoutubeIcon from '$lib/components/icons/YoutubeIcon.svelte';
 	import { getWikiImg, intToDurationStr, relativeTime, toURL } from '$lib/utils/utils';
 	import { Avatar } from 'flowbite-svelte';
 	import type { Component } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
 	import type { VideoResponseData } from '../../../routes/api/videos/+server';
-	import Image from '../commons/Image.svelte';
-	import RenderIfVisible from '../commons/RenderIfVisible.svelte';
-	import BilibiliIcon from '../icons/BilibiliIcon.svelte';
-	import NiconicoIcon from '../icons/NiconicoIcon.svelte';
-	import TwitchIcon from '../icons/TwitchIcon.svelte';
-	import YoutubeIcon from '../icons/YoutubeIcon.svelte';
 
 	export let data: VideoResponseData;
 
@@ -38,11 +38,17 @@
 </script>
 
 <RenderIfVisible class={twMerge($$props.class, 'relative grid gap-1 pb-2 text-sm')}>
-	<a class="clickable relative" href={data.video_url} target="_blank" rel="noreferrer">
+	<a
+		class="clickable relative"
+		href={data.video_url}
+		target="_blank"
+		rel="noreferrer"
+		title={data.video_title}
+	>
 		<Image
 			src={data.video_image && `/api/images/${data.video_image}`}
 			alt={data.video_title}
-			class="aspect-video h-full w-full rounded-lg object-cover object-center"
+			class="aspect-video size-full rounded-lg object-cover object-center"
 			delay={500}
 		/>
 		<span class="absolute right-1 bottom-1 rounded bg-black px-1 text-xs text-white uppercase">
@@ -53,14 +59,16 @@
 		class="clickable text-primary line-clamp-2"
 		href={data.video_url}
 		target="_blank"
-		rel="noreferrer">{data.video_title}</a
+		rel="noreferrer"
+		title={data.video_title}
 	>
+		{data.video_title}
+	</a>
 	<div class="flex items-center gap-2">
 		<a href="/vtubers/{data.vtuber_id}/{toURL(data.vtuber_name)}" class="clickable min-w-7">
 			<Avatar
 				src={getWikiImg(data.vtuber_image)}
 				alt={data.vtuber_name}
-				size="none"
 				class="size-7 object-cover object-top"
 			/>
 		</a>

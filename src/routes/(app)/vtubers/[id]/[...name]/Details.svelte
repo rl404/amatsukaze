@@ -14,7 +14,7 @@
 </script>
 
 <div class="grid gap-2 sm:gap-4">
-	<Card size="none" class="gap-4">
+	<Card class="max-w-full gap-4 p-4 sm:p-6">
 		<h3 class="h3 border-primary-500 border-l-4 pl-2">Basic Details</h3>
 		<div class="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
 			<div>
@@ -124,7 +124,7 @@
 		</div>
 	</Card>
 
-	<Card size="none" class="gap-4">
+	<Card class="max-w-full gap-4 p-4 sm:p-6">
 		<h3 class="h3 border-primary-500 border-l-4 pl-2">Medias</h3>
 		<div class="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
 			<div>
@@ -172,7 +172,7 @@
 		</div>
 	</Card>
 
-	<Card size="none" class="gap-4">
+	<Card class="max-w-full gap-4 p-4 sm:p-6">
 		<h3 class="h3 border-primary-500 border-l-4 pl-2">Personal Details</h3>
 		<div class="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
 			<div>

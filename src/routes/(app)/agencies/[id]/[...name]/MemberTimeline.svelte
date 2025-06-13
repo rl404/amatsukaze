@@ -37,7 +37,7 @@
 				<div
 					class="ltr md:rtl grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
 				>
-					{#each d.retired as vtuber}
+					{#each d.retired as vtuber (vtuber.id)}
 						<VtuberGrid
 							id={vtuber.id}
 							name={vtuber.name}
@@ -59,7 +59,7 @@
 				<div
 					class="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
 				>
-					{#each d.debut as vtuber}
+					{#each d.debut as vtuber (vtuber.id)}
 						<VtuberGrid id={vtuber.id} name={vtuber.name} image={vtuber.image} delay={500} />
 					{/each}
 				</div>

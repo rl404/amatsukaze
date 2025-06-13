@@ -6,9 +6,9 @@
 	export let title: string;
 </script>
 
-<Card size="none" padding="xs" class={twMerge('gap-2 text-center', $$props.class)}>
+<Card class={twMerge('max-w-full gap-2 p-2 text-center', $$props.class)}>
 	<h5 class="h5">{title}</h5>
-	<RenderIfVisible class="h-full w-full">
+	<RenderIfVisible class="size-full">
 		<slot />
 	</RenderIfVisible>
 </Card>

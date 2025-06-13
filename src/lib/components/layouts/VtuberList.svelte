@@ -1,7 +1,7 @@
 <script lang="ts">
+	import RenderIfVisible from '$lib/components/commons/RenderIfVisible.svelte';
 	import { getWikiImg, toURL } from '$lib/utils/utils';
 	import { Avatar, Badge, Card, Tooltip } from 'flowbite-svelte';
-	import RenderIfVisible from '../commons/RenderIfVisible.svelte';
 
 	export let id: number;
 	export let name: string;
@@ -16,18 +16,11 @@
 <RenderIfVisible class={$$props.class}>
 	<Card
 		title={name}
-		size="none"
-		padding="xs"
 		href="/vtubers/{id}/{toURL(name)}"
-		class="grid grid-cols-10 items-center gap-2 text-center"
+		class="grid max-w-full grid-cols-10 items-center gap-2 p-2 text-center"
 	>
 		<div class="col-span-10 flex items-center gap-2 sm:col-span-5 md:col-span-3">
-			<Avatar
-				src={getWikiImg(image)}
-				alt={name}
-				size="none"
-				class="size-7 object-cover object-top"
-			/>
+			<Avatar src={getWikiImg(image)} alt={name} class="size-7 object-cover object-top" />
 			<h4 class="h5 line-clamp-1 text-left">{name}</h4>
 		</div>
 		<div

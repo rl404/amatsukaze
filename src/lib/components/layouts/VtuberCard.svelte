@@ -1,9 +1,9 @@
 <script lang="ts">
+	import Image from '$lib/components/commons/Image.svelte';
+	import RenderIfVisible from '$lib/components/commons/RenderIfVisible.svelte';
 	import { getWikiImg, toURL } from '$lib/utils/utils';
 	import { Card } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
-	import Image from '../commons/Image.svelte';
-	import RenderIfVisible from '../commons/RenderIfVisible.svelte';
 
 	export let id: number;
 	export let name: string;
@@ -17,10 +17,8 @@
 <RenderIfVisible class={twMerge('h-36', $$props.class)}>
 	<Card
 		title={name}
-		size="none"
-		padding="none"
 		href="/vtubers/{id}/{toURL(name)}"
-		class="flex h-full w-full flex-row overflow-hidden"
+		class="flex size-full max-w-full flex-row overflow-hidden"
 	>
 		<Image
 			{delay}

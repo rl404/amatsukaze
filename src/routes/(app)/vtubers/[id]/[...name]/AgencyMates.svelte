@@ -20,7 +20,7 @@
 	let tabI: number = 0;
 </script>
 
-<Card size="none" class="gap-4">
+<Card class="max-w-full gap-4 p-4 sm:p-6">
 	<div class="flex items-center justify-between gap-4">
 		<div class="flex items-center gap-4">
 			{#each vtuber.agencies as agency, i}
@@ -43,7 +43,7 @@
 		</div>
 	</div>
 	<div class={twMerge('grid grid-cols-24', layout === 'list' ? 'gap-1' : 'gap-2')}>
-		{#each agencies[tabI].data.sort(vtuberSorter(sort)) as v}
+		{#each agencies[tabI].data.sort(vtuberSorter(sort)) as v (v.id)}
 			{#if layout === 'grid'}
 				<VtuberGrid
 					id={v.id}

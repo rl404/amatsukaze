@@ -92,7 +92,7 @@
 					<Tooltip placement="bottom">Add vtuber to compare</Tooltip>
 				{:else if loading[i] || !data[i].id}
 					<div class="flex aspect-square w-1/2 items-center justify-center">
-						<Spinner />
+						<Spinner class="dark:text-gray-400" />
 					</div>
 				{:else if error[i] !== ''}
 					<div class="flex aspect-square w-1/2 items-center justify-center text-red-500">
@@ -100,20 +100,18 @@
 					</div>
 				{:else}
 					<Card
-						size="none"
-						padding="none"
 						class="group relative aspect-square w-1/2 hover:cursor-pointer"
 						onclick={toggleModal}
 					>
 						<Image
 							src={getWikiImg(data[i].image)}
 							alt={data[i].name}
-							class="h-full w-full rounded-lg object-cover object-top"
+							class="size-full rounded-lg object-cover object-top"
 						/>
 						<div
 							class="absolute top-1 right-1 opacity-0 transition-opacity group-hover:opacity-100"
 						>
-							<Button class="!p-2" pill color="red">
+							<Button class="p-2" pill color="red">
 								<EditIcon class="size-3" />
 							</Button>
 						</div>

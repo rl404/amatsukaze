@@ -11,7 +11,7 @@
 	import VtuberGrid from '$lib/components/layouts/VtuberGrid.svelte';
 	import VtuberList from '$lib/components/layouts/VtuberList.svelte';
 	import { DefaultVtubersQuery } from '$lib/const';
-	import { type VtuberLayout, type VtuberSort, type VtubersQuery } from '$lib/types';
+	import type { VtuberLayout, VtuberSort, VtubersQuery } from '$lib/types';
 	import { getAxiosError } from '$lib/utils/api';
 	import axios from 'axios';
 	import { Badge, Breadcrumb, BreadcrumbItem, Card, Search, Spinner } from 'flowbite-svelte';
@@ -155,13 +155,16 @@
 			<h1 class="h1">Vtuber List</h1>
 			<Badge large>{total.toLocaleString()}</Badge>
 		</div>
-		<div class="flex basis-full items-center gap-2 md:basis-auto [&>div]:w-full">
+		<div class="flex basis-full items-center gap-2 md:basis-auto">
 			<Search
 				size="md"
 				placeholder="vtuber name..."
 				disabled={loading}
-				bind:value={query.names}
 				oninput={onInput}
+				clearable
+				clearableClass="dark:hover:text-primary cursor-pointer"
+				clearableOnClick={onSearch}
+				bind:value={query.names}
 			/>
 			<SearchModal
 				{loading}
@@ -189,11 +192,12 @@
 		</div>
 	</div>
 	<Card
-		size="none"
-		padding="none"
-		class={twMerge('grid grid-cols-24 p-2 sm:p-4', layout === 'list' ? 'gap-1' : 'gap-2 sm:gap-4')}
+		class={twMerge(
+			'grid max-w-full grid-cols-24 p-2 sm:p-4',
+			layout === 'list' ? 'gap-1' : 'gap-2 sm:gap-4'
+		)}
 	>
-		{#each vtubers as vtuber}
+		{#each vtubers as vtuber (vtuber.id)}
 			{#if layout === 'grid'}
 				<VtuberGrid
 					id={vtuber.id}
@@ -241,7 +245,7 @@
 		{/each}
 
 		{#if loading}
-			<div class="col-span-24 text-center"><Spinner /></div>
+			<div class="col-span-24 text-center"><Spinner class="dark:text-gray-400" /></div>
 		{:else if error !== ''}
 			<div class="col-span-24 text-center text-red-500">{error}</div>
 		{:else if vtubers.length === 0}
