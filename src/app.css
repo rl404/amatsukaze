@@ -81,19 +81,24 @@
 	}
 
 	body {
-		@apply bg-gray-50 text-gray-500 antialiased dark:bg-gray-900 dark:text-gray-400;
+		@apply bg-gray-50 text-gray-500 antialiased transition-colors dark:bg-gray-900 dark:text-gray-400;
+	}
+
+	button {
+		@apply cursor-pointer;
 	}
 
 	::-webkit-scrollbar {
-		@apply w-2;
+		@apply w-1;
 	}
 
 	::-webkit-scrollbar-thumb {
-		@apply bg-black/50 dark:bg-white/50;
+		@apply rounded-full bg-neutral-600;
 	}
 
-	::-webkit-scrollbar-thumb:hover {
-		@apply bg-black/70 dark:bg-white/70;
+	/* disable chrome cancel button */
+	input[type='search']::-webkit-search-cancel-button {
+		display: none;
 	}
 }
 

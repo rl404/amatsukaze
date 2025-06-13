@@ -60,7 +60,7 @@
 	</div>
 	<div class="col-span-4 sm:col-span-1">
 		<div class="sticky top-20 flex flex-col gap-4">
-			<Card size="none" padding="none" onclick={toggleModal}>
+			<Card class="max-w-full" onclick={toggleModal}>
 				<Image
 					src={getWikiImg(agency.image, 0, 400)}
 					alt={agency.name}
@@ -84,20 +84,29 @@
 		</div>
 	</div>
 	<div class="col-span-4 sm:col-span-3">
-		<Tabs tabStyle="pill" contentClass="mt-2 sm:mt-4">
-			<TabItem open>
-				<h2 slot="title" class="flex items-center gap-2">
-					<UsersIcon class="size-4" />
-					Members
-				</h2>
+		<Tabs tabStyle="pill" ulClass="flex-wrap" contentClass="p-0 bg-transparent dark:bg-transparent">
+			<TabItem
+				open
+				activeClass="dark:bg-primary-500 dark:text-primary bg-primary-600 rounded-lg px-4 py-3 text-white"
+			>
+				{#snippet titleSlot()}
+					<h2 class="flex items-center gap-2">
+						<UsersIcon class="size-4" />
+						Members
+					</h2>
+				{/snippet}
 				<Members {vtubers} />
 			</TabItem>
 			{#if vtubers.length > 0}
-				<TabItem>
-					<h2 slot="title" class="flex items-center gap-2">
-						<CalendarIcon class="size-4" />
-						Events
-					</h2>
+				<TabItem
+					activeClass="dark:bg-primary-500 dark:text-primary bg-primary-600 rounded-lg px-4 py-3 text-white"
+				>
+					{#snippet titleSlot()}
+						<h2 class="flex items-center gap-2">
+							<CalendarIcon class="size-4" />
+							Events
+						</h2>
+					{/snippet}
 					<Events {vtubers} />
 				</TabItem>
 			{/if}

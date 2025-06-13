@@ -67,7 +67,7 @@
 	<div class="grid gap-4">
 		{#if loading}
 			<div class="text-center">
-				<Spinner />
+				<Spinner class="dark:text-gray-400" />
 			</div>
 		{:else if error !== ''}
 			<div class="text-center text-red-500">{error}</div>
@@ -97,7 +97,7 @@
 				{#if tabs[tabI].data.length === 0}
 					<div class="col-span-24">No vtubers...</div>
 				{:else}
-					{#each tabs[tabI].data.sort(vtuberSorter(sort)) as v}
+					{#each tabs[tabI].data.sort(vtuberSorter(sort)) as v (v.id)}
 						{#if layout === 'grid'}
 							<VtuberGrid id={v.id} name={v.name} image={v.image} delay={500} class="col-span-4">
 								<VtuberStatBadge

@@ -62,7 +62,7 @@
 			<h1 class="h1">Agency List</h1>
 			<Badge large>{agencies.length.toLocaleString()}</Badge>
 		</div>
-		<div class="flex basis-full items-center gap-2 md:basis-auto [&>div]:w-full">
+		<div class="flex basis-full items-center gap-2 md:basis-auto">
 			<Search size="md" placeholder="agency name..." bind:value={name} oninput={onInput} />
 		</div>
 	</div>
@@ -75,11 +75,12 @@
 		</div>
 	</div>
 	<Card
-		size="none"
-		padding="none"
-		class={twMerge('grid grid-cols-6 p-2 sm:p-4', layout === 'list' ? 'gap-1' : 'gap-2 sm:gap-4')}
+		class={twMerge(
+			'grid max-w-full grid-cols-6 p-2 sm:p-4',
+			layout === 'list' ? 'gap-1' : 'gap-2 sm:gap-4'
+		)}
 	>
-		{#each agencies.sort(agencySorter(sort)) as agency}
+		{#each agencies.sort(agencySorter(sort)) as agency (agency.id)}
 			{#if layout === 'grid'}
 				<AgencyGrid
 					id={agency.id}

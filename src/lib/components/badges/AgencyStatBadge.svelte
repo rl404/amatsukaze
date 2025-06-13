@@ -27,7 +27,7 @@
 </script>
 
 {#if value !== ''}
-	<div class="bg-primary-500 rounded px-2 text-xs font-bold text-white">
+	<div class="bg-primary-500 rounded px-1.5 text-xs font-bold text-white">
 		{value}
 	</div>
 {/if}

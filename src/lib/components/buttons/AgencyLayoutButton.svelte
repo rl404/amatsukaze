@@ -1,9 +1,9 @@
 <script lang="ts">
+	import GridIcon from '$lib/components/icons/GridIcon.svelte';
+	import ListIcon from '$lib/components/icons/ListIcon.svelte';
 	import type { AgencyLayout } from '$lib/types';
 	import type { Component } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
-	import GridIcon from '../icons/GridIcon.svelte';
-	import ListIcon from '../icons/ListIcon.svelte';
 
 	export let value: AgencyLayout;
 

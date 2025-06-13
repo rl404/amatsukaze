@@ -1,9 +1,9 @@
 <script lang="ts">
+	import CalendarIcon from '$lib/components/icons/CalendarIcon.svelte';
+	import GridIcon from '$lib/components/icons/GridIcon.svelte';
 	import type { VideoChartLayout } from '$lib/types';
 	import type { Component } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
-	import CalendarIcon from '../icons/CalendarIcon.svelte';
-	import GridIcon from '../icons/GridIcon.svelte';
 
 	export let value: VideoChartLayout;
 

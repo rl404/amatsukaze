@@ -97,9 +97,9 @@
 			<h4 class="text-white">{MonthNames[data.month - 1]}</h4>
 			<ChevronDownIcon class="size-3" />
 		</Button>
-		<Dropdown bind:open style="width:{buttonWidth}px">
+		<Dropdown bind:isOpen={open} simple style="width:{buttonWidth}px">
 			{#each MonthNames as month, i}
-				<DropdownItem onclick={() => onChangeMonth(i)}>{month}</DropdownItem>
+				<DropdownItem class="w-full" onclick={() => onChangeMonth(i)}>{month}</DropdownItem>
 			{/each}
 		</Dropdown>
 	</div>
@@ -114,9 +114,9 @@
 			</Button>
 		{/each}
 	</div>
-	<Card size="none">
+	<Card class="max-w-full p-4 sm:p-6">
 		{#if loading}
-			<div class="text-center"><Spinner /></div>
+			<div class="text-center"><Spinner class="dark:text-gray-400" /></div>
 		{:else if error !== ''}
 			<div class="text-center text-red-500">{error}</div>
 		{:else}

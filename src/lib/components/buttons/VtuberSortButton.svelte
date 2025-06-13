@@ -1,8 +1,8 @@
 <script lang="ts">
+	import SortIcon from '$lib/components/icons/SortIcon.svelte';
 	import type { VtuberSort } from '$lib/types';
 	import { Dropdown, DropdownItem } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
-	import SortIcon from '../icons/SortIcon.svelte';
 
 	export let value: VtuberSort;
 	export let hideKeys: VtuberSort[] = [];
@@ -118,10 +118,13 @@
 	<SortIcon class="size-3" />
 	{sorts[value].name}
 </button>
-<Dropdown bind:open>
+<Dropdown bind:isOpen={open} simple transitionParams={{ duration: 0 }}>
 	{#each Object.values(sorts) as sort}
 		{#if !sort.hidden}
-			<DropdownItem onclick={() => onClick(sort.value)}>
+			<DropdownItem
+				class={twMerge('w-full text-left', value === sort.value && 'bg-gray-100 dark:bg-gray-600')}
+				onclick={() => onClick(sort.value)}
+			>
 				{sort.name}
 			</DropdownItem>
 		{/if}
