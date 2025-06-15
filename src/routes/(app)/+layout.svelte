@@ -6,9 +6,14 @@
 	let { children } = $props();
 
 	let drawer: boolean = $state(false);
+	let innerWidth: number = $state(0);
+
+	const onResize = () => (drawer = innerWidth >= 1024 ? false : drawer);
 </script>
 
-<header class="border-border sticky top-0 z-40 border-b bg-white dark:bg-gray-800">
+<svelte:window bind:innerWidth on:resize={onResize} />
+
+<header class="border-border sticky top-0 z-50 border-b bg-white dark:bg-gray-800">
 	<Navbar bind:drawer />
 </header>
 
