@@ -92,10 +92,12 @@
 		moreData.forEach((d, i) => {
 			axios.get(d.api).then((resp) => (moreData[i] = { ...moreData[i], data: resp.data.data }));
 		});
+		drawer = false;
 	});
 
 	afterNavigate(() => {
 		activeUrl = '/' + page.url.pathname.split('/')[1];
+		drawer = false;
 	});
 </script>
 
@@ -105,7 +107,6 @@
 	closeSidebar={toggleDrawer}
 	breakpoint="lg"
 	isSingle={false}
-	backdrop={false}
 	class="border-border top-15.2 h-full overflow-y-auto border-e pb-32"
 >
 	<SidebarGroup>
