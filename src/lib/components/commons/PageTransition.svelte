@@ -53,7 +53,7 @@
 </script>
 
 {#if p.current > 0 && p.current < 1 && isVisible}
-	<div transition:fade class="absolute top-0 left-0 z-50 h-2 w-full">
+	<div transition:fade class="absolute top-0 left-0 z-60 h-2 w-full">
 		<Progressbar progress={p.current * 100} size="h-1" />
 	</div>
 {/if}
