@@ -36,10 +36,12 @@ const si = [
 ];
 
 export const compactInt = (n: number) => {
-	const num = n.toString().replace(/[^0-9.]/g, '');
-	if (n < 1000) {
-		return num;
+	if (n > -1000 && n < 1000) {
+		return n.toFixed(0);
 	}
+
+	const isNeg = n < 0;
+	n = isNeg ? -n : n;
 
 	let index;
 	for (index = si.length - 1; index > 0; index--) {
@@ -47,7 +49,12 @@ export const compactInt = (n: number) => {
 			break;
 		}
 	}
-	return (n / si[index].v).toFixed(2).replace(/\.0+$|(\.[0-9]*[1-9])0+$/, '$1') + si[index].s;
+
+	return (
+		(isNeg ? '-' : '') +
+		(n / si[index].v).toFixed(2).replace(/\.0+$|(\.[0-9]*[1-9])0+$/, '$1') +
+		si[index].s
+	);
 };
 
 export const generateVtuberDescription = (vtuber: VtuberResponseData): string => {

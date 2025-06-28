@@ -40,7 +40,9 @@
 	href={data.url}
 	target="_blank"
 >
-	<svelte:component this={icon} class="mr-2 size-3" />
+	<div class="flex items-center">
+		<svelte:component this={icon} class="mr-2 size-3" />
+	</div>
 	<span class="line-clamp-1">
 		{#if !data.name}
 			{toTitleCase(data.type)}
