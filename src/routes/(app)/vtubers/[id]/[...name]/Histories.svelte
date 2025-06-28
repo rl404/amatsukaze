@@ -116,7 +116,7 @@
 							class={twMerge('size-5', getIconClass(channel))}
 						/>
 					</div>
-					<div class="line-clamp-1" title={channel.name || toTitleCase(channel.type)}>
+					<div class="line-clamp-1 text-left" title={channel.name || toTitleCase(channel.type)}>
 						{channel.name || toTitleCase(channel.type)}
 					</div>
 				</button>
