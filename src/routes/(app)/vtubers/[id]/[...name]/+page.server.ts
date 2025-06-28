@@ -2,10 +2,12 @@ import { SHIMAKAZE_HOST } from '$env/static/private';
 import { handleAPIResponse } from '$lib/utils/api';
 import type { VtubersResponse } from '../../../../api/vtubers/+server';
 import type { VtuberResponse } from '../../../../api/vtubers/[id]/+server';
+import type { VtuberHistoriesResponse } from '../../../../api/vtubers/[id]/channel-history/+server';
 import type { PageServerLoad } from './$types';
 
 export type VtuberDetailResponse = {
 	vtuber: VtuberResponse;
+	histories: VtuberHistoriesResponse;
 	agencies: VtubersResponse[];
 	families: VtubersResponse[];
 };
@@ -17,8 +19,11 @@ export const config = {
 };
 
 export const load = (async ({ params }) => {
-	const resp = await fetch(`${SHIMAKAZE_HOST}/vtubers/${params.id}`);
-	const vtuber = (await handleAPIResponse(resp)) as VtuberResponse;
+	const vtuberResp = await fetch(`${SHIMAKAZE_HOST}/vtubers/${params.id}`);
+	const vtuber = (await handleAPIResponse(vtuberResp)) as VtuberResponse;
+
+	const historiesResp = await fetch(`${SHIMAKAZE_HOST}/vtubers/${params.id}/channel-history`);
+	const histories = (await handleAPIResponse(historiesResp)) as VtuberHistoriesResponse;
 
 	const agencies = !vtuber.data.agencies
 		? []
@@ -44,6 +49,7 @@ export const load = (async ({ params }) => {
 
 	return {
 		vtuber: vtuber,
+		histories: histories,
 		agencies: agencies,
 		families: families
 	};

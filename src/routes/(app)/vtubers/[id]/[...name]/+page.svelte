@@ -29,6 +29,7 @@
 	export let data: VtuberDetailResponse;
 
 	$: vtuber = data.vtuber.data;
+	$: histories = data.histories.data;
 	$: agencies = data.agencies;
 	$: families = data.families;
 
@@ -109,7 +110,7 @@
 						Details
 					</h2>
 				{/snippet}
-				<Details {vtuber} />
+				<Details {vtuber} {histories} />
 			</TabItem>
 			<TabItem
 				activeClass="dark:bg-primary-500 dark:text-primary bg-primary-600 rounded-lg px-4 py-3 text-white"
