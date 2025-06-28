@@ -37,7 +37,7 @@ const si = [
 
 export const compactInt = (n: number) => {
 	if (n > -1000 && n < 1000) {
-		return n.toString();
+		return n.toFixed(0);
 	}
 
 	const isNeg = n < 0;
