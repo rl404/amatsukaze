@@ -32,6 +32,16 @@
 
 	DarkTheme.subscribe((v) => (darkTheme = v));
 
+	const getDiff = (): number => {
+		return (
+			filteredHistories[filteredHistories.length - 1].subscriber - filteredHistories[0].subscriber
+		);
+	};
+
+	const getAvg = (): number => {
+		return getDiff() / filteredHistories.length;
+	};
+
 	const getIcon = (channel: VtuberResponseDataChannel): Component => {
 		switch (channel.type) {
 			case 'YOUTUBE':
@@ -115,7 +125,17 @@
 		{#key channelI}
 			<div class="col-span-full flex flex-col gap-4 sm:col-span-8 md:col-span-9">
 				<div class="flex flex-col">
-					<div class="h5">Subscriber Count</div>
+					<div class="h5 flex items-center justify-between">
+						<div>Subscriber Count</div>
+						<div>
+							{#if getDiff() < 0}
+								<span class="text-red-500">{compactInt(getDiff())}</span>
+							{:else}
+								<span class="text-green-500">+{compactInt(getDiff())}</span>
+							{/if}
+						</div>
+						<Tooltip placement="left" arrow>total increment</Tooltip>
+					</div>
 					<div class="aspect-chart">
 						<Chart
 							options={{
@@ -189,7 +209,17 @@
 					</div>
 				</div>
 				<div class="flex flex-col">
-					<div class="h5">Subscriber Increment</div>
+					<div class="h5 flex items-center justify-between">
+						<div>Subscriber Increment</div>
+						<div>
+							{#if getAvg() < 0}
+								<span class="text-red-500">{compactInt(getAvg())}</span>
+							{:else}
+								<span class="text-green-500">+{compactInt(getAvg())}</span>
+							{/if}
+						</div>
+						<Tooltip placement="left" arrow>average monthly</Tooltip>
+					</div>
 					<div class="aspect-chart">
 						<Chart
 							options={{
