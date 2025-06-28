@@ -1,5 +1,6 @@
 <script lang="ts">
 	import ChannelBadge from '$lib/components/badges/ChannelBadge.svelte';
+	import LineChartIcon from '$lib/components/icons/LineChartIcon.svelte';
 	import {
 		channelSorter,
 		formatBirthday,
@@ -7,10 +8,15 @@
 		isEmptyArray,
 		toURL
 	} from '$lib/utils/utils';
-	import { Card, P } from 'flowbite-svelte';
+	import { Card, P, Tooltip } from 'flowbite-svelte';
 	import type { VtuberResponseData } from '../../../../api/vtubers/[id]/+server';
+	import type { VtuberHistoriesResponseData } from '../../../../api/vtubers/[id]/channel-history/+server';
+	import Histories from './Histories.svelte';
 
 	export let vtuber: VtuberResponseData;
+	export let histories: VtuberHistoriesResponseData[];
+
+	let open: boolean = false;
 </script>
 
 <div class="grid gap-2 sm:gap-4">
@@ -128,7 +134,15 @@
 		<h3 class="h3 border-primary-500 border-l-4 pl-2">Medias</h3>
 		<div class="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
 			<div>
-				<h4 class="font-bold">Channels</h4>
+				<div class="flex items-center gap-2">
+					<h4 class="font-bold">Channels</h4>
+					{#if vtuber.channels.length > 0}
+						<button class="clickable text-primary-500" onclick={() => (open = true)}>
+							<LineChartIcon class="size-4" />
+						</button>
+						<Tooltip placement="right" arrow>click to see subcriber histories</Tooltip>
+					{/if}
+				</div>
 				{#if isEmptyArray(vtuber.channels)}
 					<P>-</P>
 				{:else}
@@ -206,3 +220,5 @@
 		</div>
 	</Card>
 </div>
+
+<Histories bind:open {vtuber} {histories} />

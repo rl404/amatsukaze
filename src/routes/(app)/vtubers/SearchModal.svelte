@@ -71,14 +71,9 @@
 			</div>
 		</div>
 		<div class="grid gap-2">
-			<Label for="in_agency">Agency</Label>
-			<Checkbox
-				id="in_agency"
-				checked={query.in_agency}
-				useIndeterminate
-				bind:state={query.in_agency}
-			>
-				<Label for="in_agency">In Agency</Label>
+			<Label>Agency</Label>
+			<Checkbox checked={query.in_agency} useIndeterminate bind:state={query.in_agency}>
+				In Agency
 			</Checkbox>
 		</div>
 		<div class="grid gap-2">
@@ -95,11 +90,11 @@
 		</div>
 		<div class="grid grid-cols-2 gap-2">
 			<Label class="col-span-2">Model</Label>
-			<Checkbox id="has_2d" checked={query.has_2d} useIndeterminate bind:state={query.has_2d}>
-				<Label for="has_2d">2D Model</Label>
+			<Checkbox checked={query.has_2d} useIndeterminate bind:state={query.has_2d}>
+				2D Model
 			</Checkbox>
-			<Checkbox id="has_3d" checked={query.has_3d} useIndeterminate bind:state={query.has_3d}>
-				<Label for="has_3d">3D Model</Label>
+			<Checkbox checked={query.has_3d} useIndeterminate bind:state={query.has_3d}>
+				3D Model
 			</Checkbox>
 		</div>
 		<div class="grid gap-2">
