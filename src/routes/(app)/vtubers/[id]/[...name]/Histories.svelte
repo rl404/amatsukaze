@@ -33,12 +33,14 @@
 	DarkTheme.subscribe((v) => (darkTheme = v));
 
 	const getDiff = (): number => {
+		if (filteredHistories.length === 0) return 0;
 		return (
 			filteredHistories[filteredHistories.length - 1].subscriber - filteredHistories[0].subscriber
 		);
 	};
 
 	const getAvg = (): number => {
+		if (filteredHistories.length === 0) return 0;
 		return getDiff() / filteredHistories.length;
 	};
 
