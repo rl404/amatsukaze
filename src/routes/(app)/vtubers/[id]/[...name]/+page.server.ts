@@ -22,7 +22,16 @@ export const load = (async ({ params }) => {
 	const vtuberResp = await fetch(`${SHIMAKAZE_HOST}/vtubers/${params.id}`);
 	const vtuber = (await handleAPIResponse(vtuberResp)) as VtuberResponse;
 
-	const historiesResp = await fetch(`${SHIMAKAZE_HOST}/vtubers/${params.id}/channel-history`);
+	const vtuberDayOld = Math.floor(
+		(new Date().getTime() - new Date(vtuber.data.debut_date || '').getTime()) /
+			(1000 * 60 * 60 * 24)
+	);
+
+	const isNewVtuber: boolean = !vtuber.data.debut_date ? false : vtuberDayOld < 30 * 6;
+
+	const historiesResp = await fetch(
+		`${SHIMAKAZE_HOST}/vtubers/${params.id}/channel-history?group=${isNewVtuber ? 'DAILY' : 'MONTHLY'}`
+	);
 	const histories = (await handleAPIResponse(historiesResp)) as VtuberHistoriesResponse;
 
 	const agencies = !vtuber.data.agencies

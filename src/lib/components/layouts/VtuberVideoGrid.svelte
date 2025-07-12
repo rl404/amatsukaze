@@ -54,7 +54,12 @@
 				alt={data.title}
 				class="aspect-video size-full rounded-lg object-cover object-center"
 			/>
-			<span class="absolute right-1 bottom-1 rounded bg-black px-1 text-xs text-white uppercase">
+			<span
+				class={twMerge(
+					'absolute right-1 bottom-1 rounded px-1 text-xs text-white uppercase',
+					durationStr === 'live' ? 'bg-red-500' : 'bg-black'
+				)}
+			>
 				{durationStr}
 			</span>
 		</div>
