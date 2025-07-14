@@ -158,7 +158,7 @@
 								xaxis: {
 									type: 'datetime',
 									categories: filteredHistories.map((d) =>
-										new Date(d.year, d.month, 1).toISOString().slice(0, 10)
+										new Date(d.year, d.month - 1, d.day || 1).toISOString().slice(0, 10)
 									),
 									labels: { style: { colors: ChartTextColors[darkTheme.toString()] } },
 									axisBorder: { color: ChartBorderColors[darkTheme.toString()] },
@@ -203,7 +203,7 @@
 									theme: darkTheme ? 'dark' : 'light',
 									intersect: false,
 									shared: true,
-									x: { format: 'MMM yyyy' },
+									x: { format: 'dd MMM yyyy' },
 									y: { formatter: (v) => (!v ? '0' : v.toLocaleString()) }
 								}
 							}}
@@ -246,7 +246,7 @@
 								xaxis: {
 									type: 'datetime',
 									categories: filteredHistories.map((d) =>
-										new Date(d.year, d.month, 1).toISOString().slice(0, 10)
+										new Date(d.year, d.month - 1, d.day || 1).toISOString().slice(0, 10)
 									),
 									labels: { style: { colors: ChartTextColors[darkTheme.toString()] } },
 									axisBorder: { color: ChartBorderColors[darkTheme.toString()] },
@@ -283,7 +283,7 @@
 									theme: darkTheme ? 'dark' : 'light',
 									intersect: false,
 									shared: true,
-									x: { format: 'MMM yyyy' },
+									x: { format: 'dd MMM yyyy' },
 									y: { formatter: (v) => (!v ? '0' : v.toLocaleString()) }
 								}
 							}}
