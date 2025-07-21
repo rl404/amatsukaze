@@ -18,6 +18,7 @@
 	<meta http-equiv="content-type" content="text/html charset=utf-8" />
 	<meta name="theme-color" content="#4f46e5" />
 	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="robots" content="index, follow" />
 </svelte:head>
 
 <Analytics />
