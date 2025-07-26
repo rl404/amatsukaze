@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { ChartBorderColors, ChartColors, ChartTextColors, DayNames } from '$lib/const';
 	import { DarkTheme } from '$lib/utils/theme';
-	import { Chart } from 'flowbite-svelte';
+	import { Chart } from '@flowbite-svelte-plugins/chart';
 	import type { VtuberHeatmap } from './utils';
 
 	export let data: VtuberHeatmap[];
