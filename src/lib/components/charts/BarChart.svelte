@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { ChartBorderColors, ChartColors, ChartTextColors } from '$lib/const';
 	import { DarkTheme } from '$lib/utils/theme';
-	import { Chart } from 'flowbite-svelte';
+	import { Chart } from '@flowbite-svelte-plugins/chart';
 
 	type ChartData = {
 		name: string;

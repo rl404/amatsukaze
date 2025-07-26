@@ -8,7 +8,7 @@
 	} from '$lib/const';
 	import type { VtuberLayout } from '$lib/types';
 	import { DarkTheme } from '$lib/utils/theme';
-	import { Chart } from 'flowbite-svelte';
+	import { Chart } from '@flowbite-svelte-plugins/chart';
 	import type { VtuberResponseData } from '../../../../api/vtubers/[id]/+server';
 	import { getChartData, type AgencyMemberMonth } from './utils';
 
@@ -20,7 +20,7 @@
 
 	DarkTheme.subscribe((v) => (darkTheme = v));
 
-	$: vtubers, (chartData = getChartData(vtubers));
+	$: (vtubers, (chartData = getChartData(vtubers)));
 </script>
 
 {#key darkTheme}
