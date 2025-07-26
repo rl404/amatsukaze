@@ -84,7 +84,13 @@
 		</div>
 	</div>
 	<div class="col-span-4 sm:col-span-3">
-		<Tabs tabStyle="pill" ulClass="flex-wrap" contentClass="p-0 bg-transparent dark:bg-transparent">
+		<Tabs
+			tabStyle="pill"
+			class="flex-wrap"
+			classes={{
+				content: 'p-0 bg-transparent dark:bg-transparent'
+			}}
+		>
 			<TabItem
 				open
 				activeClass="dark:bg-primary-500 dark:text-primary bg-primary-600 rounded-lg px-4 py-3 text-white"
