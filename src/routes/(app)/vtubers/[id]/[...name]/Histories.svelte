@@ -25,11 +25,14 @@
 	let channelI: number = 0;
 	let darkTheme: boolean = false;
 
-	$: filteredHistories = histories.filter(
-		(h) =>
-			h.channel_type === vtuber.channels[channelI].type &&
-			h.channel_id === vtuber.channels[channelI].id
-	);
+	$: filteredHistories =
+		vtuber.channels.length > 0
+			? histories.filter(
+					(h) =>
+						h.channel_type === vtuber.channels[channelI].type &&
+						h.channel_id === vtuber.channels[channelI].id
+				)
+			: [];
 
 	DarkTheme.subscribe((v) => (darkTheme = v));
 
