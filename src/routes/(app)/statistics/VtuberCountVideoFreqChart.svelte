@@ -2,8 +2,9 @@
 	import { ChartBorderColors, ChartColors, ChartTextColors, DayNames } from '$lib/const';
 	import { getAxiosError } from '$lib/utils/api';
 	import { DarkTheme } from '$lib/utils/theme';
+	import { Chart } from '@flowbite-svelte-plugins/chart';
 	import axios from 'axios';
-	import { Chart, Spinner } from 'flowbite-svelte';
+	import { Spinner } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
 
 	type ChartData = { [day: string]: number[] };

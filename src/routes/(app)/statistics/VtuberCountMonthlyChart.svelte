@@ -9,8 +9,9 @@
 	import { getAxiosError } from '$lib/utils/api';
 	import { DarkTheme } from '$lib/utils/theme';
 	import { autoCeil } from '$lib/utils/utils';
+	import { Chart } from '@flowbite-svelte-plugins/chart';
 	import axios from 'axios';
-	import { Chart, Spinner } from 'flowbite-svelte';
+	import { Spinner } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
 	import type { VtuberDebutRetireCountMonthlyResponseData } from '../../api/statistics/vtubers/debut-retire-count-monthly/+server';
 	import VtuberCountMonthlyModal from './VtuberCountMonthlyModal.svelte';

@@ -8,7 +8,8 @@
 	import { ChartBorderColors, ChartTextColors } from '$lib/const';
 	import { DarkTheme } from '$lib/utils/theme';
 	import { compactInt, toTitleCase } from '$lib/utils/utils';
-	import { Chart, Modal, Tooltip } from 'flowbite-svelte';
+	import { Chart } from '@flowbite-svelte-plugins/chart';
+	import { Modal, Tooltip } from 'flowbite-svelte';
 	import type { Component } from 'svelte';
 	import { twMerge } from 'tailwind-merge';
 	import type {
@@ -24,11 +25,14 @@
 	let channelI: number = 0;
 	let darkTheme: boolean = false;
 
-	$: filteredHistories = histories.filter(
-		(h) =>
-			h.channel_type === vtuber.channels[channelI].type &&
-			h.channel_id === vtuber.channels[channelI].id
-	);
+	$: filteredHistories =
+		vtuber.channels.length > 0
+			? histories.filter(
+					(h) =>
+						h.channel_type === vtuber.channels[channelI].type &&
+						h.channel_id === vtuber.channels[channelI].id
+				)
+			: [];
 
 	DarkTheme.subscribe((v) => (darkTheme = v));
 
