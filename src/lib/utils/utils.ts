@@ -67,7 +67,9 @@ export const generateVtuberDescription = (vtuber: VtuberResponseData): string =>
 	desc += `who entertained fans since ${
 		!vtuber.debut_date ? 'unknown' : vtuber.debut_date.slice(0, 10)
 	}`;
-	desc += vtuber.retirement_date && ` to ${vtuber.retirement_date.slice(0, 10)}`;
+	if (vtuber.retirement_date) {
+		desc += ` to ${vtuber.retirement_date.slice(0, 10)}`;
+	}
 	desc +=
 		'. Discover their unique details, designer, modeler, agency mates, families, and channel videos.';
 	return desc;
