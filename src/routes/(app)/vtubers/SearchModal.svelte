@@ -33,7 +33,7 @@
 </Button>
 <Tooltip>advanced search</Tooltip>
 
-<Modal title="Vtuber Search" bind:open outsideclose autoclose>
+<Modal title="Vtuber Search" bind:open outsideclose={false} autoclose>
 	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
 		<div class="grid gap-2">
 			<Label for="name">Name</Label>
