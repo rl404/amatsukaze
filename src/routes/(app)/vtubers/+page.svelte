@@ -162,8 +162,8 @@
 				disabled={loading}
 				oninput={onInput}
 				clearable
-				clearableClass="dark:hover:text-primary cursor-pointer"
 				clearableOnClick={onSearch}
+				classes={{ close: 'dark:hover:text-primary cursor-pointer' }}
 				bind:value={query.names}
 			/>
 			<SearchModal
