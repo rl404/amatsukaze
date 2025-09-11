@@ -74,7 +74,7 @@
 
 <Head
 	title="Events"
-	description="Mark your calendar and relive the magic of Vtuber history with our comprehensive coverage of current, previous, and upcoming anniversary and birthday events. Stay connected to the excitement, nostalgia, and anticipation within the virtual world."
+	description="Mark your calendar and relive the magic of Vtuber history with our comprehensive coverage of current, previous, and upcoming anniversary and birthday events."
 	image="/events.png"
 />
 
