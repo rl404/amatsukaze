@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { toURL } from '$lib/utils/utils';
+	import { generateVtuberDescription, toURL } from '$lib/utils/utils';
 	import type { ProfilePage, WithContext } from 'schema-dts';
 	import type { VtubersResponse } from '../../../../api/vtubers/+server';
 	import type { VtuberResponseData } from '../../../../api/vtubers/[id]/+server';
@@ -20,7 +20,7 @@
 			identifier: vtuber.id.toString(),
 			name: vtuber.name,
 			alternateName: [...(vtuber.original_names || []), ...(vtuber.nicknames || [])],
-			description: vtuber.caption,
+			description: generateVtuberDescription(vtuber),
 			image: vtuber.image,
 			birthDate: vtuber.debut_date,
 			deathDate: vtuber.retirement_date,
