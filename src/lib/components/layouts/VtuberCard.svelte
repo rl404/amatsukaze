@@ -18,7 +18,7 @@
 	<Card
 		title={name}
 		href="/vtubers/{id}/{toURL(name)}"
-		class="flex size-full max-w-full flex-row overflow-hidden"
+		class="group relative flex size-full max-w-full flex-row overflow-hidden"
 	>
 		<Image
 			{delay}
@@ -26,7 +26,20 @@
 			alt={name}
 			class="aspect-portrait h-full rounded-l-lg object-cover object-top"
 		/>
-		<div class="flex w-full flex-col gap-1 p-2">
+		{#if image}
+			<div class="aspect-portrait absolute -top-1/3 right-0 h-60 opacity-15 dark:opacity-10">
+				<Image
+					{delay}
+					src={getWikiImg(image)}
+					alt={name}
+					class="aspect-portrait absolute top-0 right-0 h-full bg-none object-cover object-top"
+				/>
+				<div
+					class="absolute top-0 right-0 size-full bg-gradient-to-r from-white to-transparent group-hover:from-gray-100 dark:from-gray-800 dark:group-hover:from-gray-700"
+				/>
+			</div>
+		{/if}
+		<div class="z-10 flex w-full flex-col gap-1 p-2">
 			<div class="border-border border-b pb-1">
 				<h4 class="h5 line-clamp-1">{name}</h4>
 			</div>
