@@ -3,6 +3,7 @@
 	import GithubIcon from '$lib/components/icons/GithubIcon.svelte';
 	import { Avatar, Button, Navbar, NavBrand, NavHamburger, Span } from 'flowbite-svelte';
 	import DarkMode from './DarkMode.svelte';
+	import Image from './Image.svelte';
 
 	export let drawer: boolean;
 
@@ -13,7 +14,7 @@
 	fluid
 	class="to-primary-100 dark:to-primary-950 overflow-hidden bg-gradient-to-r from-white transition dark:from-gray-800"
 >
-	<img src={logo} alt="bg-logo" class="absolute left-2 size-32 opacity-10" />
+	<Image src={logo} alt="bg-logo" class="absolute left-2 size-32 opacity-10" />
 	<NavHamburger onclick={toggleDrawer} class="z-51 m-0 hover:text-black md:block lg:hidden" />
 	<NavBrand href="/" class="z-51">
 		<Avatar src={logo} alt="amatsukaze" class="me-2 size-7 sm:size-9" />
