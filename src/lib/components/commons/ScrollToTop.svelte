@@ -24,7 +24,7 @@
 
 <div
 	class={twMerge(
-		'fixed right-0 bottom-0 z-10 p-8 transition',
+		'fixed right-0 bottom-0 z-100 p-8 transition',
 		hidden ? 'opacity-0' : 'opacity-100'
 	)}
 >
