@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Checkbox from '$lib/components/inputs/Checkbox.svelte';
+	import { Checkbox } from 'flowbite-svelte';
 
 	export let excludeActive: boolean;
 	export let excludeRetired: boolean;
@@ -7,18 +7,23 @@
 	let active: boolean = !excludeActive;
 	let retired: boolean = !excludeRetired;
 
-	$: (active, setExcludeActive());
-	$: (retired, setExcludeRetired());
-	$: (excludeActive, setActive());
-	$: (excludeRetired, setRetired());
+	$: active = !excludeActive;
+	$: retired = !excludeRetired;
 
-	const setActive = () => (active = !excludeActive);
-	const setRetired = () => (retired = !excludeRetired);
-	const setExcludeActive = () => (excludeActive = !active);
-	const setExcludeRetired = () => (excludeRetired = !retired);
+	const onActiveChange = (event: Event) => {
+		const target = event.target as HTMLInputElement;
+		active = !target.checked;
+		excludeActive = !target.checked;
+	};
+
+	const onRetiredChange = (event: Event) => {
+		const target = event.target as HTMLInputElement;
+		retired = !target.checked;
+		excludeRetired = !target.checked;
+	};
 </script>
 
 <div class="grid grid-cols-2 gap-2">
-	<Checkbox bind:checked={active}>Active</Checkbox>
-	<Checkbox bind:checked={retired}>Retired</Checkbox>
+	<Checkbox checked={active} onchange={onActiveChange}>Active</Checkbox>
+	<Checkbox checked={retired} onchange={onRetiredChange}>Retired</Checkbox>
 </div>
