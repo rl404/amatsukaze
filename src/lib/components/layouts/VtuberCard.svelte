@@ -27,7 +27,9 @@
 			class="aspect-portrait h-full rounded-l-lg object-cover object-top"
 		/>
 		{#if image}
-			<div class="aspect-portrait absolute -top-1/3 right-0 h-60 opacity-15 dark:opacity-10">
+			<div
+				class="aspect-portrait absolute top-1/2 right-0 h-60 -translate-y-1/2 opacity-15 dark:opacity-10"
+			>
 				<Image
 					{delay}
 					src={getWikiImg(image)}

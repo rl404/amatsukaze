@@ -21,11 +21,13 @@
 		class="relative grid max-w-full grid-cols-10 items-center gap-2 overflow-hidden p-2 text-center"
 	>
 		{#if image}
-			<div class="aspect-portrait absolute -top-2/3 right-0 h-60 opacity-15 dark:opacity-10">
+			<div
+				class="aspect-portrait absolute top-1/2 right-0 w-60 -translate-y-1/2 opacity-15 dark:opacity-10"
+			>
 				<Image
 					src={getWikiImg(image)}
 					alt={name}
-					class="aspect-portrait absolute top-0 right-0 h-full bg-none object-cover object-top"
+					class="aspect-portrait absolute top-0 right-0 h-full bg-none object-cover object-center"
 				/>
 				<div
 					class="absolute top-0 right-0 size-full bg-gradient-to-r from-white to-transparent group-hover:from-gray-100 dark:from-gray-800 dark:group-hover:from-gray-700"
