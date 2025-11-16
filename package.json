@@ -14,7 +14,7 @@
 		"lint": "prettier --check . && eslint ."
 	},
 	"devDependencies": {
-		"@eslint/compat": "^1.2.5",
+		"@eslint/compat": "^2.0.0",
 		"@eslint/js": "^9.18.0",
 		"@flowbite-svelte-plugins/chart": "^0.2.4",
 		"@sveltejs/adapter-auto": "^7.0.0",
