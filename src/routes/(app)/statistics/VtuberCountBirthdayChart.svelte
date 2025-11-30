@@ -30,10 +30,10 @@
 			.finally(() => (loading = false));
 	});
 
-	const onClick = (x: number, y: number) => {
+	const onClick = (x: any, y: any) => {
 		window
 			.open(
-				`/vtubers?birthday_day=${x + 1}&start_birthday_month=${y + 1}&end_birthday_month=${y + 1}`,
+				`/vtubers?birthday_day=${parseInt(x) + 1}&start_birthday_month=${parseInt(y) + 1}&end_birthday_month=${parseInt(y) + 1}`,
 				'_blank'
 			)
 			?.focus();
