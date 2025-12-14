@@ -109,10 +109,16 @@
 
 @layer utilities {
 	.dark {
-		& .apexcharts-canvas .apexcharts-tooltip {
-			background-color: var(--color-gray-700) !important;
-			& .apexcharts-tooltip-title {
-				border-bottom-color: var(--color-border) !important;
+		& .apexcharts-canvas {
+			& .apexcharts-tooltip {
+				background-color: var(--color-gray-700) !important;
+				& .apexcharts-tooltip-title {
+					border-bottom-color: var(--color-border) !important;
+				}
+			}
+
+			& .apexcharts-datalabels-group .apexcharts-text.apexcharts-datalabel-label {
+				fill: #9ca3af !important;
 			}
 		}
 	}
