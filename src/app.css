@@ -107,6 +107,17 @@
 	}
 }
 
+@layer utilities {
+	.dark {
+		& .apexcharts-canvas .apexcharts-tooltip {
+			background-color: var(--color-gray-700) !important;
+			& .apexcharts-tooltip-title {
+				border-bottom-color: var(--color-border) !important;
+			}
+		}
+	}
+}
+
 @utility h1 {
 	@apply text-primary text-3xl font-bold sm:text-4xl;
 }
