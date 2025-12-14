@@ -38,8 +38,8 @@
 	--aspect-chart: 3/1;
 }
 
-@source "../node_modules/flowbite-svelte/dist";
-@source "../node_modules/@flowbite-svelte-plugins/chart/dist";
+@source '../node_modules/flowbite-svelte/dist';
+@source '../node_modules/@flowbite-svelte-plugins/chart/dist';
 
 @layer base {
 	:root {
@@ -100,6 +100,27 @@
 	/* disable chrome cancel button */
 	input[type='search']::-webkit-search-cancel-button {
 		display: none;
+	}
+
+	[type='checkbox']:indeterminate {
+		background-size: 0.55em 0.55em !important;
+	}
+}
+
+@layer utilities {
+	.dark {
+		& .apexcharts-canvas {
+			& .apexcharts-tooltip {
+				background-color: var(--color-gray-700) !important;
+				& .apexcharts-tooltip-title {
+					border-bottom-color: var(--color-border) !important;
+				}
+			}
+
+			& .apexcharts-datalabels-group .apexcharts-text.apexcharts-datalabel-label {
+				fill: #9ca3af !important;
+			}
+		}
 	}
 }
 
