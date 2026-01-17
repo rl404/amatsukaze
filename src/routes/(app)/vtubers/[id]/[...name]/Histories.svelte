@@ -185,7 +185,7 @@
 								grid: {
 									borderColor: ChartBorderColors[darkTheme.toString()],
 									strokeDashArray: 5,
-									xaxis: { lines: { show: false } },
+									xaxis: { lines: { show: true } },
 									yaxis: { lines: { show: true } }
 								},
 								fill: {
@@ -273,7 +273,7 @@
 								grid: {
 									borderColor: ChartBorderColors[darkTheme.toString()],
 									strokeDashArray: 5,
-									xaxis: { lines: { show: false } },
+									xaxis: { lines: { show: true } },
 									yaxis: { lines: { show: true } }
 								},
 								fill: {

@@ -121,6 +121,10 @@
 				fill: #9ca3af !important;
 			}
 		}
+
+		& .apexcharts-gridline {
+			stroke: #52525280 !important;
+		}
 	}
 }
 
