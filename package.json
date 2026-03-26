@@ -41,6 +41,6 @@
 	},
 	"dependencies": {
 		"axios": "^1.9.0",
-		"schema-dts": "^1.1.5"
+		"schema-dts": "^2.0.0"
 	}
 }
