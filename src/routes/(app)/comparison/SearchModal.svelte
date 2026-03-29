@@ -112,7 +112,7 @@
 				{#each vtubers as vtuber (vtuber.id)}
 					<Card
 						title={vtuber.name}
-						class="group hover:!border-primary-500 relative col-span-2 aspect-square size-full transition hover:cursor-pointer sm:col-span-1"
+						class="group hover:border-primary-500! relative col-span-2 aspect-square size-full transition hover:cursor-pointer sm:col-span-1"
 						onclick={() => addVtuber(vtuber)}
 					>
 						<Image

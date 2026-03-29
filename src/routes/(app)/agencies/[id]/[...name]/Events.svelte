@@ -12,7 +12,7 @@
 	let showBirthday: boolean = true;
 	let showAnniversary: boolean = true;
 
-	$: vtubers, (eventData = getMonthsData(vtubers, showBirthday, showAnniversary));
+	$: (vtubers, (eventData = getMonthsData(vtubers, showBirthday, showAnniversary)));
 
 	const toggleBirthday = () => (showBirthday = !showBirthday);
 	const toggleAnniversary = () => (showAnniversary = !showAnniversary);
@@ -68,7 +68,7 @@
 						{data.year}
 					</h4>
 					{#each DayNames as day, i}
-						<Span class={twMerge('text-sm', i === 0 || i === 6 ? '!text-red-500' : '')}>
+						<Span class={twMerge('text-sm', i === 0 || i === 6 ? 'text-red-500!' : '')}>
 							{day[0]}
 						</Span>
 					{/each}
@@ -77,7 +77,7 @@
 						<div
 							id={isToday(data.year, data.month, day.day) && day.focus ? 'today' : ''}
 							class={twMerge(
-								'text-primary bg-gradient-to-r text-sm',
+								'text-primary bg-linear-to-r text-sm',
 								!day.focus && 'opacity-30',
 								isToday(data.year, data.month, day.day) &&
 									day.focus &&

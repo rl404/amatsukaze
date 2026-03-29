@@ -15,7 +15,7 @@
 	<Card
 		title={name}
 		href="/agencies/{id}/{toURL(name)}"
-		class="group hover:!border-primary-500 relative size-full max-w-full transition"
+		class="group hover:border-primary-500! relative size-full max-w-full transition"
 	>
 		<Image
 			{delay}
