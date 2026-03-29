@@ -27,7 +27,7 @@
 					class="absolute top-0 right-0 aspect-video h-full bg-none object-cover object-right"
 				/>
 				<div
-					class="absolute top-0 right-0 size-full bg-gradient-to-r from-white to-transparent group-hover:from-gray-100 dark:from-gray-800 dark:group-hover:from-gray-700"
+					class="absolute top-0 right-0 size-full bg-linear-to-r from-white to-transparent group-hover:from-gray-100 dark:from-gray-800 dark:group-hover:from-gray-700"
 				/>
 			</div>
 		{/if}

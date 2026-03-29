@@ -25,7 +25,7 @@
 
 <div class="mx-auto grid w-full max-w-2xl grid-cols-7 gap-1 text-center">
 	{#each DayNames as day, i}
-		<Span class={twMerge('text-sm md:text-base', i === 0 || i === 6 ? '!text-red-500' : '')}>
+		<Span class={twMerge('text-sm md:text-base', i === 0 || i === 6 ? 'text-red-500!' : '')}>
 			{day[0]}
 		</Span>
 	{/each}
