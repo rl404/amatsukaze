@@ -60,7 +60,7 @@
 	<div
 		bind:this={element}
 		class={twMerge(
-			'to-primary-100 dark:to-primary-950 flex items-center justify-center overflow-hidden bg-gradient-to-b from-transparent p-1 text-center',
+			'to-primary-100 dark:to-primary-950 flex items-center justify-center overflow-hidden bg-linear-to-b from-transparent p-1 text-center',
 			errorClass,
 			$$props.class
 		)}
@@ -71,7 +71,7 @@
 	<div
 		bind:this={element}
 		class={twMerge(
-			'to-primary-100 dark:to-primary-950 flex animate-pulse items-center justify-center bg-gradient-to-b from-transparent',
+			'to-primary-100 dark:to-primary-950 flex animate-pulse items-center justify-center bg-linear-to-b from-transparent',
 			loadingClass,
 			$$props.class
 		)}
@@ -85,7 +85,7 @@
 		{alt}
 		loading="lazy"
 		class={twMerge(
-			'to-primary-100 dark:to-primary-950 bg-gradient-to-b from-transparent',
+			'to-primary-100 dark:to-primary-950 bg-linear-to-b from-transparent',
 			$$props.class
 		)}
 	/>

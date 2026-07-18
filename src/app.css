@@ -185,7 +185,7 @@
 }
 
 @utility bg-gradient {
-	@apply to-primary-500 dark:to-primary-500 bg-gradient-to-r from-white dark:from-gray-900;
+	@apply to-primary-500 dark:to-primary-500 bg-linear-to-r from-white dark:from-gray-900;
 }
 
 @utility clickable {

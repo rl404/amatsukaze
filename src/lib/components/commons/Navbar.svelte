@@ -12,7 +12,7 @@
 
 <Navbar
 	fluid
-	class="to-primary-100 dark:to-primary-950 overflow-hidden bg-gradient-to-r from-white transition dark:from-gray-800"
+	class="to-primary-100 dark:to-primary-950 overflow-hidden bg-linear-to-r from-white transition dark:from-gray-800"
 >
 	<Image src={logo} alt="bg-logo" class="absolute left-2 size-32 opacity-10" />
 	<NavHamburger onclick={toggleDrawer} class="z-51 m-0 hover:text-black md:block lg:hidden" />

@@ -12,7 +12,7 @@
 
 	let timelineData: AgencyMemberTimeline[] = [];
 
-	$: vtubers, (timelineData = getTimelineData(vtubers, sort[0] !== '-'));
+	$: (vtubers, (timelineData = getTimelineData(vtubers, sort[0] !== '-')));
 </script>
 
 <Timeline>
@@ -21,7 +21,7 @@
 			<div
 				slot="dot"
 				class={twMerge(
-					'size-3 rounded-full bg-gradient-to-t md:bg-gradient-to-r',
+					'size-3 rounded-full bg-linear-to-t md:bg-linear-to-r',
 					d.retired.length > 0 ? 'from-red-500' : 'from-green-500',
 					d.debut.length > 0 ? 'to-green-500' : 'to-red-500'
 				)}

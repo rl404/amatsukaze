@@ -50,7 +50,7 @@
 		<div class="relative">
 			<Image
 				{delay}
-				src={data.image && `/api/images/${data.image}`}
+				src={data.image}
 				alt={data.title}
 				class="aspect-video size-full rounded-lg object-cover object-center"
 			/>
