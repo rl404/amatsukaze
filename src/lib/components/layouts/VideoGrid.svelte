@@ -46,7 +46,7 @@
 		title={data.video_title}
 	>
 		<Image
-			src={data.video_image && `/api/images/${data.video_image}`}
+			src={data.video_image}
 			alt={data.video_title}
 			class="aspect-video size-full rounded-lg object-cover object-center"
 			delay={500}
