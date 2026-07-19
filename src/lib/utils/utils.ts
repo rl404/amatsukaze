@@ -17,11 +17,7 @@ export const shuffleArray = (array: any[]) => {
 };
 
 export const getWikiImg = (src: string, height = 206, width = 0): string => {
-	if (!src) return '';
-	var url = src.split('?')[0];
-	if (width > 0) url += `/scale-to-width-down/${width}`;
-	if (height > 0) url += `/scale-to-height-down/${height}`;
-	return url;
+	return src && `/api/images/wikia/${src.split('?')[0]}?height=${height}&width=${width}`;
 };
 
 export const toTitleCase = (str: string): string => {
