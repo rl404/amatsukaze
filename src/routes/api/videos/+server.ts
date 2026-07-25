@@ -23,6 +23,12 @@ export type VideoResponseData = {
 	video_end_date?: string;
 };
 
+export const config = {
+	isr: {
+		expiration: 60 * 5
+	}
+};
+
 export const GET = (async ({ url }) => {
 	const queries = ['start_date', 'end_date', 'is_finished', 'sort', 'page', 'limit']
 		.map((q) => `${q}=${url.searchParams.get(q) ?? ''}`)
@@ -33,7 +39,7 @@ export const GET = (async ({ url }) => {
 	return new Response(JSON.stringify(body), {
 		headers: {
 			'content-type': 'application/json',
-			'cache-control': 'max-age=3600'
+			'cache-control': 'max-age=300, s-maxage=300, stale-while-revalidate=300'
 		},
 		status: resp.status
 	});

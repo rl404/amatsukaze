@@ -1,6 +1,12 @@
 import type { RequestHandler } from './$types';
 import { SHIMAKAZE_HOST } from '$env/static/private';
 
+export const config = {
+	isr: {
+		expiration: 60 * 60 * 24
+	}
+};
+
 export const GET = (async () => {
 	const resp = await fetch(`${SHIMAKAZE_HOST}/statistics/vtubers/average-video-duration`);
 	const data = await resp.json();
