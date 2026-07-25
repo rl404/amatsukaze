@@ -16,6 +16,12 @@ export type VtuberHistoriesResponseData = {
 	subscriber: number;
 };
 
+export const config = {
+	isr: {
+		expiration: 60 * 60 * 24
+	}
+};
+
 export const GET = (async ({ params }) => {
 	const resp = await fetch(`${SHIMAKAZE_HOST}/vtubers/${params.id}/channel-history`);
 	const body = await resp.json();
