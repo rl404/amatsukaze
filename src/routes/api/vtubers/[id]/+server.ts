@@ -60,6 +60,12 @@ export type VtuberResponseDataChannelVideo = {
 	end_date?: string;
 };
 
+export const config = {
+	isr: {
+		expiration: 60 * 60 * 24
+	}
+};
+
 export const GET = (async ({ params }) => {
 	const resp = await fetch(`${SHIMAKAZE_HOST}/vtubers/${params.id}`);
 	const body = await resp.json();

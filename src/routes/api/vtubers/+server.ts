@@ -8,6 +8,12 @@ export type VtubersResponse = BaseAPIResponse & {
 	meta: MetaAPIResponse;
 };
 
+export const config = {
+	isr: {
+		expiration: 60 * 60 * 24
+	}
+};
+
 export const GET = (async ({ url }) => {
 	const queries = [
 		'mode',
@@ -57,7 +63,7 @@ export const GET = (async ({ url }) => {
 	return new Response(JSON.stringify(body), {
 		headers: {
 			'content-type': 'application/json',
-			'cache-control': 'max-age=21600, s-maxage=86400, stale-while-revalidate=21600'
+			'cache-control': 'max-age=86400, s-maxage=86400, stale-while-revalidate=86400'
 		},
 		status: resp.status
 	});
