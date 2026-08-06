@@ -11,12 +11,6 @@ export type Vtuber2DModelerCountResponseData = {
 	count: number;
 };
 
-export const config = {
-	isr: {
-		expiration: 60 * 60 * 24 * 7
-	}
-};
-
 export const GET = (async ({ url }) => {
 	const queries = ['top'].map((q) => `${q}=${url.searchParams.get(q) ?? ''}`).join('&');
 	const resp = await fetch(`${SHIMAKAZE_HOST}/statistics/vtubers/2d-modeler-count?${queries}`);
