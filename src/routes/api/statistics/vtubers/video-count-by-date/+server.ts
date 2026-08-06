@@ -12,12 +12,6 @@ export type VtuberVideoCountByDateResponseData = {
 	count: number;
 };
 
-export const config = {
-	isr: {
-		expiration: 60 * 60 * 24 * 7
-	}
-};
-
 export const GET = (async ({ url }) => {
 	const queries = ['hourly', 'daily'].map((q) => `${q}=${url.searchParams.get(q) ?? ''}`).join('&');
 	const resp = await fetch(`${SHIMAKAZE_HOST}/statistics/vtubers/video-count-by-date?${queries}`);

@@ -8,12 +8,6 @@ export type AgenciesResponse = BaseAPIResponse & {
 	meta: MetaAPIResponse;
 };
 
-export const config = {
-	isr: {
-		expiration: 60 * 60 * 24 * 7
-	}
-};
-
 export const GET = (async ({ url }) => {
 	const queries = ['sort', 'page', 'limit']
 		.map((q) => `${q}=${url.searchParams.get(q) ?? ''}`)

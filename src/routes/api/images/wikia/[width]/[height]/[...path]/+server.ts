@@ -6,9 +6,9 @@ export const config = {
 	}
 };
 
-export const GET = (async ({ url, params }) => {
-	const width = parseInt(url.searchParams.get('width') || '');
-	const height = parseInt(url.searchParams.get('height') || '');
+export const GET = (async ({ params }) => {
+	const width = parseInt(params.width || '');
+	const height = parseInt(params.height || '');
 
 	if (width > 0) params.path += `/scale-to-width-down/${width}`;
 	if (height > 0) params.path += `/scale-to-height-down/${height}`;

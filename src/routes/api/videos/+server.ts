@@ -23,12 +23,6 @@ export type VideoResponseData = {
 	video_end_date?: string;
 };
 
-export const config = {
-	isr: {
-		expiration: 60 * 5
-	}
-};
-
 export const GET = (async ({ url }) => {
 	const queries = ['start_date', 'end_date', 'is_finished', 'sort', 'page', 'limit']
 		.map((q) => `${q}=${url.searchParams.get(q) ?? ''}`)
