@@ -8,12 +8,6 @@ export type VtubersResponse = BaseAPIResponse & {
 	meta: MetaAPIResponse;
 };
 
-export const config = {
-	isr: {
-		expiration: 60 * 60 * 24
-	}
-};
-
 export const GET = (async ({ url }) => {
 	const queries = [
 		'mode',
