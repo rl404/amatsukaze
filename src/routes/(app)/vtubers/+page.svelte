@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { afterNavigate, goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { page as appPage } from '$app/state';
 	import VtuberStatBadge from '$lib/components/badges/VtuberStatBadge.svelte';
 	import VtuberLayoutButton from '$lib/components/buttons/VtuberLayoutButton.svelte';
@@ -95,7 +96,7 @@
 			.map((v) => `${v[0]}=${v[1] ?? ''}`)
 			.join('&');
 
-		goto(`?${queries}`);
+		goto(resolve(`/vtubers?${queries}`));
 	};
 
 	const fetchData = () => {

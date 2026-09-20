@@ -39,13 +39,13 @@
 	<h3 class="h3 col-span-3 text-center">
 		<span class="border-primary-500 border-l-4 pl-2">Medias</span>
 	</h3>
-	{#each data as vtuber, i}
+	{#each data as vtuber, i (i)}
 		<div class={twMerge('flex flex-col', i == 1 && 'border-border border-x')}>
 			<h4 class="text-center font-bold">Channels</h4>
 			{#if isEmptyArray(vtuber.channels)}
 				<P class="text-center">-</P>
 			{:else}
-				{#each vtuber.channels.sort(channelSorter) as channel}
+				{#each vtuber.channels.sort(channelSorter) as channel (channel.id)}
 					<div class="text-center">
 						<ChannelBadge data={channel} />
 					</div>
@@ -53,7 +53,7 @@
 			{/if}
 		</div>
 	{/each}
-	{#each data as vtuber, i}
+	{#each data as vtuber, i (i)}
 		<div
 			class={twMerge('grid grid-cols-1 gap-4 md:grid-cols-2', i == 1 && 'border-border border-x')}
 		>
@@ -81,15 +81,15 @@
 			</div>
 		</div>
 	{/each}
-	{#each data as vtuber, i}
+	{#each data as vtuber, i (i)}
 		<div class={twMerge('flex flex-col', i == 1 && 'border-border border-x')}>
 			<h4 class="text-center font-bold">Social Medias</h4>
 			{#if isEmptyArray(vtuber.social_medias)}
 				<P class="text-center">-</P>
 			{:else}
-				{#each vtuber.social_medias as url}
+				{#each vtuber.social_medias as url (url)}
 					<P class="text-center">
-						<a href={url} class="clickable underline" target="_blank" rel="noreferrer">
+						<a href={url} class="clickable underline" target="_blank" rel="external">
 							{getHostname(url)}
 						</a>
 					</P>
@@ -97,15 +97,15 @@
 			{/if}
 		</div>
 	{/each}
-	{#each data as vtuber, i}
+	{#each data as vtuber, i (i)}
 		<div class={twMerge('flex flex-col', i == 1 && 'border-border border-x')}>
 			<h4 class="text-center font-bold">Official Websites</h4>
 			{#if isEmptyArray(vtuber.official_websites)}
 				<P class="text-center">-</P>
 			{:else}
-				{#each vtuber.official_websites as url}
+				{#each vtuber.official_websites as url (url)}
 					<P class="text-center">
-						<a href={url} class="clickable underline" target="_blank" rel="noreferrer">
+						<a href={url} class="clickable underline" target="_blank" rel="external">
 							{getHostname(url)}
 						</a>
 					</P>

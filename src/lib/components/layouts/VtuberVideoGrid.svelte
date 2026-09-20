@@ -43,7 +43,7 @@
 	<a
 		href={data.url}
 		target="_blank"
-		rel="noreferrer"
+		rel="external"
 		class="clickable grid gap-1 pb-2 text-sm"
 		title={data.title}
 	>

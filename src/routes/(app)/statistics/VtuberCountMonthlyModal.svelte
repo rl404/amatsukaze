@@ -27,14 +27,14 @@
 	let layout: VtuberLayout = 'grid';
 	let tabI: number = 0;
 
-	$: open, loadData();
+	$: loadData(open, month, year);
 
 	$: tabs = [
 		{ label: 'Debut', data: debutData },
 		{ label: 'Retired', data: retiredData }
 	];
 
-	const loadData = () => {
+	const loadData = (open: boolean, month: number, year: number) => {
 		if (!open || month === 0 || year === 0) return;
 
 		tabI = 0;
@@ -74,7 +74,7 @@
 		{:else}
 			<div class="flex items-center justify-between gap-4">
 				<div class="flex items-center gap-4">
-					{#each tabs as tab, i}
+					{#each tabs as tab, i (tab.label)}
 						<button
 							class={twMerge(
 								'flex items-center gap-2 border-b-2 px-2 pb-2 transition-all hover:opacity-100',
@@ -97,7 +97,7 @@
 				{#if tabs[tabI].data.length === 0}
 					<div class="col-span-24">No vtubers...</div>
 				{:else}
-					{#each tabs[tabI].data.sort(vtuberSorter(sort)) as v (v.id)}
+					{#each [...tabs[tabI].data].sort(vtuberSorter(sort)) as v (v.id)}
 						{#if layout === 'grid'}
 							<VtuberGrid id={v.id} name={v.name} image={v.image} delay={500} class="col-span-4">
 								<VtuberStatBadge

@@ -3,21 +3,17 @@
 	import Timeline from '$lib/components/timelines/Timeline.svelte';
 	import TimelineItem from '$lib/components/timelines/TimelineItem.svelte';
 	import type { VtuberResponseData } from '../../api/vtubers/[id]/+server';
-	import { getTimelineData, type EventMonth } from './utils';
+	import { getTimelineData } from './utils';
 
 	export let month: number;
 	export let birthdayData: VtuberResponseData[];
 	export let anniversaryData: VtuberResponseData[];
 
-	let timelineData: EventMonth[] = [];
-
-	$: birthdayData,
-		anniversaryData,
-		(timelineData = getTimelineData(month, birthdayData, anniversaryData));
+	$: timelineData = getTimelineData(month, birthdayData, anniversaryData);
 </script>
 
 <Timeline>
-	{#each timelineData as d}
+	{#each timelineData as d (d.id)}
 		<TimelineItem id={d.id}>
 			<div slot="dot" class="flex items-center gap-3">
 				<div

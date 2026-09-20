@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import Image from '$lib/components/commons/Image.svelte';
 	import MinusIcon from '$lib/components/icons/MinusIcon.svelte';
 	import PlusIcon from '$lib/components/icons/PlusIcon.svelte';
@@ -55,14 +56,14 @@
 
 	const onCompare = () => {
 		open = false;
-		goto(`?ids=${modalData.map((d) => d.id ?? 0).join(',')}`);
+		goto(resolve(`/comparison?ids=${modalData.map((d) => d.id ?? 0).join(',')}`));
 	};
 </script>
 
 <Modal title="Vtuber List" bind:open size="lg">
 	<div class="grid gap-4">
 		<div class="flex items-center justify-center gap-4">
-			{#each modalData as data, i}
+			{#each modalData as data, i (i)}
 				{#if data.id === 0}
 					<Card class="aspect-square max-w-36"><div /></Card>
 				{:else}

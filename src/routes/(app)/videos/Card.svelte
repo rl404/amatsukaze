@@ -46,7 +46,7 @@
 		<div class="text-center">No result...</div>
 	{:else}
 		<div class="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
-			{#each videos as video}
+			{#each videos as video, i (i)}
 				<VideoGrid data={video} />
 			{/each}
 		</div>

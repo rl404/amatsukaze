@@ -1,4 +1,4 @@
-import { SHIMAKAZE_HOST } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { handleAPIResponse } from '$lib/utils/api';
 import type { VtubersResponse } from '../../api/vtubers/+server';
 import type { PageServerLoad } from './$types';
@@ -19,10 +19,10 @@ export const load = (async () => {
 	const month = new Date().getMonth() + 1;
 	const [birthdayResp, anniversaryResp] = await Promise.all([
 		await fetch(
-			`${SHIMAKAZE_HOST}/vtubers?mode=simple&start_birthday_month=${month}&end_birthday_month=${month}&exclude_retired=true&limit=-1`
+			`${env.SHIMAKAZE_HOST}/vtubers?mode=simple&start_birthday_month=${month}&end_birthday_month=${month}&exclude_retired=true&limit=-1`
 		),
 		await fetch(
-			`${SHIMAKAZE_HOST}/vtubers?mode=simple&start_debut_month=${month}&end_debut_month=${month}&exclude_retired=true&limit=-1`
+			`${env.SHIMAKAZE_HOST}/vtubers?mode=simple&start_debut_month=${month}&end_debut_month=${month}&exclude_retired=true&limit=-1`
 		)
 	]);
 	return {

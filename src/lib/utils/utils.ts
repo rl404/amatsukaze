@@ -6,7 +6,6 @@ import type {
 	VtuberResponseDataChannel
 } from '../../routes/api/vtubers/[id]/+server';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export const shuffleArray = (array: any[]) => {
 	for (let i = array.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));

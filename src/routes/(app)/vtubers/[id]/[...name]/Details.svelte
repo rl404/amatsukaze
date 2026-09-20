@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import ChannelBadge from '$lib/components/badges/ChannelBadge.svelte';
 	import LineChartIcon from '$lib/components/icons/LineChartIcon.svelte';
 	import {
@@ -28,7 +29,7 @@
 				{#if isEmptyArray(vtuber.original_names)}
 					<P>-</P>
 				{:else}
-					{#each vtuber.original_names as name}
+					{#each vtuber.original_names as name (name)}
 						<P>{name}</P>
 					{/each}
 				{/if}
@@ -38,7 +39,7 @@
 				{#if isEmptyArray(vtuber.nicknames)}
 					<P>-</P>
 				{:else}
-					{#each vtuber.nicknames as name}
+					{#each vtuber.nicknames as name (name)}
 						<P>{name}</P>
 					{/each}
 				{/if}
@@ -56,9 +57,9 @@
 				{#if isEmptyArray(vtuber.character_designers)}
 					<P>-</P>
 				{:else}
-					{#each vtuber.character_designers as name}
+					{#each vtuber.character_designers as name (name)}
 						<P>
-							<a href={`/vtubers?character_designer=${name}`} class="clickable underline">
+							<a href={resolve(`/vtubers?character_designer=${name}`)} class="clickable underline">
 								{name}
 							</a>
 						</P>
@@ -70,9 +71,12 @@
 				{#if isEmptyArray(vtuber.character_2d_modelers)}
 					<P>-</P>
 				{:else}
-					{#each vtuber.character_2d_modelers as name}
+					{#each vtuber.character_2d_modelers as name (name)}
 						<P>
-							<a href={`/vtubers?character_2d_modeler=${name}`} class="clickable underline">
+							<a
+								href={resolve(`/vtubers?character_2d_modeler=${name}`)}
+								class="clickable underline"
+							>
 								{name}
 							</a>
 						</P>
@@ -84,9 +88,12 @@
 				{#if isEmptyArray(vtuber.character_3d_modelers)}
 					<P>-</P>
 				{:else}
-					{#each vtuber.character_3d_modelers as name}
+					{#each vtuber.character_3d_modelers as name (name)}
 						<P>
-							<a href={`/vtubers?character_3d_modeler=${name}`} class="clickable underline">
+							<a
+								href={resolve(`/vtubers?character_3d_modeler=${name}`)}
+								class="clickable underline"
+							>
 								{name}
 							</a>
 						</P>
@@ -98,9 +105,12 @@
 				{#if isEmptyArray(vtuber.agencies)}
 					<P>-</P>
 				{:else}
-					{#each vtuber.agencies as agency}
+					{#each vtuber.agencies as agency (agency.id)}
 						<P>
-							<a href={`/agencies/${agency.id}/${toURL(agency.name)}`} class="clickable underline">
+							<a
+								href={resolve(`/agencies/${agency.id}/${toURL(agency.name)}`)}
+								class="clickable underline"
+							>
 								{agency.name}
 							</a>
 						</P>
@@ -112,7 +122,7 @@
 				{#if isEmptyArray(vtuber.affiliations)}
 					<P>-</P>
 				{:else}
-					{#each vtuber.affiliations as name}
+					{#each vtuber.affiliations as name (name)}
 						<P>{name}</P>
 					{/each}
 				{/if}
@@ -122,7 +132,7 @@
 				{#if isEmptyArray(vtuber.languages)}
 					<P>-</P>
 				{:else}
-					{#each vtuber.languages as language}
+					{#each vtuber.languages as language (language.id)}
 						<P>{language.name}</P>
 					{/each}
 				{/if}
@@ -147,7 +157,7 @@
 					<P>-</P>
 				{:else}
 					<div class="flex flex-col">
-						{#each vtuber.channels.sort(channelSorter) as channel}
+						{#each vtuber.channels.sort(channelSorter) as channel (channel.id)}
 							<div>
 								<ChannelBadge data={channel} />
 							</div>
@@ -160,9 +170,9 @@
 				{#if isEmptyArray(vtuber.social_medias)}
 					<P>-</P>
 				{:else}
-					{#each vtuber.social_medias as url}
+					{#each vtuber.social_medias as url (url)}
 						<P>
-							<a href={url} class="clickable underline" target="_blank" rel="noreferrer">
+							<a href={url} class="clickable underline" target="_blank" rel="external">
 								{getHostname(url)}
 							</a>
 						</P>
@@ -174,9 +184,9 @@
 				{#if isEmptyArray(vtuber.official_websites)}
 					<P>-</P>
 				{:else}
-					{#each vtuber.official_websites as url}
+					{#each vtuber.official_websites as url (url)}
 						<P>
-							<a href={url} class="clickable underline" target="_blank" rel="noreferrer">
+							<a href={url} class="clickable underline" target="_blank" rel="external">
 								{getHostname(url)}
 							</a>
 						</P>

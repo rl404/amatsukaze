@@ -24,13 +24,13 @@
 </script>
 
 <div class="mx-auto grid w-full max-w-2xl grid-cols-7 gap-1 text-center">
-	{#each DayNames as day, i}
+	{#each DayNames as day, i (day)}
 		<Span class={twMerge('text-sm md:text-base', i === 0 || i === 6 ? 'text-red-500!' : '')}>
 			{day[0]}
 		</Span>
 	{/each}
 	<div class="bg-border col-span-7 h-px" />
-	{#each data.days as day}
+	{#each data.days as day (day)}
 		<div
 			class={twMerge(
 				'bg-border/70 dark:bg-border/30 relative flex aspect-square items-center justify-center rounded-lg p-1 text-xs md:text-sm',
@@ -44,8 +44,8 @@
 		>
 			<Span class="absolute top-0 left-1">{day.day}</Span>
 			<div class="flex flex-wrap items-center justify-center gap-1 xl:gap-2">
-				{#each day.videos as video}
-					<a id={`${video.type}-${video.id}`} href={video.url} target="_blank" rel="noreferrer">
+				{#each day.videos as video, i (i)}
+					<a id={`${video.type}-${video.id}`} href={video.url} target="_blank" rel="external">
 						<svelte:component
 							this={ChannelIcons[video.type].icon}
 							class={twMerge('size-3 md:size-4 xl:size-5', ChannelIcons[video.type].class)}

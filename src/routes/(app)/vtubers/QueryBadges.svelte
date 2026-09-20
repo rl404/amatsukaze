@@ -14,7 +14,7 @@
 
 	const onClose = (name: keyof VtubersQuery, value: any, callDispatch = true) => {
 		query = { ...query, [name]: value };
-		callDispatch && onChange();
+		if (callDispatch) onChange();
 	};
 
 	const onCloseChannel = (i: number) => {

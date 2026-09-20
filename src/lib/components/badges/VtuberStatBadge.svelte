@@ -11,8 +11,6 @@
 	export let totalVideoLength: number;
 	export let sort: VtuberSort = 'name';
 
-	let value: string = '';
-
 	$: value = getValue(sort);
 
 	const getValue = (sort: VtuberSort): string => {

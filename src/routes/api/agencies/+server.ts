@@ -1,4 +1,4 @@
-import { SHIMAKAZE_HOST } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import type { RequestHandler } from './$types';
 import type { AgencyResponseData } from './[id]/+server';
 import type { BaseAPIResponse, MetaAPIResponse } from '../types';
@@ -12,7 +12,7 @@ export const GET = (async ({ url }) => {
 	const queries = ['sort', 'page', 'limit']
 		.map((q) => `${q}=${url.searchParams.get(q) ?? ''}`)
 		.join('&');
-	const resp = await fetch(`${SHIMAKAZE_HOST}/agencies?${queries}`);
+	const resp = await fetch(`${env.SHIMAKAZE_HOST}/agencies?${queries}`);
 	const data = await resp.json();
 	return new Response(JSON.stringify(data), {
 		headers: {

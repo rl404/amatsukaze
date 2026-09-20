@@ -8,6 +8,7 @@
 	export let vtuber: VtuberResponseData;
 
 	let show: boolean = false;
+	let videos: VtuberVideo[] = [];
 
 	$: allVideos = vtuber.channels
 		.reduce(
@@ -58,7 +59,7 @@
 		</div>
 	</div>
 	<div class="grid grid-cols-24 gap-2">
-		{#each videos as video}
+		{#each videos as video, i (i)}
 			<VtuberVideoGrid
 				data={video}
 				type={video.type}

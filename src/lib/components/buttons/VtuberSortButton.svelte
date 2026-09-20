@@ -119,7 +119,7 @@
 	{sorts[value].name}
 </button>
 <Dropdown bind:isOpen={open} simple transitionParams={{ duration: 0 }}>
-	{#each Object.values(sorts) as sort}
+	{#each Object.values(sorts) as sort (sort.value)}
 		{#if !sort.hidden}
 			<DropdownItem
 				class={twMerge('w-full text-left', value === sort.value && 'bg-gray-100 dark:bg-gray-600')}

@@ -52,8 +52,7 @@
 							total: {
 								show: true,
 								color: ChartTextColors[darkTheme.toString()],
-								formatter: (_) =>
-									data.reduce((acc, curr) => (acc += curr.value), 0).toLocaleString()
+								formatter: (_) => data.reduce((acc, curr) => acc + curr.value, 0).toLocaleString()
 							}
 						}
 					}

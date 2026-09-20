@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import Image from '$lib/components/commons/Image.svelte';
 	import RenderIfVisible from '$lib/components/commons/RenderIfVisible.svelte';
 	import BilibiliIcon from '$lib/components/icons/BilibiliIcon.svelte';
@@ -42,7 +43,7 @@
 		class="clickable relative"
 		href={data.video_url}
 		target="_blank"
-		rel="noreferrer"
+		rel="external"
 		title={data.video_title}
 	>
 		<Image
@@ -64,13 +65,16 @@
 		class="clickable text-primary line-clamp-2"
 		href={data.video_url}
 		target="_blank"
-		rel="noreferrer"
+		rel="external"
 		title={data.video_title}
 	>
 		{data.video_title}
 	</a>
 	<div class="flex items-center gap-2">
-		<a href="/vtubers/{data.vtuber_id}/{toURL(data.vtuber_name)}" class="clickable min-w-7">
+		<a
+			href={resolve(`/vtubers/${data.vtuber_id}/${toURL(data.vtuber_name)}`)}
+			class="clickable min-w-7"
+		>
 			<Avatar
 				src={getWikiImg(data.vtuber_image)}
 				alt={data.vtuber_name}
@@ -78,7 +82,10 @@
 			/>
 		</a>
 		<div class="grid">
-			<a href="/vtubers/{data.vtuber_id}/{toURL(data.vtuber_name)}" class="clickable line-clamp-1">
+			<a
+				href={resolve(`/vtubers/${data.vtuber_id}/${toURL(data.vtuber_name)}`)}
+				class="clickable line-clamp-1"
+			>
 				{data.vtuber_name}
 			</a>
 			<div class="flex items-center gap-2" title={startDate}>

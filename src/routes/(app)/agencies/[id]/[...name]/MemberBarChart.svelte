@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import RenderIfVisible from '$lib/components/commons/RenderIfVisible.svelte';
 	import type { VtuberSort } from '$lib/types';
 	import { compactInt, getWikiImg, intToDurationStr, toURL, vtuberSorter } from '$lib/utils/utils';
@@ -8,9 +9,7 @@
 	export let vtubers: VtuberResponseData[];
 	export let sort: VtuberSort;
 
-	let maxValue: number = 0;
-
-	$: sort, (maxValue = getMaxValue(sort));
+	$: maxValue = getMaxValue(sort);
 
 	const getMaxValue = (sort: VtuberSort): number => {
 		switch (sort) {
@@ -89,7 +88,7 @@
 				title={vtuber.name}
 			/>
 			<a
-				href="/vtubers/{vtuber.id}/{toURL(vtuber.name)}"
+				href={resolve(`/vtubers/${vtuber.id}/${toURL(vtuber.name)}`)}
 				class="clickable h5 bg-primary-500 line-clamp-1 rounded-lg px-2 text-white"
 				style="width:{getWidth(vtuber, sort)}"
 				title={vtuber.name}

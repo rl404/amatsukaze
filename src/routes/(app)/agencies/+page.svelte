@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { afterNavigate, goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { page as appPage } from '$app/state';
 	import AgencyStatBadge from '$lib/components/badges/AgencyStatBadge.svelte';
 	import AgencyLayoutButton from '$lib/components/buttons/AgencyLayoutButton.svelte';
@@ -31,7 +32,7 @@
 		fetchData();
 	});
 
-	const onSearch = () => goto(`?name=${name}&sort=${sort}`);
+	const onSearch = () => goto(resolve(`/agencies?name=${name}&sort=${sort}`));
 
 	const fetchData = () =>
 		(agencies = data.data.filter((a) => a.name.toLowerCase().includes(name.toLowerCase())));

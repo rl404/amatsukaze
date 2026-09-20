@@ -1,5 +1,5 @@
 import type { RequestHandler } from './$types';
-import { SHIMAKAZE_HOST } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import type { BaseAPIResponse } from '../../../types';
 
 export type VtuberBloodTypeCountResponse = BaseAPIResponse & {
@@ -13,7 +13,7 @@ export type VtuberBloodTypeCountResponseData = {
 
 export const GET = (async ({ url }) => {
 	const queries = ['top'].map((q) => `${q}=${url.searchParams.get(q) ?? ''}`).join('&');
-	const resp = await fetch(`${SHIMAKAZE_HOST}/statistics/vtubers/blood-type-count?${queries}`);
+	const resp = await fetch(`${env.SHIMAKAZE_HOST}/statistics/vtubers/blood-type-count?${queries}`);
 	const data = await resp.json();
 	return new Response(JSON.stringify(data), {
 		headers: {

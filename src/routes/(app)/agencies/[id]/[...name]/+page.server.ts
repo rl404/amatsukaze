@@ -1,4 +1,4 @@
-import { SHIMAKAZE_HOST } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { handleAPIResponse } from '$lib/utils/api';
 import type { AgencyResponse } from '../../../../api/agencies/[id]/+server';
 import type { VtubersResponse } from '../../../../api/vtubers/+server';
@@ -17,8 +17,8 @@ export const config = {
 
 export const load = (async ({ params }) => {
 	const [agencyResp, vtubersResp] = await Promise.all([
-		await fetch(`${SHIMAKAZE_HOST}/agencies/${params.id}`),
-		await fetch(`${SHIMAKAZE_HOST}/vtubers?mode=simple&agency_id=${params.id}&limit=-1`)
+		await fetch(`${env.SHIMAKAZE_HOST}/agencies/${params.id}`),
+		await fetch(`${env.SHIMAKAZE_HOST}/vtubers?mode=simple&agency_id=${params.id}&limit=-1`)
 	]);
 	return {
 		agency: await handleAPIResponse(agencyResp),

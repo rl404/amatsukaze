@@ -5,18 +5,16 @@
 	import type { VtuberSort } from '$lib/types';
 	import { twMerge } from 'tailwind-merge';
 	import type { VtuberResponseData } from '../../../../api/vtubers/[id]/+server';
-	import { getTimelineData, type AgencyMemberTimeline } from './utils';
+	import { getTimelineData } from './utils';
 
 	export let vtubers: VtuberResponseData[];
 	export let sort: VtuberSort;
 
-	let timelineData: AgencyMemberTimeline[] = [];
-
-	$: (vtubers, (timelineData = getTimelineData(vtubers, sort[0] !== '-')));
+	$: timelineData = getTimelineData(vtubers, sort[0] !== '-');
 </script>
 
 <Timeline>
-	{#each timelineData as d}
+	{#each timelineData as d (d.id)}
 		<TimelineItem id={d.id}>
 			<div
 				slot="dot"

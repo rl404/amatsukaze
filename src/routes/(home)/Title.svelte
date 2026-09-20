@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { PUBLIC_VTUBER_WIKI_HOST } from '$env/static/public';
+	import { resolve } from '$app/paths';
+	import { env } from '$env/dynamic/public';
 	import amatsukaze from '$lib/assets/amatsukaze.png';
 	import ChevronLeftIcon from '$lib/components/icons/ChevronLeftIcon.svelte';
 	import ChevronRightIcon from '$lib/components/icons/ChevronRightIcon.svelte';
@@ -8,11 +9,11 @@
 	import ThemeButton from './ThemeButton.svelte';
 
 	const links = [
-		{ label: 'Vtubers', link: '/vtubers' },
-		{ label: 'Agencies', link: '/agencies' },
-		{ label: 'Streams', link: '/videos' },
-		{ label: 'Events', link: '/events' },
-		{ label: 'Statistics', link: '/statistics' }
+		{ label: 'Vtubers', link: resolve('/vtubers') },
+		{ label: 'Agencies', link: resolve('/agencies') },
+		{ label: 'Streams', link: resolve('/videos') },
+		{ label: 'Events', link: resolve('/events') },
+		{ label: 'Statistics', link: resolve('/statistics') }
 	];
 
 	let open: boolean = true;
@@ -34,7 +35,7 @@
 	<div class="bg-gradient absolute -bottom-2 left-0 h-1 w-full transition" />
 
 	<h2 class="h4 font-normal text-white drop-shadow-lg">
-		<a href={PUBLIC_VTUBER_WIKI_HOST} target="_blank" rel="noreferrer" class="clickable">
+		<a href={env.PUBLIC_VTUBER_WIKI_HOST} target="_blank" rel="external" class="clickable">
 			Vtuber Wikia
 		</a>
 		Visualizer
@@ -45,7 +46,7 @@
 	</h1>
 
 	<div class="grid items-center text-xl drop-shadow-lg sm:flex sm:justify-end sm:gap-2">
-		{#each links as link}
+		{#each links as link (link.label)}
 			<h3><a href={link.link} class="clickable">{link.label}</a></h3>
 			<span class="hidden sm:inline-block">•</span>
 		{/each}

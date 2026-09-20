@@ -1,4 +1,4 @@
-import { SHIMAKAZE_HOST } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import type { RequestHandler } from './$types';
 import type { BaseAPIResponse, MetaAPIResponse } from '../types';
 
@@ -19,7 +19,7 @@ export const config = {
 };
 
 export const GET = (async () => {
-	const resp = await fetch(`${SHIMAKAZE_HOST}/languages`);
+	const resp = await fetch(`${env.SHIMAKAZE_HOST}/languages`);
 	const data = await resp.json();
 	return new Response(JSON.stringify(data), {
 		headers: {

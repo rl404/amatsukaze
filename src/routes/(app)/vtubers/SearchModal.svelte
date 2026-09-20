@@ -21,7 +21,10 @@
 
 	let open: boolean = false;
 
-	const onReset = () => (query = { ...DefaultVtubersQuery }) && onSubmit();
+	const onReset = () => {
+		query = { ...DefaultVtubersQuery };
+		onSubmit();
+	};
 </script>
 
 <Button
@@ -200,7 +203,7 @@
 			<Label for="zodiac">Zodiac</Label>
 			<Input id="zodiac" placeholder="any" list="zodiac-datalist" bind:value={query.zodiacs} />
 			<datalist id="zodiac-datalist">
-				{#each Zodiacs.sort() as zodiac}
+				{#each Zodiacs.sort() as zodiac (zodiac)}
 					<option>{zodiac}</option>
 				{/each}
 			</datalist>
