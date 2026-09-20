@@ -108,7 +108,7 @@
 		<div
 			class="col-span-full flex flex-row flex-wrap gap-1 pb-4 sm:col-span-4 sm:flex-col sm:flex-nowrap sm:pr-4 md:col-span-3 md:pr-5"
 		>
-			{#each vtuber.channels.filter((c) => c.type !== 'OTHER') as channel, i}
+			{#each vtuber.channels.filter((c) => c.type !== 'OTHER') as channel, i (channel.id)}
 				<button
 					class={twMerge(
 						'hover:text-primary flex items-center gap-2 rounded-lg p-2 transition-colors hover:bg-gray-200 hover:dark:bg-gray-700',

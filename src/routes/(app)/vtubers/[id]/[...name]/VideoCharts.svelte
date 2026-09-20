@@ -22,16 +22,16 @@
 	let monthI: number = 0;
 	let heatmapData: VtuberHeatmap[] = [];
 
-	$: vtuber, (monthsData = getMonthsData(vtuber));
-	$: vtuber, monthsData, (monthI = monthsData.findIndex((m) => m.month === new Date().getMonth()));
-	$: vtuber, (heatmapData = getHeatmapData(vtuber));
+	$: monthsData = getMonthsData(vtuber);
+	$: monthI = monthsData.findIndex((m) => m.month === new Date().getMonth());
+	$: heatmapData = getHeatmapData(vtuber);
 </script>
 
 <Card class="max-w-full gap-4 p-4 sm:p-6">
 	<div class="flex items-center justify-between gap-4">
 		{#if layout === 'calendar'}
 			<div class="flex items-center gap-4">
-				{#each monthsData as month, i}
+				{#each monthsData as month, i (month)}
 					<button
 						class={twMerge(
 							'flex items-center gap-2 border-b-2 px-2 pb-2 transition-all hover:opacity-100',

@@ -6,8 +6,6 @@
 	export let subscriber: number;
 	export let sort: AgencySort = 'name';
 
-	let value: string = '';
-
 	$: value = getValue(sort);
 
 	const getValue = (sort: AgencySort): string => {

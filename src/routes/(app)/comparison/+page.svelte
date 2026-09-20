@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import Head from '$lib/components/commons/Head.svelte';
 	import Image from '$lib/components/commons/Image.svelte';
@@ -83,7 +84,7 @@
 		<h1 class="h1">Vtuber Comparison</h1>
 	</div>
 	<div class="grid grid-cols-3 gap-4">
-		{#each ids as id, i}
+		{#each ids as id, i (i)}
 			<div class="flex items-center justify-center">
 				{#if id === 0}
 					<Button color="alternative" class="aspect-square w-1/2" onclick={toggleModal}>
@@ -119,9 +120,12 @@
 				{/if}
 			</div>
 		{/each}
-		{#each data as vtuber}
+		{#each data as vtuber, i (i)}
 			{#if vtuber.id}
-				<a class="h3 clickable text-center" href="/vtubers/{vtuber.id}/{toURL(vtuber.name)}">
+				<a
+					class="h3 clickable text-center"
+					href={resolve(`/vtubers/${vtuber.id}/${toURL(vtuber.name)}`)}
+				>
 					{vtuber.name}
 					{vtuber.emoji}
 				</a>

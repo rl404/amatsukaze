@@ -110,7 +110,7 @@
 	class="border-border top-15.2 h-full overflow-y-auto border-e pb-32"
 >
 	<SidebarGroup>
-		{#each links as { label, icon: _icon, href }}
+		{#each links as { label, icon: _icon, href } (label)}
 			<SidebarItem {label} {href} class="group">
 				{#snippet icon()}
 					<svelte:component
@@ -121,7 +121,7 @@
 			</SidebarItem>
 		{/each}
 	</SidebarGroup>
-	{#each moreData as { label, icon: _icon, more, data }}
+	{#each moreData as { label, icon: _icon, more, data } (label)}
 		{#if data.length > 0}
 			<SidebarGroup border>
 				<SidebarDropdownWrapper {label}>
@@ -131,7 +131,7 @@
 							class="group-hover:text-primary size-5 text-gray-500 transition dark:text-gray-400"
 						/>
 					{/snippet}
-					{#each data as vtuber}
+					{#each data as vtuber (vtuber.id)}
 						<SidebarItem
 							label={`${vtuber.name} ${vtuber.emoji} `}
 							href={`/vtubers/${vtuber.id}/${toURL(vtuber.name)}`}

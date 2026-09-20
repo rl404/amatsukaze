@@ -4,15 +4,14 @@
 	import { Card, Popover, Span } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
 	import type { VtuberResponseData } from '../../../../api/vtubers/[id]/+server';
-	import { getMonthsData, type AgencyEventMonth } from './utils';
+	import { getMonthsData } from './utils';
 
 	export let vtubers: VtuberResponseData[];
 
-	let eventData: AgencyEventMonth[] = [];
 	let showBirthday: boolean = true;
 	let showAnniversary: boolean = true;
 
-	$: (vtubers, (eventData = getMonthsData(vtubers, showBirthday, showAnniversary)));
+	$: eventData = getMonthsData(vtubers, showBirthday, showAnniversary);
 
 	const toggleBirthday = () => (showBirthday = !showBirthday);
 	const toggleAnniversary = () => (showAnniversary = !showAnniversary);
@@ -60,20 +59,20 @@
 		</div>
 	</div>
 	<div class="grid grid-cols-1 gap-4 text-center md:grid-cols-2 xl:grid-cols-3">
-		{#each eventData as data}
+		{#each eventData as data, i (i)}
 			<div>
 				<div class="bg-border/30 grid grid-cols-7 gap-1 rounded-lg p-2">
 					<h4 class="h4 bg-primary-600/10 dark:bg-primary-600/20 col-span-7 mb-2">
 						{MonthNames[data.month]}
 						{data.year}
 					</h4>
-					{#each DayNames as day, i}
+					{#each DayNames as day, i (day)}
 						<Span class={twMerge('text-sm', i === 0 || i === 6 ? 'text-red-500!' : '')}>
 							{day[0]}
 						</Span>
 					{/each}
 					<div class="bg-border col-span-7 h-px" />
-					{#each data.days as day}
+					{#each data.days as day (day)}
 						<div
 							id={isToday(data.year, data.month, day.day) && day.focus ? 'today' : ''}
 							class={twMerge(
@@ -96,7 +95,7 @@
 						{#if day.birthday.length > 0 || day.anniversary.length > 0}
 							<Popover placement="bottom" class="z-50">
 								<div class="flex gap-3">
-									{#each day.birthday as vtuber}
+									{#each day.birthday as vtuber (vtuber.id)}
 										<VtuberGrid
 											id={vtuber.id}
 											name={vtuber.name}
@@ -104,7 +103,7 @@
 											class="size-32 rounded-lg outline-2 outline-pink-500 hover:outline-0"
 										/>
 									{/each}
-									{#each day.anniversary as vtuber}
+									{#each day.anniversary as vtuber (vtuber.id)}
 										<VtuberGrid
 											id={vtuber.id}
 											name={vtuber.name}

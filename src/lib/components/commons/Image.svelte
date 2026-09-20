@@ -19,11 +19,11 @@
 	onMount(() => {
 		if (src === '') return;
 		observer = new IntersectionObserver(handleIntersection, { threshold: 0.1 });
-		element && observer.observe(element);
+		if (element) observer.observe(element);
 	});
 
 	onDestroy(() => {
-		observer && observer.disconnect();
+		if (observer) observer.disconnect();
 		clearTimeout(timer);
 	});
 
@@ -46,7 +46,7 @@
 			if (entry.isIntersecting) {
 				observed = true;
 				timer = setTimeout(() => {
-					observed && loadImage();
+					if (observed) loadImage();
 				}, delay);
 			} else {
 				observed = false;

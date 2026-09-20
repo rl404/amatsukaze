@@ -53,7 +53,7 @@
 			])
 			.then((res) => {
 				data = { ...data, birthday: res[0].data, anniversary: res[1].data };
-				jump && scrollToToday();
+				if (jump) scrollToToday();
 			})
 			.catch((err) => (error = getAxiosError(err)))
 			.finally(() => (loading = false));
@@ -98,13 +98,13 @@
 			<ChevronDownIcon class="size-3" />
 		</Button>
 		<Dropdown bind:isOpen={open} simple style="width:{buttonWidth}px">
-			{#each MonthNames as month, i}
+			{#each MonthNames as month, i (month)}
 				<DropdownItem class="w-full" onclick={() => onChangeMonth(i)}>{month}</DropdownItem>
 			{/each}
 		</Dropdown>
 	</div>
 	<div class="hidden grid-cols-12 gap-2 sm:grid">
-		{#each MonthNames as month, i}
+		{#each MonthNames as month, i (month)}
 			<Button
 				color={i === data.month - 1 ? 'primary' : 'alternative'}
 				onclick={() => onChangeMonth(i)}

@@ -33,15 +33,15 @@
 	let day = birthdayDay.toString();
 	let month = startBirthdayMonth.toString();
 
-	$: day, setBDay();
-	$: month, setBMonth();
-	$: birthdayDay, setDay();
-	$: startBirthdayMonth, endBirthdayMonth, setMonth();
+	$: setBDay(day);
+	$: setBMonth(month);
+	$: setDay(birthdayDay);
+	$: setMonth(startBirthdayMonth);
 
-	const setDay = () => (day = birthdayDay.toString());
-	const setMonth = () => (month = startBirthdayMonth.toString());
-	const setBDay = () => (birthdayDay = day);
-	const setBMonth = () => ([startBirthdayMonth, endBirthdayMonth] = [month, month]);
+	const setDay = (birthdayDay: string) => (day = birthdayDay.toString());
+	const setMonth = (startBirthdayMonth: string) => (month = startBirthdayMonth.toString());
+	const setBDay = (day: string) => (birthdayDay = day);
+	const setBMonth = (month: string) => ([startBirthdayMonth, endBirthdayMonth] = [month, month]);
 </script>
 
 <div class="grid grid-cols-2 gap-2">

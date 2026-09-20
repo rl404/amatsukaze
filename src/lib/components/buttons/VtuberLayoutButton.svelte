@@ -28,7 +28,7 @@
 </script>
 
 <div class="flex items-center justify-center gap-2">
-	{#each layouts as layout}
+	{#each layouts as layout (layout.value)}
 		<button onclick={() => onClick(layout.value)} class={layout.class}>
 			<svelte:component
 				this={layout.icon}

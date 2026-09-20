@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import { isEmptyArray, toURL } from '$lib/utils/utils';
 	import { Badge, Card, P, Tooltip } from 'flowbite-svelte';
 	import { twMerge } from 'tailwind-merge';
@@ -11,31 +12,31 @@
 	<h3 class="h3 col-span-3 text-center">
 		<span class="border-primary-500 border-l-4 pl-2">Basic Details</span>
 	</h3>
-	{#each data as vtuber, i}
+	{#each data as vtuber, i (i)}
 		<div class={twMerge('flex flex-col', i == 1 && 'border-border border-x')}>
 			<h4 class="text-center font-bold">Original Names</h4>
 			{#if isEmptyArray(vtuber.original_names)}
 				<P class="text-center">-</P>
 			{:else}
-				{#each vtuber.original_names as name}
+				{#each vtuber.original_names as name (name)}
 					<P class="text-center">{name}</P>
 				{/each}
 			{/if}
 		</div>
 	{/each}
-	{#each data as vtuber, i}
+	{#each data as vtuber, i (i)}
 		<div class={twMerge('flex flex-col', i == 1 && 'border-border border-x')}>
 			<h4 class="text-center font-bold">Nicknames</h4>
 			{#if isEmptyArray(vtuber.nicknames)}
 				<P class="text-center">-</P>
 			{:else}
-				{#each vtuber.nicknames as name}
+				{#each vtuber.nicknames as name (name)}
 					<P class="text-center">{name}</P>
 				{/each}
 			{/if}
 		</div>
 	{/each}
-	{#each data as vtuber, i}
+	{#each data as vtuber, i (i)}
 		<div class={twMerge('flex flex-col', i == 1 && 'border-border border-x')}>
 			<h4 class="text-center font-bold">Status</h4>
 			<div class="text-center">
@@ -49,7 +50,7 @@
 			</div>
 		</div>
 	{/each}
-	{#each data as vtuber, i}
+	{#each data as vtuber, i (i)}
 		<div
 			class={twMerge('grid grid-cols-1 gap-4 md:grid-cols-2', i == 1 && 'border-border border-x')}
 		>
@@ -65,7 +66,7 @@
 			</div>
 		</div>
 	{/each}
-	{#each data as vtuber, i}
+	{#each data as vtuber, i (i)}
 		<div class={twMerge('flex flex-col', i == 1 && 'border-border border-x')}>
 			<h4 class="text-center font-bold">Model</h4>
 			<div class="flex flex-wrap items-center justify-center gap-2">
@@ -80,15 +81,15 @@
 			</div>
 		</div>
 	{/each}
-	{#each data as vtuber, i}
+	{#each data as vtuber, i (i)}
 		<div class={twMerge('flex flex-col', i == 1 && 'border-border border-x')}>
 			<h4 class="text-center font-bold">Character Designers</h4>
 			{#if isEmptyArray(vtuber.character_designers)}
 				<P class="text-center">-</P>
 			{:else}
-				{#each vtuber.character_designers as name}
+				{#each vtuber.character_designers as name (name)}
 					<P class="text-center">
-						<a href={`/vtubers?character_designer=${name}`} class="clickable underline">
+						<a href={resolve(`/vtubers?character_designer=${name}`)} class="clickable underline">
 							{name}
 						</a>
 					</P>
@@ -96,7 +97,7 @@
 			{/if}
 		</div>
 	{/each}
-	{#each data as vtuber, i}
+	{#each data as vtuber, i (i)}
 		<div
 			class={twMerge('grid grid-cols-1 gap-4 md:grid-cols-2', i == 1 && 'border-border border-x')}
 		>
@@ -105,9 +106,12 @@
 				{#if isEmptyArray(vtuber.character_2d_modelers)}
 					<P class="text-center">-</P>
 				{:else}
-					{#each vtuber.character_2d_modelers as name}
+					{#each vtuber.character_2d_modelers as name (name)}
 						<P class="text-center">
-							<a href={`/vtubers?character_2d_modeler=${name}`} class="clickable underline">
+							<a
+								href={resolve(`/vtubers?character_2d_modeler=${name}`)}
+								class="clickable underline"
+							>
 								{name}
 							</a>
 						</P>
@@ -119,9 +123,12 @@
 				{#if isEmptyArray(vtuber.character_3d_modelers)}
 					<P class="text-center">-</P>
 				{:else}
-					{#each vtuber.character_3d_modelers as name}
+					{#each vtuber.character_3d_modelers as name (name)}
 						<P class="text-center">
-							<a href={`/vtubers?character_3d_modeler=${name}`} class="clickable underline">
+							<a
+								href={resolve(`/vtubers?character_3d_modeler=${name}`)}
+								class="clickable underline"
+							>
 								{name}
 							</a>
 						</P>
@@ -130,7 +137,7 @@
 			</div>
 		</div>
 	{/each}
-	{#each data as vtuber, i}
+	{#each data as vtuber, i (i)}
 		<div
 			class={twMerge('grid grid-cols-1 gap-4 md:grid-cols-2', i == 1 && 'border-border border-x')}
 		>
@@ -139,9 +146,12 @@
 				{#if isEmptyArray(vtuber.agencies)}
 					<P class="text-center">-</P>
 				{:else}
-					{#each vtuber.agencies as agency}
+					{#each vtuber.agencies as agency (agency.id)}
 						<P class="text-center">
-							<a href={`/agencies/${agency.id}/${toURL(agency.name)}`} class="clickable underline">
+							<a
+								href={resolve(`/agencies/${agency.id}/${toURL(agency.name)}`)}
+								class="clickable underline"
+							>
 								{agency.name}
 							</a>
 						</P>
@@ -153,20 +163,20 @@
 				{#if isEmptyArray(vtuber.affiliations)}
 					<P class="text-center">-</P>
 				{:else}
-					{#each vtuber.affiliations as name}
+					{#each vtuber.affiliations as name (name)}
 						<P class="text-center">{name}</P>
 					{/each}
 				{/if}
 			</div>
 		</div>
 	{/each}
-	{#each data as vtuber, i}
+	{#each data as vtuber, i (i)}
 		<div class={twMerge('flex flex-col', i == 1 && 'border-border border-x')}>
 			<h4 class="text-center font-bold">Languages</h4>
 			{#if isEmptyArray(vtuber.languages)}
 				<P class="text-center">-</P>
 			{:else}
-				{#each vtuber.languages as language}
+				{#each vtuber.languages as language (language.name)}
 					<P class="text-center">{language.name}</P>
 				{/each}
 			{/if}

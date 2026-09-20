@@ -40,7 +40,7 @@
 	{sorts[value].name}
 </button>
 <Dropdown bind:isOpen={open} simple transitionParams={{ duration: 0 }}>
-	{#each Object.values(sorts) as sort}
+	{#each Object.values(sorts) as sort (sort.value)}
 		<DropdownItem class="w-full text-left" onclick={() => onClick(sort.value)}>
 			{sort.name}
 		</DropdownItem>

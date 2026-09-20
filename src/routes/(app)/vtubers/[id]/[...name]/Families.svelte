@@ -23,7 +23,7 @@
 <Card class="max-w-full gap-4 p-4 sm:p-6">
 	<div class="flex items-center justify-between gap-4">
 		<div class="flex items-center gap-4">
-			{#each vtuber.character_designers as designer, i}
+			{#each vtuber.character_designers as designer, i (designer)}
 				<button
 					class={twMerge(
 						'flex items-center gap-2 border-b-2 px-2 pb-2 transition-all hover:opacity-100 ',

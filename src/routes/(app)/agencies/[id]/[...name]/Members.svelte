@@ -19,8 +19,8 @@
 	let sort: VtuberSort = 'debut_date';
 
 	const onChangeLayout = (v: VtuberLayout) => {
-		v === 'timeline' && (sort = 'debut_date');
-		v === 'bar_chart' && (sort = '-subscriber');
+		if (v === 'timeline') sort = 'debut_date';
+		if (v === 'bar_chart') sort = '-subscriber';
 	};
 
 	const onChangeSort = (v: VtuberSort) => {
@@ -45,6 +45,7 @@
 				) {
 					layout = 'bar_chart';
 				}
+				break;
 			case 'bar_chart':
 				if (
 					![

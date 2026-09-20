@@ -68,7 +68,7 @@
 		</div>
 	</div>
 	<Card class="grid max-w-full grid-cols-24 gap-4 p-2 sm:p-4">
-		{#each videos as video}
+		{#each videos as video, i (i)}
 			<VideoGrid class="col-span-12 sm:col-span-8 xl:col-span-6 2xl:col-span-4" data={video} />
 		{/each}
 

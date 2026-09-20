@@ -13,7 +13,7 @@
 		})
 		.filter((v) => v !== '')
 		.join(',');
-	$: (value, setChannelChecked());
+	$: setChannelChecked(value);
 
 	let channelChecked = ChannelTypes.map((ct) => {
 		const valueSplit = value.split(',');
@@ -22,7 +22,7 @@
 		return undefined;
 	});
 
-	const setChannelChecked = () =>
+	const setChannelChecked = (value: string) =>
 		(channelChecked = ChannelTypes.map((ct) => {
 			const valueSplit = value.split(',');
 			if (valueSplit.includes(ct)) return true;
@@ -32,7 +32,7 @@
 </script>
 
 <div class="flex justify-center gap-2">
-	{#each ChannelTypes as ct, i}
+	{#each ChannelTypes as ct, i (ct)}
 		<Checkbox
 			value={ct}
 			useIndeterminate

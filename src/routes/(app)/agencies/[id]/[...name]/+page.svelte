@@ -51,7 +51,7 @@
 			<a
 				href="{PUBLIC_VTUBER_WIKI_HOST}/{agency.name}"
 				target="_blank"
-				rel="noreferrer"
+				rel="external"
 				class="clickable"
 			>
 				{agency.name}
