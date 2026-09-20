@@ -1,5 +1,5 @@
 import type { RequestHandler } from './$types';
-import { SHIMAKAZE_HOST } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 
 export const config = {
 	isr: {
@@ -8,7 +8,7 @@ export const config = {
 };
 
 export const GET = (async () => {
-	const resp = await fetch(`${SHIMAKAZE_HOST}/statistics/vtubers/average-video-duration`);
+	const resp = await fetch(`${env.SHIMAKAZE_HOST}/statistics/vtubers/average-video-duration`);
 	const data = await resp.json();
 	return new Response(JSON.stringify(data), {
 		headers: {

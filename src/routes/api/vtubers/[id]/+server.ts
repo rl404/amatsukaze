@@ -1,4 +1,4 @@
-import { SHIMAKAZE_HOST } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import type { ChannelType } from '$lib/types';
 import type { BaseAPIResponse } from '../../types';
 import type { RequestHandler } from './$types';
@@ -67,7 +67,7 @@ export const config = {
 };
 
 export const GET = (async ({ params }) => {
-	const resp = await fetch(`${SHIMAKAZE_HOST}/vtubers/${params.id}`);
+	const resp = await fetch(`${env.SHIMAKAZE_HOST}/vtubers/${params.id}`);
 	const body = await resp.json();
 	return new Response(JSON.stringify(body), {
 		headers: {

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_GA_ID } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
 	import { onMount } from 'svelte';
 
 	let domain = 'https://www.googletagmanager.com';
@@ -33,10 +33,10 @@
 			window.dataLayer.push(arguments);
 		};
 		window.gtag('js', new Date());
-		window.gtag('config', PUBLIC_GA_ID);
+		window.gtag('config', env.PUBLIC_GA_ID);
 
 		try {
-			await addGoogleAnalyticsScript(PUBLIC_GA_ID, domain);
+			await addGoogleAnalyticsScript(env.PUBLIC_GA_ID, domain);
 		} catch (err) {
 			const s = window.document.getElementById(scriptID);
 			if (s) {
@@ -50,7 +50,7 @@
 
 	$: {
 		if (mounted && window.gtag) {
-			window.gtag('config', PUBLIC_GA_ID);
+			window.gtag('config', env.PUBLIC_GA_ID);
 		}
 	}
 </script>

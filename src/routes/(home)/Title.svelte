@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { PUBLIC_VTUBER_WIKI_HOST } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
 	import amatsukaze from '$lib/assets/amatsukaze.png';
 	import ChevronLeftIcon from '$lib/components/icons/ChevronLeftIcon.svelte';
 	import ChevronRightIcon from '$lib/components/icons/ChevronRightIcon.svelte';
@@ -35,7 +35,7 @@
 	<div class="bg-gradient absolute -bottom-2 left-0 h-1 w-full transition" />
 
 	<h2 class="h4 font-normal text-white drop-shadow-lg">
-		<a href={PUBLIC_VTUBER_WIKI_HOST} target="_blank" rel="external" class="clickable">
+		<a href={env.PUBLIC_VTUBER_WIKI_HOST} target="_blank" rel="external" class="clickable">
 			Vtuber Wikia
 		</a>
 		Visualizer

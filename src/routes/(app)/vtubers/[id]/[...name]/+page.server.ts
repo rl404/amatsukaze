@@ -1,4 +1,4 @@
-import { SHIMAKAZE_HOST } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { handleAPIResponse } from '$lib/utils/api';
 import type { VtubersResponse } from '../../../../api/vtubers/+server';
 import type { VtuberResponse } from '../../../../api/vtubers/[id]/+server';
@@ -19,7 +19,7 @@ export const config = {
 };
 
 export const load = (async ({ params }) => {
-	const vtuberResp = await fetch(`${SHIMAKAZE_HOST}/vtubers/${params.id}`);
+	const vtuberResp = await fetch(`${env.SHIMAKAZE_HOST}/vtubers/${params.id}`);
 	const vtuber = (await handleAPIResponse(vtuberResp)) as VtuberResponse;
 
 	const vtuberDayOld = Math.floor(
@@ -30,7 +30,7 @@ export const load = (async ({ params }) => {
 	const isNewVtuber: boolean = !vtuber.data.debut_date ? false : vtuberDayOld < 30 * 6;
 
 	const historiesResp = await fetch(
-		`${SHIMAKAZE_HOST}/vtubers/${params.id}/channel-history?group=${isNewVtuber ? 'DAILY' : 'MONTHLY'}`
+		`${env.SHIMAKAZE_HOST}/vtubers/${params.id}/channel-history?group=${isNewVtuber ? 'DAILY' : 'MONTHLY'}`
 	);
 	const histories = (await handleAPIResponse(historiesResp)) as VtuberHistoriesResponse;
 
@@ -39,7 +39,7 @@ export const load = (async ({ params }) => {
 		: await Promise.all(
 				vtuber.data.agencies.map(async (agency) => {
 					const resp = await fetch(
-						`${SHIMAKAZE_HOST}/vtubers?mode=simple&agency=${agency.name}&limit=-1`
+						`${env.SHIMAKAZE_HOST}/vtubers?mode=simple&agency=${agency.name}&limit=-1`
 					);
 					return await handleAPIResponse(resp);
 				})
@@ -50,7 +50,7 @@ export const load = (async ({ params }) => {
 		: await Promise.all(
 				vtuber.data.character_designers.map(async (designer) => {
 					const resp = await fetch(
-						`${SHIMAKAZE_HOST}/vtubers?mode=simple&character_designer=${designer}&limit=-1`
+						`${env.SHIMAKAZE_HOST}/vtubers?mode=simple&character_designer=${designer}&limit=-1`
 					);
 					return await handleAPIResponse(resp);
 				})

@@ -1,5 +1,5 @@
 import { handleAPIResponse } from '$lib/utils/api';
-import { SHIMAKAZE_HOST } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import type { AgenciesResponse } from '../api/agencies/+server';
 import type { VtuberResponseData } from '../api/vtubers/[id]/+server';
 import type { AgencyResponseData } from '../api/agencies/[id]/+server';
@@ -113,8 +113,8 @@ const sitemap = (
 
 export const GET = (async () => {
 	const [vtubersResp, agenciesResp] = await Promise.all([
-		await fetch(`${SHIMAKAZE_HOST}/vtubers?mode=simple&limit=-1`),
-		await fetch(`${SHIMAKAZE_HOST}/agencies?limit=-1`)
+		await fetch(`${env.SHIMAKAZE_HOST}/vtubers?mode=simple&limit=-1`),
+		await fetch(`${env.SHIMAKAZE_HOST}/agencies?limit=-1`)
 	]);
 
 	const vtubers: VtubersResponse = await handleAPIResponse(vtubersResp);

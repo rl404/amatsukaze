@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_VTUBER_WIKI_HOST } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
 	import Head from '$lib/components/commons/Head.svelte';
 	import Image from '$lib/components/commons/Image.svelte';
 	import TextOutline from '$lib/components/commons/TextOutline.svelte';
@@ -49,7 +49,7 @@
 		<TextOutline class="absolute -z-10 opacity-20">{agency.name}</TextOutline>
 		<h1 class="h1">
 			<a
-				href="{PUBLIC_VTUBER_WIKI_HOST}/{agency.name}"
+				href="{env.PUBLIC_VTUBER_WIKI_HOST}/{agency.name}"
 				target="_blank"
 				rel="external"
 				class="clickable"

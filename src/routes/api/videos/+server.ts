@@ -1,4 +1,4 @@
-import { SHIMAKAZE_HOST } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import type { BaseAPIResponse, MetaAPIResponse } from '../types';
 import type { RequestHandler } from './$types';
 
@@ -28,7 +28,7 @@ export const GET = (async ({ url }) => {
 		.map((q) => `${q}=${url.searchParams.get(q) ?? ''}`)
 		.join('&');
 
-	const resp = await fetch(`${SHIMAKAZE_HOST}/videos?${queries}`);
+	const resp = await fetch(`${env.SHIMAKAZE_HOST}/videos?${queries}`);
 	const body = await resp.json();
 	return new Response(JSON.stringify(body), {
 		headers: {
