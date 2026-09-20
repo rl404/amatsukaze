@@ -1,0 +1,8 @@
+services:
+  amatsukaze:
+    container_name: amatsukaze
+    image: rl404/amatsukaze:latest
+    build: .
+    restart: always
+    env_file: .env
+    network_mode: host
