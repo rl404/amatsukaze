@@ -36,7 +36,7 @@
 		window.gtag('config', env.PUBLIC_GA_ID);
 
 		try {
-			await addGoogleAnalyticsScript(env.PUBLIC_GA_ID, domain);
+			await addGoogleAnalyticsScript(env.PUBLIC_GA_ID || '', domain);
 		} catch (err) {
 			const s = window.document.getElementById(scriptID);
 			if (s) {
