@@ -32,5 +32,6 @@
 		rel="canonical"
 		href={`https://amatsukaze.rl404.com/agencies/${agency.id}/${toURL(agency.name)}`}
 	/>
-	{@html `<script type="application/ld+json">${JSON.stringify(schema)}</script>`}
+	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+	{@html '<script type="application/ld+json">' + JSON.stringify(schema) + '<' + '/script>'}
 </svelte:head>

@@ -12,8 +12,7 @@
 	export let seriesName: string = 'Count';
 	export let horizontal: boolean = false;
 	export let xaxisFormatter:
-		| ((value: string, timestamp?: number, opts?: any) => string | string[])
-		| undefined = undefined;
+		((value: string, timestamp?: number, opts?: any) => string | string[]) | undefined = undefined;
 	export let tooltipYFormatter: (val: number, opts?: any) => string = (v) =>
 		!v ? '0' : v.toLocaleString();
 	export let onClickArea: (n: number) => void = () => {};
