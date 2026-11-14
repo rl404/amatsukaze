@@ -24,4 +24,6 @@ jobs:
           node-version: 26.13
           cache: npm
       - run: npm ci
+      - run: npm run check
+      - run: npm run lint
       - run: npm run build
