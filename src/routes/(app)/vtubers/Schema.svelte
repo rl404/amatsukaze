@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { WebSite, WithContext } from 'schema-dts';
 
-	const schema: WithContext<WebSite> = {
+	const schema: WithContext<WebSite> & { potentialAction: { 'query-input': string } } = {
 		'@context': 'https://schema.org',
 		'@type': 'WebSite',
 		url: 'https://amatsukaze.rl404.com',
@@ -19,5 +19,6 @@
 
 <svelte:head>
 	<link rel="canonical" href="https://amatsukaze.rl404.com/vtubers" />
-	{@html `<script type="application/ld+json">${JSON.stringify(schema)}</script>`}
+	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+	{@html '<script type="application/ld+json">' + JSON.stringify(schema) + '<' + '/script>'}
 </svelte:head>

@@ -28,22 +28,22 @@ _More will be coming soon..._
 
 1. Clone the repo.
 
-```sh
-git clone https://github.com/rl404/amatsukaze
-```
+   ```sh
+   git clone https://github.com/rl404/amatsukaze
+   ```
 
 2. Rename `.env.sample` to `.env` and modify the value according to your setup.
 3. Install depedencies.
 
-```sh
-npm ci
-```
+   ```sh
+   npm i
+   ```
 
 4. Start.
 
-```sh
-npm run dev
-```
+   ```sh
+   npm run dev
+   ```
 
 5. [http://localhost:5173](http://localhost:5173) is ready.
 
